@@ -1,0 +1,856 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.2.7" />
+<style type="text/css">
+/* Debug borders */
+p, li, dt, dd, div, pre, h1, h2, h3, h4, h5, h6 {
+/*
+  border: 1px solid red;
+*/
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+tt {
+  color: navy;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  font-family: sans-serif;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+
+div.sectionbody {
+  font-family: serif;
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+span#author {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+span#email {
+}
+span#revision {
+  font-family: sans-serif;
+}
+
+div#footer {
+  font-family: sans-serif;
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+div#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+div#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+div#preamble,
+div.tableblock, div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-right: 10%;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+
+div.listingblock {
+  margin-right: 0%;
+}
+div.listingblock > div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock {
+  padding-left: 2.0em;
+}
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock {
+  padding-left: 2.0em;
+}
+div.verseblock > div.content {
+  white-space: pre;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 2px solid silver;
+}
+
+div.exampleblock > div.content {
+  border-left: 2px solid silver;
+  padding: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+div.imageblock img { border: 1px solid silver; }
+span.image img { border-style: none; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+div.olist > ol {
+  list-style-type: decimal;
+}
+div.olist2 > ol {
+  list-style-type: lower-alpha;
+}
+
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+tfoot {
+  font-weight: bold;
+}
+
+div.hlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hlist td {
+  padding-bottom: 15px;
+}
+td.hlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+}
+td.hlist2 {
+  vertical-align: top;
+}
+
+@media print {
+  div#footer-badges { display: none; }
+}
+
+div#toctitle {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+/* Workarounds for IE6's broken and incomplete CSS2. */
+
+div.sidebar-content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+div.sidebar-title, div.image-title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-top: 0.0em;
+  margin-bottom: 0.5em;
+}
+
+div.listingblock div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock-attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock-content {
+  white-space: pre;
+}
+div.verseblock-attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+
+div.exampleblock-content {
+  border-left: 2px solid silver;
+  padding-left: 0.5em;
+}
+
+/* IE6 sets dynamically generated links as visited. */
+div#toc a:visited { color: blue; }
+
+/* Because IE6 child selector is broken. */
+div.olist2 ol {
+  list-style-type: lower-alpha;
+}
+div.olist2 div.olist ol {
+  list-style-type: decimal;
+}
+</style>
+<title>Savant: The Road Not Taken (Yet&#8230;)</title>
+</head>
+<body>
+<div id="header">
+<h1>Savant: The Road Not Taken (Yet&#8230;)</h1>
+<span id="author">Eric S. Raymond</span><br />
+<span id="email"><tt>&lt;<a href="mailto:esr@thyrsus.com">esr@thyrsus.com</a>&gt;</tt></span><br />
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="para"><p>In early October 2009, before starting ForgePlucker, I seriously
+considered writing a new forge system from
+scratch. <a href="http://esr.ibiblio.org/?p=1302">Sanity prevailed</a>, but the
+design speculations I wrote down may sttill be interesting to people
+other than me &#8212; if only because some of these ideas are relevant to
+the more restricted scope of ForgePlucker.</p></div>
+<div class="para"><p>Some pieces of this may migrate to the ForgePlucker project plan as
+that design gets fleshed out.</p></div>
+</div>
+</div>
+<h2 id="_the_state_of_forges">The State of Forges</h2>
+<div class="sectionbody">
+<div class="para"><p>For the purposes of this discussion, we define the "state" associated
+with a given project as all data and metadata pertaining to it on the
+hosting system.  Project state includes but is not limited to the
+following:</p></div>
+<div class="olist"><ol>
+<li>
+<p>
+Contents of version-control repositories
+</p>
+</li>
+<li>
+<p>
+The content and structure of webspace and wikis owned by the project.
+</p>
+</li>
+<li>
+<p>
+Contents of the project bug tracker, and of any other auxiliary
+   trackers such as patch and task trackers.
+</p>
+</li>
+<li>
+<p>
+Developer lists and role assignments.
+</p>
+</li>
+<li>
+<p>
+Project releases, including product files and release metadata.
+</p>
+</li>
+<li>
+<p>
+Mailing list state (address lists, options, and archives).
+</p>
+</li>
+</ol></div>
+<div class="para"><p>To solve these problems in full generality, a hosting system would
+require three major capabilities.</p></div>
+<div class="olist"><ol>
+<li>
+<p>
+The ability to export all project state, or selected portions of
+   it, into lossless static representations - state dumps - that can
+   be archived.
+</p>
+</li>
+<li>
+<p>
+The ability to re-import a state dump to re-create a project.
+</p>
+</li>
+<li>
+<p>
+The ability to import partial state dumps and apply them as edits
+   to the live project state.  This requirement intentionally implies
+   the ability to script transactions that change the state.
+</p>
+</li>
+</ol></div>
+</div>
+<h2 id="_high_level_design_strategy">High-level Design Strategy</h2>
+<div class="sectionbody">
+<div class="para"><p>I propose to address this problem by writing a server daemon which
+I will call "Savant". Savant will be a primarily a request broker
+for the hosting system's database, but will also have the capability
+to query the state of detached subsystems such as a MailMan instance.</p></div>
+<div class="para"><p>The server daemon's job will be to accept two kinds of messages:
+requests to dump some portion of the hosting system's state, and
+requests to add to or modify the state.</p></div>
+<div class="para"><p>It is expected that the daemon will be connected to an email responder
+robot so that queries and edit requests can be mailed to it, in which
+case it will return state dumps and acknowledgements or error
+notifications by mail.</p></div>
+<div class="para"><p>It is also expected that the daemon will be connected to a well-known
+Internet port so that client programs can converse with it
+directly. Once Savant is in production, it may become convenient for
+the hosting system's own Web front end to operate in this way.</p></div>
+<div class="para"><p>In order for this daemon to be useful, it must implement an
+application protocol or domain-specific minilanguage in which the
+high-level objects of the hosting system ("project", "bug tracker",
+"mailing list", and the like) are accessible as first-class objects
+that can be inspected and modified.</p></div>
+<div class="para"><p>The principal design challenge of Savant is to pick the correct set of
+objects and relationships, then find a way to expose those objects and
+relationships through a representation with good behavior.  "Good
+behavior" means, specifically, this:</p></div>
+<div class="olist"><ol>
+<li>
+<p>
+The representation must be lossless and <strong>invertible</strong>.  That is,
+it must be possible for Savant to read in a representation and
+accurately reproduce the state from which it was dumped.
+</p>
+</li>
+<li>
+<p>
+The representation must be <strong>transparent</strong>. That is, a human being
+should be able to read it, understand the object state, and edit
+the representation without undue difficulty.
+</p>
+</li>
+<li>
+<p>
+The representation must have <strong>minimal novelty</strong> and obey the KISS
+principle. It should exploit Unicode, ISO 8601, XML, JSON, RFC-822,
+and other standards as thoroughly as possible in order to make
+learning it and writing clients as easy as possible.
+</p>
+</li>
+</ol></div>
+</div>
+<h2 id="_some_building_blocks_and_terminology">Some Building Blocks and Terminology</h2>
+<div class="sectionbody">
+<h3 id="_meta_protocols">Meta-protocols</h3><div style="clear:left"></div>
+<div class="para"><p>One way to achieve KISS is to build the Savant application protocol on top
+of an existing meta-protocol or set of meta-protocols. Never having
+to write a custom parser is a good thing.</p></div>
+<div class="para"><p>My first design choice is to make the Savant protocol an application
+of JSON wrapped in an RFC-822/MIME envelope.</p></div>
+<h3 id="_why_json">Why JSON?</h3><div style="clear:left"></div>
+<div class="para"><p>Why JSON, rather than, for example, XML?  Three reasons:</p></div>
+<div class="para"><p>First: I think JSON is well-suited to the shape of the objects we will
+be manipulating, which will consist largely of lots of containers full
+of (a) attribute/value pairs, (b) smaller containers, and (c) pieces
+of text that aren't very large. The exceptions, such as repositories,
+will be extremely large blob-like objects that we wouldn't want
+to carry in-line of any protocol, whether JSON or XML or anything
+else.</p></div>
+<div class="para"><p>Second: I have recent successful experience of building a JSON-baed
+application protocol for GPSD.  I was extremely impressed with how
+lightweight this format and the tools for it are.  At one point I was
+able to write a fairly complete JSON parser in 300 lines of C, and I
+have made effective use of the JSON module in Python.  The contrast
+with the complex gymnastics required when using XML is quite striking.</p></div>
+<div class="para"><p>Third: JSON, unlike XML, has an appealingly rich type ontology. As a
+representation, it is essentially equivalent to Python or Perl data
+structures without executable parts.  I didn't get a lot of advantage
+from this in GPSD, which is written in C for legacy reasons.  But I
+expect to write Savant in a modern language (probably Python). This
+means the barrier between "outside" (the Savant protocol
+representation) and "inside" (the data structures used within Savant)
+can be low, with little or no glue code required.</p></div>
+<h3 id="_why_rfc_822">Why RFC-822?</h3><div style="clear:left"></div>
+<div class="para"><p>One of our interfaces to Savant is going to be an email autoresponder
+bot.  Rather than strip off the RFC-822 wrapper before handing
+the request to Savant, I think there are two excellent reasons to keep
+it as an integral part of the protocol.  They are:</p></div>
+<div class="olist"><ol>
+<li>
+<p>
+Authentication. PGP signatures associated with email addresses is
+as good as it gets for verifying that the author of a message is who
+he or she claims to be.  This will be an issue in requests to modify
+privileged state.
+</p>
+</li>
+<li>
+<p>
+MIME is a serviceable container for for multi-part objects consisting
+of a message and one or more attachments.  In our case, we might need
+a state dump to consist (a) of a few lines of JSON specifying a system
+object, and (b) one or more large binary blobs that are the actual
+content of some of the object fields.
+</p>
+</li>
+</ol></div>
+<div class="para"><p>We could work hard at developing our own functional equivalent of
+RFC-822 with MIME attachments, but that would be pointless.  By
+using it, we'll immediately get the ability to forget the protocol
+details and re-use a lot of standard library code.</p></div>
+<h4 id="_job_cards_folding_and_unfolding">Job cards, Folding, and Unfolding ===</h4>
+<div class="para"><p>With these premises in place, we can define a central feature of
+Savant: what its requests and responses will look at one level above
+the wire protocol, to a human or program outside Savant and to the code
+inside it.</p></div>
+<div class="para"><p>Savant requests and responses will both be instances of Savant
+messages.</p></div>
+<div class="para"><p>From the "inside" point of view of Savant, a message will be one big
+object &#8212; a dictionary &#8212; with values that have the type ontology of
+Python or Perl, that is numbers, strings, dictionaries, lists,
+booleans, and None.  Importantly, the top level will have a "class"
+attribute which will specify the object type.  (Types will include,
+for example, "PROJECT", "TRACKER", and "MAILING-LIST".)</p></div>
+<div class="para"><p>From the point of view of someone outside, a message will be an
+RFC-822/MIME envelope containing a "job card" in JSON and zero or more
+attachments for large blobs of data that are incorporated by reference
+into the JSON structure.  This choice means a human, or a program, can
+read the job card to get the semantics of the message and only look at
+any blobs that might be attached when they become relevant.</p></div>
+<div class="para"><p>There will be two relatively simple operations at the interface
+between Savant and client programs.  In one &#8212; folding &#8212; an internal
+Savant object will be flattened into a an RFC-822/MIME representation.
+Pieces of data above a threshold size will turn into attachments. The
+rest of the structure will become a JSON text body.</p></div>
+<div class="para"><p>In the other &#8212; unfolding &#8212; various parts of a well-formed
+RFC-822/MIME message including a JSON text body will be incorporated
+into a structure.  References to attachments will be replaced with the
+decoded attachment data.  The RFC-822 message sender will supply a
+requesting identity if the JSON in the job card does not.  If the
+message is PGP-signed, the unfolded structure will contain a boolean
+expressing the authentication status.</p></div>
+</div>
+<h2 id="_savant_objects">Savant Objects</h2>
+<div class="sectionbody">
+<div class="para"><p>With these levels of the design in place, we can now forget about the
+lower-level details and consider what kinds of objects Savant has to
+know about to do its job.  Furthemore, we can forget about the
+technical distinction between the objects and their JSON representations
+and start writing down transactions in JSON with reasonable confidence
+that we will be able to implement what we describe.</p></div>
+<div class="para"><p>The following description is in the spirit of what AI researchers call
+an "ontology".  It is not presently complete.  It is intended to
+explain the relationships among the most important objects in Savant's
+universe.</p></div>
+<h3 id="_objects">Objects</h3><div style="clear:left"></div>
+<div class="para"><p>The hosting system itself is a Host object with at least these
+attributes:</p></div>
+<div class="para"><p>name:;          The name of the hosting site.
+description:;   Brief description for search and indexing purposes
+location:;      URL to hosting system's entry page
+projects:;      Dictionary mapping project IDs to Project objects
+                (Project ID would be the Unix name.)
+staff:;         A dictionary mapping usernames to Role objects
+                See the description of Role objects below.
+webspace:;      Path or URL to site-wide webspace</p></div>
+<div class="para"><p>A Project is a container with at least the following attributes:</p></div>
+<div class="para"><p>id:;            The project's ID (its key in the Host dictionary)
+name:;          The name of the project to humans
+description:;   Brief description for search and indexing purposes
+members:;       A dictionary mapping usernames to Role objects
+repositories:;  A list of Repository objects
+webspace:;      Path or URL pointing to the project's HTML document root.
+trackers:;      A dictionary mapping tracker types to lists of Items
+                Tracker types might be:
+                <strong> Bugs
+                </strong> Tasks
+                * Patches
+mailinglists:;  A dictionary of MailingList objects indexed by</p></div>
+<div class="para"><p>A Role object is a container with at least the following attributes:</p></div>
+<div class="para"><p>id:;            The user it describes (the key in the parent dictionary)
+created-date:;  Date the role was created (not editable)
+modified-date:; Date the role was last modified (not editable)
+modifier:;      Username of person who last modified it (not editable)
+capabilities:;  There are are several capabilities this might hold:
+                <strong> owner = other capabilities cannot be removed (not editable)
+                </strong> administrator = can edit metadata of the parent object
+                <strong> developer = has write access to parent's repositories
+                </strong> websmith = has write access to parent object's webspace
+                * engineer = can package releases</p></div>
+<div class="para"><p>A Repository object has at least the following attributes:</p></div>
+<div class="para"><p>id:;            The name of the repository (usually "Main");
+                the repository's key in the parent Project instance.
+description:;   Brief description (e.g., "Experimental git conversion")
+vcs:;           Associated version-control system (CVS, SVN, hg, git, etc.)
+location:;      Path or URL pointing to the repository</p></div>
+<div class="para"><p>The Item object illustrates multiple levels of containment. When
+folded into a statement this would map to multoply-nested JSON
+The top-level object looks like this:</p></div>
+<div class="para"><p>id:;              ID number of the bug (key in the parent Tracker instance).
+summary:;         One-line summary
+category:;        Controlled vocabulary editable by administrator.
+                  Typical set would be:
+                  <strong> Bug
+                  </strong> Feature Request
+priority:;        Priority level, 1-9
+status:;          Controlled vocabulary editable by administrator.
+                  Typical set would be:
+                  <strong> None
+                  </strong> Fixed
+                  <strong> Won't Fix
+                  </strong> Confirmed
+                  <strong> Work for Me
+                  </strong> Ready for Test
+                  <strong> In Progress
+                  </strong> Postponed
+                  <strong> Need Info
+                  </strong> Duplicate
+                  <strong> Invalid
+                  </strong> Upstream Problem
+assigned_to:      Member name
+discussion_lock:; Is commenting locked?
+platform:;        Operating system or platform
+severity:;        Controlled vocabulary
+                  Typical set would be:
+                  <strong> Wish (1)
+                  </strong> Minor (2)
+                  <strong> Normal (3)
+                  </strong> Important (4)
+                  <strong> Blocker (5)
+                  </strong> Security (6)
+item_group:;      Controlled vocabulary editable by administrator.
+                  Typical set would be:
+                  <strong> Engine
+                  </strong> User Interface
+                  * Documentattion
+public:;          Boolean, True if public, False if private
+open:;            Boolean, True if open, False if closed
+release:;         Project release identification for the report
+comments:;        List of Comment objects</p></div>
+<div class="para"><p>A Comment object looks like this:</p></div>
+<div class="para"><p>id:;              Ordinal number of the comment (key in the parent Item)
+date:;            Date entered
+submitter:;       Submitter name
+text:;            Text body
+attachments:;     Text attachments</p></div>
+<div class="para"><p>A MailingList object looks like this:</p></div>
+<div class="para"><p>id:;              Submission address (key in the parent dictionary)
+name:;            The name of the list to humans
+description:;     Brief description for search and indexing purposes
+list_archive:;    List of MailMessage objects (not editable)
+list_type;;       List type (controls interpretation of list options)
+list_options;;    Dictionary, name/attribute values specifying list options.
+members:;         A list of Role objects. The capability vocabulary
+                  will be specific to the mailing list type.</p></div>
+</div>
+<h2 id="_the_savant_language">The Savant language</h2>
+<div class="sectionbody">
+<div class="para"><p>With a partial ontology in place, we can actually define the
+behavior of a query language and write some example requests
+and responses.</p></div>
+<h3 id="_savant_language_examples">Savant language examples</h3><div style="clear:left"></div>
+<div class="para"><p>Ask Savant to dump the contents of Wesnoth's bug tracker:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>=&gt; {"query":"value", "projects":"wesnoth", "trackers":"Bugs"}</tt></pre>
+</div></div>
+<div class="para"><p>Note the lookup rule.  We start at the top-level Host object. At each
+step we look for an attribute of the object we're looking at; that
+constrains the query for the next step.  The "projects" attribute
+tells us to look in the projects dictionary for the value associated
+with <em>wesnoth</em>, which will be a a Project object.  We then look for an
+an attribute of the Wesnoth project object and find "trackers". That
+navigates us into the Wesnoth trackers dictionary. We're out of
+specifiers, so that object is the value of our query.</p></div>
+<div class="para"><p>Ask Savant to dump the entire Wesnoth project state.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>=&gt; {"get":"value", "projects":"wesnoth"}</tt></pre>
+</div></div>
+<div class="para"><p>Now we'll see what an actual response looks like. For an instance
+running on Savane, root could make "esr" a developer of the Savane
+project like this:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>=&gt; {"set":"value", "projects":"savane",
+       "members":"esr", "capabilities":["developer",]}
+
+&lt;= {"set":"value", "projects":"savane",
+       "members":"esr", "capabilities":["developer",],
+       "succeeded"=True}</tt></pre>
+</div></div>
+<div class="para"><p>Then, to check on esr's capabilities:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>=&gt; {"get":"value", "projects":"savane", "members":"esr"}
+
+&lt;= {"get":"value", "projects":"savane", "members":"esr",
+    "value":{"class":"Role",
+             "id":"esr",
+             "capabilities":["developer",],
+             "modifier":"root",
+             "created-date":"2009:10:07T04:43",
+             "modified-date":"2009:10:07T04:43"}}</tt></pre>
+</div></div>
+<div class="para"><p>Some things to note here: the response is embedded in a "value"
+attribute, with the query specifiers preserved. The object type of the
+response is given by a "class" tag.  And some additional attributes,
+providing an audit trail and not editable, have been set.</p></div>
+<div class="para"><p>Here's an example of an error response. Assuming there is no user
+with the name "mytzlpyk", this could happen:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>=&gt; {"set":"value", "projects":"savane",
+       "members":"mytzlpyk", "capabilities":["developer",]}
+=&gt; {"set":"value", "projects":"savane",
+       "members":"mytzlpyk", "capabilities":["developer",],
+       "succeeded":False,
+       "error":{"#":232, "message":"No such user"}}</tt></pre>
+</div></div>
+<div class="para"><p>To illustrate a more complex response with nested objects,
+ask Savant for item 14661 from the Wesnoth project's bug tracker:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>=&gt; {"query":"value", "projects":"wesnoth", "trackers":"Bugs", "id":14661}
+
+&lt;= {"query":"value", "projects":"wesnoth", "trackers":"Bugs", "id":14661,
+    "value":{"class":"Item", "id":14661,
+             "summary":"Right-clicking during a [message] causes terrain to overwrite message",
+             "category":"Bug", "priority":3, "severity:2", "status":"None",
+             "assigned_to":"mordante", "discussion_lock":True,
+             "platform="Linux", "item_group":"Graphics", "open":True,
+             "release":"1.7.6+svn r39137",
+             "comments:[
+                        {"class":"Comment", "id":1,
+                         "submitter":"ai0867",
+                         "date":"2009-10-6T23:22:00",
+                         "text":"Steps to reproduce:
+-Start Legend of Wesmere, scenario 9
+-Click through the saurian dialogue until a unit on the player's side starts talking
+-Right click anywhere
+-Notice that the selected unit's hex and surrounding hexes have been refreshed, overwriting the message dialog
+
+All that's actually needed is for the active unit to be covered by the message dialog, so the redrawing of the terrain interferes with it."}
+    ]}}</tt></pre>
+</div></div>
+<div class="para"><p>Observe that every subobject in this piece of JSON is a
+self-describing unit with its own class tag.  This is quite
+deliberate.</p></div>
+<div class="para"><p>There is a reason the queries written down so far have "get":"value"
+in them.  Queries could be used to get and set other things as well:</p></div>
+<div class="para"><p>Ask Savant for the list of keys in the Wesnoth project's trackers
+dictionary:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>=&gt; {"get":"keys", "projects":"wesnoth", "attribute":"trackers"}
+
+&lt;= {"get":"keys", "projects":"wesnoth", "attribute":"trackers"}
+       "value":["Bugs", "Tasks", "Patches"]}</tt></pre>
+</div></div>
+<div class="para"><p>As before, we first narrow the search space to Wesnoth.  But there are
+no more specifiers that take us into subobjects. Instead, "attribute":
+"trackers" says we want to look not at an individual tracker but at
+the dictionary-valued tracker attribute. The "get:keys" query
+would throw an error if this weren't a dictionary; since it is, it
+returns the key set.</p></div>
+<div class="para"><p>Ask Savant what the legal values for a bug category are in the Wesnoth
+project:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>=&gt; {"get":"vocabulary", "projects":"wesnoth",
+       "object":"Item", "attribute":"category"}
+
+&lt;= {"get":"vocabulary", "project":"wesnoth",
+       "object":"Item", "attribute":"category",
+       "value":["Bug", "Feature Request"]}</tt></pre>
+</div></div>
+<div class="para"><p>Instead, the "object" attribute says we want to look at Wesnoth's
+local specialization of the Item object.  The "attribute" object then says
+we're asking about its "category" member, The "get:vocabulary" query
+would throw an error if this weren't a controlled-vocabulary field;
+since it is, it returns the vocabulary list.</p></div>
+<div class="para"><p>The point of these latter queries is so clients can check their
+assumptions about legal values before setting them.  There will,
+of course, be corresponding "set" queries.</p></div>
+</div>
+<h2 id="_architecture_and_implementation_of_the_savant_daemon">Architecture and Implementation of the Savant daemon</h2>
+<div class="sectionbody">
+<div class="para"><p>The daemon will have three main components: a front end,
+a language interpreter, and a back end.</p></div>
+<div class="para"><p>The front end's job will be folding and unfolding messages. It
+will accept incoming RFC-822/MIME/JSON and turn it into
+internal structures corresponding to the JSON.  It will fiold
+messages going in the other direction, moving blobs to
+attachments.  It will check message authentication.  It will
+track whether the request entered by email or the command port
+and direct responses appropriately.</p></div>
+<div class="para"><p>The back end will be a collection of object interfaces to hosting
+subsystems.  The single most important object will be the SQL
+interface.  Another object will talk to a Mailman instance. More
+objects may be added as Savant capabilities improve.</p></div>
+<div class="para"><p>The language interpreter will interpret incoming unfolded requests
+passed to it by the front end, call the back end as needed to query or
+change system state, and generate a response to be passed back to the
+front end for folding and dispatch.</p></div>
+<div class="para"><p>Unless someone makes an overwhelmingly convincing argument against
+it, I intend to write the Savant daemon in Python. Here is the
+rationale:</p></div>
+<div class="olist"><ol>
+<li>
+<p>
+As already noted, JSON and Python are well-matched, making the
+folding and unfolding operations easier and increasing the
+transparency of the system.
+</p>
+</li>
+<li>
+<p>
+Standard Python library classes - email, json, and smtp in
+particular - will supply much of the front-end plumbing. It may be
+possible to use Twisted[http://twistedmatrix.com/] to avoid
+hand-rolling most of the daemon framework.
+</p>
+</li>
+</ol></div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2009-11-04 11:13:08 EDT
+</div>
+</div>
+</body>
+</html>

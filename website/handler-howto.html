@@ -1,0 +1,799 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.2.7" />
+<style type="text/css">
+/* Debug borders */
+p, li, dt, dd, div, pre, h1, h2, h3, h4, h5, h6 {
+/*
+  border: 1px solid red;
+*/
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+tt {
+  color: navy;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  font-family: sans-serif;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+
+div.sectionbody {
+  font-family: serif;
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+span#author {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+span#email {
+}
+span#revision {
+  font-family: sans-serif;
+}
+
+div#footer {
+  font-family: sans-serif;
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+div#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+div#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+div#preamble,
+div.tableblock, div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-right: 10%;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+
+div.listingblock {
+  margin-right: 0%;
+}
+div.listingblock > div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock {
+  padding-left: 2.0em;
+}
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock {
+  padding-left: 2.0em;
+}
+div.verseblock > div.content {
+  white-space: pre;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 2px solid silver;
+}
+
+div.exampleblock > div.content {
+  border-left: 2px solid silver;
+  padding: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+div.imageblock img { border: 1px solid silver; }
+span.image img { border-style: none; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+div.olist > ol {
+  list-style-type: decimal;
+}
+div.olist2 > ol {
+  list-style-type: lower-alpha;
+}
+
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+tfoot {
+  font-weight: bold;
+}
+
+div.hlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hlist td {
+  padding-bottom: 15px;
+}
+td.hlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+}
+td.hlist2 {
+  vertical-align: top;
+}
+
+@media print {
+  div#footer-badges { display: none; }
+}
+
+div#toctitle {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+/* Workarounds for IE6's broken and incomplete CSS2. */
+
+div.sidebar-content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+div.sidebar-title, div.image-title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-top: 0.0em;
+  margin-bottom: 0.5em;
+}
+
+div.listingblock div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock-attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock-content {
+  white-space: pre;
+}
+div.verseblock-attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+
+div.exampleblock-content {
+  border-left: 2px solid silver;
+  padding-left: 0.5em;
+}
+
+/* IE6 sets dynamically generated links as visited. */
+div#toc a:visited { color: blue; }
+
+/* Because IE6 child selector is broken. */
+div.olist2 ol {
+  list-style-type: lower-alpha;
+}
+div.olist2 div.olist ol {
+  list-style-type: decimal;
+}
+</style>
+<title>How To Write A ForgePlucker Handler Class ==</title>
+</head>
+<body>
+<div id="header">
+<h1>How To Write A ForgePlucker Handler Class ==</h1>
+<span id="author">Eric S. Raymond</span><br />
+<span id="email"><tt>&lt;<a href="mailto:esr@thyrsus.com">esr@thyrsus.com</a>&gt;</tt></span><br />
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="para"><p>Forgeplucker is a web-scraper.  It pulls project data out of forge
+sites through the same HTML intercaces human beings use.  Therefore,
+for each distinct forge type, it needs a handler class to tell it
+how to extract data from that forge. This document explains how to
+write a handler class.</p></div>
+<div class="para"><p>Note that to test a handler module, you will need to have developer
+access to a project on the target site. To test the bug-plucking logic
+you will need to be authorized as a bugtracker technician, able to
+modify bug entries. This is not because the program actually modifies
+them, but because it relies on parsing input form elements in the
+bug detail pages.  To test the (not yt written) logic for eztacting
+project member permissions,  you will need to be a project
+administrator.</p></div>
+</div>
+</div>
+<h2 id="_defining_the_handler">Defining the Handler</h2>
+<div class="sectionbody">
+<div class="para"><p>Begin by declaring a new class for your forge type and adding it to
+the <em>handlers</em> variable.  If it is associated with a well-known
+domain address, add that association to the  <em>site_to_type</em> dictionary.</p></div>
+<div class="para"><p>Your handler should inherit from the GenericForge class, which will
+supply its logic skeleton and various default methods that often work for
+forge systems descended from SourceForge.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>
+class FooForge(GenericForge):
+    "Handler class for forge sites running the FooForge hosting suite."
+    pass</tt></pre>
+</div></div>
+<div class="para"><p>The <em>pass</em> is a placeholderr statement; as written, our class does not yet have
+real methods or members and is an exaxct clone of GenericForhe.</p></div>
+</div>
+<h2 id="_logging_in">Logging In</h2>
+<div class="sectionbody">
+<div class="para"><p>One of these methods FooForge will inherit is <em>login_url()</em>.  The
+GenericForge version assumes that the site login form is at
+"http://%s/account/login.php", where %s gets the sitename substituted;
+this often works without modification. If the login page as at a
+different location on your forge system, you will have to write a
+login_url() method for you handler to override the one from
+GenericForge, but this is unusual.</p></div>
+<div class="para"><p>The first method you are likely to actually have to write will be be the
+site login method, usually something like this:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>
+class FooForge(GenericForge):
+    "Handler class for forge sites running the FooForge hosting suite."
+    def login(self, username, password):
+        response = GenericForge.login(self, {
+            'form_loginname':username,
+            'form_pw':password,
+            'stay_in_ssl':1,
+            'login':'Login With SSL'},
+            "Personal Page")</tt></pre>
+</div></div>
+<div class="para"><p>You'll need to look at the login page source to see what form elements
+it actually requires. You'll also need to change "Personal Page" to a
+string that reliably occurs on the page you get on successful login,
+and does <strong>not</strong> occur on the page returned by an unsuccessful login.
+This is how your handler robot will tell whether it has entered the
+site properly and can proceed to fetch data.  GenericForge will take
+care of handling authentication cookies for your session once your
+handler has logged in.</p></div>
+<div class="para"><p>I find the Firefox LiveHeaders extension useful for debugging these
+methods.  It's easy to miss a required form element in the visual
+clutter of a login page's source, but with LiveHeaders, you can snoop
+the transaction to see what a successful login through Firefix
+is actually sending.</p></div>
+</div>
+<h2 id="_getting_the_project_id">Getting the Project ID</h2>
+<div class="sectionbody">
+<div class="para"><p>Projects on a forge system has a "Unix name" which is a legal Unix
+directory segment, conventionally an abbreviated name of the project
+in all-lowercase letters.  This name is used to generate path names
+for files and CGI scripts associated with the project.  On most
+modern forge systems, this Unix name identifies the project
+for all purposes.</p></div>
+<div class="para"><p>On forge systems descended from older SourceForge versions, each
+project has a second internal project ID that is all numeric and
+not related to the Unix name in any obvious way.  If that ID exists,
+it has to be used rather than the Unix name in generating various
+kinds of URL into the site.</p></div>
+<div class="para"><p>If you find one of these older systems we don't already support,
+you'll have to write logic to get the numeric project ID from the Unix
+name, one, just after you log in.  For an example of how this is done,
+see the method numid_from_name() in the Berlios handler.</p></div>
+<div class="para"><p>In other mrethods you will need to use project Unix name or project
+numeric ID as appropriate. In thre rest of this document, we'll assume
+that your forge stem identifies projects in the modern style requiring
+Unix name only; adjust as needed.</p></div>
+</div>
+<h2 id="_extracting_tracker_state">Extracting Tracker State</h2>
+<div class="sectionbody">
+<div class="para"><p>The first thing you'll want to do is write logic to extract the
+project's issue-tracker state.</p></div>
+<div class="para"><p>In order to write the code to do this, you need to know what
+GenericForge does to fetch tracker state.  For each tracker, it first
+tries to fetch an index page listing artifact IDs. If there are more IDs
+than fit on the first index page, (usually this means <em>more than 50</em>)
+it fetches the next index page and repeats.</p></div>
+<div class="para"><p>Once it has the entire list of artifact IDs, it then fetches the detail
+page for each ID on the page and parses out the artifact information on
+that.</p></div>
+<div class="para"><p>The code for doing all these things lives in tracker classlets, little
+auxiliary classes visible only from within your forge handler.  There
+will be one classlet for each tracker type the forge supports; a
+typical type set might include "bugs", "features", "support",
+"patches", and "tasks".  You will probably also want to write a base
+Tracker classlet for the others to inherit from; on well-designed
+forges most of the logic will live there, with only trivial variations
+in the derived ones.</p></div>
+<div class="para"><p>The most effective way to understand how tracker classlets work is
+to look at a working one.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>    class Tracker:
+        "Generic tracker classlet for Savane."
+        def __init__(self, parent):
+            self.parent = parent
+            self.optional = True
+            self.chunksize = 50
+            self.zerostring = "No matching items found"
+            self.artifactid_re = r'&lt;a href="\?([0-9]+)"&gt;'
+            # This may yield anchor markup around the submitter name.
+            # Sometimes it's present, if the submitter is a known user
+            self.submitter_re = r'Submitted by:&amp;nbsp;&lt;/td&gt;\s*&lt;td[^&gt;]*&gt;(&lt;a[^&gt;]*&gt;[^&lt;]*&lt;/a&gt;|[^&lt;]+)&lt;/td&gt;'
+            self.date_re = r'Submitted on:[^&lt;]*&lt;/td&gt;\s*&lt;td[^&gt;]*&gt;([^&lt;]*)&lt;/td&gt;'
+            self.ignore = ('canned_response',
+                           'comment_type_id',
+                           'depends_search_only_artifact',
+                           'depends_search_only_project',
+                           'reassign_change_artifact',
+                           "add_cc",
+                           "cc_comment",
+                           "new_vote")</tt></pre>
+</div></div>
+<div class="para"><p>The tracker classlet needs a reference to the owning forge handler
+class. That's what self.parent is.</p></div>
+<div class="para"><p>On some forge systems, all projects always have all tracker types. On
+others, the set of trackers is configurable by project administrators.
+If the <em>optional</em> member is False, treat failure to fetch an index
+page for this tracker as a fatal error. If it's true, simply skip this
+tracker when it's missing.</p></div>
+<div class="para"><p>The chunksize member is the expected number of bugs per index page.
+It's used in computing URLs for index page fetches.</p></div>
+<div class="para"><p>Some forges have a recognizable string that means a tracker index is
+empty.  This is good to know, because if we have such a <em>zerostring</em>
+entry, and it's not on the page, and we still count no artifacts, we
+can throw an error.  If this ever happens it will mean the site has
+changed its HTML generation enough that the bug-plucker won't work
+any more. If that happens, we want to fail noisily rather than
+returning a bogus empty dump.</p></div>
+<div class="para"><p>The <em>artifactid_re</em> member is the regular expression we use to mine bug
+ID numbers out of an index page.</p></div>
+<div class="para"><p>The <em>submitter_re</em> and <em>date_re</em> members are the regular expression we
+used to mine the artifact submitter and date out of an artifact detail page
+fetched by ID.</p></div>
+<div class="para"><p>To get the rest of the data about an artifact from its detail page,
+GenericForge does various kinds of parsing of the HTML.  One thing
+it looks for is the contents of form fields.  The <em>ignore</em> member
+is a list of the names of form fields to ignore.  In this example,
+all the names up to <em>reassign_change_artifact</em> belong to fields on
+auxiliary forms that control the forge interface rather than
+reflecting project data.  The later ones are for user entry fields
+for new data; they'll be empty in this case.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>        def access_denied(self, page, issue_id=None):
+            return issue_id is not None and re.search("This task has [0-9]+ encouragements? so far.", page)</tt></pre>
+</div></div>
+<div class="para"><p>The method for telling whether we failed to get tracker technician
+access to the project. Without this, we don't get the right form
+elements on detail pages to be able to parse out the data. This metod
+is called on index pages with issue_id=None and on detail pages with
+the error ID as argument; if it is ever True, the generic forge
+framework code will throw an access-denied error.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>        def has_next_page(self, page):
+            m = re.search("([0-9]+) matching items - Items [0-9]+ to ([0-9]+)", page)
+            if not m:
+                self.parent.error("missing item count header")
+            else:
+                return int(m.group(1)) &gt; int(m.group(2))</tt></pre>
+</div></div>
+<div class="para"><p>The method for checking whether or not there's a next page.  Observe
+that it throws an error if it doesn't see what it's expecting.  In order
+not to get spurious data, it's vest when our web-scraping methhods
+have lots and lots of sanity checks, and fail loudly when one
+doesn't pass.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>        def chunkfetcher(self, offset):
+            "Get a tracker index page - all artifact IDs, open and closed.."
+            return "%s/index.php?go_report=Apply&amp;group=%s&amp;func=browse&amp;set=custom&amp;chunksz=50&amp;offset=%d" % (self.type, self.parent.project_name, offset)
+        def detailfetcher(self, artifactid):
+            "Generate a detail URL for the specified artifact ID."
+            return "%s/index.php?%d" % (self.type, artifactid)</tt></pre>
+</div></div>
+<div class="para"><p>Generate the URLs to get index pages and artifact detail pages.
+Note that the URLs generated are local; the GenericForge methods will
+add the sitename and service prefix.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>        def narrow(self, text):
+            "Get the section of text containing editable elements."
+            return self.parent.skipspan(text, "form", 1)</tt></pre>
+</div></div>
+<div class="para"><p>Now we get to the more difficult parts. First, the <em>narrow()</em> method
+gets the part of the webpage that is interesting for data-extraction
+purposes.  This will be an HTML &lt;FORM&gt; element, often but not
+necessarily the second one in sequence. (On many systems there will be
+an earlier form containing a site search box, which is rendered as
+part of a sidebar.)</p></div>
+<div class="para"><p>Once the right form has been extracted, there's a lot of data that the
+GenericForge code can extract automatically just by looking at
+&lt;SELECT&gt; elements and text &lt;INPUT&gt; boxes.</p></div>
+<div class="para"><p>The artifact's Open/Closed status will do for an example.  Because we
+logged in with tracker-technician credentials, the Open/Closed status
+is presented as a drop-down menu generated by a select.  By looking
+for the &lt;SELECT&gt;, we avoid having to parse prsentation-level tag soup.
+As a side benefit, looking at the contained &lt;OPTION&gt; elements tells us
+not only the current value of the field, but all possible values.</p></div>
+<div class="para"><p>The most important thing we get from text &lt;INPUT&gt; elements is the
+artifact summary line.  If the project has custom metadata fields,  for
+tems, this part of the parse will pick them up as well.</p></div>
+<div class="para"><p>This is also when the <em>submitter_re</em> and <em>submitter_date</em> regexpa get
+applied to extract the submitter's name.  These aren't in form elements
+because they can't be modified after the artifact is created.</p></div>
+<div class="para"><p>Most of the forge-type-specific work of parsing datra out of a detail
+page goes in a method called <em>custom</em> which has to be custom-written
+for each forge type.  Here's the one for Savane.  It's responsible
+for parsing artifact comments (that part is handed iff to a helper),
+votes, and modification history.  Essentially, everything we can't
+extract automatically be looking at &lt;FORM&gt; elements.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>        def custom(self, contents, artifact):
+            artifact['comments'] = self.parent.parse_followups(contents)
+            artifact["attachments"] = []
+            for m in re.finditer(r'&lt;a href="([^"]*)"&gt;file #([0-9]+): &amp;nbsp;([^&lt;]*)&lt;/a&gt; added by &lt;a href="[^"]*"&gt;([^&lt;]*)&lt;/a&gt; &lt;span class="smaller"&gt;\((\w+) - ([^)]*)\)', contents):
+                filename = m.group(1)
+                fileid = m.group(2)
+                filename = m.group(3)
+                attacher = m.group(4)
+                size = m.group(5)
+                mimetype = m.group(6)
+                artifact["attachments"].append({
+                    "class":"ATTACHMENT",
+                    "filename": filename,
+                    "id": fileid,
+                    "attached_by": attacher,
+                    "size":size,
+                    "mimetype":mimetype,
+                    })
+            if ("No files currently attached" in contents) != (len(artifact["attachments"])==0):
+                self.parent.error("garbled file-attachment section, possible version-skew problem.")
+            artifact['votes'] = None
+            if "There is 1 vote so far." in contents:
+                artifact['votes'] = 0
+            else:
+                m = re.search("There are ([0-9]*) votes so far.", contents)
+                if m:
+                    artifact['votes'] = int(m.group(1))
+            if artifact['votes'] is None:
+                raise('cannot find a vote indication')
+            artifact["history"] = []
+            for (date, by, field, old, dummy, new) in self.parent.table_iter(contents,
+                                                                             "History",
+                                                                             6,
+                                                                             "history",
+                                                                             has_header=True):
+
+                # Savane leaves the Date and Changed-by fields blank
+                # (actually, containing &amp;nbsp;) when they represent
+                # the second or later field changes made at one time.
+                if date[-1].isdigit():
+                    date = self.parent.isodate(date)
+                elif date == '&amp;nbsp;':
+                    date = ''
+                if by == '&amp;nbsp;':
+                    by = ''
+                artifact["history"].append({"class":"EVENT",
+                                        'field': field,
+                                        'old': old,
+                                        'new': new,
+                                        'date':date,
+                                        'by': by})</tt></pre>
+</div></div>
+<div class="para"><p>It's very common for forge systems to structure sequences in output
+(such as sequences of comments, or modification histories) as tables
+A lot of the hard work in this implementation of <em>custom</em> gets done by
+helper functions that walk through tales with specific titles.</p></div>
+<div class="para"><p>Now let's look at the actual tracker classes.  Savane has s relatively
+well-defined user interface; the trackers all behave the same way,
+so users can form consistent behavioral expectations.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>    class BugTracker(Tracker):
+        def __init__(self, parent):
+            Savane.Tracker.__init__(self, parent)
+            self.type = "bugs"
+    class PatchTracker(Tracker):
+        def __init__(self, parent):
+            Savane.Tracker.__init__(self, parent)
+            self.type = "patch"
+    class TaskTracker(Tracker):
+        def __init__(self, parent):
+            Savane.Tracker.__init__(self, parent)
+            self.type = "task"
+    class SupportTracker(Tracker):
+        def __init__(self, parent):
+            Savane.Tracker.__init__(self, parent)
+            self.type = "support"</tt></pre>
+</div></div>
+<div class="para"><p>The <em>type</em> member will be used to name the tracker data in the
+output report.</p></div>
+<div class="para"><p>Now we'll look at the Savane handler class itself:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>    def __init__(self, host, project_name):
+        GenericForge.__init__(self, host, project_name);
+        self.host = host
+        self.project_name = project_name
+        self.verbosity = 0
+        self.trackers = [Savane.BugTracker(self),
+                         Savane.SupportTracker(self),
+                         Savane.TaskTracker(self),
+                         Savane.PatchTracker(self)]</tt></pre>
+</div></div>
+<div class="para"><p>The key thing here is instantiating the list of tracker objects.  The
+GenericForge code will walk through this list looking for data from
+each of them.</p></div>
+<div class="para"><p>Our next function canonicalizes dates into ISO 8601 form.  Other code
+calls this through the GenericForge method isodate(), which will catch
+format mismatch errors and convert them to ForgePlucker errors we can
+dispatch on. The code should be pretty self-explanatory.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>    @staticmethod
+    def canonicalize_date(date):
+        "Canonicalize Savane dates to ISO."
+        # SavaneCleanup dates will look like this: Fri 22 Jun 2001
+        # 09:54:07 AM UTC. The timezone is variable according to the
+        # user's preferences; sometimes SavaneCleanup omits the
+        # timezone. Beware that strptime(3) doesn't actually interpret
+        # %Z, it only barfs on bad values. So we have to do it.
+        #
+        # Savane dates may look like this: "Sun Jul 27 11:08:45 2008"
+        # (note the absence of timezone and that time and year are swapped)
+        # or like this: "Thursday 10/15/2009 at 06:40".
+        if date == '-':                 # Gna! sometimes generates these
+            return 'None'
+        if '/' in date:                 # Gna! date
+            t = time.strptime(date, "%A %m/%d/%y at %H:%M")
+        elif date[-1].isalpha():        # Savannah date with timezone
+            t = time.strptime(date, "%a %d %b %Y %H:%M:%S %p %Z")
+        else:                           # Savannah date without timezone
+            t = time.strptime(date, "%a %b %d %H:%M:%S %Y")
+        if "UTC" in date or "GMT" in date:
+            secs = calendar.timegm(t)   # struct time in UTC to secs since epoch
+        else:
+            secs = time.mktime(t)       # struct local time to secs since epoch
+        t = time.gmtime(secs)           # secs since epoch to struct UTC time
+        return time.strftime("%Y-%m-%dT%H:%M:%SZ", t)</tt></pre>
+</div></div>
+<div class="para"><p>Every forge handler needs a login method. The GenericForge method
+takes a dictionary of requirted login-form elements and a check
+string.  If the form response fails to contain the chreck string,
+the login failed and the GenericForge code will throw an error.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>    def login(self, username, password):
+        response = GenericForge.login(self, {
+            'uri':'/',
+            'form_loginname':username,
+            'form_pw':password,
+            'stay_in_ssl':1,
+            'brotherhood':1,
+            'login':'Login'}, "My Incoming Items")</tt></pre>
+</div></div>
+<div class="para"><p>Finally, the code for parsing comments on detail pages.  Older
+SourceForgebased systems distinguish between the original submission
+and other comments, presenting them slightly different.  Savane
+doesn't &#8212; the submission comment is just comment #0 in the sequence.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>    def parse_followups(self, contents):
+        "Parse followups out of a displayed page in a bug or patch tracker."
+        comments = []
+        # Look for the anchor Savane creates for the Discussion section.
+        begin = contents.find('href="#discussion"')
+        if begin == -1:
+            self.notify("no discussion")
+        else:
+            contents = contents[begin:].replace("&lt;br /&gt;", "&lt;br/&gt;")
+            # There's no decorative header element in this table.
+            for row in walk_table(contents):
+                try:
+                    # Savane comments have *two* column elents per comment,
+                    # one for date and text, the second for the user.
+                    (comment, submitter) = row
+                    date = comment.split("&lt;br/&gt;")[0]
+                    comment = "\n".join(comment.split("&lt;br/&gt;")[1:])
+                    # Submitter's name may have HTML markup in it.
+                    # But first toss everything after &lt;br/&gt;, it's image
+                    # cruft.
+                    submitter = submitter.split("&lt;br/&gt;")[0]
+                    submitter = dehtmlize(submitter)
+                    # Throw out everything past the terminating comma
+                    # If this leads to an ill-formed date, because somebody
+                    # moved the punctuation, isodate() should throw an error
+                    m = re.search("&lt;[^&gt;]+&gt;([^&lt;]+),", date)
+                    date = self.isodate(m.group(1))
+                    # Comment may have HTML in it. Do normal markup
+                    # stripping,but first deal with the funky way that
+                    # Savane emits paragraph delimiters.
+                    comment = comment.replace("\n\n", "\n")
+                    comment = comment.replace("\n&lt;/p&gt;\n&lt;p&gt;", "\n")
+                    comment = blocktext(dehtmlize(comment))
+                    # Stash the result.
+                    comments.append({"class":"COMMENT",
+                                     'submitter':submitter,
+                                     'date':date,
+                                     'comment':comment})
+                except ValueError:
+                    raise ForgePluckerException("mangled followup,")
+        return comments</tt></pre>
+</div></div>
+</div>
+<h2 id="_testing_your_handler_class">Testing Your Handler Class</h2>
+<div class="sectionbody">
+<div class="para"><p>To verify your handler class, you should either use an existing
+oroject on the target forge of which you are already a member, or
+create a new test project.  Some random project won't do, as you will
+need tracker technician access to extract bug state.  It's best if you
+can create a dedicated forgeplucker-test project in which you can
+manipulate and inspect the data as you like.</p></div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2009-11-04 11:13:09 EDT
+</div>
+</div>
+</body>
+</html>

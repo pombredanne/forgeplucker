@@ -1,0 +1,150 @@
+= ForgePlucker =
+
+ForgePlucker will be a project aimed at breaking open-source projects
+out of their data jails, one step at a time.  A central goal will be to produce
+useful data-mining and content-mirroring tools at every stage,
+gradually integrating them into smarter robots as we gain knowledge of
+the domain.
+
+ForgePlucker will write tools that rely only on the publicly exposed
+interfaces of forge systems.  We do not expect to be able to run code
+on forge servers or get direct access to databases, if only because
+many forges would consider the security risks of allowing such access
+unacceptable.
+
+The end goal of ForgePlucker will be a tool that can recover the state
+of a project from any of the commonly used forge systems, and dump
+that state to a standardized representation that is static, textual
+and self-describing. But we will deliberately not try to specify this
+format up front; instead, we will collect experience by capturing data
+from the most commonly used forge systems into forge-type-specific
+dump formats, unifying them at a later stage.
+
+Beyond ForgePlucker lies the goal of using these snapshots for import
+to forges.  But that can happen only after experiance has taught us
+how to jailbreak the data out of them.
+
+The name "ForgePlucker" is bicapitalized, violating normal hacker
+custom, as a tip of the hat to the original SourceForge - which,
+though afflicted with bad architectural decisions that have made this
+project necessary ten years later, was nevertheless a conceptual
+breakthrough in how we coordinate programming work.
+
+== Starting Small, Staying Grounded ==
+
+The project plan is conditioned on the fact that while there are many
+forges out there, there are relatively few forge types.  Furthermore,
+the most commonly used family of forges (those descended from early
+SourceForge) has rigidities in its underlying architecture that mean
+not much has actually changed in the decade since SourceForge.
+Accordingly the problem of jailbreaking these sites, while not easy,
+is not as forbidding as it might at first appear
+
+We will chose a set of supported forge types to give the best tradeoff
+we can manage between userbase coverage and implementation pain. At
+each stage, every piece of code delivered will solve a real
+data-jailing problem with a real forge.
+
+Later in the project, some forges may choose to cooperate with it by
+providing relatively painless export features.  We'll use those when
+they're available but but never, *ever* wait on them.
+
+=== Phase 1a: Individual BugPluckers ===
+
+The first step on the road to ForgePlucker has already been taken -
+the demonstration code can mine all items from trackers on Savane (the
+forge system used for Savannah and Gna!)  and Berlios, an instance of
+the widely-deployed GForge/FusionForge family.
+
+Despite the fact that these sites run different forge system, the
+logic for mining them is mostly shared - they're subclasses of a
+GenericForge class that captures the invariants of this class of
+systems.
+
+In the rest of phase 1a we'll make the coverage of these
+systems more complete and add several other forge types,
+certainly including the original SourceForge and probably
+Canonical's Launchpad as well.
+
+=== Phase 1b: A Smarter BugPlucker, and One Dump Format.
+
+Lather, rinse, repeat.  By the time we have done three or four of
+these we will know enough to reconcile the dump formats -- and merge
+the code into a bugplucker robot that can be given a URL to a tracker
+and figure out the right thing to do.
+
+=== Phase 2: Mailing Lists ===
+
+The principal goal of Phase Two will be to write a robot that can
+extract the state of MailMan lists through public interfaces.  This
+list manager is so widely used in forges that being able to pluck from
+it may reduce the rest of the problem to statistical noise.
+
+If there are other mailing-list managers out there with significant
+usage, we'll figure out how to pluck data from them, too.
+
+The deliverable of this phase will be a ListPlucker robot that, given
+the URL of the administrator page for a mailing list manager instance
+and the correct credentials, can extract all the state data for the
+list - recipient addresses and options, list options, and archives.
+
+== Phase Three: RepoPlucker ==
+
+The goal of Phase 3 will be lossless capture of repostory data through
+forge public interfaces.  This will be trivial for distributed VCSes
+like hg, git, and bzr; in practice, it reduces to writing a history 
+grabber that can mine SVN and CVS repositories.
+
+== Phase 4: ProjectPlucker ==
+
+Once we have BugPlucker, ListPlucker, MailPlucker, and common dump
+formats for all of these, it will be time to amalgamate them into
+ProjectPlucker.  ProjectPlucker will need to capture at least two
+additional things from projects on each forge type: the roles table
+describing the capabilities of each member, and the state of whatever
+static webspace is associated with the project.
+
+As in previous phases, we'll write custom pluckers and custom
+dumpfile types for individual forges until we know enough to unify
+them.  The deliverable of Phase Four will be a robot that can produce
+a static backup dump of the entire state of any project on a 
+supported forge type.
+
+== Phase 5: Envoi ==
+
+In phase 5, we begin wriing tools to reanimate a state dump into a live
+project.  This may involve writing a new forge system, or bolting
+import facilities onto cooperative existing forges.
+
+== Additional ==
+
+The preceding has been written as if the goal of the tools will
+always be one big static dump.  That was an oversimplification; for
+several reasons, beginning with bandwidth efficiency, it would be very
+desirable for pluckers to be able to read in a previously captured
+state and do an incremental fetch to update it. This could prove
+difficult, as forges tend to be spotty about exposing modification
+dates.  But with a complete state dump in hand, it would at least be
+possible to report on all items created since the last fetch time.
+
+Much later, late in phase 5, incremental updates may turn into the basis
+for dynamic synchronization between replicated live instances of a
+project, or into a facility for serving an RSS-like feed to
+subscribers as a project changes state.
+
+This goal puts some constraints on the dump format.  It means that 
+not only does the project state dump have to be self-describing as an
+entire collection, each lower-level piece (tracker state,
+mailing-list sate, repo state, webspace state, roles table) needs to
+be a self-describing unit on its own.
+
+== Tools and Basics ==
+
+Python (and perhaps PyCurl) for building the plucker 'bots.
+
+JSON as a metaformat for the dumpfiles, because it's better than XML for
+stuff that is mostly attribute-value pairs, and no worse than XML
+for large binary blobs.
+
+asciidoc for documentation and web pages, because it's beautifully
+simple.

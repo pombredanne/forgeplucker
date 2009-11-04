@@ -1,0 +1,553 @@
+= Forge Ontology =
+Eric S. Raymond <esr@thyrsus.com>
+Version 1.1
+
+== Scope of this document ==
+
+Forges are software-project hosting systems.  In order to support
+cross-forge migration of projects, a common representation and
+ontology of project states will be required.  This document
+informally constructs such an antology and describes how the
+representations of different forge systems map to it.
+
+The ontology described here is not yet complete.  It is being
+developed in conjunction with forgeplucker, which is as
+yet only capable of extracting tracker state from forges.  
+
+To motivate this, it is worth bearing in mind the forgeplucker goal: 
+extraction of a complete enough sate that it could in principle
+be uploaded into another forge site and create a running project.
+
+== CFO, the Common Forge Ontology ==
+
+Ontology terms are in all caps.  Terms suffixed with ? 
+are placeholders intended for further development. Comma-separated
+lists enclosed in [] are controlled vocabularies.
+
+=== IDENTITY objects ===
+
+An IDENTITY object identifies a person. An IDENTITY has the following
+parts:
+
+NICK:: Nickname of a developer, usurally the person part of an email address  
+EMAIL:: String that is the fully qualified email address of a person
+NAME:: String that is the name of a person.
+
+The NICK may be the special value None representing an anonymous or
+unspecified user, in which case the NAME and EMAIL parts are not used.
+
+=== PULL-INTERVAL OBJECTS ===
+
+A PULL-INTERVAL object represents the time interval associated with
+the capture of project state or some portion of it.  The capture
+is guaranteed to contain all changes prior to the capture start date, and
+no changes after the capture end date.
+
+A PULL-INTERVAL has the following parts:
+
+- CAPTURE-START:: Timestamp, when the caprure of the parent object began
+- CAPTURE-END:: Timestamp, when the capture of the parent object completed
+
+=== RELEASE objects and subobjects ===
+
+A RELEASE is product files and metadata describing a software release.  It
+has the foilowing parts:
+
+- ID:: A string naming the release
+- DATE:: Date of the release
+- DESCRIPTION:: Text of release notes
+- PRODUCT_LIST:: One or more PRODUCT objects
+
+A PRODUCT is a shippable form of a release, or release component.
+Possible PRODUCTs include source tarballs, RPMs, Debian packages, or
+SHA1 checksum files.  PRODUCT objects have the following parts:
+
+- FILENAME:: Product filename
+- DESCRIPTION:: Optional one-line description
+- MIMETYPE:: MIME type
+- ARCHITECTURE:: Tag for the product's target architecture 
+- TYPE:: Controlled vocabulary describing the project resource type
+
+=== PROJECT-STATE OBJECTS ===
+
+A PROJECT-STATE object is intended to capture the entire state of
+a project for export and re-import.
+
+A PROJECT-STATE has the following parts:
+
+SHORTNAME:: a project identification string that is a legal Unix path segment.
+LONGNAME:: a name for human use.
+DESCRIPTION:: a text description of the project.
+PRIVILEGE-LIST:: List of PRIVILEGE objects with the following parts.
+- IDENTITY: Identity of a project number; may not be Anonymous
+- Zero or more CAPABILITY? tokens.
+SUBSYSTEM-LIST:: One or more SUBSYSTEM parts, which may be one of the following:
+- REPOSITORY with the following parts.
+* NAME:: a string identifying the repository.
+* TYPE:: a string identifying the version control system.
+* CONTENT:: a file or directory.
+- LISTS:: Zero or more MAILING-LIST? objects
+- WEBSPACE:: a directory.
+- RELEASE-LIST:: Zero or more RELEASE objects.
+- TRACKER:: Refer to the TRACKER definition below.
+- CAPTURED:: A PULL-INTERVAL for the project state capture.
+
+Most forges limit projects to one REPOSITORY and one WEBSPACE.
+This ontology supports more than one repository because that may
+be useful for modeling repo conversions.
+
+=== TRACKER objects and subobjects ===
+
+A TRACKER object is intended to contain the entire state of one of a
+project's issue trackers.  It has several subobject types.  All but
+ARTIFACT, the central and most complex one, are described here.  ARTIFACT
+is described in the next section.
+
+In the descriptions below, a 'nick' is the site-local username of a
+project developer.
+
+A TRACKER has the following parts:
+
+TYPE:: One of [Bugs, Features, Support, Patches, Tasks].
+CAPTURED:: A PULL-INTERVAL for the tracker capture.
+ARTIFACT-LIST:: One or more ARTIFACT objects.  Refer to the ARTIFACT 
+                definition below
+RANGES:: A map from ARTIFACT slots to lists of possible string values
+
+A COMMENT has the collowing parts:
+
+SUBMITTER:: IDENTITY, the submitting user.
+DATE:: A timestamp.
+TEXT:: Comment text.
+
+A FIELDCHANGE has the following parts
+
+BY:: Nick of developer making a change to field value (not an IDENTITY)
+DATE:: A timestamp.
+FIELD:: An ARTIFACT fieldname
+OLD:: The value before the change
+NEW:: The value after the change
+
+An ATTACHMENT has the following parts
+
+URL:: Where the file can be fetched
+FILENAME:: A string, the name of the file as attached (optional)
+DATE:: Date of attachment (optional)
+ID:: A string that is a file attachment ID, conventionally numeric
+BY:: IDENTITY
+DESCRIPTION:: One-line description of file contents (optional)
+
+A SUBSCRIBER has the following parts:
+
+CC-TO:: Email address
+COMMENT:: Why this person is subscribed
+
+=== ARTIFACT objects ===
+
+The ARTIFACT object is the most complex and variable one in the entuire
+ontology.  It is described by several tables.
+
+The Internal Fieldname table maps slots into the ontology to the form
+attributes used on different forge system.  The 'Savane' column
+describes both Savane and Savane-Cleanup.  A '-' value means the slot
+is unsupported on that system. If the entry is 'Unnamed', the
+attribute is supported but not editable in the artifact detail form, and
+must be scraped from presentation-level HTML rather than parsing
+INPUT elements.  Otherwise the entry names the form parameter that
+names this slot.
+
+.Internal fieldname
+[grid="all"]
+`----------------`-------------`-------------`-----------------
+CFO field        Berlios       SourceForge   Savane           
+---------------------------------------------------------------
+ATTACHMENT-LIST      -         Unnamed       Unnamed         
+ASSIGNED-TO      assigned_to   assigned_to   assigned_to     
+BUG-GROUP        bug_group_id  bug_group_id  bug_group_id    
+CATEGORY         category_id   category_id   category_id
+COMMENT-LIST     Unnamed       Unnamed       Unnamed
+COMP-VERSION     -             -             category_version*
+DATE             Unnamed       Unnamed       Unnamed     
+DEPENDENTS       Unnamed       Unnamed       Unnamed         
+DISCUSSION-LOCK  -             -             discussion_lock 
+EFFORT           -             -             effort
+FIX-RELEASE      -             -             fix_release*
+HISTORY          Unnamed       Unnamed       Unnamed         
+ID               Unnamed       Unnamed       Unnamed
+KEYWORDS         -             -             keywords
+ORIG_EMAIL	 -             -             Unnamed
+ORIG_NAME        -             -             originator_name
+ORIG_PHONE       -             -             originator_phone
+PATCH		 patch         -             -
+PERCENT          -             -             percent_complete
+PLAN-RELEASE     -             -             plan_release*
+PLATFORM         -             -             platform_version_id
+PRIORITY         priority      priority      priority        
+PRIVACY          -             -             privacy
+RELEASE          -             -             release*     
+REPRODUCIBILITY  -             -             reproducibility_id
+RESOLUTION       resolution_id resolution_id resolution_id   
+SEVERITY         -             -             severity        
+SIZE             -             -             size_id
+STATUS           status_id     status_id     status_id
+SUBMITTER        Unnamed       Unnamed       Unnamed  
+SUBSCRIBER       -             Unnamed       Unnamed
+SUMMARY          Unnamed       Unnamed       summary         
+VOTES            -             -             Unnamed
+---------------------------------------------------------------
+
+Under Savane, slots with starred field names can be defined in one of
+two ways: as a free-text field. or as a select box with an
+administrator-defined controlled vocabulary.  In the latter case, the
+fieldmame gets an '_id' suffix.
+
+The 'Intended Semantics' table describes the intended semantics of each slot.
+
+.Intended Semantics
+[grid="all"]
+`---------------`-------------------------------------------------
+CFO field       Meaning
+------------------------------------------------------------------
+ATTACHMENT-LIST List of ATTACHMENT objects
+ASSIGNED-TO     Nick of the developer responsible
+BUG-GROUP       Controlled by administrator
+CATEGORY        Controlled by administrator
+CC-LIST         List of subscribers to be notified on changes
+COMMENT-LIST    User comments on the artifact
+COMP-VERSION    Version of system component impacted by artifact 
+DATE            Original submission date of the artifact
+DEPENDENTS      List of IDs of bugs that depend on this one
+DISCUSSION_LOCK Whether or no discussion is closed on this bug
+EFFORT          Estimated number of hours to address
+FIX-RELEASE     Release in which the artifact was actually fixed 
+HISTORY         Change history of the bug record
+ID              A string-valued bug ID, conventionally numeric in form.
+KEYWORDS        Comma-separated tags associated with the artifact
+ORIG_EMAIL      Originator's email address (if different from Submitter)
+ORIG_NAME       Originator's name (if different from Submitter)
+ORIG_PHONE      Originator's phone number
+PATCH           Editable text data
+PERCENT         Percentage completion of task
+PLAN-RELEASE    Planned release for this artifact to be
+PLATFORM        Platform (operating system) affected by artifact
+PRIORITY        How quickly the artifact should be handled
+PRIVACY         Public or private
+RELEASE         Release impacted by the artifact
+REPRODUCIBILITY How reproducible is this bug?
+RESOLUTION      Resolution status of the bug 
+SEVERITY        Impact on the system
+SIZE            Estimated size of code to be added or changed
+STATUS          Open/Closed status of the bug
+SUBMITTER       Identity of the bug submitter (string or IDENTITY)
+SUMMARY         One-line summary of the bug
+VOTES           User votes for this bug
+------------------------------------------------------------------
+
+On Savane, the "PLATFORM" field is actually labeled "Operating System".
+
+The Field Type table describes what kind of data each slot contains.
+
+.Field type
+[grid="all"]
+`---------------`-----------------------------
+CFO field       Data type
+----------------------------------------------
+ATTACHMENT-LIST List of ATTACHMENT objects
+ASSIGNED-TO     IDENTITY
+BUG-GROUP       Controlled by administrator
+CATEGORY        Controlled by administrator
+CC-LIST         List of SUBSCRIBER objects
+COMMENT-LIST    One or more COMMENT objects
+COMP_VERSION    Controlled by administrator
+DATE            Timestamp
+DEPENDENTS      List of IDs
+DISCUSSION_LOCK Enumerated: Locked, Unlocked
+EFFORT          String interpreted as numeric
+FIX-RELEASE     Controlled or string
+HISTORY         List of FIELDCHANGE objects
+ID              Sequence number
+KEYWORDS        String
+ORIG_EMAIL      String
+ORIG_NAME       String
+PATCH           Text
+PLATFORM        Controlled by administrator
+PERCENT         String interpreted as numeric
+PLAN-RELEASE    Controlled or string
+PRIORITY        Enumerated
+PRIVACY         Enumerated
+RELEASE         Controlled or string
+REPRODUCIBILITY Enumerated
+RESOLUTION      Controlled by administrator
+SEVERITY        Enumerated
+SIZE            Enumerated
+STATUS          Controlled by administrator   
+SUBMITTER       IDENTITY
+SUMMARY         String text
+VOTES           String interpreted as numeric
+----------------------------------------------
+
+The following tables describe the default controlled vocabularies
+associated with each slot.  Starred fields can have possible values 
+added by the adminstrator.
+
+.Controlled Vocabularies - All Trackers
+[grid="all"]
+`---------------`-------------`-------------`---------------
+CFO field       Berlios       SourceForge   Savane          
+------------------------------------------------------------
+BUG-GROUP       None*         None*         None*
+CATEGORY        None*         None*         None*
+COMP-VERSION    -             -             None*
+PRIORITY        1 - Lowest    1 - Lowest    1 - Lowest
+                2             2             2
+                3             3             3
+                4             4             4
+                5 - Medium    5 - Medium    5 - Medium
+                6             6             6
+                7             7             7
+                8             8             8
+                9 - Highest   9 - Highest   9 - Highest
+PERCENT         -             -             0% 
+                                            10%
+                                            20%
+                                            30%
+                                            40%
+                                            50%
+                                            60%
+                                            70%
+                                            80%
+                                            90%
+                                            100%
+PLATFORM        -             -             None*
+                                            GNU/Linux
+                                            Microsoft Windows
+                                            *BSD
+                                            MacOS
+PRIVACY         -             -             Public
+                                            Private
+REPRODUCIBILITY                             None
+                                            Every Time
+                                            Intermittent
+                                            Once
+SEVERITY        -             -             1 - Wish
+                                            2 - Minor
+                                            3 - Normal
+                                            4 - Important
+                                            5 - Blocker
+                                            6 - Security
+SIZE                                        None
+                                            Low <30
+                                            Medium 30-200
+                                            High >200 
+------------------------------------------------------------
+
+The PERCENT value is encoded as the numeric string 1. 
+Other values are encoded without the percent.
+
+.Controlled Vocabularies - Bugs
+[grid="all"]
+`---------------`-------------`-------------`---------------
+CFO field       Berlios       SourceForge   Savane          
+------------------------------------------------------------
+STATUS          Open          Open          Open
+                Closed        Closed        Closed
+                              Deleted	    
+                              Pending	    
+RESOLUTION      None          None          None*
+                Fixed         Accepted      Fixed
+                Invalid       Duplicate     Invalid
+                Wont Fix      Fixed         Wont Fix
+                Later         Invalid       Postponed
+                Remind        Later         In Progress
+                Works For Me  Out of Date   Works For Me
+                Duplicate     Postponed     Duplicate
+                              Rejected      Confirmed
+                              Remind        Need Info
+                              Wont Fix      Ready For Test
+                              Works For Me  
+------------------------------------------------------------
+
+.Controlled vocabularies - Features
+[grid="all"]
+`---------------`-------------`-------------`---------------
+CFO field       Berlios       SourceForge   Savane          
+------------------------------------------------------------
+STATUS          Open          Open          Open
+                Closed        Closed        Closed
+                Deleted	      Deleted	    
+			      Pending	    
+RESOLUTION      -             None          None*
+                              Accepted      Fixed
+                              Duplicate     Wont Fix
+                              Fixed         Works For Me
+                              Invalid       Ready For Test
+                              Later         In Progress
+                              Out of Date   Postponed
+                              Postponed     Confirmed
+                              Rejected      Need Info
+                              Remind        Duplicate
+                              Wont Fix      Invalid
+                              Works For Me
+-----------------------------------------------------------
+-
+.Controlled vocabularies - Patches
+[grid="all"]
+`---------------`-------------`-------------`---------------
+CFO field       Berlios       SourceForge   Savane          
+------------------------------------------------------------
+STATUS          Open          Open          Open
+                Closed        Closed        Closed
+                Deleted       Deleted	    
+                              Pending	    
+RESOLUTION      -             None          None*
+                              Accepted      Done
+                              Duplicate     Wont Do
+                              Fixed         Works For Me
+                              Invalid       Ready For Test
+                              Later         In Progress
+                              Out of Date   Postponed
+                              Postponed     Need Info
+                              Rejected      Duplicate
+                              Remind        Invalid
+			      Wont Fix      
+                              Works For Me
+------------------------------------------------------------
+
+.Controlled vocabularies - Support
+[grid="all"]
+`---------------`-------------`-------------`---------------
+CFO field       Berlios       SourceForge   Savane          
+------------------------------------------------------------
+STATUS          Open          Open          Open
+                Closed        Closed        Closed
+                Deleted       Deleted	    
+RESOLUTION      -             Pending	    None*
+                              None          Done
+                              Accepted      Wont Do
+                              Duplicate     Works For Me
+                              Fixed         Ready For Test
+                              Invalid       In Progress
+                              Later         Confirmed
+                              Out of Date   Postponed
+                              Postponed     Need Info
+                              Rejected      Duplicate
+                              Remind        Invalid
+                              Wont Fix      
+                              Works For Me  
+------------------------------------------------------------
+
+.Controlled vocabularies - Tasks
+[grid="all"]
+`---------------`-------------`-------------`---------------
+CFO field       Berlios       SourceForge   Savane          
+------------------------------------------------------------
+STATUS          Open          -             Open
+                Closed        -             Closed
+RESOLUTION      -             -             None*
+                                	    Done
+                                            Cancelled
+                                            Works For Me
+                                            Ready For Test
+                                            In Progress
+                                            Postponed
+                                            Need Info
+------------------------------------------------------------
+
+Pending is a non-closed status in which development work is considered done,
+but some other work is needed (QA, documentation, etc.) The ideal workflow is
+Open -> Pending -> Closed. Of course, the real workflow is up to the
+developers.
+
+== Additional metadata not covered by the ontology ==
+
+Under Berlios and SourceForge, every tracker has a list of
+canned responses associated with it,
+
+SourceForge trackers have a set of preferences that should probably be
+considered part of project state.
+
+- Whether or not to allow posting by anonymous users
+- Whether or not closed artifacts should be reopened when submitter
+  attaches a new coment.
+- Timeouts associated with overdue and Pending status on SourceForge.
+- Canned texts to be shown on the artifact submission and tracker 
+  browse pages.
+- Hidden vs. visible preferences for all metadata other than ID and Summary.
+
+Under Savane, every modifiable ARTIFACT field has some additional
+attributes:
+
+- Whether it is optional, mandatory, or mandatory only if it was
+  presented to the submitter.
+- Who it is visible to (Project members, logged-in users, anonymous users)
+- Screen rank
+- Whether or not artifact changes are stored in the HISTORY list.
+
+Under Savane, it is also possible to selectively allow or disallow
+various transitions in enumerated and controlled values.
+
+Savane also allows the definition of up to 10 each of custom text
+areas and select boxes, and up to 5 customizable date fields.  These
+have fieldnames of the form *_custom. 
+
+== Incompatibilities ==
+
+Berlios and SourceForge lack many artifact fields found Savane and
+SavaneCleanup.
+
+The RESOLUTION slot is screen-labeled "Resolution" on Berlios, but
+"Status" on Savane.  The STATUS slot is labeled "Status:" on
+Berlios, but "Open/Closed" on Savane.
+
+The Berlios PATCH field could be imported to other systems as an
+ATTACHMENT object.
+
+Berlios and SourceForge have separate bug and feature trackers.
+Savane has no separate feature tracker; projects separate those by
+using the Bug Category or Bug Group field.
+
+Under SourceForge, there is no predefined Task tracker, but it is
+possible to create custom trackers that don't fit one of the named
+types.
+
+Savane ATTACHMENT objects lack the DESCRIPTION slot,  SourceForge
+ATTACHMENT objects lack MIMETYPE.
+
+SourceForge allows setting (in tracker preferences) the address of a
+commit list for new submissions, and its subscriptions have no
+explanation attached.  Savane allows setting a CC list for
+notification on all state changes, and each subscription can have an 
+explanatory comment.  The CFO SUBSCRIBER slot assumes Savane-like
+behavior which Berlios cannot support and SourceForge can only
+partially support.
+
+== Open Questions ==
+
+We need a definition of MAILING-LIST.
+
+What are the controlled vocabularies for PRODUCT::TYPE,
+PRODUCT::ARCHITECTURE, and CAPABILITY?
+
+There are other kinds of objects that might be considered part of
+a project state: blogs, wikis, and forums leap to mind.  Which of
+these should we try to capture?
+
+How much of the state described under "Additional metadata" should
+be brought into CFO?  Is there a principled distinction between "state
+of the project" and "state of the forge"?
+
+== Formalizing the ontology ==
+
+The PROJECT class is a pretty close match to DOAP.  We'll
+need an extension field cfo#captured.
+
+The IDENTITY class can be represented by FOAF.
+
+== Change History ==
+
+Version 1.0, 2009-10-24: Initial version.
+
+Version 1.1, 2009-10-24: Add CC-LIST tracker slot and subscriber
+object. Add RELEASE and PRODUCT objects.  Describe Pending status.
+ATTACHMENT object mutates some.  CC-LIST changes to SUBSCRIBER.
+NICK member added to IDENTITY.

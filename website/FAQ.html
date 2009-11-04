@@ -1,0 +1,425 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.2.7" />
+<style type="text/css">
+/* Debug borders */
+p, li, dt, dd, div, pre, h1, h2, h3, h4, h5, h6 {
+/*
+  border: 1px solid red;
+*/
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+tt {
+  color: navy;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  font-family: sans-serif;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+
+div.sectionbody {
+  font-family: serif;
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+span#author {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+span#email {
+}
+span#revision {
+  font-family: sans-serif;
+}
+
+div#footer {
+  font-family: sans-serif;
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+div#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+div#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+div#preamble,
+div.tableblock, div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-right: 10%;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+
+div.listingblock {
+  margin-right: 0%;
+}
+div.listingblock > div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock {
+  padding-left: 2.0em;
+}
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock {
+  padding-left: 2.0em;
+}
+div.verseblock > div.content {
+  white-space: pre;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 2px solid silver;
+}
+
+div.exampleblock > div.content {
+  border-left: 2px solid silver;
+  padding: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+div.imageblock img { border: 1px solid silver; }
+span.image img { border-style: none; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+div.olist > ol {
+  list-style-type: decimal;
+}
+div.olist2 > ol {
+  list-style-type: lower-alpha;
+}
+
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+tfoot {
+  font-weight: bold;
+}
+
+div.hlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hlist td {
+  padding-bottom: 15px;
+}
+td.hlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+}
+td.hlist2 {
+  vertical-align: top;
+}
+
+@media print {
+  div#footer-badges { display: none; }
+}
+
+div#toctitle {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+/* Workarounds for IE6's broken and incomplete CSS2. */
+
+div.sidebar-content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+div.sidebar-title, div.image-title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-top: 0.0em;
+  margin-bottom: 0.5em;
+}
+
+div.listingblock div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock-attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock-content {
+  white-space: pre;
+}
+div.verseblock-attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+
+div.exampleblock-content {
+  border-left: 2px solid silver;
+  padding-left: 0.5em;
+}
+
+/* IE6 sets dynamically generated links as visited. */
+div#toc a:visited { color: blue; }
+
+/* Because IE6 child selector is broken. */
+div.olist2 ol {
+  list-style-type: lower-alpha;
+}
+div.olist2 div.olist ol {
+  list-style-type: decimal;
+}
+</style>
+<title></title>
+</head>
+<body>
+<div id="header">
+</div>
+<h2 id="_forgeplucker_frequently_asked_questions">ForgePlucker Frequently Asked Questions</h2>
+<div class="sectionbody">
+<div class="para"><p>ForgePlucker is a young project to have a FAQ, but some
+questions came up repeatedly during early design discussions
+around the project launch.</p></div>
+<h3 id="_what_do_you_mean_by_project_state_anyway">What do you mean by "project state", anyway?</h3><div style="clear:left"></div>
+<div class="para"><p>We aim to recover everything needed to get a project up and running on
+another forge site. Source-code repositories, bug tracker state,
+webspace and wikis, mailing lists, the whole thing.</p></div>
+<h3 id="_why_web_scrape_rather_than_trying_to_build_exporters_into_existing_forges">Why web-scrape rather than trying to build exporters into existing forges?</h3><div style="clear:left"></div>
+<div class="para"><p>The architectures of most forge systems would be very difficult to
+modify to support native exporters: see
+<a href="file:jail-breaking-the-forges.html">this discussion</a>. Even if they
+weren't, developing and deploying to each and every forge site out
+there would be way too much like work. Most hosting sites are run on a
+shoestring budget by dedicated but overworked adnministrators who are
+unlikely to be receptive to potentially disruptive upgrades with
+obvious security risks attached. We'd welcome their cooperation, but
+by writing ForgePlucker we avoid being critically dependent on it.</p></div>
+<h3 id="_how_do_you_expect_to_do_reliable_capture_through_web_interfaces_aren_t_they_chronically_unstable">How do you expect to do reliable capture through web interfaces, aren't they chronically unstable?</h3><div style="clear:left"></div>
+<div class="para"><p>They're not as unstable as you might think. One of the consequences of
+the bad architectural decisions most forges have inherited is that
+interfaces are tightly coupled to implementation; accordingly, forge
+interfaces tend to change slowly when they change at all.</p></div>
+<h3 id="_how_do_you_recover_good_data_from_html_that_s_presentation_centered">How do you recover good data from HTML that's presentation-centered?</h3><div style="clear:left"></div>
+<div class="para"><p>Forgeplucker plays various tricks to ignore presentation level and cut
+through to structure.  An important one is relying heavily on the
+structure of generated HTML select menus, which are easy to parse out
+of the surrounding tag soup and carry not just the existing values of
+important metadata but much of the information about what values
+they can have.</p></div>
+<h3 id="_ok_but_doesn_t_that_sort_of_thing_have_to_be_messy_and_huge_and_hard_to_maintain">OK, but doesn't that sort of thing have to be messy and huge and hard to maintain?</h3><div style="clear:left"></div>
+<div class="para"><p>You'd be surprised. The initial proof-of-concept, which pulled
+bugtracker state out of Berlios, was less than 500 lines of Python.
+More than half of that moved to our GenericForge class and is shared
+among types.  The Berlios and Savane handler classes were about
+200 and less than 100 lines each when we first published; we estimate
+that a full ForgePlucker implementation will cost not more than about
+400 lines of Python per site type.</p></div>
+<h3 id="_your_dump_format_varies_by_site_type_shouldn_t_you_have_designed_a_standardized_representation_first">Your dump format varies by site type. Shouldn't you have designed a standardized representation first?</h3><div style="clear:left"></div>
+<div class="para"><p>We think it's smarter to get 100% state capture from a wide variety of
+forge types first, then use the domain knowledge we gain to design a
+format that will really work.</p></div>
+<h3 id="_i_m_a_forge_system_maintainer_and_i_don_t_want_my_system_to_be_a_jail_how_can_i_cooperate">I'm a forge-system maintainer, and I don't want my system to be a jail. How can I cooperate?</h3><div style="clear:left"></div>
+<div class="para"><p>First: put a meta tag on your generated main page with type and
+version attributes identifying your forge software, so our bot will
+know what it's dealing with. Second: Provide a per-project URL that
+returns a machine-parseable report on as much of the state as you can
+conveniently dump.  It doesn't have to be our format, as long as it's
+unambiguous and version-stamped and relatively easy to parse (XML or
+JSON are good bases).  You give us the spec, we'll write the parser.
+For other things you can do, ask on our dev list.</p></div>
+<h3 id="_i_m_a_random_hacker_and_this_project_looks_interesting_what_kind_of_help_do_you_need">I'm a random hacker and this project looks interesting.  What kind of help do you need?</h3><div style="clear:left"></div>
+<div class="para"><p>The main thing we need is developers who care a lot about individual
+forge types and are motivated to keep their handler classes
+complete and up to date.  We don't expect this to be a large job after
+the initial implementation is done (the first handler class took
+four days, the second about two), but it does mean being ready to
+respond quickly on the (probably rare) occasions when something
+breaks.</p></div>
+<h3 id="_is_forgeplucker_a_stepping_stone_to_something_else_like_writing_a_new_forge_system">Is ForgePlucker a stepping stone to something else, like writing a new forge system?</h3><div style="clear:left"></div>
+<div class="para"><p>Obviously, the usefulness of project-state export is limited if there
+aren't any automatic importers.  But there are several ways the future
+might play out.  In one, existing forges cheer us on and make the
+effort required to implement importers for our interchange format;
+everybody wins.  In another, our devs eventually write a new forge
+system that can import from anywhere, and that pressures other forge
+designers into writing importers. In a third, existing forges are too
+technically and/or politically broken to write importers, so we write a
+forge and it takes over the world.  We don't care which of those
+happens.  Yet.</p></div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2009-11-04 11:13:09 EDT
+</div>
+</div>
+</body>
+</html>

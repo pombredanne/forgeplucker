@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE refentry PUBLIC 
+   "-//OASIS//DTD DocBook XML V4.1.2//EN"
+   "docbook/docbookx.dtd">
+<refentry id='forgeplucker.1'>
+<refmeta>
+<refentrytitle>forgeplucker</refentrytitle>
+<manvolnum>1</manvolnum>
+<refmiscinfo class='date'>14 Oct 2009</refmiscinfo>
+</refmeta>
+<refnamediv id='name'>
+<refname>forgeplucker</refname>
+<refpurpose>capture and dump project state from a hosting site</refpurpose>
+</refnamediv>
+<refsynopsisdiv id='synopsis'>
+
+<cmdsynopsis>
+  <command>bugplucker.py</command>  
+      <arg choice='opt'>-f <replaceable>forgetype</replaceable></arg>
+      <arg choice='opt'>-i <replaceable>trackername:id</replaceable></arg>
+      <arg choice='opt'>-u <replaceable>username</replaceable></arg>
+      <arg choice='opt'>-p <replaceable>password</replaceable></arg>
+      <arg choice='opt'>-r</arg>
+      <arg choice='opt'>-s</arg>
+      <arg choice='opt'>-v <replaceable>verbosity</replaceable></arg>
+      <arg choice='plain'><replaceable>projecturl</replaceable></arg>
+</cmdsynopsis>
+</refsynopsisdiv>
+
+<refsect1 id='description'><title>DESCRIPTION</title>
+
+<para>The forgeplucker program does not yet exist.  This placeholder
+page describes an ancestor, bugplucker.py, which is demonstration code 
+expected to evolve into forgeplucker.</para>
+
+<para>bugplucker.py can extract the complete state of a project's bug
+tracker from any supported hosting system.  Uses for this capability
+including making emergency backups, working on buglists without
+network access, and statistical analyses of project histories.</para>
+
+<para>For a list of supported systems, use the <option>-?</option>
+option or <option>-h</option> option.</para>
+
+<para>The program requires one argument, a hosting-site name and
+project name separated by a slash. It produces a dump of the
+bugtracker state in JSON on output.</para>
+
+<para>The program requires that you be a member of the project you
+are pulling state for, with the authority to modify tracker entries.
+This is not because the program modifies entries (it doesn't) but
+because its parsing techniques rely heavily on the structure of HTML
+select elements in order to make sense out of what would otherwise be
+text soup.</para>
+
+<para>The program also requires that you have your user preforences on
+the site you are pulling from set to display messages in English and
+display dates as local time for your timezone. Many hostiong sites do
+not reliably display a timezone in dates, and timezone conversion is
+intrinsically unreliable where it is supported. Thus, the code must
+rely on
+<citerefentry><refentrytitle>localtime</refentrytitle><manvolnum>3</manvolnum></citerefentry>.</para>
+
+<para>The program accepts the following options:</para>
+
+<variablelist>
+<varlistentry>
+<term>-f</term>
+<listitem>
+<para>Specify the forge-system type. May not be necessary, as the
+program can infer a type from well-known sitenames.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>-u</term>
+<listitem>
+<para>Set your username for authentication purposes.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>-p</term>
+<listitem>
+<para>Set your password for site-authentication purposes.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>-i</term>
+<listitem>
+<para>Fetch an individual detail page and return the JSON for the
+corresponding issue. The specification should be two colon-separated
+parts, a tracker name and a bug ID. Mainly useful for debgging.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>-r</term>
+<listitem>
+<para>Dump in XML rather than JSON.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>-s</term>
+<listitem>
+<para>Sample mode. Get only the most recent bug in each
+tracker. Useful for verifying that you can read a forge type
+correctly without fetching an entire project.  Also useful if what
+you want is just the atttribute ranges for project metadata.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>-v</term>
+<listitem>
+<para>Set a numeric verbosity level, primarily for debugging. 1
+enables various progress messages to standard error, and 2 enables
+dumping of web pages as they are fetched.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+<para>These options are mainly for testing purposes; for production it
+is recommended that you put your credentials in your .netrc file in
+order to avoid having to type your password frequently where it might
+be seen. The 'account' field, if present, will be interpreted as a
+forge type overriding the normal heuristics.</para>
+
+</refsect1>
+<refsect1 id='bugs'><title>BUGS</title>
+
+<para>The program will change the settings on yoor tracker search form
+in order to collect all bugs.  You will probably have to reset them
+afterwards.</para>
+
+<para>It's not forgeplucker yet. Forgeplucker will capture the
+project's <emphasis>entire</emphasis> state, not just the trackers.</para>
+
+<para>Bugplucker dumps are all in JSON, but the shape and keywords are
+forge-type-specific. At a later stage of the project, once we have gained
+field experience with many hosting sites, we expect to design a
+uniform dump file format.</para>
+
+<para>No tools yet exist to import the dumps into forge systems. They
+cannot be written until we have a standardized format.</para>
+
+<para>The range of supported systems could be larger, and will be.</para>
+
+</refsect1>
+<refsect1 id='see_also'><title>SEE ALSO</title>
+<para>
+<citerefentry><refentrytitle>netrc</refentrytitle><manvolnum>7</manvolnum></citerefentry>,
+</para>
+</refsect1>
+
+<refsect1 id='maintainer'><title>AUTHOR</title> 
+
+<para>Eric S. Raymond <email>esr@thyrsus.com</email></para>
+</refsect1>
+</refentry>

@@ -1,0 +1,523 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.2.7" />
+<style type="text/css">
+/* Debug borders */
+p, li, dt, dd, div, pre, h1, h2, h3, h4, h5, h6 {
+/*
+  border: 1px solid red;
+*/
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+tt {
+  color: navy;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  font-family: sans-serif;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+
+div.sectionbody {
+  font-family: serif;
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+span#author {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+span#email {
+}
+span#revision {
+  font-family: sans-serif;
+}
+
+div#footer {
+  font-family: sans-serif;
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+div#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+div#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+div#preamble,
+div.tableblock, div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-right: 10%;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+
+div.listingblock {
+  margin-right: 0%;
+}
+div.listingblock > div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock {
+  padding-left: 2.0em;
+}
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock {
+  padding-left: 2.0em;
+}
+div.verseblock > div.content {
+  white-space: pre;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 2px solid silver;
+}
+
+div.exampleblock > div.content {
+  border-left: 2px solid silver;
+  padding: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+div.imageblock img { border: 1px solid silver; }
+span.image img { border-style: none; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+div.olist > ol {
+  list-style-type: decimal;
+}
+div.olist2 > ol {
+  list-style-type: lower-alpha;
+}
+
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+tfoot {
+  font-weight: bold;
+}
+
+div.hlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hlist td {
+  padding-bottom: 15px;
+}
+td.hlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+}
+td.hlist2 {
+  vertical-align: top;
+}
+
+@media print {
+  div#footer-badges { display: none; }
+}
+
+div#toctitle {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+/* Workarounds for IE6's broken and incomplete CSS2. */
+
+div.sidebar-content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+div.sidebar-title, div.image-title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-top: 0.0em;
+  margin-bottom: 0.5em;
+}
+
+div.listingblock div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock-attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock-content {
+  white-space: pre;
+}
+div.verseblock-attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+
+div.exampleblock-content {
+  border-left: 2px solid silver;
+  padding-left: 0.5em;
+}
+
+/* IE6 sets dynamically generated links as visited. */
+div#toc a:visited { color: blue; }
+
+/* Because IE6 child selector is broken. */
+div.olist2 ol {
+  list-style-type: lower-alpha;
+}
+div.olist2 div.olist ol {
+  list-style-type: decimal;
+}
+</style>
+<title>Jailbreaking the Forges</title>
+</head>
+<body>
+<div id="header">
+<h1>Jailbreaking the Forges</h1>
+<span id="author">Eric S. Raymond</span><br />
+<span id="email"><tt>&lt;<a href="mailto:esr@thyrsus.com">esr@thyrsus.com</a>&gt;</tt></span><br />
+<span id="revision">version 1.0,</span>
+Oct 2009
+</div>
+<h2 id="_problem_statement">Problem Statement</h2>
+<div class="sectionbody">
+<div class="para"><p>At the beginning of October 2009, berlios.de, the hosting site on
+which my GPSD project lived, went abruptly flatline after months of
+deteriorating performance; I had good reason to fear that it had died
+a final death. Though Berlios came back up a few days later, the
+intervening process of trying to reconstruct my project data from git
+mirrors and the still-accessible Mailman administrative pages rubbed
+my nose in three serious design issues shared by many hosting sites
+and many of their software components.</p></div>
+<h3 id="_data_jails">Data Jails</h3><div style="clear:left"></div>
+<div class="para"><p>The worst problem with almost all current hosting sites is that
+they're data jails. You can put data (the source code revision
+history, mailing list address lists, bug reports) into them, but
+getting a complete snapshot of that data back out often ranges from
+painful to impossible.</p></div>
+<div class="para"><p>Why is this an issue? Very practically, because hosting sites, even
+well-established ones, sometimes go off the air. Any prudent project
+lead should be thinking about how to recover if that happens, and how
+to take periodic backups of critical project data.  But more generally,
+it's <strong>your data</strong>.  You should own it.  If you can't push a button and
+get a snapshot of your project state out of the site whenever you
+want, you <strong>don't</strong> own it.</p></div>
+<div class="para"><p>When berlios.de crashed on me, I was lucky; I had been preparing to
+migrate GPSD off the site due to deteriorating performance; I had
+a Subversion dump file that was less than two weeks old.  I was
+able to bring that up to date by translating commits from an
+unofficial git mirror. I was doubly lucky in that the Mailman
+adminstrative pages remained accessible even when the project
+webspace and repositories had been 404 for two days.</p></div>
+<div class="para"><p>But actually retrieving my mailing-list data was a hideous process
+that involved screen-scraping HTML by hand, and I had no hope at all
+of retrieving the bug tracker state.</p></div>
+<div class="para"><p>This anecdote illustrates the most serious manifestations of the
+data-jail problem.  Third-generation version-control (hg, git, bzr,
+etc.) systems pretty much solve it for code repositories; every
+checkout is a mirror.  But most projects have two other critical data
+collections: their mailing-list state and their bug-tracker state.
+And, on all sites I know of in late 2009, those are seriously jailed.</p></div>
+<div class="para"><p>This is a problem that goes straight to the design of the software
+subsystems used by these sites.  Some are generic: of these, the most
+frequent single offender is 2.x versions of Mailman, the most widely
+used mailing-list manager (the Mailman maintainers claim to have fixed
+this in 3.0). Bug-trackers tend to be tightly tied to individual
+hosting engines, and are even harder to dig data out of.  They also
+illustrate the second major failing&#8230;</p></div>
+<h3 id="_unscriptability">Unscriptability</h3><div style="clear:left"></div>
+<div class="para"><p>All hosting-site suites are Web-centric, operated primarily or
+entirely through a browser.  This solves many problems, but creates a
+few as well.  One is that browsers, like GUIs in general, are badly
+suited for stereotyped and repetitive tasks.  Another is that they
+have poor accessibility for people with visual or motor-control
+issues.</p></div>
+<div class="para"><p>Here again the issues with version-control systems are relatively
+minor, because all those in common use are driven by CLI tools
+that are easy to script.  Mailing lists don't present serious issues
+either; the only operation on them that normally goes through the web
+is moderation of submissions, and the demands of that operation are
+fairly well matched to a browser-style interface.</p></div>
+<div class="para"><p>But there are other common operations that need to be scriptable and
+are generally not. A representative one is getting a list of open bug
+reports to work on later - say, somewhere that your net connection is
+spotty.  There is no reason this couldn't be handled by an email
+autoresponder robot connected to the bug-tracker database, a feature
+which would also improve tracker accessibility for the blind.</p></div>
+<div class="para"><p>Another is shipping a software release.  This normally consists of
+uploading product files in various shipping formats (source tarballs,
+debs, RPMs, and the like) to the hosting site's download area, and
+associating with them a bunch of metadata including such things as a
+short-form release announcement, file-type or architecture tags for
+the binary packages, MD5 signatures, and the like.</p></div>
+<div class="para"><p>With the exception of the release announcement, there is really no
+reason a human being should be sitting at a web browser to type in
+this sort of thing. In fact there is an excellent reason a human
+<strong>shouldn't</strong> do it by hand - it's exactly the sort of fiddly, tedious
+semi-mechanical chore at which humans tend to make (and then miss)
+finger errors because the brain is not fully engaged.</p></div>
+<div class="para"><p>It would be better for the hosting system's release-registration logic
+to accept a job card via email, said job card including all the
+release metadata and URLs pointing to the product files it should
+gather for the release.  Each job card could be generated by a
+project-specific script that would take the parts that really need
+human attention from a human and mechanically fill in the rest. This
+would both minimize human error and improve accessibility.</p></div>
+<div class="para"><p>In general, a good question for hosting-system designers to be asking
+themselves about each operation of the system would be "Do I provide a
+way to remote-script this through an email robot or XML-RPC interface
+or the like?" When the answer is "no", that's a bug that needs to be
+fixed.</p></div>
+<h3 id="_poor_support_for_immigration">Poor support for immigration</h3><div style="clear:left"></div>
+<div class="para"><p>The first (and in my opinion, most serious) failing I identified is
+poor support for snapshotting and if necessary out-migrating a
+project.  Most hosting systems do almost as badly at in-migrating a
+project that already has a history, as opposed to one started from
+nothing on the site.</p></div>
+<div class="para"><p>Even uploading an existing source code repository at start of a
+project (as opposed to starting with an empty one) is only spottily
+supported. Just try, for example, to find a site that will let you upload
+a mailbox full of archives from a pre-existing development list in
+order to re-home it at the project's new development site.</p></div>
+<div class="para"><p>This is the flip side of the data-jail problem. It has some of the
+same causes, and many of the same consequences too.  Because it makes
+re-homing projects unnecessarily difficult, it means that project
+leads cannot respond effectively to hosting-site problems.  This
+creates a systemic brittleness in our development infrastructure.</p></div>
+</div>
+<h2 id="_looking_deeper">Looking Deeper</h2>
+<div class="sectionbody">
+<div class="para"><p>Why don't existing hosting systems already have these facilities?  I
+have looked into this question, actually examining the codebases of
+Savane and GForge/FusionForge, and the answer appears to go back to
+the original SourceForge.  It offered such exciting, cutting-edge
+capabilities that nobody noticed its internal architecture was a
+tar-pit full of nasty kluges.  The descendants &#8212; Savane, GForge, and
+FusionForge &#8212; inherited that bad architecture.</p></div>
+<div class="para"><p>The central problem is implied by the implementation.  It's PHP pages
+doing SQL queries to a MySQL database.  The query logic is
+inextricably tangled up with the UI.  There is no separation of
+function! Now I understand why, back when I was a director at VA
+Linux, the original SourceForge team promised me a scriptable release
+process but never delivered.  They couldn't have done it without
+either (a) duplicating a significant number of SQL queries in some
+kind of ad-hoc tool (begging for maintainance problems as the schema
+changed) or (b) prying the SQL queries loose from the GUI and
+isolating them in some kind of service broker, either an Apache plugin
+or a service daemon, that both the web interface and a scripting tool
+could call on.</p></div>
+<div class="para"><p>Approach (b) would have been the right thing, but would have required
+re-architecting the entire system.  It never happened.  When, in my
+problem statement, I complained of forge systems being excessively
+tied to Web interfaces, I did not yet know how horribly true that was.</p></div>
+<div class="para"><p>The rottenness of the architecture also accounts, indirecctly, for
+some other features of these systems that have long puzzled me - like
+the reliance on cron jobs to do things like actually creating
+new project instances.  The cron jobs are a half-assed substitute
+for a real service broker.</p></div>
+<div class="para"><p>I conclude that the SourceForge/GForge/FusionForge architecture, as it
+is now, is an evolutionary dead end &#8212; overspecialized for webbiness.
+To tackle challenges like fixing the data-jail problem, scripting,
+and seamless project migration, one of these systems will need to be
+rebuilt from the inside out.  The surface appearance of the GUI might
+survive at one end, and the SQL schema at the other, but everything &#8212;
+<strong>everything</strong> &#8212; between them needs to change.</p></div>
+</div>
+<h2 id="_starting_on_a_solution">Starting On A Solution</h2>
+<div class="sectionbody">
+<div class="para"><p>Writing a new forge system to solve all these problems, and marketing
+it hard enough to replace the existing ones, wouldn't be easy. A
+project that tried to do it all in one go would probably collapse from
+its own overambition.</p></div>
+<div class="para"><p>But there is no need to tackle all of the architectural problems at
+once.  An incremental path, with each stage delivering functional
+tools that lay foundations for the next stage, would be better.</p></div>
+<div class="para"><p>The clear first step on that road is to solve the problem of
+jailbreaking data out of existing forges.  That will be an essential
+prerequisite for importing it into better systems, and it will build a
+basis of domain knowledge on which to build those better systems.</p></div>
+<div class="para"><p>Just the existence of such tools would begin to sever the unhealthy
+degree of coupling that presently exists between projects and their
+hosting sites. It might even set off a virtuous evolutionary arms
+race, with forge designers building importers in order to avoid
+watching their userbases gradually migrate away from them to sites
+with importers.</p></div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 1.0<br />
+Last updated 2009-11-04 11:13:08 EDT
+</div>
+</div>
+</body>
+</html>

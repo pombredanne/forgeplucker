@@ -1,0 +1,3416 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.2.7" />
+<style type="text/css">
+/* Debug borders */
+p, li, dt, dd, div, pre, h1, h2, h3, h4, h5, h6 {
+/*
+  border: 1px solid red;
+*/
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+tt {
+  color: navy;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  font-family: sans-serif;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+
+div.sectionbody {
+  font-family: serif;
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+span#author {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+span#email {
+}
+span#revision {
+  font-family: sans-serif;
+}
+
+div#footer {
+  font-family: sans-serif;
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+div#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+div#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+div#preamble,
+div.tableblock, div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-right: 10%;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+
+div.listingblock {
+  margin-right: 0%;
+}
+div.listingblock > div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock {
+  padding-left: 2.0em;
+}
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock {
+  padding-left: 2.0em;
+}
+div.verseblock > div.content {
+  white-space: pre;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 2px solid silver;
+}
+
+div.exampleblock > div.content {
+  border-left: 2px solid silver;
+  padding: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+div.imageblock img { border: 1px solid silver; }
+span.image img { border-style: none; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+div.olist > ol {
+  list-style-type: decimal;
+}
+div.olist2 > ol {
+  list-style-type: lower-alpha;
+}
+
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+tfoot {
+  font-weight: bold;
+}
+
+div.hlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hlist td {
+  padding-bottom: 15px;
+}
+td.hlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+}
+td.hlist2 {
+  vertical-align: top;
+}
+
+@media print {
+  div#footer-badges { display: none; }
+}
+
+div#toctitle {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+/* Workarounds for IE6's broken and incomplete CSS2. */
+
+div.sidebar-content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+div.sidebar-title, div.image-title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-top: 0.0em;
+  margin-bottom: 0.5em;
+}
+
+div.listingblock div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock-attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock-content {
+  white-space: pre;
+}
+div.verseblock-attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+
+div.exampleblock-content {
+  border-left: 2px solid silver;
+  padding-left: 0.5em;
+}
+
+/* IE6 sets dynamically generated links as visited. */
+div#toc a:visited { color: blue; }
+
+/* Because IE6 child selector is broken. */
+div.olist2 ol {
+  list-style-type: lower-alpha;
+}
+div.olist2 div.olist ol {
+  list-style-type: decimal;
+}
+</style>
+<title>Forge Ontology</title>
+</head>
+<body>
+<div id="header">
+<h1>Forge Ontology</h1>
+<span id="author">Eric S. Raymond</span><br />
+<span id="email"><tt>&lt;<a href="mailto:esr@thyrsus.com">esr@thyrsus.com</a>&gt;</tt></span><br />
+Version 1.1
+</div>
+<h2 id="_scope_of_this_document">Scope of this document</h2>
+<div class="sectionbody">
+<div class="para"><p>Forges are software-project hosting systems.  In order to support
+cross-forge migration of projects, a common representation and
+ontology of project states will be required.  This document
+informally constructs such an antology and describes how the
+representations of different forge systems map to it.</p></div>
+<div class="para"><p>The ontology described here is not yet complete.  It is being
+developed in conjunction with forgeplucker, which is as
+yet only capable of extracting tracker state from forges.</p></div>
+<div class="para"><p>To motivate this, it is worth bearing in mind the forgeplucker goal:
+extraction of a complete enough sate that it could in principle
+be uploaded into another forge site and create a running project.</p></div>
+</div>
+<h2 id="_cfo_the_common_forge_ontology">CFO, the Common Forge Ontology</h2>
+<div class="sectionbody">
+<div class="para"><p>Ontology terms are in all caps.  Terms suffixed with ?
+are placeholders intended for further development. Comma-separated
+lists enclosed in [] are controlled vocabularies.</p></div>
+<h3 id="_identity_objects">IDENTITY objects</h3><div style="clear:left"></div>
+<div class="para"><p>An IDENTITY object identifies a person. An IDENTITY has the following
+parts:</p></div>
+<div class="hlist"><table>
+<tr>
+<td class="hlist1">
+NICK
+</td>
+<td class="hlist2">
+Nickname of a developer, usurally the person part of an email address
+</td>
+</tr>
+<tr>
+<td class="hlist1">
+EMAIL
+</td>
+<td class="hlist2">
+String that is the fully qualified email address of a person
+</td>
+</tr>
+<tr>
+<td class="hlist1">
+NAME
+</td>
+<td class="hlist2">
+String that is the name of a person.
+</td>
+</tr>
+</table></div>
+<div class="para"><p>The NICK may be the special value None representing an anonymous or
+unspecified user, in which case the NAME and EMAIL parts are not used.</p></div>
+<h3 id="_pull_interval_objects">PULL-INTERVAL OBJECTS</h3><div style="clear:left"></div>
+<div class="para"><p>A PULL-INTERVAL object represents the time interval associated with
+the capture of project state or some portion of it.  The capture
+is guaranteed to contain all changes prior to the capture start date, and
+no changes after the capture end date.</p></div>
+<div class="para"><p>A PULL-INTERVAL has the following parts:</p></div>
+<div class="ilist"><ul>
+<li>
+<p>
+CAPTURE-START:: Timestamp, when the caprure of the parent object began
+</p>
+</li>
+<li>
+<p>
+CAPTURE-END:: Timestamp, when the capture of the parent object completed
+</p>
+</li>
+</ul></div>
+<h3 id="_release_objects_and_subobjects">RELEASE objects and subobjects</h3><div style="clear:left"></div>
+<div class="para"><p>A RELEASE is product files and metadata describing a software release.  It
+has the foilowing parts:</p></div>
+<div class="ilist"><ul>
+<li>
+<p>
+ID:: A string naming the release
+</p>
+</li>
+<li>
+<p>
+DATE:: Date of the release
+</p>
+</li>
+<li>
+<p>
+DESCRIPTION:: Text of release notes
+</p>
+</li>
+<li>
+<p>
+PRODUCT_LIST:: One or more PRODUCT objects
+</p>
+</li>
+</ul></div>
+<div class="para"><p>A PRODUCT is a shippable form of a release, or release component.
+Possible PRODUCTs include source tarballs, RPMs, Debian packages, or
+SHA1 checksum files.  PRODUCT objects have the following parts:</p></div>
+<div class="ilist"><ul>
+<li>
+<p>
+FILENAME:: Product filename
+</p>
+</li>
+<li>
+<p>
+DESCRIPTION:: Optional one-line description
+</p>
+</li>
+<li>
+<p>
+MIMETYPE:: MIME type
+</p>
+</li>
+<li>
+<p>
+ARCHITECTURE:: Tag for the product's target architecture
+</p>
+</li>
+<li>
+<p>
+TYPE:: Controlled vocabulary describing the project resource type
+</p>
+</li>
+</ul></div>
+<h3 id="_project_state_objects">PROJECT-STATE OBJECTS</h3><div style="clear:left"></div>
+<div class="para"><p>A PROJECT-STATE object is intended to capture the entire state of
+a project for export and re-import.</p></div>
+<div class="para"><p>A PROJECT-STATE has the following parts:</p></div>
+<div class="hlist"><table>
+<tr>
+<td class="hlist1">
+SHORTNAME
+</td>
+<td class="hlist2">
+a project identification string that is a legal Unix path segment.
+</td>
+</tr>
+<tr>
+<td class="hlist1">
+LONGNAME
+</td>
+<td class="hlist2">
+a name for human use.
+</td>
+</tr>
+<tr>
+<td class="hlist1">
+DESCRIPTION
+</td>
+<td class="hlist2">
+a text description of the project.
+</td>
+</tr>
+<tr>
+<td class="hlist1">
+PRIVILEGE-LIST
+</td>
+<td class="hlist2">
+List of PRIVILEGE objects with the following parts.
+<div class="ilist"><ul>
+<li>
+<p>
+IDENTITY: Identity of a project number; may not be Anonymous
+</p>
+</li>
+<li>
+<p>
+Zero or more CAPABILITY? tokens.
+</p>
+</li>
+</ul></div>
+</td>
+</tr>
+<tr>
+<td class="hlist1">
+SUBSYSTEM-LIST
+</td>
+<td class="hlist2">
+One or more SUBSYSTEM parts, which may be one of the following:
+<div class="ilist"><ul>
+<li>
+<p>
+REPOSITORY with the following parts.
+</p>
+<div class="ilist"><ul>
+<li>
+<p>
+NAME:: a string identifying the repository.
+</p>
+</li>
+<li>
+<p>
+TYPE:: a string identifying the version control system.
+</p>
+</li>
+<li>
+<p>
+CONTENT:: a file or directory.
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<p>
+LISTS:: Zero or more MAILING-LIST? objects
+</p>
+</li>
+<li>
+<p>
+WEBSPACE:: a directory.
+</p>
+</li>
+<li>
+<p>
+RELEASE-LIST:: Zero or more RELEASE objects.
+</p>
+</li>
+<li>
+<p>
+TRACKER:: Refer to the TRACKER definition below.
+</p>
+</li>
+<li>
+<p>
+CAPTURED:: A PULL-INTERVAL for the project state capture.
+</p>
+</li>
+</ul></div>
+</td>
+</tr>
+</table></div>
+<div class="para"><p>Most forges limit projects to one REPOSITORY and one WEBSPACE.
+This ontology supports more than one repository because that may
+be useful for modeling repo conversions.</p></div>
+<h3 id="_tracker_objects_and_subobjects">TRACKER objects and subobjects</h3><div style="clear:left"></div>
+<div class="para"><p>A TRACKER object is intended to contain the entire state of one of a
+project's issue trackers.  It has several subobject types.  All but
+ARTIFACT, the central and most complex one, are described here.  ARTIFACT
+is described in the next section.</p></div>
+<div class="para"><p>In the descriptions below, a <em>nick</em> is the site-local username of a
+project developer.</p></div>
+<div class="para"><p>A TRACKER has the following parts:</p></div>
+<div class="hlist"><table>
+<tr>
+<td class="hlist1">
+TYPE
+</td>
+<td class="hlist2">
+One of [Bugs, Features, Support, Patches, Tasks].
+</td>
+</tr>
+<tr>
+<td class="hlist1">
+CAPTURED
+</td>
+<td class="hlist2">
+A PULL-INTERVAL for the tracker capture.
+</td>
+</tr>
+<tr>
+<td class="hlist1">
+ARTIFACT-LIST
+</td>
+<td class="hlist2">
+One or more ARTIFACT objects.  Refer to the ARTIFACT
+                definition below
+</td>
+</tr>
+<tr>
+<td class="hlist1">
+RANGES
+</td>
+<td class="hlist2">
+A map from ARTIFACT slots to lists of possible string values
+</td>
+</tr>
+</table></div>
+<div class="para"><p>A COMMENT has the collowing parts:</p></div>
+<div class="hlist"><table>
+<tr>
+<td class="hlist1">
+SUBMITTER
+</td>
+<td class="hlist2">
+IDENTITY, the submitting user.
+</td>
+</tr>
+<tr>
+<td class="hlist1">
+DATE
+</td>
+<td class="hlist2">
+A timestamp.
+</td>
+</tr>
+<tr>
+<td class="hlist1">
+TEXT
+</td>
+<td class="hlist2">
+Comment text.
+</td>
+</tr>
+</table></div>
+<div class="para"><p>A FIELDCHANGE has the following parts</p></div>
+<div class="hlist"><table>
+<tr>
+<td class="hlist1">
+BY
+</td>
+<td class="hlist2">
+Nick of developer making a change to field value (not an IDENTITY)
+</td>
+</tr>
+<tr>
+<td class="hlist1">
+DATE
+</td>
+<td class="hlist2">
+A timestamp.
+</td>
+</tr>
+<tr>
+<td class="hlist1">
+FIELD
+</td>
+<td class="hlist2">
+An ARTIFACT fieldname
+</td>
+</tr>
+<tr>
+<td class="hlist1">
+OLD
+</td>
+<td class="hlist2">
+The value before the change
+</td>
+</tr>
+<tr>
+<td class="hlist1">
+NEW
+</td>
+<td class="hlist2">
+The value after the change
+</td>
+</tr>
+</table></div>
+<div class="para"><p>An ATTACHMENT has the following parts</p></div>
+<div class="hlist"><table>
+<tr>
+<td class="hlist1">
+URL
+</td>
+<td class="hlist2">
+Where the file can be fetched
+</td>
+</tr>
+<tr>
+<td class="hlist1">
+FILENAME
+</td>
+<td class="hlist2">
+A string, the name of the file as attached (optional)
+</td>
+</tr>
+<tr>
+<td class="hlist1">
+DATE
+</td>
+<td class="hlist2">
+Date of attachment (optional)
+</td>
+</tr>
+<tr>
+<td class="hlist1">
+ID
+</td>
+<td class="hlist2">
+A string that is a file attachment ID, conventionally numeric
+</td>
+</tr>
+<tr>
+<td class="hlist1">
+BY
+</td>
+<td class="hlist2">
+IDENTITY
+</td>
+</tr>
+<tr>
+<td class="hlist1">
+DESCRIPTION
+</td>
+<td class="hlist2">
+One-line description of file contents (optional)
+</td>
+</tr>
+</table></div>
+<div class="para"><p>A SUBSCRIBER has the following parts:</p></div>
+<div class="hlist"><table>
+<tr>
+<td class="hlist1">
+CC-TO
+</td>
+<td class="hlist2">
+Email address
+</td>
+</tr>
+<tr>
+<td class="hlist1">
+COMMENT
+</td>
+<td class="hlist2">
+Why this person is subscribed
+</td>
+</tr>
+</table></div>
+<h3 id="_artifact_objects">ARTIFACT objects</h3><div style="clear:left"></div>
+<div class="para"><p>The ARTIFACT object is the most complex and variable one in the entuire
+ontology.  It is described by several tables.</p></div>
+<div class="para"><p>The Internal Fieldname table maps slots into the ontology to the form
+attributes used on different forge system.  The <em>Savane</em> column
+describes both Savane and Savane-Cleanup.  A <em>-</em> value means the slot
+is unsupported on that system. If the entry is <em>Unnamed</em>, the
+attribute is supported but not editable in the artifact detail form, and
+must be scraped from presentation-level HTML rather than parsing
+INPUT elements.  Otherwise the entry names the form parameter that
+names this slot.</p></div>
+<div class="tableblock">
+<table rules="all"
+frame="hsides"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table: Internal fieldname</caption>
+<col width="194" />
+<col width="160" />
+<col width="160" />
+<col width="205" />
+<thead>
+  <tr>
+    <th align="left">
+    CFO field
+    </th>
+    <th align="left">
+    Berlios
+    </th>
+    <th align="left">
+    SourceForge
+    </th>
+    <th align="left">
+    Savane
+    </th>
+  </tr>
+</thead>
+<tbody valign="top">
+  <tr>
+    <td align="left">
+    ATTACHMENT-LIST
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    ASSIGNED-TO
+    </td>
+    <td align="left">
+    assigned_to
+    </td>
+    <td align="left">
+    assigned_to
+    </td>
+    <td align="left">
+    assigned_to
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    BUG-GROUP
+    </td>
+    <td align="left">
+    bug_group_id
+    </td>
+    <td align="left">
+    bug_group_id
+    </td>
+    <td align="left">
+    bug_group_id
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    CATEGORY
+    </td>
+    <td align="left">
+    category_id
+    </td>
+    <td align="left">
+    category_id
+    </td>
+    <td align="left">
+    category_id
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    COMMENT-LIST
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    COMP-VERSION
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    category_version*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    DATE
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    DEPENDENTS
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    DISCUSSION-LOCK
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    discussion_lock
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    EFFORT
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    effort
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    FIX-RELEASE
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    fix_release*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    HISTORY
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    ID
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    KEYWORDS
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    keywords
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    ORIG_EMAIL
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    ORIG_NAME
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    originator_name
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    ORIG_PHONE
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    originator_phone
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PATCH
+    </td>
+    <td align="left">
+    patch
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PERCENT
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    percent_complete
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PLAN-RELEASE
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    plan_release*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PLATFORM
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    platform_version_id
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PRIORITY
+    </td>
+    <td align="left">
+    priority
+    </td>
+    <td align="left">
+    priority
+    </td>
+    <td align="left">
+    priority
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PRIVACY
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    privacy
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    RELEASE
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    release*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    REPRODUCIBILITY
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    reproducibility_id
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    RESOLUTION
+    </td>
+    <td align="left">
+    resolution_id
+    </td>
+    <td align="left">
+    resolution_id
+    </td>
+    <td align="left">
+    resolution_id
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    SEVERITY
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    severity
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    SIZE
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    size_id
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    STATUS
+    </td>
+    <td align="left">
+    status_id
+    </td>
+    <td align="left">
+    status_id
+    </td>
+    <td align="left">
+    status_id
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    SUBMITTER
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    SUBSCRIBER
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    SUMMARY
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+    <td align="left">
+    summary
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    VOTES
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    Unnamed
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div class="para"><p>Under Savane, slots with starred field names can be defined in one of
+two ways: as a free-text field. or as a select box with an
+administrator-defined controlled vocabulary.  In the latter case, the
+fieldmame gets an <em>_id</em> suffix.</p></div>
+<div class="para"><p>The <em>Intended Semantics</em> table describes the intended semantics of each slot.</p></div>
+<div class="tableblock">
+<table rules="all"
+frame="hsides"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table: Intended Semantics</caption>
+<col width="182" />
+<col width="571" />
+<thead>
+  <tr>
+    <th align="left">
+    CFO field
+    </th>
+    <th align="left">
+    Meaning
+    </th>
+  </tr>
+</thead>
+<tbody valign="top">
+  <tr>
+    <td align="left">
+    ATTACHMENT-LIST
+    </td>
+    <td align="left">
+    List of ATTACHMENT objects
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    ASSIGNED-TO
+    </td>
+    <td align="left">
+    Nick of the developer responsible
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    BUG-GROUP
+    </td>
+    <td align="left">
+    Controlled by administrator
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    CATEGORY
+    </td>
+    <td align="left">
+    Controlled by administrator
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    CC-LIST
+    </td>
+    <td align="left">
+    List of subscribers to be notified on changes
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    COMMENT-LIST
+    </td>
+    <td align="left">
+    User comments on the artifact
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    COMP-VERSION
+    </td>
+    <td align="left">
+    Version of system component impacted by artifact
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    DATE
+    </td>
+    <td align="left">
+    Original submission date of the artifact
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    DEPENDENTS
+    </td>
+    <td align="left">
+    List of IDs of bugs that depend on this one
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    DISCUSSION_LOCK
+    </td>
+    <td align="left">
+    Whether or no discussion is closed on this bug
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    EFFORT
+    </td>
+    <td align="left">
+    Estimated number of hours to address
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    FIX-RELEASE
+    </td>
+    <td align="left">
+    Release in which the artifact was actually fixed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    HISTORY
+    </td>
+    <td align="left">
+    Change history of the bug record
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    ID
+    </td>
+    <td align="left">
+    A string-valued bug ID, conventionally numeric in form.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    KEYWORDS
+    </td>
+    <td align="left">
+    Comma-separated tags associated with the artifact
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    ORIG_EMAIL
+    </td>
+    <td align="left">
+    Originator's email address (if different from Submitter)
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    ORIG_NAME
+    </td>
+    <td align="left">
+    Originator's name (if different from Submitter)
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    ORIG_PHONE
+    </td>
+    <td align="left">
+    Originator's phone number
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PATCH
+    </td>
+    <td align="left">
+    Editable text data
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PERCENT
+    </td>
+    <td align="left">
+    Percentage completion of task
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PLAN-RELEASE
+    </td>
+    <td align="left">
+    Planned release for this artifact to be
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PLATFORM
+    </td>
+    <td align="left">
+    Platform (operating system) affected by artifact
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PRIORITY
+    </td>
+    <td align="left">
+    How quickly the artifact should be handled
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PRIVACY
+    </td>
+    <td align="left">
+    Public or private
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    RELEASE
+    </td>
+    <td align="left">
+    Release impacted by the artifact
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    REPRODUCIBILITY
+    </td>
+    <td align="left">
+    How reproducible is this bug?
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    RESOLUTION
+    </td>
+    <td align="left">
+    Resolution status of the bug
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    SEVERITY
+    </td>
+    <td align="left">
+    Impact on the system
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    SIZE
+    </td>
+    <td align="left">
+    Estimated size of code to be added or changed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    STATUS
+    </td>
+    <td align="left">
+    Open/Closed status of the bug
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    SUBMITTER
+    </td>
+    <td align="left">
+    Identity of the bug submitter (string or IDENTITY)
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    SUMMARY
+    </td>
+    <td align="left">
+    One-line summary of the bug
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    VOTES
+    </td>
+    <td align="left">
+    User votes for this bug
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div class="para"><p>On Savane, the "PLATFORM" field is actually labeled "Operating System".</p></div>
+<div class="para"><p>The Field Type table describes what kind of data each slot contains.</p></div>
+<div class="tableblock">
+<table rules="all"
+frame="hsides"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table: Field type</caption>
+<col width="182" />
+<col width="342" />
+<thead>
+  <tr>
+    <th align="left">
+    CFO field
+    </th>
+    <th align="left">
+    Data type
+    </th>
+  </tr>
+</thead>
+<tbody valign="top">
+  <tr>
+    <td align="left">
+    ATTACHMENT-LIST
+    </td>
+    <td align="left">
+    List of ATTACHMENT objects
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    ASSIGNED-TO
+    </td>
+    <td align="left">
+    IDENTITY
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    BUG-GROUP
+    </td>
+    <td align="left">
+    Controlled by administrator
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    CATEGORY
+    </td>
+    <td align="left">
+    Controlled by administrator
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    CC-LIST
+    </td>
+    <td align="left">
+    List of SUBSCRIBER objects
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    COMMENT-LIST
+    </td>
+    <td align="left">
+    One or more COMMENT objects
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    COMP_VERSION
+    </td>
+    <td align="left">
+    Controlled by administrator
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    DATE
+    </td>
+    <td align="left">
+    Timestamp
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    DEPENDENTS
+    </td>
+    <td align="left">
+    List of IDs
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    DISCUSSION_LOCK
+    </td>
+    <td align="left">
+    Enumerated: Locked, Unlocked
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    EFFORT
+    </td>
+    <td align="left">
+    String interpreted as numeric
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    FIX-RELEASE
+    </td>
+    <td align="left">
+    Controlled or string
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    HISTORY
+    </td>
+    <td align="left">
+    List of FIELDCHANGE objects
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    ID
+    </td>
+    <td align="left">
+    Sequence number
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    KEYWORDS
+    </td>
+    <td align="left">
+    String
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    ORIG_EMAIL
+    </td>
+    <td align="left">
+    String
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    ORIG_NAME
+    </td>
+    <td align="left">
+    String
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PATCH
+    </td>
+    <td align="left">
+    Text
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PLATFORM
+    </td>
+    <td align="left">
+    Controlled by administrator
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PERCENT
+    </td>
+    <td align="left">
+    String interpreted as numeric
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PLAN-RELEASE
+    </td>
+    <td align="left">
+    Controlled or string
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PRIORITY
+    </td>
+    <td align="left">
+    Enumerated
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PRIVACY
+    </td>
+    <td align="left">
+    Enumerated
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    RELEASE
+    </td>
+    <td align="left">
+    Controlled or string
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    REPRODUCIBILITY
+    </td>
+    <td align="left">
+    Enumerated
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    RESOLUTION
+    </td>
+    <td align="left">
+    Controlled by administrator
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    SEVERITY
+    </td>
+    <td align="left">
+    Enumerated
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    SIZE
+    </td>
+    <td align="left">
+    Enumerated
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    STATUS
+    </td>
+    <td align="left">
+    Controlled by administrator
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    SUBMITTER
+    </td>
+    <td align="left">
+    IDENTITY
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    SUMMARY
+    </td>
+    <td align="left">
+    String text
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    VOTES
+    </td>
+    <td align="left">
+    String interpreted as numeric
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div class="para"><p>The following tables describe the default controlled vocabularies
+associated with each slot.  Starred fields can have possible values
+added by the adminstrator.</p></div>
+<div class="tableblock">
+<table rules="all"
+frame="hsides"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table: Controlled Vocabularies - All Trackers</caption>
+<col width="182" />
+<col width="160" />
+<col width="160" />
+<col width="182" />
+<thead>
+  <tr>
+    <th align="left">
+    CFO field
+    </th>
+    <th align="left">
+    Berlios
+    </th>
+    <th align="left">
+    SourceForge
+    </th>
+    <th align="left">
+    Savane
+    </th>
+  </tr>
+</thead>
+<tbody valign="top">
+  <tr>
+    <td align="left">
+    BUG-GROUP
+    </td>
+    <td align="left">
+    None*
+    </td>
+    <td align="left">
+    None*
+    </td>
+    <td align="left">
+    None*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    CATEGORY
+    </td>
+    <td align="left">
+    None*
+    </td>
+    <td align="left">
+    None*
+    </td>
+    <td align="left">
+    None*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    COMP-VERSION
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    None*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PRIORITY
+    </td>
+    <td align="left">
+    1 - Lowest
+    </td>
+    <td align="left">
+    1 - Lowest
+    </td>
+    <td align="left">
+    1 - Lowest
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    2
+    </td>
+    <td align="left">
+    2
+    </td>
+    <td align="left">
+    2
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    3
+    </td>
+    <td align="left">
+    3
+    </td>
+    <td align="left">
+    3
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    4
+    </td>
+    <td align="left">
+    4
+    </td>
+    <td align="left">
+    4
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    5 - Medium
+    </td>
+    <td align="left">
+    5 - Medium
+    </td>
+    <td align="left">
+    5 - Medium
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    6
+    </td>
+    <td align="left">
+    6
+    </td>
+    <td align="left">
+    6
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    7
+    </td>
+    <td align="left">
+    7
+    </td>
+    <td align="left">
+    7
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    8
+    </td>
+    <td align="left">
+    8
+    </td>
+    <td align="left">
+    8
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    9 - Highest
+    </td>
+    <td align="left">
+    9 - Highest
+    </td>
+    <td align="left">
+    9 - Highest
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PERCENT
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    0%
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    10%
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    20%
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    30%
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    40%
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    50%
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    60%
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    70%
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    80%
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    90%
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    100%
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PLATFORM
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    None*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    GNU/Linux
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Microsoft Windows
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    *BSD
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    MacOS
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PRIVACY
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    Public
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Private
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    REPRODUCIBILITY
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    None
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Every Time
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Intermittent
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Once
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    SEVERITY
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    1 - Wish
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    2 - Minor
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    3 - Normal
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    4 - Important
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    5 - Blocker
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    6 - Security
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    SIZE
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    None
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Low &lt;30
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Medium 30-200
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    High &gt;200
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div class="para"><p>The PERCENT value is encoded as the numeric string 1.
+Other values are encoded without the percent.</p></div>
+<div class="tableblock">
+<table rules="all"
+frame="hsides"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table: Controlled Vocabularies - Bugs</caption>
+<col width="182" />
+<col width="160" />
+<col width="160" />
+<col width="182" />
+<thead>
+  <tr>
+    <th align="left">
+    CFO field
+    </th>
+    <th align="left">
+    Berlios
+    </th>
+    <th align="left">
+    SourceForge
+    </th>
+    <th align="left">
+    Savane
+    </th>
+  </tr>
+</thead>
+<tbody valign="top">
+  <tr>
+    <td align="left">
+    STATUS
+    </td>
+    <td align="left">
+    Open
+    </td>
+    <td align="left">
+    Open
+    </td>
+    <td align="left">
+    Open
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    Closed
+    </td>
+    <td align="left">
+    Closed
+    </td>
+    <td align="left">
+    Closed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Deleted
+    </td>
+    <td align="left">
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Pending
+    </td>
+    <td align="left">
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    RESOLUTION
+    </td>
+    <td align="left">
+    None
+    </td>
+    <td align="left">
+    None
+    </td>
+    <td align="left">
+    None*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    Fixed
+    </td>
+    <td align="left">
+    Accepted
+    </td>
+    <td align="left">
+    Fixed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    Invalid
+    </td>
+    <td align="left">
+    Duplicate
+    </td>
+    <td align="left">
+    Invalid
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    Wont Fix
+    </td>
+    <td align="left">
+    Fixed
+    </td>
+    <td align="left">
+    Wont Fix
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    Later
+    </td>
+    <td align="left">
+    Invalid
+    </td>
+    <td align="left">
+    Postponed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    Remind
+    </td>
+    <td align="left">
+    Later
+    </td>
+    <td align="left">
+    In Progress
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    Works For Me
+    </td>
+    <td align="left">
+    Out of Date
+    </td>
+    <td align="left">
+    Works For Me
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    Duplicate
+    </td>
+    <td align="left">
+    Postponed
+    </td>
+    <td align="left">
+    Duplicate
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Rejected
+    </td>
+    <td align="left">
+    Confirmed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Remind
+    </td>
+    <td align="left">
+    Need Info
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Wont Fix
+    </td>
+    <td align="left">
+    Ready For Test
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Works For Me
+    </td>
+    <td align="left">
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock">
+<table rules="all"
+frame="hsides"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table: Controlled vocabularies - Features</caption>
+<col width="182" />
+<col width="160" />
+<col width="160" />
+<col width="182" />
+<thead>
+  <tr>
+    <th align="left">
+    CFO field
+    </th>
+    <th align="left">
+    Berlios
+    </th>
+    <th align="left">
+    SourceForge
+    </th>
+    <th align="left">
+    Savane
+    </th>
+  </tr>
+</thead>
+<tfoot>
+  <tr>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    .Controlled voca
+    </td>
+    <td align="left">
+    bularies - Pat
+    </td>
+    <td align="left">
+    ches
+    </td>
+    <td align="left">
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    [grid="all"]
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    `---------------
+    </td>
+    <td align="left">
+    `-------------
+    </td>
+    <td align="left">
+    `-------------
+    </td>
+    <td align="left">
+    `---------------
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    CFO field
+    </td>
+    <td align="left">
+    Berlios
+    </td>
+    <td align="left">
+    SourceForge
+    </td>
+    <td align="left">
+    Savane
+    </td>
+  </tr>
+</tfoot>
+<tbody valign="top">
+  <tr>
+    <td align="left">
+    STATUS
+    </td>
+    <td align="left">
+    Open
+    </td>
+    <td align="left">
+    Open
+    </td>
+    <td align="left">
+    Open
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    Closed
+    </td>
+    <td align="left">
+    Closed
+    </td>
+    <td align="left">
+    Closed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    Deleted
+    </td>
+    <td align="left">
+    Deleted
+    </td>
+    <td align="left">
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Pending
+    </td>
+    <td align="left">
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    RESOLUTION
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    None
+    </td>
+    <td align="left">
+    None*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Accepted
+    </td>
+    <td align="left">
+    Fixed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Duplicate
+    </td>
+    <td align="left">
+    Wont Fix
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Fixed
+    </td>
+    <td align="left">
+    Works For Me
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Invalid
+    </td>
+    <td align="left">
+    Ready For Test
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Later
+    </td>
+    <td align="left">
+    In Progress
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Out of Date
+    </td>
+    <td align="left">
+    Postponed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Postponed
+    </td>
+    <td align="left">
+    Confirmed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Rejected
+    </td>
+    <td align="left">
+    Need Info
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Remind
+    </td>
+    <td align="left">
+    Duplicate
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Wont Fix
+    </td>
+    <td align="left">
+    Invalid
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Works For Me
+    </td>
+    <td align="left">
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock">
+<table rules="all"
+frame="hsides"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table: Controlled vocabularies - Support</caption>
+<col width="182" />
+<col width="160" />
+<col width="160" />
+<col width="182" />
+<thead>
+  <tr>
+    <th align="left">
+    CFO field
+    </th>
+    <th align="left">
+    Berlios
+    </th>
+    <th align="left">
+    SourceForge
+    </th>
+    <th align="left">
+    Savane
+    </th>
+  </tr>
+</thead>
+<tbody valign="top">
+  <tr>
+    <td align="left">
+    STATUS
+    </td>
+    <td align="left">
+    Open
+    </td>
+    <td align="left">
+    Open
+    </td>
+    <td align="left">
+    Open
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    Closed
+    </td>
+    <td align="left">
+    Closed
+    </td>
+    <td align="left">
+    Closed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    Deleted
+    </td>
+    <td align="left">
+    Deleted
+    </td>
+    <td align="left">
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    RESOLUTION
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    Pending
+    </td>
+    <td align="left">
+    None*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    None
+    </td>
+    <td align="left">
+    Done
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Accepted
+    </td>
+    <td align="left">
+    Wont Do
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Duplicate
+    </td>
+    <td align="left">
+    Works For Me
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Fixed
+    </td>
+    <td align="left">
+    Ready For Test
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Invalid
+    </td>
+    <td align="left">
+    In Progress
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Later
+    </td>
+    <td align="left">
+    Confirmed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Out of Date
+    </td>
+    <td align="left">
+    Postponed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Postponed
+    </td>
+    <td align="left">
+    Need Info
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Rejected
+    </td>
+    <td align="left">
+    Duplicate
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Remind
+    </td>
+    <td align="left">
+    Invalid
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Wont Fix
+    </td>
+    <td align="left">
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Works For Me
+    </td>
+    <td align="left">
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock">
+<table rules="all"
+frame="hsides"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table: Controlled vocabularies - Tasks</caption>
+<col width="182" />
+<col width="160" />
+<col width="160" />
+<col width="182" />
+<thead>
+  <tr>
+    <th align="left">
+    CFO field
+    </th>
+    <th align="left">
+    Berlios
+    </th>
+    <th align="left">
+    SourceForge
+    </th>
+    <th align="left">
+    Savane
+    </th>
+  </tr>
+</thead>
+<tbody valign="top">
+  <tr>
+    <td align="left">
+    STATUS
+    </td>
+    <td align="left">
+    Open
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    Open
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    Closed
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    Closed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    RESOLUTION
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    -
+    </td>
+    <td align="left">
+    None*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Done
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Cancelled
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Works For Me
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Ready For Test
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    In Progress
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Postponed
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td align="left">
+    Need Info
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div class="para"><p>Pending is a non-closed status in which development work is considered done,
+but some other work is needed (QA, documentation, etc.) The ideal workflow is
+Open &#8594; Pending &#8594; Closed. Of course, the real workflow is up to the
+developers.</p></div>
+</div>
+<h2 id="_additional_metadata_not_covered_by_the_ontology">Additional metadata not covered by the ontology</h2>
+<div class="sectionbody">
+<div class="para"><p>Under Berlios and SourceForge, every tracker has a list of
+canned responses associated with it,</p></div>
+<div class="para"><p>SourceForge trackers have a set of preferences that should probably be
+considered part of project state.</p></div>
+<div class="ilist"><ul>
+<li>
+<p>
+Whether or not to allow posting by anonymous users
+</p>
+</li>
+<li>
+<p>
+Whether or not closed artifacts should be reopened when submitter
+  attaches a new coment.
+</p>
+</li>
+<li>
+<p>
+Timeouts associated with overdue and Pending status on SourceForge.
+</p>
+</li>
+<li>
+<p>
+Canned texts to be shown on the artifact submission and tracker
+  browse pages.
+</p>
+</li>
+<li>
+<p>
+Hidden vs. visible preferences for all metadata other than ID and Summary.
+</p>
+</li>
+</ul></div>
+<div class="para"><p>Under Savane, every modifiable ARTIFACT field has some additional
+attributes:</p></div>
+<div class="ilist"><ul>
+<li>
+<p>
+Whether it is optional, mandatory, or mandatory only if it was
+  presented to the submitter.
+</p>
+</li>
+<li>
+<p>
+Who it is visible to (Project members, logged-in users, anonymous users)
+</p>
+</li>
+<li>
+<p>
+Screen rank
+</p>
+</li>
+<li>
+<p>
+Whether or not artifact changes are stored in the HISTORY list.
+</p>
+</li>
+</ul></div>
+<div class="para"><p>Under Savane, it is also possible to selectively allow or disallow
+various transitions in enumerated and controlled values.</p></div>
+<div class="para"><p>Savane also allows the definition of up to 10 each of custom text
+areas and select boxes, and up to 5 customizable date fields.  These
+have fieldnames of the form *_custom.</p></div>
+</div>
+<h2 id="_incompatibilities">Incompatibilities</h2>
+<div class="sectionbody">
+<div class="para"><p>Berlios and SourceForge lack many artifact fields found Savane and
+SavaneCleanup.</p></div>
+<div class="para"><p>The RESOLUTION slot is screen-labeled "Resolution" on Berlios, but
+"Status" on Savane.  The STATUS slot is labeled "Status:" on
+Berlios, but "Open/Closed" on Savane.</p></div>
+<div class="para"><p>The Berlios PATCH field could be imported to other systems as an
+ATTACHMENT object.</p></div>
+<div class="para"><p>Berlios and SourceForge have separate bug and feature trackers.
+Savane has no separate feature tracker; projects separate those by
+using the Bug Category or Bug Group field.</p></div>
+<div class="para"><p>Under SourceForge, there is no predefined Task tracker, but it is
+possible to create custom trackers that don't fit one of the named
+types.</p></div>
+<div class="para"><p>Savane ATTACHMENT objects lack the DESCRIPTION slot,  SourceForge
+ATTACHMENT objects lack MIMETYPE.</p></div>
+<div class="para"><p>SourceForge allows setting (in tracker preferences) the address of a
+commit list for new submissions, and its subscriptions have no
+explanation attached.  Savane allows setting a CC list for
+notification on all state changes, and each subscription can have an
+explanatory comment.  The CFO SUBSCRIBER slot assumes Savane-like
+behavior which Berlios cannot support and SourceForge can only
+partially support.</p></div>
+</div>
+<h2 id="_open_questions">Open Questions</h2>
+<div class="sectionbody">
+<div class="para"><p>We need a definition of MAILING-LIST.</p></div>
+<div class="para"><p>What are the controlled vocabularies for PRODUCT::TYPE,
+PRODUCT::ARCHITECTURE, and CAPABILITY?</p></div>
+<div class="para"><p>There are other kinds of objects that might be considered part of
+a project state: blogs, wikis, and forums leap to mind.  Which of
+these should we try to capture?</p></div>
+<div class="para"><p>How much of the state described under "Additional metadata" should
+be brought into CFO?  Is there a principled distinction between "state
+of the project" and "state of the forge"?</p></div>
+</div>
+<h2 id="_formalizing_the_ontology">Formalizing the ontology</h2>
+<div class="sectionbody">
+<div class="para"><p>The PROJECT class is a pretty close match to DOAP.  We'll
+need an extension field cfo#captured.</p></div>
+<div class="para"><p>The IDENTITY class can be represented by FOAF.</p></div>
+</div>
+<h2 id="_change_history">Change History</h2>
+<div class="sectionbody">
+<div class="para"><p>Version 1.0, 2009-10-24: Initial version.</p></div>
+<div class="para"><p>Version 1.1, 2009-10-24: Add CC-LIST tracker slot and subscriber
+object. Add RELEASE and PRODUCT objects.  Describe Pending status.
+ATTACHMENT object mutates some.  CC-LIST changes to SUBSCRIBER.
+NICK member added to IDENTITY.</p></div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2009-11-04 11:13:10 EDT
+</div>
+</div>
+</body>
+</html>

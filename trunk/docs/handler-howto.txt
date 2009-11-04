@@ -1,0 +1,481 @@
+= How To Write A ForgePlucker Handler Class ==
+Eric S. Raymond <esr@thyrsus.com>
+
+Forgeplucker is a web-scraper.  It pulls project data out of forge
+sites through the same HTML intercaces human beings use.  Therefore,
+for each distinct forge type, it needs a handler class to tell it 
+how to extract data from that forge. This document explains how to
+write a handler class.
+
+Note that to test a handler module, you will need to have developer
+access to a project on the target site. To test the bug-plucking logic
+you will need to be authorized as a bugtracker technician, able to
+modify bug entries. This is not because the program actually modifies
+them, but because it relies on parsing input form elements in the 
+bug detail pages.  To test the (not yt written) logic for eztacting
+project member permissions,  you will need to be a project
+administrator.
+
+== Defining the Handler ==
+
+Begin by declaring a new class for your forge type and adding it to
+the 'handlers' variable.  If it is associated with a well-known 
+domain address, add that association to the  'site_to_type' dictionary.
+
+Your handler should inherit from the GenericForge class, which will
+supply its logic skeleton and various default methods that often work for 
+forge systems descended from SourceForge.  
+
+--------------------------------------------------------------------------
+
+class FooForge(GenericForge):
+    "Handler class for forge sites running the FooForge hosting suite."
+    pass
+
+--------------------------------------------------------------------------
+
+The 'pass' is a placeholderr statement; as written, our class does not yet have
+real methods or members and is an exaxct clone of GenericForhe.
+
+== Logging In ==
+
+One of these methods FooForge will inherit is 'login_url()'.  The
+GenericForge version assumes that the site login form is at
+"http://%s/account/login.php", where %s gets the sitename substituted;
+this often works without modification. If the login page as at a
+different location on your forge system, you will have to write a
+login_url() method for you handler to override the one from
+GenericForge, but this is unusual.
+
+The first method you are likely to actually have to write will be be the
+site login method, usually something like this:
+
+--------------------------------------------------------------------------
+
+class FooForge(GenericForge):
+    "Handler class for forge sites running the FooForge hosting suite."
+    def login(self, username, password):
+        response = GenericForge.login(self, {
+            'form_loginname':username,
+            'form_pw':password,
+            'stay_in_ssl':1,
+            'login':'Login With SSL'}, 
+            "Personal Page")
+
+--------------------------------------------------------------------------
+
+You'll need to look at the login page source to see what form elements
+it actually requires. You'll also need to change "Personal Page" to a
+string that reliably occurs on the page you get on successful login,
+and does *not* occur on the page returned by an unsuccessful login.
+This is how your handler robot will tell whether it has entered the
+site properly and can proceed to fetch data.  GenericForge will take
+care of handling authentication cookies for your session once your
+handler has logged in.
+
+I find the Firefox LiveHeaders extension useful for debugging these
+methods.  It's easy to miss a required form element in the visual
+clutter of a login page's source, but with LiveHeaders, you can snoop
+the transaction to see what a successful login through Firefix
+is actually sending.
+
+== Getting the Project ID ==
+
+Projects on a forge system has a "Unix name" which is a legal Unix
+directory segment, conventionally an abbreviated name of the project
+in all-lowercase letters.  This name is used to generate path names
+for files and CGI scripts associated with the project.  On most
+modern forge systems, this Unix name identifies the project
+for all purposes.
+
+On forge systems descended from older SourceForge versions, each
+project has a second internal project ID that is all numeric and
+not related to the Unix name in any obvious way.  If that ID exists,
+it has to be used rather than the Unix name in generating various
+kinds of URL into the site.  
+
+If you find one of these older systems we don't already support,
+you'll have to write logic to get the numeric project ID from the Unix
+name, one, just after you log in.  For an example of how this is done,
+see the method numid_from_name() in the Berlios handler.
+
+In other mrethods you will need to use project Unix name or project 
+numeric ID as appropriate. In thre rest of this document, we'll assume 
+that your forge stem identifies projects in the modern style requiring
+Unix name only; adjust as needed.
+
+== Extracting Tracker State ==
+
+The first thing you'll want to do is write logic to extract the
+project's issue-tracker state.
+
+In order to write the code to do this, you need to know what
+GenericForge does to fetch tracker state.  For each tracker, it first
+tries to fetch an index page listing artifact IDs. If there are more IDs
+than fit on the first index page, (usually this means 'more than 50')
+it fetches the next index page and repeats.
+
+Once it has the entire list of artifact IDs, it then fetches the detail
+page for each ID on the page and parses out the artifact information on
+that.
+
+The code for doing all these things lives in tracker classlets, little
+auxiliary classes visible only from within your forge handler.  There
+will be one classlet for each tracker type the forge supports; a
+typical type set might include "bugs", "features", "support",
+"patches", and "tasks".  You will probably also want to write a base
+Tracker classlet for the others to inherit from; on well-designed
+forges most of the logic will live there, with only trivial variations
+in the derived ones.
+
+The most effective way to understand how tracker classlets work is
+to look at a working one.
+
+-------------------------------------------------------------------------------
+    class Tracker:
+        "Generic tracker classlet for Savane."
+        def __init__(self, parent):
+            self.parent = parent
+            self.optional = True
+            self.chunksize = 50
+            self.zerostring = "No matching items found"
+            self.artifactid_re = r'<a href="\?([0-9]+)">'
+            # This may yield anchor markup around the submitter name.
+            # Sometimes it's present, if the submitter is a known user
+            self.submitter_re = r'Submitted by:&nbsp;</td>\s*<td[^>]*>(<a[^>]*>[^<]*</a>|[^<]+)</td>'
+            self.date_re = r'Submitted on:[^<]*</td>\s*<td[^>]*>([^<]*)</td>'
+            self.ignore = ('canned_response',
+                           'comment_type_id',
+                           'depends_search_only_artifact',
+                           'depends_search_only_project',
+                           'reassign_change_artifact',
+                           "add_cc",
+                           "cc_comment",
+                           "new_vote")
+-------------------------------------------------------------------------------
+
+The tracker classlet needs a reference to the owning forge handler
+class. That's what self.parent is.
+
+On some forge systems, all projects always have all tracker types. On
+others, the set of trackers is configurable by project administrators.
+If the 'optional' member is False, treat failure to fetch an index
+page for this tracker as a fatal error. If it's true, simply skip this
+tracker when it's missing.
+
+The chunksize member is the expected number of bugs per index page.
+It's used in computing URLs for index page fetches.
+
+Some forges have a recognizable string that means a tracker index is
+empty.  This is good to know, because if we have such a 'zerostring'
+entry, and it's not on the page, and we still count no artifacts, we
+can throw an error.  If this ever happens it will mean the site has
+changed its HTML generation enough that the bug-plucker won't work
+any more. If that happens, we want to fail noisily rather than
+returning a bogus empty dump.
+
+The 'artifactid_re' member is the regular expression we use to mine bug
+ID numbers out of an index page.
+
+The 'submitter_re' and 'date_re' members are the regular expression we
+used to mine the artifact submitter and date out of an artifact detail page
+fetched by ID.
+
+To get the rest of the data about an artifact from its detail page,
+GenericForge does various kinds of parsing of the HTML.  One thing
+it looks for is the contents of form fields.  The 'ignore' member
+is a list of the names of form fields to ignore.  In this example, 
+all the names up to 'reassign_change_artifact' belong to fields on
+auxiliary forms that control the forge interface rather than
+reflecting project data.  The later ones are for user entry fields
+for new data; they'll be empty in this case.
+
+-------------------------------------------------------------------------------
+        def access_denied(self, page, issue_id=None):
+            return issue_id is not None and re.search("This task has [0-9]+ encouragements? so far.", page)
+-------------------------------------------------------------------------------
+
+The method for telling whether we failed to get tracker technician
+access to the project. Without this, we don't get the right form
+elements on detail pages to be able to parse out the data. This metod
+is called on index pages with issue_id=None and on detail pages with
+the error ID as argument; if it is ever True, the generic forge
+framework code will throw an access-denied error.
+ 
+-------------------------------------------------------------------------------
+        def has_next_page(self, page):
+            m = re.search("([0-9]+) matching items - Items [0-9]+ to ([0-9]+)", page)
+            if not m:
+                self.parent.error("missing item count header")
+            else:
+                return int(m.group(1)) > int(m.group(2))
+-------------------------------------------------------------------------------
+
+The method for checking whether or not there's a next page.  Observe
+that it throws an error if it doesn't see what it's expecting.  In order
+not to get spurious data, it's vest when our web-scraping methhods
+have lots and lots of sanity checks, and fail loudly when one
+doesn't pass.
+
+-------------------------------------------------------------------------------
+        def chunkfetcher(self, offset):
+            "Get a tracker index page - all artifact IDs, open and closed.."
+            return "%s/index.php?go_report=Apply&group=%s&func=browse&set=custom&chunksz=50&offset=%d" % (self.type, self.parent.project_name, offset)
+        def detailfetcher(self, artifactid):
+            "Generate a detail URL for the specified artifact ID."
+            return "%s/index.php?%d" % (self.type, artifactid)
+-------------------------------------------------------------------------------
+
+Generate the URLs to get index pages and artifact detail pages.
+Note that the URLs generated are local; the GenericForge methods will
+add the sitename and service prefix.
+
+-------------------------------------------------------------------------------
+        def narrow(self, text):
+            "Get the section of text containing editable elements."
+            return self.parent.skipspan(text, "form", 1)
+-------------------------------------------------------------------------------
+
+Now we get to the more difficult parts. First, the 'narrow()' method
+gets the part of the webpage that is interesting for data-extraction
+purposes.  This will be an HTML <FORM> element, often but not
+necessarily the second one in sequence. (On many systems there will be
+an earlier form containing a site search box, which is rendered as
+part of a sidebar.)
+
+Once the right form has been extracted, there's a lot of data that the
+GenericForge code can extract automatically just by looking at
+<SELECT> elements and text <INPUT> boxes. 
+
+The artifact's Open/Closed status will do for an example.  Because we
+logged in with tracker-technician credentials, the Open/Closed status
+is presented as a drop-down menu generated by a select.  By looking
+for the <SELECT>, we avoid having to parse prsentation-level tag soup.
+As a side benefit, looking at the contained <OPTION> elements tells us
+not only the current value of the field, but all possible values.
+
+The most important thing we get from text <INPUT> elements is the
+artifact summary line.  If the project has custom metadata fields,  for
+tems, this part of the parse will pick them up as well.
+
+This is also when the 'submitter_re' and 'submitter_date' regexpa get 
+applied to extract the submitter's name.  These aren't in form elements
+because they can't be modified after the artifact is created.
+
+Most of the forge-type-specific work of parsing datra out of a detail
+page goes in a method called 'custom' which has to be custom-written
+for each forge type.  Here's the one for Savane.  It's responsible 
+for parsing artifact comments (that part is handed iff to a helper),
+votes, and modification history.  Essentially, everything we can't
+extract automatically be looking at <FORM> elements.
+
+-------------------------------------------------------------------------------
+        def custom(self, contents, artifact):
+            artifact['comments'] = self.parent.parse_followups(contents)
+            artifact["attachments"] = []
+            for m in re.finditer(r'<a href="([^"]*)">file #([0-9]+): &nbsp;([^<]*)</a> added by <a href="[^"]*">([^<]*)</a> <span class="smaller">\((\w+) - ([^)]*)\)', contents):
+                filename = m.group(1)
+                fileid = m.group(2)
+                filename = m.group(3)
+                attacher = m.group(4)
+                size = m.group(5)
+                mimetype = m.group(6)
+                artifact["attachments"].append({
+                    "class":"ATTACHMENT",
+                    "filename": filename,
+                    "id": fileid,
+                    "attached_by": attacher,
+                    "size":size,
+                    "mimetype":mimetype,
+                    })
+            if ("No files currently attached" in contents) != (len(artifact["attachments"])==0):
+                self.parent.error("garbled file-attachment section, possible version-skew problem.")
+            artifact['votes'] = None
+            if "There is 1 vote so far." in contents:
+                artifact['votes'] = 0
+            else:
+                m = re.search("There are ([0-9]*) votes so far.", contents)
+                if m:
+                    artifact['votes'] = int(m.group(1))
+            if artifact['votes'] is None:
+                raise('cannot find a vote indication')
+            artifact["history"] = []
+            for (date, by, field, old, dummy, new) in self.parent.table_iter(contents,
+                                                                             "History",
+                                                                             6,
+                                                                             "history",
+                                                                             has_header=True):
+
+                # Savane leaves the Date and Changed-by fields blank
+                # (actually, containing &nbsp;) when they represent
+                # the second or later field changes made at one time.
+                if date[-1].isdigit():
+                    date = self.parent.isodate(date)
+                elif date == '&nbsp;':
+                    date = ''
+                if by == '&nbsp;':
+                    by = ''
+                artifact["history"].append({"class":"EVENT",
+                                        'field': field,
+                                        'old': old,
+                                        'new': new,
+                                        'date':date,
+                                        'by': by})
+-------------------------------------------------------------------------------
+
+It's very common for forge systems to structure sequences in output
+(such as sequences of comments, or modification histories) as tables
+A lot of the hard work in this implementation of 'custom' gets done by
+helper functions that walk through tales with specific titles. 
+
+Now let's look at the actual tracker classes.  Savane has s relatively
+well-defined user interface; the trackers all behave the same way,
+so users can form consistent behavioral expectations.
+
+-------------------------------------------------------------------------------
+    class BugTracker(Tracker):
+        def __init__(self, parent):
+            Savane.Tracker.__init__(self, parent)
+            self.type = "bugs"
+    class PatchTracker(Tracker):
+        def __init__(self, parent):
+            Savane.Tracker.__init__(self, parent)
+            self.type = "patch"
+    class TaskTracker(Tracker):
+        def __init__(self, parent):
+            Savane.Tracker.__init__(self, parent)
+            self.type = "task"
+    class SupportTracker(Tracker):
+        def __init__(self, parent):
+            Savane.Tracker.__init__(self, parent)
+            self.type = "support"
+-------------------------------------------------------------------------------
+
+The 'type' member will be used to name the tracker data in the
+output report.
+
+Now we'll look at the Savane handler class itself:
+
+-------------------------------------------------------------------------------
+    def __init__(self, host, project_name):
+        GenericForge.__init__(self, host, project_name);
+        self.host = host
+        self.project_name = project_name
+        self.verbosity = 0
+        self.trackers = [Savane.BugTracker(self),
+                         Savane.SupportTracker(self),
+                         Savane.TaskTracker(self),
+                         Savane.PatchTracker(self)]
+-------------------------------------------------------------------------------
+
+The key thing here is instantiating the list of tracker objects.  The
+GenericForge code will walk through this list looking for data from
+each of them.
+
+Our next function canonicalizes dates into ISO 8601 form.  Other code
+calls this through the GenericForge method isodate(), which will catch
+format mismatch errors and convert them to ForgePlucker errors we can
+dispatch on. The code should be pretty self-explanatory.
+
+-------------------------------------------------------------------------------
+    @staticmethod
+    def canonicalize_date(date):
+        "Canonicalize Savane dates to ISO."
+        # SavaneCleanup dates will look like this: Fri 22 Jun 2001
+        # 09:54:07 AM UTC. The timezone is variable according to the
+        # user's preferences; sometimes SavaneCleanup omits the
+        # timezone. Beware that strptime(3) doesn't actually interpret
+        # %Z, it only barfs on bad values. So we have to do it.
+        #
+        # Savane dates may look like this: "Sun Jul 27 11:08:45 2008"
+        # (note the absence of timezone and that time and year are swapped)
+        # or like this: "Thursday 10/15/2009 at 06:40".
+        if date == '-':			# Gna! sometimes generates these
+            return 'None'
+        if '/' in date:			# Gna! date
+            t = time.strptime(date, "%A %m/%d/%y at %H:%M")
+        elif date[-1].isalpha():	# Savannah date with timezone
+            t = time.strptime(date, "%a %d %b %Y %H:%M:%S %p %Z")
+        else:				# Savannah date without timezone
+            t = time.strptime(date, "%a %b %d %H:%M:%S %Y")
+        if "UTC" in date or "GMT" in date:
+            secs = calendar.timegm(t)	# struct time in UTC to secs since epoch
+        else:
+            secs = time.mktime(t)	# struct local time to secs since epoch
+        t = time.gmtime(secs)		# secs since epoch to struct UTC time
+        return time.strftime("%Y-%m-%dT%H:%M:%SZ", t)
+-------------------------------------------------------------------------------
+
+Every forge handler needs a login method. The GenericForge method
+takes a dictionary of requirted login-form elements and a check
+string.  If the form response fails to contain the chreck string, 
+the login failed and the GenericForge code will throw an error.
+
+-------------------------------------------------------------------------------
+    def login(self, username, password):
+        response = GenericForge.login(self, {
+            'uri':'/',
+            'form_loginname':username,
+            'form_pw':password,
+            'stay_in_ssl':1,
+            'brotherhood':1,
+            'login':'Login'}, "My Incoming Items")
+-------------------------------------------------------------------------------
+
+Finally, the code for parsing comments on detail pages.  Older
+SourceForgebased systems distinguish between the original submission
+and other comments, presenting them slightly different.  Savane
+doesn't -- the submission comment is just comment #0 in the sequence.
+
+-------------------------------------------------------------------------------
+    def parse_followups(self, contents):
+        "Parse followups out of a displayed page in a bug or patch tracker."
+        comments = []
+        # Look for the anchor Savane creates for the Discussion section.
+        begin = contents.find('href="#discussion"')
+        if begin == -1:
+            self.notify("no discussion")
+        else:
+            contents = contents[begin:].replace("<br />", "<br/>")
+            # There's no decorative header element in this table.
+            for row in walk_table(contents):
+                try:
+                    # Savane comments have *two* column elents per comment,
+                    # one for date and text, the second for the user.
+                    (comment, submitter) = row
+                    date = comment.split("<br/>")[0]
+                    comment = "\n".join(comment.split("<br/>")[1:])
+                    # Submitter's name may have HTML markup in it.
+                    # But first toss everything after <br/>, it's image
+                    # cruft.
+                    submitter = submitter.split("<br/>")[0]
+                    submitter = dehtmlize(submitter)
+                    # Throw out everything past the terminating comma
+                    # If this leads to an ill-formed date, because somebody
+                    # moved the punctuation, isodate() should throw an error
+                    m = re.search("<[^>]+>([^<]+),", date)
+                    date = self.isodate(m.group(1))
+                    # Comment may have HTML in it. Do normal markup
+                    # stripping,but first deal with the funky way that
+                    # Savane emits paragraph delimiters.
+                    comment = comment.replace("\n\n", "\n")
+                    comment = comment.replace("\n</p>\n<p>", "\n")
+                    comment = blocktext(dehtmlize(comment))
+                    # Stash the result.
+                    comments.append({"class":"COMMENT",
+                                     'submitter':submitter,
+                                     'date':date,
+                                     'comment':comment})
+                except ValueError:
+                    raise ForgePluckerException("mangled followup,")
+        return comments
+-------------------------------------------------------------------------------
+
+== Testing Your Handler Class ==
+
+To verify your handler class, you should either use an existing
+oroject on the target forge of which you are already a member, or
+create a new test project.  Some random project won't do, as you will
+need tracker technician access to extract bug state.  It's best if you
+can create a dedicated forgeplucker-test project in which you can
+manipulate and inspect the data as you like.

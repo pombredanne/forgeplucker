@@ -1,0 +1,89 @@
+== ForgePlucker Frequently Asked Questions ==
+
+ForgePlucker is a young project to have a FAQ, but some
+questions came up repeatedly during early design discussions
+around the project launch.
+
+=== What do you mean by "project state", anyway? ===
+
+We aim to recover everything needed to get a project up and running on
+another forge site. Source-code repositories, bug tracker state,
+webspace and wikis, mailing lists, the whole thing.
+
+=== Why web-scrape rather than trying to build exporters into existing forges? ===
+
+The architectures of most forge systems would be very difficult to
+modify to support native exporters: see
+file:jail-breaking-the-forges.html[this discussion]. Even if they
+weren't, developing and deploying to each and every forge site out
+there would be way too much like work. Most hosting sites are run on a
+shoestring budget by dedicated but overworked adnministrators who are
+unlikely to be receptive to potentially disruptive upgrades with
+obvious security risks attached. We'd welcome their cooperation, but
+by writing ForgePlucker we avoid being critically dependent on it.
+
+=== How do you expect to do reliable capture through web interfaces, aren't they chronically unstable? ===
+
+They're not as unstable as you might think. One of the consequences of
+the bad architectural decisions most forges have inherited is that
+interfaces are tightly coupled to implementation; accordingly, forge
+interfaces tend to change slowly when they change at all.
+
+=== How do you recover good data from HTML that's presentation-centered? ===
+
+Forgeplucker plays various tricks to ignore presentation level and cut
+through to structure.  An important one is relying heavily on the 
+structure of generated HTML select menus, which are easy to parse out
+of the surrounding tag soup and carry not just the existing values of
+important metadata but much of the information about what values
+they can have.
+
+=== OK, but doesn't that sort of thing have to be messy and huge and hard to maintain? ===
+
+You'd be surprised. The initial proof-of-concept, which pulled
+bugtracker state out of Berlios, was less than 500 lines of Python.
+More than half of that moved to our GenericForge class and is shared
+among types.  The Berlios and Savane handler classes were about
+200 and less than 100 lines each when we first published; we estimate
+that a full ForgePlucker implementation will cost not more than about
+400 lines of Python per site type.
+
+=== Your dump format varies by site type. Shouldn't you have designed a standardized representation first? ===
+
+We think it's smarter to get 100% state capture from a wide variety of
+forge types first, then use the domain knowledge we gain to design a
+format that will really work.
+
+=== I'm a forge-system maintainer, and I don't want my system to be a jail. How can I cooperate? ===
+
+First: put a meta tag on your generated main page with type and
+version attributes identifying your forge software, so our bot will
+know what it's dealing with. Second: Provide a per-project URL that
+returns a machine-parseable report on as much of the state as you can
+conveniently dump.  It doesn't have to be our format, as long as it's
+unambiguous and version-stamped and relatively easy to parse (XML or
+JSON are good bases).  You give us the spec, we'll write the parser.
+For other things you can do, ask on our dev list.
+
+=== I'm a random hacker and this project looks interesting.  What kind of help do you need? ===
+
+The main thing we need is developers who care a lot about individual
+forge types and are motivated to keep their handler classes
+complete and up to date.  We don't expect this to be a large job after
+the initial implementation is done (the first handler class took
+four days, the second about two), but it does mean being ready to
+respond quickly on the (probably rare) occasions when something
+breaks.
+
+===  Is ForgePlucker a stepping stone to something else, like writing a new forge system? ===
+
+Obviously, the usefulness of project-state export is limited if there
+aren't any automatic importers.  But there are several ways the future
+might play out.  In one, existing forges cheer us on and make the
+effort required to implement importers for our interchange format;
+everybody wins.  In another, our devs eventually write a new forge
+system that can import from anywhere, and that pressures other forge
+designers into writing importers. In a third, existing forges are too
+technically and/or politically broken to write importers, so we write a
+forge and it takes over the world.  We don't care which of those
+happens.  Yet.
