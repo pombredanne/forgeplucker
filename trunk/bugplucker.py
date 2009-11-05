@@ -395,7 +395,6 @@ code may generalize.
 Things it doesn't grab yet:
 * Tasks and task interdependencies.
 * Mantis bugs.
-* Canned Responses
 
 Bug, feature-request, and patch trackers always exist in conjunction
 with any given project, and are simply empty if no artifacts have been
@@ -637,7 +636,6 @@ The Savane handler provides bug-plucking machinery for a Savane
 site. It is used for Gna! and Savannah.
 
 The status of all trackers (bug, patch, support, and task) is extracted.
-It does not currently pick up dependencies, or canned responses..
 """
 # There are two minor variants of Savane. The original Savane is used on Gna!,
 # SavaneCleanup on Savannah. The date formats differ, see the canonicalize_date
@@ -772,6 +770,13 @@ It does not currently pick up dependencies, or canned responses..
                     reason = m.group(2)
                     artifact["subscribers"].append({"subscriber":self.parent.identity(subscriber),
                                                     "reason":reason})
+            # Capture the dependency list, if present
+            artifact["dependents"] = []
+            dpstart = contents.find("Items that depend on this one")
+            if dpstart > -1:
+                tail = contents[dpstart:]
+                for m in re.finditer(r'\([a-zA-Z ]* #([0-9]+), [a-zA-Z ]*\)', tail):
+                    artifact["dependents"].append(int(m.group(1)))            
     class BugTracker(Tracker):
         def __init__(self, parent):
             Savane.Tracker.__init__(self, parent)
