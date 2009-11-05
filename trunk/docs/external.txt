@@ -5,7 +5,7 @@ Some of this material has been adapted into portions of the project
 plan and design documents; much of it is out of scope and has not. 
 
 If you have any interest in what the project founder was thinking,
-these might be worth a browae.  If you are a new developer trying to
+these might be worth a browse.  If you are a new developer trying to
 grasp the design philosophy of the project, they're definitely worth
 a browse.
 
