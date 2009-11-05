@@ -28,3 +28,8 @@ We welcome cooperation from forge designers interested in better
 export/import tools for their systems. We intend to make that job easier by
 defining and maintaining a standard interchange format so you don't
 have to.
+
+The project is hodted at <a
+href="https://gna.org/projects/forgeplucker/">Gna!>/a>; to
+participate, you will need a <a href="https://gna.org/">Gna signon</a>
+and a Subversion client.

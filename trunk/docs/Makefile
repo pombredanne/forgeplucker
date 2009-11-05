@@ -9,7 +9,7 @@
 XML = forgeplucker.xml
 TXT = forgeplucker-plan.txt jailbreaking-the-forges.txt savant.txt FAQ.txt \
 	handler-howto.txt forge-identification.txt forge-ontology.txt
-WEB = webpage.txt
+WEB = index.txt
 DOCS = $(XML) $(TXT)
 ALL = $(SOURCES) $(DOCS) $(WEB) $(MISC)
 
@@ -21,7 +21,7 @@ html: $(XML:.xml=.html) $(DOCS:.txt=.html) $(WEB:.txt=.html)
 # (a peer of trunk) are propagated to the actual webspace via a 
 # postcommit hook.
 sitecopy: html
-	mv *.html ../../website
+	cp *.html ../../website
 
 clean:
 	rm -f *.html *~
