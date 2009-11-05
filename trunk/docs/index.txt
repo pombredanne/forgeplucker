@@ -6,18 +6,31 @@ sites). Bad architectural decisions in early forge systems have made
 their descendants into (unintentional) data jails; ForgePlucker
 will break our projects free.
 
-Project documents:
+== Project documents ==
 
 - http:jailbreaking-the-forges.html[A call to jailbreak the forges]
 - http:forgeplucker-plan.html[A detailed project plan].
 - http:forgeplucker.html[The forgeplucker manual page]
 - http:savant.html[Design study for a forge built around import/export
   and scripting]
-- A http:FAQ.html[Frequently Asked Questions list]
+- http:FAQ.html[Frequently Asked Questions]
 - http:handler-howto.html[How To Write A ForgePlucker Handler Class]
 - http:forge-identification.html[The Forge-Identification Meta Header]
 - http:forge-ontology.html[Forge Ontology]
 - http:external.html[The blog entries that gave birth to this]
+
+== Project Home and Communications ==
+
+The project is hosted at https://gna.org/projects/forgeplucker/[Gna!];
+to participate, you will need a https://gna.org/[Gna! signon] and a
+Subversion client.
+
+We have an IRC channel, '#forgeplucker' on Freenode.
+Developers and interested parties are encouraged to watch it.
+
+There is a project mailing list, https://mail.gna.org/listinfo/forgeplucker-dev/[forgeplucker-dev@gna.org].
+
+== How You Can Help ==
 
 We are actively seeking interested developers.  Ideally, each forge
 type should have an owner-advocate who takes the lead in ensuring that
@@ -30,6 +43,3 @@ export/import tools for their systems. We intend to make that job easier by
 defining and maintaining a standard interchange format so you don't
 have to.
 
-The project is hosted at https://gna.org/projects/forgeplucker/[Gna!];
-to participate, you will need a https://gna.org/[Gna signon] and a
-Subversion client.
