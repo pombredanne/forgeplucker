@@ -128,8 +128,10 @@ class GenericForge:
     def notify(self, msg):
         "Notification hook, can be overridden in subclasses."
         sys.stderr.write(sys.argv[0] + ": " + self.where + ": " + msg + "\n")
-    def error(self, msg):
+    def error(self, msg, ood=True):
         "Error hook, can be overridden in subclasses."
+        if ood:
+            msg += " - handler class probably out of date"
         raise ForgePluckerException(sys.argv[0] + ": " + self.where + ": " + msg + "\n")
     def isodate(self, date):
         "Canonicalize a date to ISO, catching errorss and reporting location."
@@ -143,7 +145,7 @@ class GenericForge:
             self.notify("dispatching to " + self.__class__.__name__)
         response = self.fetch(self.login_url(), "Login Page", params)
         if checkstring not in response:
-            self.error("authentication failure on login")
+            self.error("authentication failure on login", ood=False)
     def pluck_tracker_ids(self, tracker):
         "Fetch the ID list from the specified tracker."
         chunk_offset = 0
@@ -161,7 +163,7 @@ class GenericForge:
                         self.notify("'%s' tracker is not configured" % tracker.type)
                     return None
                 else:
-                    self.error("missing continuation page " + indexpage)
+                    self.error("missing continuation page "+indexpage,ood=False)
             elif tracker.zerostring and tracker.zerostring in page:
                 return None
             if tracker.access_denied(page):
@@ -194,11 +196,11 @@ class GenericForge:
         contents = self.fetch(tracker.detailfetcher(bugid), "Detail page")
         # Modification access to the tracker is required
         if tracker.access_denied(contents, bugid):
-            self.error("Tracker technician access was denied.")
+            self.error("tracker technician access was denied.", ood=False)
         artifact = {"class":"ARTIFACT", "id":bugid}
         m = re.search(tracker.submitter_re, contents)
         if not m:
-            self.error("no submitter")
+            self.error("no submitter found")
         submitter = m.group(1)
         m = re.search(tracker.date_re,contents)
         if not m:
@@ -337,7 +339,7 @@ class GenericForge:
         else:
             (name, mailaddr) = email.utils.parseaddr(raw)
             if not name and not mailaddr:
-                self.error('cannot get identity from "%s"' % raw)
+                self.error('cannot get identity from "%s"' % raw, ood=False)
             if name:
                 cooked['name'] = name
             if email:
@@ -483,7 +485,7 @@ submitted to them.
             m = re.search(r"<H2>\[ [A-Za-z ]* #[0-9]+ \] ([^<]*)</H2>", \
                           contents)
             if not m:
-                self.error("no summary")
+                self.error("no summary found")
             bug["summary"] = dehtmlize(m.group(1))
             # We're done with the header metadata, simplify life.
             contents = contents[m.end(0):]
@@ -530,7 +532,7 @@ submitted to them.
             m = re.search(r"<H2>\[ [A-Za-z ]* #[0-9]+ \] ([^<]*)</H2>", \
                           contents)
             if not m:
-                self.error("no summary")
+                self.error("no summary found")
             # Delete fields that will be redundant with comment headers 
             del feature['date']
             del feature['submitter']
@@ -573,7 +575,7 @@ submitted to them.
             m = re.search(r"<H2>\[ [A-Za-z ]* #[0-9]+ \] ([^<]*)</H2>", \
                           contents)
             if not m:
-                self.error("no summary")
+                self.error("no summary found")
             patch['summary'] = dehtmlize(m.group(1))
             # Ontological smoothing.  Interpret a patch as an attachment
             attacher = patch['submitter']
@@ -720,7 +722,7 @@ The status of all trackers (bug, patch, support, and task) is extracted.
                     'description': description,
                     })
             if ("No files currently attached" in contents) != (len(artifact["attachments"])==0):
-                self.parent.error("garbled file-attachment section, possible version-skew problem (%d items)." % len(artifact["attachments"]))
+                self.parent.error("garbled file-attachment section")
             # Capture votes
             artifact['votes'] = None
             if "There is 1 vote so far." in contents:
@@ -730,7 +732,7 @@ The status of all trackers (bug, patch, support, and task) is extracted.
                 if m:
                     artifact['votes'] = int(m.group(1))
             if artifact['votes'] is None:
-                self.parent.error('cannot find a vote indication')
+                self.parent.error('cannot find vote indication')
             # Capture the history list
             artifact["history"] = []
             for (date,
@@ -776,7 +778,11 @@ The status of all trackers (bug, patch, support, and task) is extracted.
             if dpstart > -1:
                 tail = contents[dpstart:]
                 for m in re.finditer(r'\([a-zA-Z ]* #([0-9]+), [a-zA-Z ]*\)', tail):
-                    artifact["dependents"].append(int(m.group(1)))            
+                    artifact["dependents"].append(int(m.group(1)))
+                if not artifact["dependents"]:
+                    self.error("garbled dependency table")
+            elif contents.find("Items that depend on this one: None found")==-1:
+                self.error("missing both dependency table and no-depemdencies message")
     class BugTracker(Tracker):
         def __init__(self, parent):
             Savane.Tracker.__init__(self, parent)
