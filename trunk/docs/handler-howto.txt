@@ -474,7 +474,7 @@ doesn't -- the submission comment is just comment #0 in the sequence.
 == Testing Your Handler Class ==
 
 To verify your handler class, you should either use an existing
-pcroject on the target forge of which you are already a member, or
+project on the target forge of which you are already a member, or
 create a new test project.  Some random project won't do, as you will
 need tracker technician access to extract bug state.  It's best if you
 can create a dedicated forgeplucker-test project in which you can

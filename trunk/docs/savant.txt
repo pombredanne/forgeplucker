@@ -493,5 +493,5 @@ transparency of the system.
 
 2. Standard Python library classes - email, json, and smtp in
 particular - will supply much of the front-end plumbing. It may be
-possible to use Twisted[http://twistedmatrix.com/] to avoid
+possible to use http://twistedmatrix.com/[Twisted] to avoid
 hand-rolling most of the daemon framework.
