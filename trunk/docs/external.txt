@@ -1,0 +1,24 @@
+= Blogging And All That =
+
+It could be said that this project began as a series of blog posts.
+Some of this material has been adapted into portions of the project
+plan and design documents; much of it is out of scope and has not. 
+
+If you have any interest in what the project founder was thinking,
+these might be worth a browae.  If you are a new developer trying to
+grasp the design philosophy of the project, they're definitely worth
+a browse.
+
+2009-10-08: http://esr.ibiblio.org/?p=1282[Three Systemic Problems with Open-Source Hosting Sites]
+
+2009-10-09: http://esr.ibiblio.org/?p=1295[Looking Deeper into Forges, And Not Liking What I See]
+
+2009-10-12: http://esr.ibiblio.org/?p=1302[How Not To Tackle the Mess around Forges]
+
+2009-10-29: http://esr.ibiblio.org/?p=1359[The future of software forges] 
+
+2009-11-04: http://esr.ibiblio.org/?p=1369[Announcing ForgePlucker]
+
+2009-11-05: http://esr.ibiblio.org/?p=1387[Structure Is Not Meaning]
+	
+More may be added in the future.

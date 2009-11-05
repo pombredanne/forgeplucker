@@ -12,7 +12,7 @@ access to a project on the target site. To test the bug-plucking logic
 you will need to be authorized as a bugtracker technician, able to
 modify bug entries. This is not because the program actually modifies
 them, but because it relies on parsing input form elements in the 
-bug detail pages.  To test the (not yt written) logic for eztacting
+bug detail pages.  To test the (not yet written) logic for eztacting
 project member permissions,  you will need to be a project
 administrator.
 
@@ -479,3 +479,14 @@ create a new test project.  Some random project won't do, as you will
 need tracker technician access to extract bug state.  It's best if you
 can create a dedicated forgeplucker-test project in which you can
 manipulate and inspect the data as you like.
+
+We presently have forgeplucker-test projects at the following places:
+
+Launchpad:: https://launchpad.net/forgepluckertest
+
+== Project Design Philosophy ==
+
+Before coding, it would probably be a good idea for you to
+at least skim the http:external.html[blog entries that gave birth to
+this project].  It may help you understand the design philosophy
+of the code better.

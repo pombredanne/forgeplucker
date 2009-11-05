@@ -8,7 +8,8 @@
 
 XML = forgeplucker.xml
 TXT = forgeplucker-plan.txt jailbreaking-the-forges.txt savant.txt FAQ.txt \
-	handler-howto.txt forge-identification.txt forge-ontology.txt
+	handler-howto.txt forge-identification.txt forge-ontology.txt \
+	external.txt
 WEB = index.txt
 DOCS = $(XML) $(TXT)
 ALL = $(SOURCES) $(DOCS) $(WEB) $(MISC)

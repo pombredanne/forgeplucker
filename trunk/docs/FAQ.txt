@@ -17,7 +17,7 @@ modify to support native exporters: see
 file:jail-breaking-the-forges.html[this discussion]. Even if they
 weren't, developing and deploying to each and every forge site out
 there would be way too much like work. Most hosting sites are run on a
-shoestring budget by dedicated but overworked adnministrators who are
+shoestring budget by dedicated but overworked administrators who are
 unlikely to be receptive to potentially disruptive upgrades with
 obvious security risks attached. We'd welcome their cooperation, but
 by writing ForgePlucker we avoid being critically dependent on it.
