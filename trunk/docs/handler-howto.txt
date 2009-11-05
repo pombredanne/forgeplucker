@@ -1,4 +1,4 @@
-= How To Write A ForgePlucker Handler Class ==
+= How To Write A ForgePlucker Handler Class =
 Eric S. Raymond <esr@thyrsus.com>
 
 Forgeplucker is a web-scraper.  It pulls project data out of forge
