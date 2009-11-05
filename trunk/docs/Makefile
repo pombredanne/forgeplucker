@@ -23,5 +23,12 @@ html: $(XML:.xml=.html) $(DOCS:.txt=.html) $(WEB:.txt=.html)
 sitecopy: html
 	cp *.html ../../website
 
+# Only works if you have root SSH keys installed on the Gna! host.
+# Will break if the virtual-host layout changes; use only in
+# emergencies, and log in to check the layout first.
+forcecopy: html
+	scp *.html root@lisa.gna.org:/chroot/homepage/var/www/forgeplucker
+	ssh root@lisa.gna.org "cd /chroot/homepage/var/www/forgeplucker; chown www-data.www-data *.html"
+
 clean:
 	rm -f *.html *~
