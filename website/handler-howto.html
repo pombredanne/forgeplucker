@@ -366,9 +366,16 @@ administrator.</p></div>
 </div>
 <h2 id="_defining_the_handler">Defining the Handler</h2>
 <div class="sectionbody">
+<div class="para"><p>Handler classes live in a multi-file module called <em>foregeplucker</em>;
+look in the directory by that name in the source distribution.  A new
+handler named <em>Foo</em> should live in a file named
+forgeplucker/handle_foo.py.  Other modules in that directory are
+support code: htmlscrape.py contains low-level functions for scraping
+HTML, and generic.py is the framework code for a generic forge.</p></div>
 <div class="para"><p>Begin by declaring a new class for your forge type and adding it to
-the <em>handlers</em> variable.  If it is associated with a well-known
-domain address, add that association to the  <em>site_to_type</em> dictionary.</p></div>
+the <em>handlers</em> variable in forgeplucker/<em>init</em>.py; you will also
+need a corresponding import statement.  If it is associated with a well-known
+domain address, add that association to the <em>site_to_type</em> dictionary.</p></div>
 <div class="para"><p>Your handler should inherit from the GenericForge class, which will
 supply its logic skeleton and various default methods that often work for
 forge systems descended from SourceForge.</p></div>
@@ -784,22 +791,38 @@ doesn't &#8212; the submission comment is just comment #0 in the sequence.</p></
 <h2 id="_testing_your_handler_class">Testing Your Handler Class</h2>
 <div class="sectionbody">
 <div class="para"><p>To verify your handler class, you should either use an existing
-oroject on the target forge of which you are already a member, or
+project on the target forge of which you are already a member, or
 create a new test project.  Some random project won't do, as you will
 need tracker technician access to extract bug state.  It's best if you
 can create a dedicated forgeplucker-test project in which you can
 manipulate and inspect the data as you like.</p></div>
 <div class="para"><p>We presently have forgeplucker-test projects at the following places:</p></div>
-<div class="hlist"><table>
-<tr>
-<td class="hlist1">
-Launchpad
-</td>
-<td class="hlist2">
-<a href="https://launchpad.net/forgepluckertest">https://launchpad.net/forgepluckertest</a>
-</td>
-</tr>
-</table></div>
+<div class="ilist"><ul>
+<li>
+<p>
+<a href="https://launchpad.net/forgepluckertest">Launchpad</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://developer.berlios.de/projects/forgepluckertst/">Berlios</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://savannah.nongnu.org/projects/testymattl/">Savane</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://sourceforge.net/projects/forgepluckertes/">SourceForge</a>
+</p>
+</li>
+</ul></div>
+<div class="para"><p>We'll join you to all of these with the required access for testing.
+Don't foget to add your site credebntials to .ntrc where our code will
+see them; see the forgeplucker.html[forgeplucker manual page] for
+details.</p></div>
 </div>
 <h2 id="_project_design_philosophy">Project Design Philosophy</h2>
 <div class="sectionbody">
@@ -810,7 +833,7 @@ of the code better.</p></div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2009-11-05 11:41:24 EDT
+Last updated 2009-11-06 16:54:36 EDT
 </div>
 </div>
 </body>

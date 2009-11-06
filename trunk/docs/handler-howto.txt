@@ -492,6 +492,13 @@ We presently have forgeplucker-test projects at the following places:
 
 - https://launchpad.net/forgepluckertest[Launchpad]
 - https://developer.berlios.de/projects/forgepluckertst/[Berlios]
+- https://savannah.nongnu.org/projects/testymattl/[Savane]
+- https://sourceforge.net/projects/forgepluckertes/[SourceForge]
+
+We'll join you to all of these with the required access for testing.
+Don't foget to add your site credebntials to .ntrc where our code will
+see them; see the forgeplucker.html[forgeplucker manual page] for
+details.
 
 == Project Design Philosophy ==
 
