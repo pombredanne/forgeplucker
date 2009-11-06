@@ -32,8 +32,6 @@ def walk_table(text):
         # First, strip out all attributes for easier parsing
         text = re.sub('<TR[^>]+>', '<TR>', text, re.I)
         text = re.sub('<TD[^>]+>', '<TD>', text, re.I)
-        text = re.sub('<tr[^>]+>', '<TR>', text, re.I)
-        text = re.sub('<td[^>]+>', '<TD>', text, re.I)
         # Case-smash all the relevant HTML tags, we won't be keeping them.
         text = text.replace("</table>", "</TABLE>")
         text = text.replace("<td>", "<TD>").replace("</td>", "</TD>")
@@ -42,6 +40,7 @@ def walk_table(text):
         # Yes, Berlios generated \r<BR> sequences with no \n
         text = text.replace("\r<BR>", "\r\n")
         # And Berlios generated doubled </TD>s
+        # (This sort of thing is why a structural parse will fail)
         text = text.replace("</TD></TD>", "</TD>")
         # Now that the HTML table structure is canonicalized, parse it.
         if text == oldtext:
