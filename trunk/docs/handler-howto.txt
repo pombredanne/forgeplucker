@@ -18,9 +18,17 @@ administrator.
 
 == Defining the Handler ==
 
+Handler classes live in a multi-file module called 'foregeplucker';
+look in the directory by that name in the source distribution.  A new
+handler named 'Foo' should live in a file named
+forgeplucker/handle_foo.py.  Other modules in that directory are 
+support code: htmlscrape.py contains low-level functions for scraping
+HTML, and generic.py is the framework code for a generic forge.
+
 Begin by declaring a new class for your forge type and adding it to
-the 'handlers' variable.  If it is associated with a well-known 
-domain address, add that association to the  'site_to_type' dictionary.
+the 'handlers' variable in forgeplucker/__init__.py; you will also
+need a corresponding import statement.  If it is associated with a well-known 
+domain address, add that association to the 'site_to_type' dictionary.
 
 Your handler should inherit from the GenericForge class, which will
 supply its logic skeleton and various default methods that often work for 
