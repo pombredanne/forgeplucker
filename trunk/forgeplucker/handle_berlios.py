@@ -247,7 +247,7 @@ submitted to them.
         t = time.gmtime(secs)	# Seconds since epoch to UTC time in structure
         return time.strftime("%Y-%m-%dT%H:%M:%SZ", t)
     def login(self, username, password):
-        response = GenericForge.login(self, {
+        GenericForge.login(self, {
             'form_loginname':username,
             'form_pw':password,
             'stay_in_ssl':1,

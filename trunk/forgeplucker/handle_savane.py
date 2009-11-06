@@ -205,7 +205,7 @@ The status of all trackers (bug, patch, support, and task) is extracted.
         t = time.gmtime(secs)		# secs since epoch to struct UTC time
         return time.strftime("%Y-%m-%dT%H:%M:%SZ", t)
     def login(self, username, password):
-        response = GenericForge.login(self, {
+        GenericForge.login(self, {
             'uri':'/',
             'form_loginname':username,
             'form_pw':password,

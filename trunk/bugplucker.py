@@ -187,7 +187,7 @@ if __name__ == '__main__':
     user = passwd = forgetype = None
     verbose = 0
     issue = None
-    help = sample = xml = False
+    sample = xml = False
     (options, arguments) = getopt.getopt(sys.argv[1:], "f:i:p:rsu:v:h?")
     for (arg, val) in options:
         if arg in ('-h', '-?'):
@@ -211,7 +211,7 @@ if __name__ == '__main__':
         elif arg == '-f':
             for cls in handler_classes:
                 if val == cls.__name__:
-                    forgetype == cls
+                    forgetype = cls
                     break
             else:
                 print >>sys.stderr, "%s: unknown forge type" % sys.argv[0]

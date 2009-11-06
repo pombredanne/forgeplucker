@@ -7,7 +7,7 @@ overriding methods where necessary.
 import sys, os, re, urllib, urllib2, time, calendar, email.utils
 from htmlscrape import *
 
-class ForgePluckerException:
+class ForgePluckerException(Exception):
     def __init__(self, msg):
         self.msg = msg
 
@@ -59,7 +59,7 @@ class GenericForge:
         "Canonicalize a date to ISO, catching errorss and reporting location."
         try:
             return self.canonicalize_date(date)
-        except ValueError, e:
+        except ValueError:
             self.error("malformed date %s" % date)
     def login(self, params, checkstring):
         "Log in to the site."
@@ -72,7 +72,6 @@ class GenericForge:
         "Fetch the ID list from the specified tracker."
         chunk_offset = 0
         continued = True
-        admin = False
         bugids = []
         while continued:
             continued = False
@@ -174,8 +173,8 @@ class GenericForge:
             name = n.group(1)
             if name in tracker.ignore:
                 continue
-            if verbose >= 2:
-                print "Input name %s has value '%s'" % (name, value)
+            #if verbose >= 2:
+            #    print "Input name %s has value '%s'" % (name, value)
             artifact[name] = dehtmlize(value)
         # Hand off to the tracker classlet's custom hook 
         tracker.custom(contents, artifact)
