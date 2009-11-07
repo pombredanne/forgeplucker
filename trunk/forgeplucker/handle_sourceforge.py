@@ -21,19 +21,19 @@ This code does not capture custom trackers.
             #SourceForge.PatchTracker(self),
             #SourceForge.FeatureTracker(self),
             ]
+    def project_page(self, project):
+        return "projects/%s/" % (project,)
     def login(self, username, password):
-        mainpage =  "projects/%s/" % self.project_name
-        m = re.search(r'\?group_id=([0-9]*)',
-                      self.fetch(mainpage, "Project Page"))
-        if m:
-            self.project_id = int(m.group(1))
-        else:
-            self.error("can't find a project ID for %s" % self.project_name)
+        #mainpage =  "projects/%s/" % self.project_name
+        #m = re.search(r'\?group_id=([0-9]*)',
+        #              self.fetch(mainpage, "Project Page"))
+        #if m:
+        #    self.project_id = int(m.group(1))
+        #else:
+        #    self.error("can't find a project ID for %s" % self.project_name)
         GenericForge.login(self, {
             'form_loginname':username,
             'form_pw':password,
-            'stay_in_ssl':"1",
-            'return_to':"",
-            'login':'Login With SSL'}, "Member Since:")
-
+            'return_to':"http://google.com",
+            'login':'login'}, "Shopping")
 # End
