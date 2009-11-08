@@ -54,6 +54,7 @@ def dehtmlize(text):
     text = text.replace("&lt;",   '<')
     text = text.replace("&gt;",   '>')
     text = text.replace("&nbsp;", ' ')
+    text = text.replace("&amp;", '&')
     text = text.replace("\r\n",   '\n')
     return text
 

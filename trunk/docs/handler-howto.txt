@@ -494,6 +494,7 @@ We presently have forgeplucker-test projects at the following places:
 - https://developer.berlios.de/projects/forgepluckertst/[Berlios]
 - https://savannah.nongnu.org/projects/testymattl/[Savane]
 - https://sourceforge.net/projects/forgepluckertes/[SourceForge]
+- https://gna.org/projects/forgepluckertest/[Gna!]
 
 We'll join you to all of these with the required access for testing.
 Don't foget to add your site credebntials to .ntrc where our code will

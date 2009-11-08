@@ -15,67 +15,71 @@ site.
 
 This code will capture custom trackers.
 """
-    class Tracker():
-        """Generic class for a SourceForge tracker"""
-        def __init__(self,forge,atid):
-            self.forge = forge
-            self.group_id = forge.group_id
-            self.atid = atid
-            print 'atid:',self.atid
-        def getbugids(self):
-            forge = self.forge
-            ids = []
-            url = r'/tracker/?group_id='+self.group_id+r'&limit=100&atid='+self.atid
-            while True:
-                page = forge.fetch(url,"Bug list")
-                print url
-                ms = re.findall(r'/tracker/\?func=detail&aid=([0-9]*)&group_id='+self.group_id+r'&atid='+self.atid,page)
-                if ms:
-                    ids += ms
-                else:
-                    if ids:
-                        self.forge.error("Can't get ALL (we got some) bugids in " + str(self))
-                    else:
-                        self.forge.error("Can't get bugids in " + str(self))
-                m = re.search(r'href="([^ <>]*?)">Next',page)
-                if m:
-                    url = re.sub(r'&amp;',r'&',m.group(1))
-                else:
-                    return ids #There is no 'Next' button we have all bug ids
+    class Tracker:
+        def __init__(self, label, parent):
+            self.parent = parent
+            self.optional = False
+            self.chunksize = 100
+            self.zerostring = None
+            self.submitter_re = r"<TD><B>Submitted By:</B><BR>([^<]*)</TD>"
+            self.date_re = "<TD><B>Date Submitted:</B><BR>([^<]*)</TD>"
+            self.ignore = ("canned_response",)
+            self.artifactid_re = 'href="/tracker/?func=detail&aid=([0-9]+)&group_id=[0-9]+&atid=[0-9]+"'
+            m = re.search('<a href="([^"]*)">%s</a>' % label,
+                          self.parent.basepage)
+            if m:
+                self.projectbase = dehtmlize(m.group(1))
+            else:
+                raise ForgePluckerException("can't find tracker labeled '%s'" \
+                                            % label)
+        def access_denied(self, page, issue_id=None):
+            return issue_id is None and not "Mass Update" in page
+        def has_next_page(self, page):
+            return "Next &raquo;" in page
+        def chunkfetcher(self, offset):
+            "Get a bugtracker index page - all bug IDs, open and closed.."
+            return self.projectbase + "?offset=%d&limit=100" % offset
+        def detailfetcher(self, bugid):
+            "Generate a bug detail URL for the specified bug ID."
+            return self.projectbase	
+    class BugTracker(Tracker):
+        def __init__(self, parent):
+            SourceForge.Tracker.__init__(self, "Bugs", parent)
+            self.type = "bugs"
+    class FeatureTracker(Tracker):
+        def __init__(self, parent):
+            SourceForge.Tracker.__init__(self, "Feature Requests", parent)
+            self.type = "features"
+    class PatchTracker(Tracker):
+        def __init__(self, parent):
+            SourceForge.Tracker.__init__(self, "Patches", parent)
+            self.type = "patches"
+    class SupportTracker(Tracker):
+        def __init__(self, parent):
+            SourceForge.Tracker.__init__(self, "Support Requests", parent)
+            self.type = "support"
     def __init__(self, host, project_name):
         GenericForge.__init__(self, host, project_name)
-        self.develop_page = self.fetch(self.project_page() + 'develop',"Develop page")
-        self.group_id = self.getgroup_id()
+        self.basepage = self.fetch(self.project_page(project_name)+'develop',
+                                   "Develop page")
+        m = re.search(r'/tracker/\?group_id=([0-9]*)', self.basepage)
+        if m:
+            self.project_id = m.group(1)
+        else:
+            raise ForgePluckerException("can't find a project ID for %s" % name)
         self.trackers = [
-            #SourceForge.BugTracker(self),
-            #SourceForge.SupportTracker(self),
-            #SourceForge.PatchTracker(self),
-            #SourceForge.FeatureTracker(self),
+            SourceForge.BugTracker(self),
+            SourceForge.FeatureTracker(self),
+            SourceForge.SupportTracker(self),
+            SourceForge.PatchTracker(self),
             ]
-    def project_page(self):
-        return "projects/%s/" % (self.project_name,)
-    def getgroup_id(self):
-        """Never run this, use self.group_id instead.
-           This is only called in __init__"""
-        page = self.develop_page
-        m = re.search(r'/tracker/\?group_id=([0-9]*)',page)
-        if m:
-            return m.group(1)
-        else:
-            self.error("Unable to get group_id")
-    def getbugatid(self):
-        page = self.develop_page
-        m = re.search(r'/tracker/\?group_id='+self.group_id+'&amp;atid=([0-9]*)">Bugs',page)
-        if m:
-            return m.group(1)
-        else:
-            self.error("Unable to get bugatid")
-    def getbugTracker(self):
-        return self.Tracker(self,self.getbugatid())
+    def project_page(self, project):
+        return "projects/%s/" % (project,)
     def login(self, username, password):
         GenericForge.login(self, {
             'form_loginname':username,
             'form_pw':password,
-            'return_to':"http://google.com",
-            'login':'login'}, "Shopping")
+            'return_to':"/account",
+            'login':'login'}, "Preferences")
+
 # End

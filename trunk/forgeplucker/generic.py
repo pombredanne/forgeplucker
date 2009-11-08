@@ -88,7 +88,7 @@ class GenericForge:
             elif tracker.zerostring and tracker.zerostring in page:
                 return None
             if tracker.access_denied(page):
-                self.parent.error("Tracker technician access was denied.")
+                self.error("Tracker technician access was denied")
             for m in re.finditer(tracker.artifactid_re, page):
                 bugid = int(m.group(1))
                 if bugid not in bugids:
