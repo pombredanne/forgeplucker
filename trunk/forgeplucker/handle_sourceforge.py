@@ -24,7 +24,7 @@ This code will capture custom trackers.
             self.submitter_re = r"<TD><B>Submitted By:</B><BR>([^<]*)</TD>"
             self.date_re = "<TD><B>Date Submitted:</B><BR>([^<]*)</TD>"
             self.ignore = ("canned_response",)
-            self.artifactid_re = 'href="/tracker/?func=detail&aid=([0-9]+)&group_id=[0-9]+&atid=[0-9]+"'
+            self.artifactid_re = r'/tracker/\?func=detail&aid=([0-9]+)&group_id=[0-9]+&atid=[0-9]+"'
             m = re.search('<a href="([^"]*)">%s</a>' % label,
                           self.parent.basepage)
             if m:

@@ -256,3 +256,5 @@ if __name__ == '__main__':
     except urllib2.HTTPError, e:
         print >>sys.stderr, "%s: %d - %s" % (e.url, e.code, e.msg)
         raise SystemExit, 1
+    except KeyboardInterrupt:
+        pass
