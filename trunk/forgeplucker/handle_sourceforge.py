@@ -21,8 +21,14 @@ This code will capture custom trackers.
             self.optional = False
             self.chunksize = 100
             self.zerostring = None
-            self.submitter_re = r"<TD><B>Submitted By:</B><BR>([^<]*)</TD>"
-            self.date_re = "<TD><B>Date Submitted:</B><BR>([^<]*)</TD>"
+            self.submitter_re = r'''<label>Submitted:</label>
+? *<p>
+? *.*?\( *<a href=".*?">(\w*)</a> *\) - (.*?)
+? *</p>''' #This triple quoted string is ugly, but captures identation style
+            self.date_re = r'''<label>Submitted:</label>
+? *<p>
+? *.*?\( *<a href=".*?">\w*</a> *\) - (.*?)
+? *</p>'''
             self.ignore = ("canned_response",)
             self.artifactid_re = r'/tracker/\?func=detail&aid=([0-9]+)&group_id=[0-9]+&atid=[0-9]+"'
             m = re.search('<a href="([^"]*)">%s</a>' % label,
@@ -41,7 +47,7 @@ This code will capture custom trackers.
             return self.projectbase + "?offset=%d&limit=100" % offset
         def detailfetcher(self, bugid):
             "Generate a bug detail URL for the specified bug ID."
-            return self.projectbase	
+            return self.projectbase + '&func=detail&aid=' + str(bugid)
     class BugTracker(Tracker):
         def __init__(self, parent):
             SourceForge.Tracker.__init__(self, "Bugs", parent)
@@ -75,6 +81,13 @@ This code will capture custom trackers.
             ]
     def project_page(self, project):
         return "projects/%s/" % (project,)
+    @staticmethod
+    def canonicalize_date(localdate):
+        "Canonicalize dates to ISO form. Assumes dares are in local time."
+        t = time.strptime(localdate, "%Y-%m-%d %H:%M")
+        secs = time.mktime(t)	# Local time to seconds since epoch
+        t = time.gmtime(secs)	# Seconds since epoch to UTC time in structure
+        return time.strftime("%Y-%m-%dT%H:%M:%SZ", t)
     def login(self, username, password):
         GenericForge.login(self, {
             'form_loginname':username,
