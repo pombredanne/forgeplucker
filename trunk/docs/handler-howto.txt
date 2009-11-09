@@ -501,6 +501,14 @@ Don't foget to add your site credebntials to .ntrc where our code will
 see them; see the http:forgeplucker.html[forgeplucker manual page] for
 details.
 
+There is a 'test' subdirectory containing regression check files, and
+a regression-test harness in the main directory that knows how to
+compare state pulls from our dummy projects with those check files.  You
+can use the script to test all handlers, rebuild an individial test after
+changing a dummy project's content, or to rebuild all tests.
+
+Run "regress-driver.py --help" to learn its control options.
+
 == Project Design Philosophy ==
 
 Before coding, it would probably be a good idea for you to

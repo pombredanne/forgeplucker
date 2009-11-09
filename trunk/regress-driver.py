@@ -1,12 +1,15 @@
 #!/usr/bin/env python
-"""
-Regression-test driver for forgeplucker code.
+"""\
+Regression-test driver for forgeplucker code.  Run the default test mode
+before committing code changes.  Use the --build mode after tchanfging the
+content of a test project.
 
 Usage:
     regress-driver.py                       # Run all regression tests
     regress-driver.py --build site/project  # Rebuild individual .chk file
     regress-driver.py --build-all           # Rebuild all .chk files
     regress-deiver.py --diffs               # Show diffs from last regression
+    regress-driver.py --help                # Display this help
 
 The -v option enables verbose progress messages.
 """
@@ -30,7 +33,9 @@ def walk_tests():
 
 
 if __name__ == '__main__':
-    (options, arguments) = getopt.getopt(sys.argv[1:], "bdv", ["build-all", "build", "diffs"])
+    (options, arguments) = getopt.getopt(sys.argv[1:],
+                                         "bdhv?",
+                                         ["build-all", "build", "diffs", "help"])
     rebuild_all = False
     build = False
     diffs = False
@@ -49,6 +54,9 @@ if __name__ == '__main__':
             diffs = True
         elif arg == '-v':
             verbose += 1
+        elif arg in ('-h', '-?', '--help'):
+            print __doc__
+            raise SystemExit, 0
 
     # Compute stem for use in naming files
     if '.' in testcmd:
