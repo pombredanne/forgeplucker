@@ -1,0 +1,7 @@
+{   'class': 'PROJECT',
+    'forgetype': 'Berlios',
+    'format_version': 1,
+    'host': 'developer.berlios.de',
+    'project': 'forgepluckertst',
+    'sample': False,
+    'trackers': []}

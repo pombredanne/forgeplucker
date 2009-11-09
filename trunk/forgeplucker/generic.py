@@ -179,7 +179,7 @@ class GenericForge:
         # Hand off to the tracker classlet's custom hook 
         tracker.custom(contents, artifact)
         return artifact
-    def pluck_artifactlist(self, tracker):
+    def pluck_artifactlist(self, tracker, timeless):
         "Gather artifact information on a specified tracker."
         artifacts = []
         vocabularies = {}
@@ -196,18 +196,21 @@ class GenericForge:
             artifacts.append(self.pluck_artifact(tracker, bugid, vocabularies))
         self.where = trackerwhere
         after = timestamp()
-        return {"class":"TRACKER",
-                    "type":tracker.type,
-                    "vocabularies":vocabularies,
-                    "interval":(before, after),
-                    "artifacts":artifacts}
+        artifacts = {"class":"TRACKER",
+                     "type":tracker.type,
+                     "vocabularies":vocabularies,
+                     "artifacts":artifacts}
+        # The timestamps screw up regression tests,
+        # so we need to be able to suppress them.
+        if not timeless:
+            artifacts["interval"] = (before, after)
     def pluck_bugs(self, sample=False, timeless=False):
         "Pull the buglist, wrapping it with metadata. about the operation."
         self.sample = sample
         trackerdata = []
         before = timestamp()
         for tracker in self.trackers:
-            content = self.pluck_artifactlist(tracker)
+            content = self.pluck_artifactlist(tracker, timeless)
             if content is not None:
                 trackerdata.append(content)
         after = timestamp()
@@ -220,8 +223,7 @@ class GenericForge:
             "sample":self.sample,
             "trackers":trackerdata,
             }
-        # The timestamps screw up regression tests,
-        # so we need to be able to suppress them.
+        # See above
         if not timeless:
             trackerdata["interval"] = (before, after)
         return trackerdata

@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 """
 Regression-test driver for forgeplucker code.
+
+Usage:
+    regress-driver.py                       # Run all regression tests
+    regress-driver.py --build site/project  # Rebuild individual .chk file
+    regress-driver.py --build-all           # Rebuild all regression tests
+
+The -v option enanbles verbose progress messages.
 """
 import sys, os, getopt
 
@@ -22,11 +29,22 @@ def walk_tests():
 
 
 if __name__ == '__main__':
-    (options, arguments) = getopt.getopt(sys.argv[1:], "b")
+    (options, arguments) = getopt.getopt(sys.argv[1:], "bv", ["build-all", "build"])
+    rebuild_all = False
     build = False
+    verbose = 0
     for (arg, val) in options:
-        if arg == '-b':
-            build = True
+        if arg == '--rebuild-all':
+            rebuild_all = True
+        elif arg in ("-b", "--build"):
+            if arguments:
+                build = True
+            else:
+                print >>sys.stderr, "%s: -b/--build requires argument" \
+                      % sys.argv[0]
+                raise SystemExit, 1
+        elif arg == '-v':
+            verbose += 1
 
     # Compute stem for use in naming files
     if '.' in testcmd:
@@ -34,16 +52,59 @@ if __name__ == '__main__':
     else:
         stem = testcmd
 
-    if build:
-        for ((site, project), path) in walk_tests():
-            print "Building %s/%s test..." % (site, project)
-            cmd = testcmd +" -n "+ site +"/"+ project +" >"+ path +"/"+ stem +".chk"
-            status = os.system(cmd)
-            if status:
-                print >>sys.stderr, "'%s' FAILED." % cmd
+    # Argument is always parsed the same way
+    if arguments:
+        try:
+            (site, project) = arguments[0].split("/")
+            path = os.path.join(testroot, site, project)
+            basecmd = testcmd +" -n "+ site +"/"+ project +" >"+ path +"/"+ stem
+        except (ValueError, IndexError):
+            print >>sys.stderr, "usage: %s [options...] host/project" % sys.argv[0]
+            raise SystemExit, 1
+        if build:
+            # Rebuild an individual test
+            if not os.path.exists(path):
+                print >>sys.stderr, "%s: no such test %s/%s" \
+                      % (sys.argv[0], site, project)
                 raise SystemExit, 1
-        print "Done"
-
+            else:
+                cmd = basecmd + ".chk"
+                if verbose:
+                    print >>sys.stderr, "%s: running '%s'" % (sys.argv[0], cmd)
+                status = os.system(cmd)
+    # Ryn ooperation on all tests
+    else:
+        if rebuild_all:
+            # Rebuild all tests
+            for ((site, project), path) in walk_tests():
+                print "Building %s/%s test..." % (site, project)
+                basecmd = testcmd +" -n "+ site +"/"+ project +" >"+ path
+                cmd = basecmd + ".chk"
+                if verbose:
+                    print >>sys.stderr, "%s: running '%s'" % (sys.argv[0], cmd)
+                status = os.system(cmd)
+                if status:
+                    print >>sys.stderr, "%s: '%s' FAILED." % (sys.argv[0], cmd)
+                    raise SystemExit, 1
+            print "Done"
+        else:
+            # Run all regression tests
+            for ((site, project), path) in walk_tests():
+                print "Running %s/%s test..." % (site, project)
+                basecmd = testcmd +" -n "+ site +"/"+ project +" >"+ path +"/"+ stem
+                cmd = basecmd + ".out"
+                if verbose:
+                    print >>sys.stderr, "%s: running '%s'" % (sys.argv[0], cmd)
+                status = os.system(cmd)
+                if status:
+                    print >>sys.stderr, "'%s' FAILED." % (sys.argv[0], cmd)
+                    raise SystemExit, 1
+                status = os.system("diff -u %s/%s.chk %s/%s.out" \
+                                   % (path, stem, path, stem))
+                if status == 0:
+                    print >>sys.stderr, "%s: %s regression test on %s/%s succeeded." \
+                          % (sys.argv[0], testcmd, site, project)
+            print "Done"
     raise SystemExit, 0
 
 # End

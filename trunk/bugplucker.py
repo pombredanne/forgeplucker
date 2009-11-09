@@ -235,7 +235,7 @@ if __name__ == '__main__':
     if not forgetype and host in site_to_handler:
         forgetype = site_to_handler[host]
     if user is None or passwd is None or forgetype is None:
-        print >>sys.stderr, "usage: %s [-hrv?] [-i itemspec] -u username -p password -f forgetype host project" % sys.argv[0]
+        print >>sys.stderr, "usage: %s [-hnrv?] [-i itemspec] -u username -p password -f forgetype host project" % sys.argv[0]
         raise SystemExit, 1
     try:
         bt = forgetype(host, project)
