@@ -37,7 +37,7 @@ if __name__ == '__main__':
     if build:
         for ((site, project), path) in walk_tests():
             print "Building %s/%s test..." % (site, project)
-            cmd = testcmd +" "+ site +"/"+ project +" >"+ path +"/"+ stem +".chk"
+            cmd = testcmd +" -n "+ site +"/"+ project +" >"+ path +"/"+ stem +".chk"
             status = os.system(cmd)
             if status:
                 print >>sys.stderr, "'%s' FAILED." % cmd

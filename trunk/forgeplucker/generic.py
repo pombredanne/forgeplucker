@@ -201,7 +201,7 @@ class GenericForge:
                     "vocabularies":vocabularies,
                     "interval":(before, after),
                     "artifacts":artifacts}
-    def pluck_bugs(self, sample=False):
+    def pluck_bugs(self, sample=False, timeless=False):
         "Pull the buglist, wrapping it with metadata. about the operation."
         self.sample = sample
         trackerdata = []
@@ -216,11 +216,14 @@ class GenericForge:
             "forgetype":self.__class__.__name__,
             "host" : self.host,
             "project" : self.project_name,
-            "interval" : (before, after),
             "format_version":1,
             "sample":self.sample,
             "trackers":trackerdata,
             }
+        # The timestamps screw up regression tests,
+        # so we need to be able to suppress them.
+        if not timeless:
+            trackerdata["interval"] = (before, after)
         return trackerdata
     def login_url(self):
         "Generate the site's account login page URL."

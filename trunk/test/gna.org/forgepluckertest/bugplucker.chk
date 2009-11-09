@@ -2,7 +2,6 @@
     'forgetype': 'Savane',
     'format_version': 1,
     'host': 'gna.org',
-    'interval': ('2009-11-09T03:41:13Z', '2009-11-09T03:41:16Z'),
     'project': 'forgepluckertest',
     'sample': False,
     'trackers': []}

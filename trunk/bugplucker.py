@@ -187,8 +187,8 @@ if __name__ == '__main__':
     user = passwd = forgetype = None
     verbose = 0
     issue = None
-    sample = xml = False
-    (options, arguments) = getopt.getopt(sys.argv[1:], "f:i:p:rsu:v:h?")
+    sample = xml = timeless = False
+    (options, arguments) = getopt.getopt(sys.argv[1:], "f:i:np:rsu:v:h?")
     for (arg, val) in options:
         if arg in ('-h', '-?'):
             print __doc__
@@ -202,6 +202,8 @@ if __name__ == '__main__':
             passwd = val
         elif arg == '-r':
             xml = True
+        elif arg == '-n':
+            timeless = True
         elif arg == '-s':
             sample = True
         elif arg == '-v':
@@ -244,7 +246,7 @@ if __name__ == '__main__':
             issue = bt.pluck_artifact(tracker, bugid)
             pp.pprint(issue)
         else:
-            bugs = bt.pluck_bugs(sample=sample)
+            bugs = bt.pluck_bugs(sample=sample, timeless=timeless)
             bugs = canonicalize(bugs)
             if xml:
                 xml_dump(bugs)
