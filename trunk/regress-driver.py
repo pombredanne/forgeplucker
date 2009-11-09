@@ -11,9 +11,12 @@ Usage:
     regress-deiver.py --diffs               # Show diffs from last regression
     regress-driver.py --help                # Display this help
 
+The -u option can be used to set a username for access to the remote site.
+
 The -v option enables verbose progress messages.
 """
 import sys, os, getopt
+from forgeplucker import site_to_handler
 
 testroot = "test"
 testcmd = "bugplucker.py"
@@ -34,11 +37,17 @@ def walk_tests():
 
 if __name__ == '__main__':
     (options, arguments) = getopt.getopt(sys.argv[1:],
-                                         "bdhv?",
-                                         ["build-all", "build", "diffs", "help"])
+                                         "bdhlu:v?",
+                                         ["build-all",
+                                          "build",
+                                          "diffs",
+                                          "help",
+                                          "list"])
     rebuild_all = False
     build = False
     diffs = False
+    listall = False
+    username = os.getenv("LOGNAME")
     verbose = 0
     for (arg, val) in options:
         if arg == '--rebuild-all':
@@ -52,11 +61,15 @@ if __name__ == '__main__':
                 raise SystemExit, 1
         elif arg in ("-d", "--diffs"):
             diffs = True
+        elif arg == '-u':
+            username = val
         elif arg == '-v':
             verbose += 1
         elif arg in ('-h', '-?', '--help'):
             print __doc__
             raise SystemExit, 0
+        elif arg in ("-l", "--list"):
+            listall = True
 
     # Compute stem for use in naming files
     if '.' in testcmd:
@@ -69,7 +82,7 @@ if __name__ == '__main__':
         try:
             (site, project) = arguments[0].split("/")
             path = os.path.join(testroot, site, project)
-            basecmd = testcmd +" -n "+ site +"/"+ project +" >"+ path +"/"+ stem
+            basecmd = testcmd +" -n -u "+ username +" "+ site +"/"+ project +" >"+ path +"/"+ stem
         except (ValueError, IndexError):
             print >>sys.stderr, "usage: %s [options...] host/project" % sys.argv[0]
             raise SystemExit, 1
@@ -90,7 +103,7 @@ if __name__ == '__main__':
             # Rebuild all tests
             for ((site, project), path) in walk_tests():
                 print "Building %s/%s test..." % (site, project)
-                basecmd = testcmd +" -n "+ site +"/"+ project +" >"+ path
+                basecmd = testcmd +" -n -u "+ username +" "+ site +"/"+ project +" >"+ path
                 cmd = basecmd + ".chk"
                 if verbose:
                     print >>sys.stderr, "%s: running '%s'" % (sys.argv[0], cmd)
@@ -105,11 +118,17 @@ if __name__ == '__main__':
                     print "%s: diffing %s/%s" % (sys.argv[0], site, project)
                 status = os.system("diff -u %s/%s.chk %s/%s.out" \
                                    % (path, stem, path, stem))
+        elif listall:
+            for ((site, project), path) in walk_tests():
+                cls = site_to_handler.get(site, None)
+                if cls:
+                    cls = cls.__name__.split(".")[-1]
+                print "%s/%s -> %s" % (site, project, cls)
         else:
             # Run all regression tests
             for ((site, project), path) in walk_tests():
                 print "Running %s/%s test..." % (site, project)
-                basecmd = testcmd +" -n "+ site +"/"+ project +" >"+ path +"/"+ stem
+                basecmd = testcmd +" -n -u "+ username +" "+ site +"/"+ project +" >"+ path +"/"+ stem
                 cmd = basecmd + ".out"
                 if verbose:
                     print >>sys.stderr, "%s: running '%s'" % (sys.argv[0], cmd)
