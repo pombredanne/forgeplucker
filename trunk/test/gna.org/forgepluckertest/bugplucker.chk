@@ -1,0 +1,8 @@
+{   'class': 'PROJECT',
+    'forgetype': 'Savane',
+    'format_version': 1,
+    'host': 'gna.org',
+    'interval': ('2009-11-09T03:25:17Z', '2009-11-09T03:25:21Z'),
+    'project': 'forgepluckertest',
+    'sample': False,
+    'trackers': []}
