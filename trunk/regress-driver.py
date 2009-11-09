@@ -5,9 +5,10 @@ Regression-test driver for forgeplucker code.
 Usage:
     regress-driver.py                       # Run all regression tests
     regress-driver.py --build site/project  # Rebuild individual .chk file
-    regress-driver.py --build-all           # Rebuild all regression tests
+    regress-driver.py --build-all           # Rebuild all .chk files
+    regress-deiver.py --diffs               # Show diffs from last regression
 
-The -v option enanbles verbose progress messages.
+The -v option enables verbose progress messages.
 """
 import sys, os, getopt
 
@@ -29,9 +30,10 @@ def walk_tests():
 
 
 if __name__ == '__main__':
-    (options, arguments) = getopt.getopt(sys.argv[1:], "bv", ["build-all", "build"])
+    (options, arguments) = getopt.getopt(sys.argv[1:], "bdv", ["build-all", "build", "diffs"])
     rebuild_all = False
     build = False
+    diffs = False
     verbose = 0
     for (arg, val) in options:
         if arg == '--rebuild-all':
@@ -43,6 +45,8 @@ if __name__ == '__main__':
                 print >>sys.stderr, "%s: -b/--build requires argument" \
                       % sys.argv[0]
                 raise SystemExit, 1
+        elif arg in ("-d", "--diffs"):
+            diffs = True
         elif arg == '-v':
             verbose += 1
 
@@ -72,7 +76,7 @@ if __name__ == '__main__':
                 if verbose:
                     print >>sys.stderr, "%s: running '%s'" % (sys.argv[0], cmd)
                 status = os.system(cmd)
-    # Ryn ooperation on all tests
+    # Run operation on all tests
     else:
         if rebuild_all:
             # Rebuild all tests
@@ -87,6 +91,12 @@ if __name__ == '__main__':
                     print >>sys.stderr, "%s: '%s' FAILED." % (sys.argv[0], cmd)
                     raise SystemExit, 1
             print "Done"
+        elif diffs:
+            for ((site, project), path) in walk_tests():
+                if verbose:
+                    print "%s: diffing %s/%s" % (sys.argv[0], site, project)
+                status = os.system("diff -u %s/%s.chk %s/%s.out" \
+                                   % (path, stem, path, stem))
         else:
             # Run all regression tests
             for ((site, project), path) in walk_tests():
