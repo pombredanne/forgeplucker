@@ -19,7 +19,7 @@ import sys, os, getopt
 from forgeplucker import site_to_handler
 
 testroot = "test"
-testcmd = "bugplucker.py"
+testcmd = "./bugplucker.py"
 
 def ignore(filename):
     "Predicare for ignoring version-=control directories."
@@ -134,7 +134,7 @@ if __name__ == '__main__':
                     print >>sys.stderr, "%s: running '%s'" % (sys.argv[0], cmd)
                 status = os.system(cmd)
                 if status:
-                    print >>sys.stderr, "'%s' FAILED." % (sys.argv[0], cmd)
+                    print >>sys.stderr, "%s: '%s' FAILED." % (sys.argv[0], cmd)
                     raise SystemExit, 1
                 status = os.system("diff -u %s/%s.chk %s/%s.out" \
                                    % (path, stem, path, stem))
