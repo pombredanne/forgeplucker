@@ -30,7 +30,6 @@ submitted to them.
             self.parent = parent
             self.optional = False
             self.chunksize = 50
-            self.zerostring = None
             self.submitter_re = r"<TD><B>Submitted By:</B><BR>([^<]*)</TD>"
             self.date_re = "<TD><B>Date Submitted:</B><BR>([^<]*)</TD>"
             self.ignore = ("canned_response", "project_id")
@@ -92,6 +91,7 @@ submitted to them.
         def __init__(self, parent):
             Berlios.Tracker.__init__(self, parent)
             self.type = "bugs"
+            self.zerostring = "No Bugs Match Your Criteria"
             self.artifactid_re = r'<A HREF="/bugs/\?func=detailbug&bug_id=([0-9]+)&group_id=%s">' % parent.project_id
         def chunkfetcher(self, offset):
             "Get a bugtracker index page - all bug IDs, open and closed.."
@@ -142,6 +142,7 @@ submitted to them.
         def __init__(self, parent):
             Berlios.Tracker.__init__(self, parent)
             self.type = "feature"
+            self.zerostring = "No Feature Requests Match Your Criteria"
             self.artifactid_re = r'<A HREF="\?func=detailfeature&feature_id=([0-9]+)&group_id=%s">' % parent.project_id
         def chunkfetcher(self, offset):
             "Get a feature tracker index page - all bug IDs, open and closed.."
@@ -185,6 +186,7 @@ submitted to them.
         def __init__(self, parent):
             Berlios.Tracker.__init__(self, parent)
             self.type = "patches"
+            self.zerostring = "No Patches Match Your Criteria"
             self.artifactid_re = r'<A HREF="\?func=detailpatch&patch_id=([0-9]+)&group_id=%s">' % parent.project_id
         def chunkfetcher(self, offset):
             "Get a patch tracker index page - all bug IDs, open and closed.."
