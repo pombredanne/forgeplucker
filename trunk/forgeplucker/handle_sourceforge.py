@@ -48,6 +48,9 @@ This code will capture custom trackers.
         def detailfetcher(self, bugid):
             "Generate a bug detail URL for the specified bug ID."
             return self.projectbase + '&func=detail&aid=' + str(bugid)
+        def narrow(self, text):
+            "Get the section of text containing editable elements."
+            return text
     class BugTracker(Tracker):
         def __init__(self, parent):
             SourceForge.Tracker.__init__(self, "Bugs", parent)
