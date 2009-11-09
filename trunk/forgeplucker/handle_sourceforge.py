@@ -23,11 +23,11 @@ This code will capture custom trackers.
             self.zerostring = None
             self.submitter_re = r'''<label>Submitted:</label>
 ? *<p>
-? *.*?\( *<a href=".*?">(\w*)</a> *\) - (.*?)
+? *.*?\( *(<a href=".*?">(\w*)</a>|\w*) *\) - (.*?)
 ? *</p>''' #This triple quoted string is ugly, but captures identation style
             self.date_re = r'''<label>Submitted:</label>
 ? *<p>
-? *.*?\( *<a href=".*?">\w*</a> *\) - (.*?)
+? *.*?\( *[^)]* *\) - (.*?)
 ? *</p>'''
             self.ignore = ("canned_response",)
             self.artifactid_re = r'/tracker/\?func=detail&aid=([0-9]+)&group_id=[0-9]+&atid=[0-9]+"'
