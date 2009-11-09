@@ -88,7 +88,7 @@ class GenericForge:
             elif tracker.zerostring and tracker.zerostring in page:
                 return None
             if tracker.access_denied(page):
-                self.error("Tracker technician access was denied")
+                self.error("Tracker technician access to bug index was denied")
             for m in re.finditer(tracker.artifactid_re, page):
                 bugid = int(m.group(1))
                 if bugid not in bugids:
@@ -117,7 +117,7 @@ class GenericForge:
         contents = self.fetch(tracker.detailfetcher(bugid), "Detail page")
         # Modification access to the tracker is required
         if tracker.access_denied(contents, bugid):
-            self.error("tracker technician access was denied.", ood=False)
+            self.error("tracker technician access to bug details was denied.", ood=False)
         artifact = {"class":"ARTIFACT", "id":bugid}
         m = re.search(tracker.submitter_re, contents)
         if not m:
