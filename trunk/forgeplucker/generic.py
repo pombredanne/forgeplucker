@@ -204,6 +204,7 @@ class GenericForge:
         # so we need to be able to suppress them.
         if not timeless:
             artifacts["interval"] = (before, after)
+        return artifacts
     def pluck_bugs(self, sample=False, timeless=False):
         "Pull the buglist, wrapping it with metadata. about the operation."
         self.sample = sample

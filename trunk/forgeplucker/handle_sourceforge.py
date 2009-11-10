@@ -51,6 +51,8 @@ This code will capture custom trackers.
         def narrow(self, text):
             "Get the section of text containing editable elements."
             return text
+        def custom(self,contents,bug):
+            print >>sys.stderr, bug
     class BugTracker(Tracker):
         def __init__(self, parent):
             SourceForge.Tracker.__init__(self, "Bugs", parent)
