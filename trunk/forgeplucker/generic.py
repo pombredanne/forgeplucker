@@ -139,7 +139,10 @@ class GenericForge:
                 selectpart = formpart[startselect:startselect+endselect.start(0)]
             possible = []
             selected = None
-            for m in re.finditer('<OPTION([^>]*)>([^<]*)</OPTION>', selectpart, re.I):
+            for m in re.finditer('<OPTION([^>]*)>([^<]*)', selectpart, re.I):
+                #Once was '<OPTION([^>]*)>([^<]*)</OPTION>'
+                #The preceding is due to following extract from sourceforge html (as emitted by -v 2)
+                #<select NAME="priority"><OPTION VALUE="1" >1 - Lowest<OPTION VALUE="2" >2<OPTION...
                 possible.append(m.group(2))
                 if "selected" in m.group(1) or "SELECTED" in m.group(1):
                     if selected:
