@@ -43,7 +43,7 @@ The status of all trackers (bug, patch, support, and task) is extracted.
         def access_denied(self, page, issue_id=None):
             return issue_id is not None and re.search("This task has [0-9]+ encouragements? so far.", page)
         def has_next_page(self, page):
-            m = re.search("([0-9]+) matching items - Items [0-9]+ to ([0-9]+)", page)
+            m = re.search("([0-9]+) matching items? - Items [0-9]+ to ([0-9]+)", page)
             if not m:
                 self.parent.error("missing item count header")
             else:
@@ -144,15 +144,16 @@ The status of all trackers (bug, patch, support, and task) is extracted.
                                                     "reason":reason})
             # Capture the dependency list, if present
             artifact["dependents"] = []
-            dpstart = contents.find("Items that depend on this one")
-            if dpstart > -1:
-                tail = contents[dpstart:]
-                for m in re.finditer(r'\([a-zA-Z ]* #([0-9]+), [a-zA-Z ]*\)', tail):
-                    artifact["dependents"].append(int(m.group(1)))
-                if not artifact["dependents"]:
-                    self.error("garbled dependency table")
-            elif contents.find("Items that depend on this one: None found")==-1:
-                self.error("missing both dependency table and no-depemdencies message")
+            if contents.find("Items that depend on this one: None found")==-1:
+                dpstart = contents.find("Items that depend on this one")
+                if dpstart > -1:
+                    tail = contents[dpstart:]
+                    for m in re.finditer(r'\([a-zA-Z ]* #([0-9]+), [a-zA-Z ]*\)', tail):
+                        artifact["dependents"].append(int(m.group(1)))
+                    if not artifact["dependents"]:
+                        self.parent.error("garbled dependency table")
+                else:
+                    self.error("missing both dependency table and no-depemdencies message")
     class BugTracker(Tracker):
         def __init__(self, parent):
             Savane.Tracker.__init__(self, parent)
