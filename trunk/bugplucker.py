@@ -21,6 +21,7 @@ def canonicalize(issues):
     "Canonicalize issue data."
     name_mappings = {
         "bug_group_id": "group",
+        "artifact_group_id": "group", #SourceForge
         "category_id": "category",
         "category_version_id": "category_version",	# Savane
         #'comment_type_id', 'comment_type',		# Savane
@@ -39,7 +40,8 @@ def canonicalize(issues):
     for tracker in issues['trackers']:
         # Delete range info for assigned_to field, it's not actually useful
         # to treat it as a vocablary.
-        del tracker['vocabularies']['assigned_to']
+        if 'assigned_to' in tracker['vocabularies']:
+            del tracker['vocabularies']['assigned_to']
         # Perform name smoothing so we have a semi-standard set of attributes
         # across all forges and tracker types.
         for (rough, smooth) in name_mappings.items():

@@ -23,13 +23,14 @@ This code will capture custom trackers.
             self.zerostring = None
             self.submitter_re = r'''<label>Submitted:</label>
 ? *<p>
-? *.*?\( *(<a href=".*?">(\w*)</a>|\w*) *\) - (.*?)
+? *.*?\( *(?:<a href=".*?">)(\w*)(?:</a>)|\w* *\) - (.*?)
 ? *</p>''' #This triple quoted string is ugly, but captures identation style
             self.date_re = r'''<label>Submitted:</label>
 ? *<p>
 ? *.*?\( *[^)]* *\) - (.*?)
 ? *</p>'''
-            self.ignore = ("canned_response",)
+            self.ignore = ("canned_response",
+                           "words")
             self.artifactid_re = r'/tracker/\?func=detail&aid=([0-9]+)&group_id=[0-9]+&atid=[0-9]+"'
             m = re.search('<a href="([^"]*)">%s</a>' % label,
                           self.parent.basepage)
@@ -52,8 +53,9 @@ This code will capture custom trackers.
             "Get the section of text containing editable elements."
             return text
         def custom(self,contents,bug):
-            bug['history']=[]
-            print >>sys.stderr, bug
+            bug['history']=[] #FIXME This is stub
+            m = re.search(r'<input type="checkbox" name="is_private" [^>]* />',contents)
+            bug['private'] = 'checked' in m.group(0)
     class BugTracker(Tracker):
         def __init__(self, parent):
             SourceForge.Tracker.__init__(self, "Bugs", parent)

@@ -264,7 +264,7 @@ class GenericForge:
         "Parse an identity object from a string."
         cooked = {"class":"IDENTITY",}
         raw = dehtmlize(raw.strip())
-        if raw.lower() in ("none", "anonymous"):
+        if raw.lower() in ("none", "anonymous","nobody"):
             cooked["nick"] = "None"
         else:
             (name, mailaddr) = email.utils.parseaddr(raw)
