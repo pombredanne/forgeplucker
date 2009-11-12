@@ -218,11 +218,18 @@ if __name__ == '__main__':
             else:
                 print >>sys.stderr, "%s: unknown forge type" % sys.argv[0]
                 raise SystemExit, 1
+    # For convenience, so pasting URLs will work
+    if arguments[0].startswith("http://"):
+        arguments[0] = arguments[0][7:]
+    if arguments[0].startswith("https://"):
+        arguments[0] = arguments[0][8:]
     try:
-        (host, project) = arguments[0].split("/")
+        segments = arguments[0].split("/")
     except (ValueError, IndexError):
         print >>sys.stderr, "usage: %s [options...] host/project" % sys.argv[0]
         raise SystemExit, 1
+    host = segments[0]
+    project = "/".join(segments[1:])
     if user is None:
         user = os.getenv("LOGNAME")
     if passwd is None:
