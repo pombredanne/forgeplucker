@@ -52,6 +52,7 @@ This code will capture custom trackers.
             "Get the section of text containing editable elements."
             return text
         def custom(self,contents,bug):
+            bug['history']=[]
             print >>sys.stderr, bug
     class BugTracker(Tracker):
         def __init__(self, parent):

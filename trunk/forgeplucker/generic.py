@@ -129,7 +129,7 @@ class GenericForge:
         artifact["submitter"] = submitter
         artifact["date"] = self.isodate(m.group(1).strip())
         formpart = tracker.narrow(contents)
-        for m in re.finditer('<SELECT NAME="([^"]*)">', formpart, re.I):
+        for m in re.finditer('<SELECT [^>]*?NAME="([^"]*)"[^>]*>', formpart, re.I):
             key = m.group(1)
             startselect = m.start(0)
             endselect = re.search("</SELECT>", formpart[startselect:], re.I)

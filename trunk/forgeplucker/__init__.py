@@ -18,7 +18,6 @@ handler_classes = (SourceForge, Berlios, Savane)
 # forge type aren't so easy to find.
 site_to_handler = {
     "sourceforge.net": SourceForge,
-    "sourceforge2.net": SourceForge,
     "developer.berlios.de": Berlios,
     "savannah.gnu.org": Savane,
     "savannah.nongnu.org": Savane,
