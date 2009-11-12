@@ -25,9 +25,14 @@ site_to_handler = {
     "gna.org": Savane,
 }
 
+def get_forgetype(host):
+    if host in site_to_handler:
+        return site_to_handler[host]
+    print >>sys.stderr, "Can't determine forge type for host %s" % host
+    raise SystemExit, 1
+
 def get_credentials(user, passwd, host):
     "Assemble user's actual credentials."
-    forgetype = None
     if user is None:
         user = os.getenv("LOGNAME")
     if passwd is None:
@@ -35,10 +40,6 @@ def get_credentials(user, passwd, host):
         auth = passwords.authenticators(host)
         if auth and auth[0] == user:
             passwd = auth[2]
-            if not forgetype and auth[1]:
-                forgetype = auth[1]
-    if not forgetype and host in site_to_handler:
-        forgetype = site_to_handler[host]
-    return (user, passwd, forgetype)
+    return (user, passwd)
 
 # End

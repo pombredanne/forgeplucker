@@ -230,8 +230,10 @@ if __name__ == '__main__':
         raise SystemExit, 1
     host = segments[0]
     project = "/".join(segments[1:])
-    (user, passwd, forgetype) = get_credentials(user, passwd, host)
-    if user is None or passwd is None or forgetype is None:
+    if forgetype is None:
+        forgetype = get_forgetype(host)
+    (user, passwd) = get_credentials(user, passwd, host)
+    if user is None or passwd is None:
         print >>sys.stderr, "usage: %s [-hnrv?] [-i itemspec] -u username -p password -f forgetype host project" % sys.argv[0]
         raise SystemExit, 1
     try:
