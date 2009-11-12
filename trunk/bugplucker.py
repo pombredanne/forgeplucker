@@ -182,7 +182,7 @@ def xml_dump(issues, fp=sys.stdout):
     fp.write('</trackers>\n')
 
 if __name__ == '__main__':
-    import getopt, pprint, netrc
+    import getopt, pprint
     pp = pprint.PrettyPrinter(indent=4)
     user = passwd = forgetype = None
     verbose = 0
@@ -230,17 +230,7 @@ if __name__ == '__main__':
         raise SystemExit, 1
     host = segments[0]
     project = "/".join(segments[1:])
-    if user is None:
-        user = os.getenv("LOGNAME")
-    if passwd is None:
-        passwords = netrc.netrc()
-        auth = passwords.authenticators(host)
-        if auth and auth[0] == user:
-            passwd = auth[2]
-            if not forgetype and auth[1]:
-                forgetype = auth[1]
-    if not forgetype and host in site_to_handler:
-        forgetype = site_to_handler[host]
+    (user, passwd, forgetype) = get_credentials(user, passwd, host)
     if user is None or passwd is None or forgetype is None:
         print >>sys.stderr, "usage: %s [-hnrv?] [-i itemspec] -u username -p password -f forgetype host project" % sys.argv[0]
         raise SystemExit, 1

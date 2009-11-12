@@ -1,5 +1,7 @@
 # Collect all imports required to do project state fetches.
 
+import netrc
+
 from htmlscrape import *
 from generic import *
 from handle_sourceforge import *
@@ -22,5 +24,21 @@ site_to_handler = {
     "savannah.nongnu.org": Savane,
     "gna.org": Savane,
 }
+
+def get_credentials(user, passwd, host):
+    "Assemble user's actual credentials."
+    forgetype = None
+    if user is None:
+        user = os.getenv("LOGNAME")
+    if passwd is None:
+        passwords = netrc.netrc()
+        auth = passwords.authenticators(host)
+        if auth and auth[0] == user:
+            passwd = auth[2]
+            if not forgetype and auth[1]:
+                forgetype = auth[1]
+    if not forgetype and host in site_to_handler:
+        forgetype = site_to_handler[host]
+    return (user, passwd, forgetype)
 
 # End
