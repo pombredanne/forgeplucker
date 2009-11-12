@@ -39,7 +39,14 @@ submitted to them.
             return "Next 50" in page
         def narrow(self, text):
             "Get the section of text containing editable elements."
-            return self.parent.skipspan(text, "FORM", 1)
+            formpart =  self.parent.skipspan(text, "FORM", 1)
+            # Discard the dependency table, its selects can have multiple
+            # values and confuse the form parser. This  is OK as the custom
+            # hook will get passed the contents including that table.
+            deps = formpart.find("Dependent on")
+            if deps > -1:
+                formpart = formpart[:deps]
+            return formpart
         def parse_followups(self, contents):
             "Parse followups out of a displayed page in a bug or patch tracker."
             comments = []
@@ -255,5 +262,8 @@ submitted to them.
             'stay_in_ssl':1,
             'return_to':"",
             'login':'Login With SSL'}, "Personal Page")
+    def pluck_permissions(self):
+        "Retrieve the developer roles table."
+        pass
 
 # End
