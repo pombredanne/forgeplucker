@@ -260,6 +260,12 @@ The status of all trackers (bug, patch, support, and task) is extracted.
         return comments
     def pluck_permissions(self):
         "Retrieve the developer roles table."
+        expected_features = [u'Support Tracker',
+                             u'Bug Tracker',
+                             u'Task Tracker',
+                             u'Patch Tracker',
+                             u'Cookbook Manager',
+                             u'News Manager']
         page = self.fetch("project/admin/userperms.php?group=%s" % self.project_name, "Permissions Table")
         if not "Update Permissions" in page:
             self.error("you need admin privileges to extract permissions",
@@ -275,7 +281,12 @@ The status of all trackers (bug, patch, support, and task) is extracted.
             self.error("expected trailing </form> element not found")
         else:
             page = page[:trailing+7]
-        tree = BeautifulSoup(page)
-        print tree.prettify()
+        form = BeautifulSoup(page)
+        defaults = form("table")[1]
+        features = map(lambda x: x.contents[0], defaults.tr.findAll("th"))
+        if features != expected_features:
+            self.error("feature set %s is not as expected" % features)
+        defaults2 = map(lambda x: x, defaults.findAll("td"))
+        print defaults2
         return None
 # End
