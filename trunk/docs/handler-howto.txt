@@ -7,6 +7,11 @@ for each distinct forge type, it needs a handler class to tell it
 how to extract data from that forge. This document explains how to
 write a handler class.
 
+Before coding, it would probably be a good idea for you to
+at least skim the http:external.html[blog entries that gave birth to
+this project].  It may help you understand the design philosophy
+of the code better.
+
 == Pragmatics of Web-Scraping ==
 
 Your handler class's job is to extract project data.  If you are
@@ -54,6 +59,74 @@ is available to handler classes.  Use it, rather than hand-rolling a
 parser, unless you have to cope with markup so badly malformed that it
 cannot cope.
 
+== Handler Class Output ==
+
+The handler class will have mathods for retrieving various portions of
+the project state.  Some of these you will not need to define; they're
+methods of the GenericForge class that will work when you provide the 
+correct implementation methods in your derived class.  Others you will
+need to write yourself.
+
+Here are the methods every handler class must implement:
+
+pluck_bugs(sample=False, timeless=False)::
+   Fetch the contents of all trackers. If sample is True, fetch only
+   one sample bug from each tracker (used for testing).  If timeless
+   is true, omit pull-interval timestamps (used for regression tests).
+   If you use GenericForge, you don't need to define this.
+
+pluck_artifact(tracker, bugid, vocabularies=None)::
+   Fetch a particular tracker item.  The 'tracker' argument must
+   be a tracker name this project defines (usually "bugs", "features",
+   "tasks", or "support"). The 'bugid' argument  is a string or
+   numeric bug ID. If 'vocabularies' is not None, it will be treated
+   as a dictionary and filled with tracker attribute vocabularies (see
+   more about this in the discussion of ontology smoothing).
+
+pluck_permissions()::
+   Get the project's member-permissions table. The ways to fetch these
+   are quite idiosyncratic by forge type, so framework code can't
+   help here: you'll have to write your own method from scratch.
+
+Each of these methods should return a JSON-conformable python
+dictionary object. What should be *in* that object is the tricky part.
+Different forges support different data models, so not all output
+format will be identicals.  Here are some guidelines:
+
+1. *Try for 100% faithful data capture.* Never throw away state,
+   because you can never tell when a handler user might need it.
+
+2. *Make the dump look as much like an existing format as possible.*
+   Re-use class tags, structures and fieldnames from the sample dumps
+   you'll find in the regression check files.  The Gna! regression
+   check makes an especially good guide, as the data model of that
+   forge is richer than most others.
+
+In order to support cross-forge statistical analyses, re-import, and
+other good things, these dumps will eventually have to be massaged
+into using a common data model.  The project's term for this is "ontology
+smoothing", and you need to be careful not to try to do too much
+of it in the handler class.
+
+In general, the handler class should only transform the data in ways
+that are trivial, lossless, and make it look more like one of the
+pre-existing formats.  Complicated and potentially lossy
+transformations should be left up to the code calling these handlers.
+
+Here's an example.  On both Berlios and Savane, the member capability 
+that allows tracker items to be assigned to a member is "Technician", 
+abbreviated "T". But the capability required to *edit*
+tracker issue items is called different things: "Administrator" on
+Berlios and "Manager" on Savane.  We prefer to use Savane
+terminology, reserving "Administrator" for someone with the capability
+to edit member permissions; so we smooth those capability names 
+to "T" and "M" on both forges.
+
+When you code ontology smoothing, explain it carefully in a comment
+with the words "ontology smoothing" actually in it.  And keep it
+carefully separated from the actual extraction logic, in case 
+someone needs to change it someday.
+
 == Defining the Handler ==
 
 Handler classes live in a multi-file module called 'forgeplucker';
@@ -80,7 +153,7 @@ class FooForge(GenericForge):
 
 --------------------------------------------------------------------------
 
-The 'pass' is a placeholderr statement; as written, our class does not yet have
+The 'pass' is a placeholder statement; as written, our class does not yet have
 real methods or members and is an exact clone of GenericForge.
 
 == Logging In ==
@@ -547,9 +620,4 @@ changing a dummy project's content, or to rebuild all tests.
 
 Run "regress-driver.py --help" to learn its control options.
 
-== Project Design Philosophy ==
-
-Before coding, it would probably be a good idea for you to
-at least skim the http:external.html[blog entries that gave birth to
-this project].  It may help you understand the design philosophy
-of the code better.
+//End
