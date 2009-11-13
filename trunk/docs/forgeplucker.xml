@@ -21,7 +21,6 @@
       <arg choice='opt'>-u <replaceable>username</replaceable></arg>
       <arg choice='opt'>-p <replaceable>password</replaceable></arg>
       <arg choice='opt'>-r</arg>
-      <arg choice='opt'>-s</arg>
       <arg choice='opt'>-v <replaceable>verbosity</replaceable></arg>
       <arg choice='plain'><replaceable>projecturl</replaceable></arg>
 </cmdsynopsis>
@@ -94,15 +93,6 @@ parts, a tracker name and a bug ID. Mainly useful for debgging.</para>
 <term>-r</term>
 <listitem>
 <para>Dump in XML rather than JSON.</para>
-</listitem>
-</varlistentry>
-<varlistentry>
-<term>-s</term>
-<listitem>
-<para>Sample mode. Get only the most recent bug in each
-tracker. Useful for verifying that you can read a forge type
-correctly without fetching an entire project.  Also useful if what
-you want is just the atttribute ranges for project metadata.</para>
 </listitem>
 </varlistentry>
 <varlistentry>

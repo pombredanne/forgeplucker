@@ -105,10 +105,10 @@ submitted to them.
         def chunkfetcher(self, offset):
             "Get a bugtracker index page - all bug IDs, open and closed.."
             return "bugs/index.php?func=browse&group_id=%s&set=custom&offset=%d" % (self.parent.project_id, offset)
-        def detailfetcher(self, bugid):
+        def detailfetcher(self, issueid):
             "Generate a bug detail URL for the specified bug ID."
             return "bugs/?func=detailbug&bug_id=%d&group_id=%s" % \
-                   (bugid, self.parent.project_id)
+                   (issueid, self.parent.project_id)
         def custom(self, contents, bug):
             m = re.search("<B>Original Submission:</B><BR>", contents)
             if not m:
@@ -156,10 +156,10 @@ submitted to them.
         def chunkfetcher(self, offset):
             "Get a feature tracker index page - all bug IDs, open and closed.."
             return "feature/index.php?func=browse&group_id=%s&set=custom&offset=%d" % (self.parent.project_id, offset)
-        def detailfetcher(self, bugid):
+        def detailfetcher(self, issueid):
             "Generate a feature detail URL for the specified bug ID."
             return "feature/?func=detailfeature&feature_id=%d&group_id=%s" % \
-                   (bugid, self.parent.project_id)
+                   (issueid, self.parent.project_id)
         def custom(self, contents, feature):
             m = re.search(r"<H2>\[ [A-Za-z ]* #[0-9]+ \] ([^<]*)</H2>", \
                           contents)
@@ -200,10 +200,10 @@ submitted to them.
         def chunkfetcher(self, offset):
             "Get a patch tracker index page - all bug IDs, open and closed.."
             return "patch/index.php?func=browse&group_id=%s&set=custom&offset=%d" % (self.parent.project_id, offset)
-        def detailfetcher(self, bugid):
+        def detailfetcher(self, issueid):
             "Generate a patch detail URL for the specified bug ID."
             return "patch/?func=detailpatch&patch_id=%d&group_id=%s" % \
-                   (bugid, self.parent.project_id)
+                   (issueid, self.parent.project_id)
         def custom(self, contents, patch):
             m = re.search(r"<H2>\[ [A-Za-z ]* #[0-9]+ \] ([^<]*)</H2>", \
                           contents)

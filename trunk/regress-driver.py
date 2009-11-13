@@ -7,7 +7,7 @@ content of a test project.
 Usage:
     regress-driver.py                       # Run all regression tests
     regress-driver.py --build site/project  # Rebuild individual .chk file
-    regress-driver.py --build-all           # Rebuild all .chk files
+    regress-driver.py --rebuild-all         # Rebuild all .chk files
     regress-deiver.py --diffs               # Show diffs from last regression
     regress-driver.py --help                # Display this help
 
@@ -38,7 +38,7 @@ def walk_tests():
 if __name__ == '__main__':
     (options, arguments) = getopt.getopt(sys.argv[1:],
                                          "bdhlu:v?",
-                                         ["build-all",
+                                         ["rebuild-all",
                                           "build",
                                           "diffs",
                                           "help",

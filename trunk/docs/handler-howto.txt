@@ -69,16 +69,15 @@ need to write yourself.
 
 Here are the methods every handler class must implement:
 
-pluck_bugs(sample=False, timeless=False)::
-   Fetch the contents of all trackers. If sample is True, fetch only
-   one sample bug from each tracker (used for testing).  If timeless
-   is true, omit pull-interval timestamps (used for regression tests).
-   If you use GenericForge, you don't need to define this.
+pluck_trackers(timeless=False)::
+   Fetch the contents of all trackers. If timeless is true, omit
+   pull-interval timestamps (used for regression tests).  If you use
+   GenericForge, you don't need to define this.
 
-pluck_artifact(tracker, bugid, vocabularies=None)::
+pluck_artifact(tracker, issueid, vocabularies=None)::
    Fetch a particular tracker item.  The 'tracker' argument must
    be a tracker name this project defines (usually "bugs", "features",
-   "tasks", or "support"). The 'bugid' argument  is a string or
+   "tasks", or "support"). The 'issueid' argument  is a string or
    numeric bug ID. If 'vocabularies' is not None, it will be treated
    as a dictionary and filled with tracker attribute vocabularies (see
    more about this in the discussion of ontology smoothing).

@@ -147,8 +147,8 @@ def xml_dump(issues, fp=sys.stdout):
             if 'dependents' in artifact:
                 if artifact['dependents']:
                     fp.write('      <dependents>\n')
-                for bugid in artifact['dependents']:
-                    fp.write('        <dependent>%d</dependent>\n' % bugid)
+                for issueid in artifact['dependents']:
+                    fp.write('        <dependent>%d</dependent>\n' % issueid)
                 if artifact['dependents']:
                     fp.write('      </dependents>\n')
                 fields.remove("dependents")
@@ -189,8 +189,8 @@ if __name__ == '__main__':
     user = passwd = forgetype = None
     verbose = 0
     issue = None
-    sample = xml = timeless = permissions = False
-    (options, arguments) = getopt.getopt(sys.argv[1:], "f:i:np:Prsu:v:h?")
+    xml = timeless = permissions = False
+    (options, arguments) = getopt.getopt(sys.argv[1:], "f:i:np:Pru:v:h?")
     for (arg, val) in options:
         if arg in ('-h', '-?'):
             print __doc__
@@ -208,8 +208,6 @@ if __name__ == '__main__':
             permissions = True
         elif arg == '-n':
             timeless = True
-        elif arg == '-s':
-            sample = True
         elif arg == '-v':
             verbose = int(val)
         elif arg == '-i':
@@ -248,11 +246,11 @@ if __name__ == '__main__':
             perms = bt.pluck_permissions()
             pp.pprint(perms)
         elif issue:
-            (tracker, bugid) = issue.split(":")
-            issue = bt.pluck_artifact(tracker, bugid)
+            (tracker, issueid) = issue.split(":")
+            issue = bt.pluck_artifact(tracker, issueid)
             pp.pprint(issue)
         else:
-            bugs = bt.pluck_bugs(sample=sample, timeless=timeless)
+            bugs = bt.pluck_trackers(timeless=timeless)
             bugs = canonicalize(bugs)
             if xml:
                 xml_dump(bugs)

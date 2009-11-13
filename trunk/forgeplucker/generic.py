@@ -73,7 +73,7 @@ class GenericForge:
         "Fetch the ID list from the specified tracker."
         chunk_offset = 0
         continued = True
-        bugids = []
+        issueids = []
         while continued:
             continued = False
             indexpage = tracker.chunkfetcher(chunk_offset)
@@ -91,18 +91,18 @@ class GenericForge:
             if tracker.access_denied(page):
                 self.error("Tracker technician access to bug index was denied")
             for m in re.finditer(tracker.artifactid_re, page):
-                bugid = int(m.group(1))
-                if bugid not in bugids:
-                    bugids.append(bugid)
-            if not self.sample and tracker.has_next_page(page):
+                issueid = int(m.group(1))
+                if issueid not in issueids:
+                    issueids.append(issueid)
+            if tracker.has_next_page(page):
                 continued = True
             chunk_offset += tracker.chunksize
         if self.verbosity >= 1:
-            self.notify("%d artifact IDs for tracker '%s': %s" % (len(bugids), tracker.type, bugids))
-        if tracker.zerostring and not bugids:
+            self.notify("%d artifact IDs for tracker '%s': %s" % (len(issueids), tracker.type, issueids))
+        if tracker.zerostring and not issueids:
             self.error("expecting nonempty ID list in %s tracker" % tracker.type)
-        return bugids
-    def pluck_artifact(self, tracker, bugid, vocabularies=None):
+        return issueids
+    def pluck_artifact(self, tracker, issueid, vocabularies=None):
         "Get a dictionary representing a single artifact in a tracker."
         # Enable this to be called with string arguments for debugging purposes
         if type(tracker) == type(""):
@@ -112,14 +112,14 @@ class GenericForge:
                     break
             else:
                 self.error("can't find any tracker of type '%s'" % tracker)
-        if type(bugid) == type(""):
-            bugid = int(bugid)
+        if type(issueid) == type(""):
+            issueid = int(issueid)
         # Actual logic starts here  
-        contents = self.fetch(tracker.detailfetcher(bugid), "Detail page")
+        contents = self.fetch(tracker.detailfetcher(issueid), "Detail page")
         # Modification access to the tracker is required
-        if tracker.access_denied(contents, bugid):
+        if tracker.access_denied(contents, issueid):
             self.error("tracker technician access to bug details was denied.", ood=False)
-        artifact = {"class":"ARTIFACT", "id":bugid}
+        artifact = {"class":"ARTIFACT", "id":issueid}
         m = re.search(tracker.submitter_re, contents)
         if not m:
             self.error("no submitter found")
@@ -192,12 +192,8 @@ class GenericForge:
         idlist = self.pluck_tracker_ids(tracker)
         if idlist is None:
             return None	# Optional tracker didn't exist
-        # Empty tracker returns an empty list rather than None;
-        # This will be passed through to the report structure.
-        if self.sample and idlist:
-            idlist = idlist[-1:]
-        for bugid in idlist:
-            artifacts.append(self.pluck_artifact(tracker, bugid, vocabularies))
+        for issueid in idlist:
+            artifacts.append(self.pluck_artifact(tracker, issueid, vocabularies))
         self.where = trackerwhere
         after = timestamp()
         artifacts = {"class":"TRACKER",
@@ -209,9 +205,8 @@ class GenericForge:
         if not timeless:
             artifacts["interval"] = (before, after)
         return artifacts
-    def pluck_bugs(self, sample=False, timeless=False):
+    def pluck_trackers(self, timeless=False):
         "Pull the buglist, wrapping it with metadata. about the operation."
-        self.sample = sample
         trackerdata = []
         before = timestamp()
         for tracker in self.trackers:
@@ -225,7 +220,6 @@ class GenericForge:
             "host" : self.host,
             "project" : self.project_name,
             "format_version":1,
-            "sample":self.sample,
             "trackers":trackerdata,
             }
         # See above

@@ -46,9 +46,9 @@ This code will capture custom trackers.
         def chunkfetcher(self, offset):
             "Get a bugtracker index page - all bug IDs, open and closed.."
             return self.projectbase + "?offset=%d&limit=100" % offset
-        def detailfetcher(self, bugid):
+        def detailfetcher(self, issueid):
             "Generate a bug detail URL for the specified bug ID."
-            return self.projectbase + '&func=detail&aid=' + str(bugid)
+            return self.projectbase + '&func=detail&aid=' + str(issueid)
         def narrow(self, text):
             "Get the section of text containing editable elements."
             return text
