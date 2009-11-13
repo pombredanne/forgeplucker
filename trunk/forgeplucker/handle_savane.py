@@ -1,6 +1,7 @@
 import sys, os, re, time, calendar
 from htmlscrape import *
 from generic import *
+from BeautifulSoup import BeautifulSoup
 
 class Savane(GenericForge):
     """
@@ -257,5 +258,24 @@ The status of all trackers (bug, patch, support, and task) is extracted.
                 except ValueError:
                     raise self.parent.error("mangled followup,")
         return comments
-
+    def pluck_permissions(self):
+        "Retrieve the developer roles table."
+        page = self.fetch("project/admin/userperms.php?group=%s" % self.project_name, "Permissions Table")
+        if not "Update Permissions" in page:
+            self.error("you need admin privileges to extract permissions",
+                       ood=False)
+        # Ignore all the site navigation crap, it's likely to mutate
+        goodstuff = page.find('<form action="/project/admin/userperms.php" method="post">')
+        if goodstuff == -1:
+            self.error("permissions form not found where expected")
+        else:
+            page = page[goodstuff:]
+        trailing = page.find("</form>")
+        if trailing == -1:
+            self.error("expected trailing </form> element not found")
+        else:
+            page = page[:trailing+7]
+        tree = BeautifulSoup(page)
+        print tree.prettify()
+        return None
 # End
