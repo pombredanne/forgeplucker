@@ -8,6 +8,7 @@ close to the ancestral Alexandria.
 import sys, os, re, time, calendar
 from htmlscrape import *
 from generic import *
+from BeautifulSoup import BeautifulSoup
 
 class Berlios(GenericForge):
     """
@@ -264,6 +265,88 @@ submitted to them.
             'login':'Login With SSL'}, "Personal Page")
     def pluck_permissions(self):
         "Retrieve the developer roles table."
-        pass
+        # FIXME: Test what happens when not logged in, no project selected,
+        # or lacking admin permissions.
+        page = self.fetch("project/admin/userperms.php", "Permissions Table")
+        if not "Update Developer Permissions" in page:
+            self.error("you need admin privileges to extract permissions",
+                       ood=False)
+        expected_features = [u'General',
+                             u'Bug Tracking',
+                             u'Task Manager',
+                             u'Patch Manager',
+                             u'Support Manager', 
+                             u'Feature Manager',
+                             u'Forums',
+                             u'Doc. Manager']
+        expected_roles = [u'Undefined',
+                          u'Developer',
+                          u'Project Manager',
+                          u'Unix Admin', u'Doc Writer',
+                          u'Tester',
+                          u'Support Manager',
+                          u'Graphic/Other Designer',
+                          u'Doc Translator',
+                          u'Editorial/Content Writer',
+                          u'Packager (.rpm, .deb etc)',
+                          u'Analysis / Design',
+                          u'Advisor/Mentor/Consultant',
+                          u'Distributor/Promoter',
+                          u'Content Management',
+                          u'Requirements Engineering',
+                          u'Web Designer',
+                          u'Porter (Cross Platform Devel.)']
+        expected_trackerperms = [u'-', u'T', u'A,T', u'A']
+        # First, drop out presentation-level tags
+        page = page.replace('<br>', ' ')
+        page = page.replace('<B>', '').replace('</B>', '')
+        page = page.replace('<b>', '').replace('</b>', '')
+        # FIXME: Should replace this with a caseblind regexp that accepts
+        # all sizes
+        page = page.replace('<FONT size="-1">', '').replace('</FONT>', '')
+        page = page.replace('<font size="-1">', '').replace('</font>', '')
+        tree = BeautifulSoup(page)
+        # There should be only one table on the page.
+        rows = tree.find("table").findAll("tr")
+        # Check the role set for this table.  That's just the labels
+        # in the first HTML row.
+        features = map(lambda x: x.contents[0], rows.pop(0).findAll('td'))
+        if features != expected_features:
+            self.error("feature set is not as expected")
+        # Now we start on the actual data extraction
+        capabilities = []
+        for (i, row) in enumerate(rows):
+            if i % 2 == 0:
+                capabilities.append(row.td.contents)
+            else:
+                general = row.contents.pop(0)
+                admincheck = general("input")[0]
+                reltech = general("input")[1]
+                (role, vocabulary) = select_parse(general.select)
+                if vocabulary != expected_roles:
+                    self.error('developer roles are not as expected')
+                capabilities[-1].append(("Role", role))
+                capabilities[-1].append(("Admin", "checked" in `admincheck`))
+                capabilities[-1].append(("Release Tech", "checked" in `reltech`))
+                permissions = map(select_parse, row.findAll("select"))
+                for (feature, (permopt, vocabulary)) in zip((u'Bug Tracking',
+                                                          u'Task Manager',
+                                                          u'Patch Manager',
+                                                          u'Support Manager', 
+                                                          u'Feature Manager'),
+                                                         permissions[:5]):
+                    if vocabulary != expected_trackerperms:
+                        self.error("permissions vocabulary is not as expected")
+                    perms = []
+                    if 'T' in permopt:
+                        perms.append('T')
+                    if 'A' in permopt:
+                        perms.append('A')
+                    capabilities[-1].append((feature, perms))
+                for (feature, (permopt, vocabulary)) in zip((u'Forums',
+                                                          u'Doc Manager'),
+                                                         permissions[5:]):
+                    capabilities[-1].append((feature, permopt!='-'))
+        return capabilities
 
 # End

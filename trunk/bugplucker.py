@@ -189,8 +189,8 @@ if __name__ == '__main__':
     user = passwd = forgetype = None
     verbose = 0
     issue = None
-    sample = xml = timeless = False
-    (options, arguments) = getopt.getopt(sys.argv[1:], "f:i:np:rsu:v:h?")
+    sample = xml = timeless = permissions = False
+    (options, arguments) = getopt.getopt(sys.argv[1:], "f:i:np:Prsu:v:h?")
     for (arg, val) in options:
         if arg in ('-h', '-?'):
             print __doc__
@@ -204,6 +204,8 @@ if __name__ == '__main__':
             passwd = val
         elif arg == '-r':
             xml = True
+        elif arg == '-P':
+            permissions = True
         elif arg == '-n':
             timeless = True
         elif arg == '-s':
@@ -242,6 +244,9 @@ if __name__ == '__main__':
         bt = forgetype(host, project)
         bt.verbosity = verbose
         bt.login(user, passwd)
+        if permissions:
+            perms = bt.pluck_permissions()
+            pp.pprint(perms)
         if issue:
             (tracker, bugid) = issue.split(":")
             issue = bt.pluck_artifact(tracker, bugid)
@@ -261,3 +266,5 @@ if __name__ == '__main__':
         raise SystemExit, 1
     except KeyboardInterrupt:
         pass
+
+# End

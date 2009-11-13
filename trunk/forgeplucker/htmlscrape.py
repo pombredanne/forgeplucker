@@ -2,7 +2,20 @@
 Helper functions for scraping HTML.
 """
 
+from BeautifulSoup import BeautifulSoup
 import re
+
+def select_parse(branch):
+    "Parse a BeautfulSoup select object."
+    options = branch.findAll("option")
+    possibilities = map(lambda x: x.contents[0], options)
+    for x in options:
+        if 'selected' in `x`:
+            return (x.contents[0], possibilities)
+    return (None, possibilities)
+
+# This doesn't use Beautiful Soup (yet) because there's a Berlios case
+# BS may not be able to cope with. We'll check sometime.
 
 def walk_table(text):
     "Parse out the rows of an HTML table."
