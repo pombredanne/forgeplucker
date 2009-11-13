@@ -3,7 +3,6 @@
     'format_version': 1,
     'host': 'gna.org',
     'project': 'forgepluckertest',
-    'sample': False,
     'trackers': [   {   'artifacts': [   {   'assigned_to': 'None ',
                                              'attachments': [],
                                              'category': 'None',

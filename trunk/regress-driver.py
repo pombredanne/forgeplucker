@@ -76,6 +76,8 @@ if __name__ == '__main__':
         (stem, dummy) = os.path.splitext(testcmd)
     else:
         stem = testcmd
+    if stem.startswith("./"):
+        stem = stem[2:]
 
     # Argument is always parsed the same way
     if arguments:
@@ -103,7 +105,7 @@ if __name__ == '__main__':
             # Rebuild all tests
             for ((site, project), path) in walk_tests():
                 print "Building %s/%s test..." % (site, project)
-                basecmd = testcmd +" -n -u "+ username +" "+ site +"/"+ project +" >"+ path
+                basecmd = testcmd +" -n -u "+ username +" "+ site +"/"+ project +" >"+ path +"/"+ stem 
                 cmd = basecmd + ".chk"
                 if verbose:
                     print >>sys.stderr, "%s: running '%s'" % (sys.argv[0], cmd)

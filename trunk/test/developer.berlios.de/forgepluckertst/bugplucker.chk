@@ -3,7 +3,6 @@
     'format_version': 1,
     'host': 'developer.berlios.de',
     'project': 'forgepluckertst',
-    'sample': False,
     'trackers': [   {   'artifacts': [   {   'assigned_to': 'ptd',
                                              'category': 'Misfeatures',
                                              'class': 'ARTIFACT',
