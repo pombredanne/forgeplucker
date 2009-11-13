@@ -19,6 +19,7 @@ code may generalize.
 
 Things it doesn't grab yet:
 * Tasks and task interdependencies.
+* Forum and Document Manager state
 * Mantis bugs.
 
 Bug, feature-request, and patch trackers always exist in conjunction
@@ -330,7 +331,7 @@ submitted to them.
                 if vocabulary != expected_roles:
                     self.error('developer roles are not as expected')
                 capabilities[-1].append(("Role", role))
-                capabilities[-1].append(("Admin", "checked" in `admincheck`))
+                capabilities[-1].append(("Administrator", "checked" in `admincheck`))
                 capabilities[-1].append(("Release Tech", "checked" in `reltech`))
                 permissions = map(select_parse, row.findAll("select"))
                 for (feature, (permopt, vocabulary)) in zip((u'Bug Tracking',
@@ -344,8 +345,16 @@ submitted to them.
                     perms = []
                     if 'T' in permopt:
                         perms.append('T')
+                    # One bit of ontology smoothing here. In native
+                    # Berlios terminology, the capability to modify
+                    # items in an issue tracker is called
+                    # "Administrator" and coded with an 'A'.  Savane
+                    # terminology, in which this permission bit is
+                    # tracker "Manager", is preferable - it's better
+                    # to reserve the term "Administrator" for a member
+                    # who can edit permissions.
                     if 'A' in permopt:
-                        perms.append('A')
+                        perms.append('M')
                     capabilities[-1].append((feature, perms))
                 for (feature, (permopt, vocabulary)) in zip((u'Forums',
                                                           u'Doc Manager'),
