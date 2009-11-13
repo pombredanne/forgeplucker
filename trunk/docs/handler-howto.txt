@@ -7,15 +7,6 @@ for each distinct forge type, it needs a handler class to tell it
 how to extract data from that forge. This document explains how to
 write a handler class.
 
-Note that to test a handler module, you will need to have developer
-access to a project on the target site. To test the bug-plucking logic
-you will need to be authorized as a bugtracker technician, able to
-modify bug entries. This is not because the program actually modifies
-them, but because it relies on parsing input form elements in the 
-bug detail pages.  To test the (not yet written) logic for eztacting
-project member permissions,  you will need to be a project
-administrator.
-
 == Pragmatics of Web-Scraping ==
 
 Your handler class's job is to extract project data.  If you are
