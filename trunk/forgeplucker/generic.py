@@ -242,20 +242,25 @@ class GenericForge:
         startform = text.find("<" + tag)
         endform = text.find("</%s>" % tag)
         return text[startform:endform]
-    def table_iter(self, contents, header, cols, errtag, has_header=False):
-        "Iterate through a tracker tabular report."
-        begin = contents.find(header)
-        if begin > -1:
-            followups = walk_table(contents[begin:])
-            if followups:
+    def table_iter(self, text, header, cols, errtag, has_header=False):
+        """An implementation of table_iter in BeautifulSoup"""
+        rows = []
+        header_passed=False
+        begin = text.find(header)
+        if begin != -1:
+            text = text[begin:]
+            soup = BeautifulSoup(text)
+            result = soup.find(name='table')
+            if result != None:
+                trs = result.findAll(name='tr')
                 if has_header:
-                    followups.pop(0)
-                for row in followups:
-                    if len(row) != cols:
+                    trs = trs[1:]
+                for tr in trs:
+                    tds = tr.findAll(name=['td','th'])
+                    if len(tds) != cols:
                         self.error(errtag+" has wrong width (%d, expecting %d)"
-                                   % (len(row), cols))
-                    else:
-                        yield map(dehtmlize, row)
+                                       % (len(row), cols))
+                    yield map(lambda x: dehtmlize(str(x)),tds)
     def identity(self, raw):
         "Parse an identity object from a string."
         cooked = {"class":"IDENTITY",}

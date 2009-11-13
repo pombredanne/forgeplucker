@@ -4,6 +4,7 @@ Handler class for SourceForge.
 This doesn't work yet.  It's a stub.
 """
 import re
+import copy
 
 from htmlscrape import *
 from generic import *
@@ -30,6 +31,7 @@ This code will capture custom trackers.
 ? *.*?\( *[^)]* *\) - (.*?)
 ? *</p>'''
             self.ignore = ("canned_response",
+                           "new_artifact_type_id"
                            "words")
             self.artifactid_re = r'/tracker/\?func=detail&aid=([0-9]+)&group_id=[0-9]+&atid=[0-9]+"'
             m = re.search('<a href="([^"]*)">%s</a>' % label,
@@ -52,8 +54,25 @@ This code will capture custom trackers.
         def narrow(self, text):
             "Get the section of text containing editable elements."
             return text
+        def parse_history_table(self,contents,bug):
+            changes = []
+            previous = copy.copy(bug)
+            for (field, old, date, by) in self.parent.table_iter(contents, #This code is shakey (the table may not exist)
+                                          r'<h4 class="titlebar toggle" id="changebar">',
+                                           4,
+                                          "history",
+                                          has_header=True):
+                change = {'field':field.strip(),
+                          'old':old.strip(),
+                          'date':self.parent.canonicalize_date(date.strip()),
+                          'by':by.strip(),
+                          'CLASS':'FIELDCHANGE'}
+                change['new'] = previous[field.strip()]
+                previous[field.strip()] = change['old']
+                changes.append(change)
+            return changes
         def custom(self,contents,bug):
-            bug['history']=[] #FIXME This is stub
+            bug['history']=self.parse_history_table(contents,bug) #FIXME This is stub
             m = re.search(r'<input type="checkbox" name="is_private" [^>]* />',contents)
             bug['private'] = 'checked' in m.group(0)
     class BugTracker(Tracker):
