@@ -247,7 +247,7 @@ if __name__ == '__main__':
         if permissions:
             perms = bt.pluck_permissions()
             pp.pprint(perms)
-        if issue:
+        elif issue:
             (tracker, bugid) = issue.split(":")
             issue = bt.pluck_artifact(tracker, bugid)
             pp.pprint(issue)

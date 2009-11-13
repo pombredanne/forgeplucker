@@ -265,9 +265,7 @@ submitted to them.
             'login':'Login With SSL'}, "Personal Page")
     def pluck_permissions(self):
         "Retrieve the developer roles table."
-        # FIXME: Test what happens when not logged in, no project selected,
-        # or lacking admin permissions.
-        page = self.fetch("project/admin/userperms.php", "Permissions Table")
+        page = self.fetch("project/admin/userperms.php?group_id=%s" % self.project_id, "Permissions Table")
         if not "Update Developer Permissions" in page:
             self.error("you need admin privileges to extract permissions",
                        ood=False)
@@ -297,6 +295,12 @@ submitted to them.
                           u'Web Designer',
                           u'Porter (Cross Platform Devel.)']
         expected_trackerperms = [u'-', u'T', u'A,T', u'A']
+        # Ignore all the site navigation crap, it's likely to mutate
+        goodstuff = page.find('<FORM action="userperms.php" method="post">')
+        if goodstuff == -1:
+            self.error("permissions form not found where expected")
+        else:
+            page = page[goodstuff:]
         # First, drop out presentation-level tags
         page = page.replace('<br>', ' ')
         page = page.replace('<B>', '').replace('</B>', '')
@@ -312,7 +316,7 @@ submitted to them.
         # in the first HTML row.
         features = map(lambda x: x.contents[0], rows.pop(0).findAll('td'))
         if features != expected_features:
-            self.error("feature set is not as expected")
+            self.error("feature set %s is not as expected" % features)
         # Now we start on the actual data extraction
         capabilities = []
         for (i, row) in enumerate(rows):
