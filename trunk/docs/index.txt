@@ -30,6 +30,8 @@ Developers and interested parties are encouraged to watch it.
 
 There is a project mailing list, https://mail.gna.org/listinfo/forgeplucker-dev/[forgeplucker-dev@gna.org].
 
+You can track the project's history on its https://www.ohloh.net/p/foregeplucker[Ohloh page].
+
 == How You Can Help ==
 
 We are actively seeking interested developers.  Ideally, each forge

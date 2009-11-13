@@ -204,7 +204,7 @@ if __name__ == '__main__':
             passwd = val
         elif arg == '-r':
             xml = True
-        elif arg == '-P':
+        elif arg == '-P':	# Not documented
             permissions = True
         elif arg == '-n':
             timeless = True

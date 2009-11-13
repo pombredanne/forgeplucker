@@ -1,7 +1,8 @@
 """
-The GenericForge class is the framework code for fiftching state from
-forges.  Handler classes are expected to derive from this, adding and
-overriding methods where necessary.
+The GenericForge class is the framework code for fetching state from
+forges.  Handler classes (art least for Alexandria-descended forges)
+are expected to derive from this, adding and overriding methods where
+necessary.
 """
 
 import sys, os, re, urllib, urllib2, time, calendar, email.utils
@@ -237,6 +238,7 @@ class GenericForge:
         # Override in derived classes if necessary.
         return "account/login.php"
     def skipspan(self, text, tag, count):
+        "Skip to content enclosed by nth instance of specified tags."
         for dummy in range(count):
             skipindex = text.find("</%s>" % tag)
             if skipindex == -1:

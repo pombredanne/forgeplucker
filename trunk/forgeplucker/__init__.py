@@ -25,8 +25,10 @@ site_to_handler = {
 }
 
 def get_forgetype(host):
+    "Deducve forge type from hostname."
     if host in site_to_handler:
         return site_to_handler[host]
+    # FIXME: Someday, we'll do more checks by parsing the site entry page 
     print >>sys.stderr, "Can't determine forge type for host %s" % host
     raise SystemExit, 1
 
