@@ -543,6 +543,53 @@ need an extension field cfo#captured.
 
 The IDENTITY class can be represented by FOAF.
 
+== Appendix: Forge permissions models ==
+
+=== Berlios ===
+
+This permissions model is documented here because CFO will have to
+capture at least some portions of it.  But that has not yet neren done.
+
+Each project member may be assigned a role.  The role set is as follows:
+
+- Undefined
+- Developer
+- Project Manager
+- Unix Admin', u'Doc Writer
+- Tester
+- Support Manager
+- Graphic/Other Designer
+- Doc Translator
+- Editorial/Content Writer
+- Packager (.rpm, .deb etc)
+- Analysis / Design
+- Advisor/Mentor/Consultant
+- Distributor/Promoter
+- Content Management
+- Requirements Engineering
+- Web Designer
+- Porter (Cross Platform Devel.)
+
+Each developer has two general permissions:
+
+Administrator:: May edit project member permissions
+Release Technician:: May create project releases
+
+There are four trackers: bugs, features, tasks, and support.  For
+each tracker, a member may be any of the following:
+
+- No permissions
+- Technician - may be assigned issues on this tracker
+- Administrator - may modify issues on this tracker
+
+There are two other flags per member:
+
+- The user may be enabled as a forum moderator
+- The user may be enabled as a document-manager editor
+
+Mailing lists have separate permissions and passwords, 
+being managed through Mailman.
+
 == Change History ==
 
 Version 1.0, 2009-10-24: Initial version.
