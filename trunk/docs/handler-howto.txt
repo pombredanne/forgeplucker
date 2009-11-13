@@ -10,7 +10,7 @@ write a handler class.
 == Pragmatics of Web-Scraping ==
 
 Your handler class's job is to extract project data.  If you are
-lucky, your target forge alredy has an export feature that will dump
+lucky, your target forge already has an export feature that will dump
 everything to you in clean XML or JSON; in that case, you have a
 fairly trivial exercise using BeautifulStoneSoup or the Python-library
 JSON parser and can skip the rest of this section.
@@ -56,7 +56,7 @@ cannot cope.
 
 == Defining the Handler ==
 
-Handler classes live in a multi-file module called 'foregeplucker';
+Handler classes live in a multi-file module called 'forgeplucker';
 look in the directory by that name in the source distribution.  A new
 handler named 'Foo' should live in a file named
 forgeplucker/handle_foo.py.  Other modules in that directory are 
@@ -66,7 +66,7 @@ HTML, and generic.py is the framework code for a generic forge.
 Begin by declaring a new class for your forge type and adding it to
 the 'handlers' variable in forgeplucker/__init__.py; you will also
 need a corresponding import statement.  If it is associated with a well-known 
-domain address, add that association to the 'site_to_type' dictionary.
+domain address, add that association to the 'site_to_handler' dictionary.
 
 Your handler should inherit from the GenericForge class, which will
 supply its logic skeleton and various default methods that often work for 
@@ -81,7 +81,7 @@ class FooForge(GenericForge):
 --------------------------------------------------------------------------
 
 The 'pass' is a placeholderr statement; as written, our class does not yet have
-real methods or members and is an exaxct clone of GenericForhe.
+real methods or members and is an exact clone of GenericForge.
 
 == Logging In ==
 
@@ -122,7 +122,7 @@ handler has logged in.
 I find the Firefox LiveHeaders extension useful for debugging these
 methods.  It's easy to miss a required form element in the visual
 clutter of a login page's source, but with LiveHeaders, you can snoop
-the transaction to see what a successful login through Firefix
+the transaction to see what a successful login through Firefox
 is actually sending.
 
 == Getting the Project ID ==
@@ -145,8 +145,8 @@ you'll have to write logic to get the numeric project ID from the Unix
 name, one, just after you log in.  For an example of how this is done,
 see the method numid_from_name() in the Berlios handler.
 
-In other mrethods you will need to use project Unix name or project 
-numeric ID as appropriate. In thre rest of this document, we'll assume 
+In other methods you will need to use project Unix name or project 
+numeric ID as appropriate. In the rest of this document, we'll assume 
 that your forge stem identifies projects in the modern style requiring
 Unix name only; adjust as needed.
 
@@ -469,8 +469,8 @@ the login failed and the GenericForge code will throw an error.
 -------------------------------------------------------------------------------
 
 Finally, the code for parsing comments on detail pages.  Older
-SourceForgebased systems distinguish between the original submission
-and other comments, presenting them slightly different.  Savane
+SourceForge-based systems distinguish between the original submission
+and other comments, presenting them slightly differently.  Savane
 doesn't -- the submission comment is just comment #0 in the sequence.
 
 -------------------------------------------------------------------------------
@@ -522,7 +522,7 @@ doesn't -- the submission comment is just comment #0 in the sequence.
 To verify your handler class, you should either use an existing
 project on the target forge of which you are already a member, or
 create a new test project.  Some random project won't do, as you will
-need tracker technician access to extract bug state.  It's best if you
+need tracker administrator access to extract bug state.  It's best if you
 can create a dedicated forgeplucker-test project in which you can
 manipulate and inspect the data as you like.
 
