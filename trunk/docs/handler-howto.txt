@@ -16,6 +16,53 @@ bug detail pages.  To test the (not yet written) logic for eztacting
 project member permissions,  you will need to be a project
 administrator.
 
+== Pragmatics of Web-Scraping ==
+
+Your handler class's job is to extract project data.  If you are
+lucky, your target forge alredy has an export feature that will dump
+everything to you in clean XML or JSON; in that case, you have a
+fairly trivial exercise using BeautifulStoneSoup or the Python-library
+JSON parser and can skip the rest of this section.
+
+Usually, however, you're going to need to extract the data from
+the same pages that humans use.  This is a problem, because these
+pages are cluttered with all kinds of presentation-level markup,
+headers, footers, sidebars, and site-navigation gorp -- any
+of which is highly likely to mutate any time the UI gets tweaked.
+
+Here are the tactics we use to try to stay out of trouble:
+
+1. When you don't see what you expect, use the framework's
+self.error() call to abort with a message.  And put in *lots* of 
+expect checks; it's better for a handler to break loudly and soon than
+to return bad data.  Fixing the handler to track a page mutation
+won't usually be hard once you know you need to - and knowing you
+need to is why we have regression tests.
+
+2. Use peephole analysis with regexps (as opposed to HTML parsing
+of the whole page) as much as possible.  Every time you get away with
+matching on strictly local patterns, like special URLs, you avoid
+a dependency on larger areas of page structure which can mutate.
+
+3. Throw away as many irrelevant parts of the page as you can before
+attempting either regexp matching or HTML parsing. If you can identify
+fixed end strings for headers or fixed start strings for footers, use
+those to trim (and error out if they're not there); that way you'll be
+safe even if the headers and footers mutate.  This is what the
+narrow() method in the framework code is for.
+
+4. Rely on forms. You can assume you'll be logged in with
+authentication and permissions to modify project data, which means the
+forge will display forms for editing things like issue data and
+project-member permissions. Use the forms structure, as it is much
+less likely to be casually mutated than the page decorations.
+
+5. When you must parse HTML,
+http://www.crummy.com/software/BeautifulSoup/documentation.html[BeautifulSoup]
+is available to handler classes.  Use it, rather than hand-rolling a
+parser, unless you have to cope with markup so badly malformed that it
+cannot cope.
+
 == Defining the Handler ==
 
 Handler classes live in a multi-file module called 'foregeplucker';
