@@ -54,6 +54,15 @@ This code will capture custom trackers.
         def narrow(self, text):
             "Get the section of text containing editable elements."
             return text
+        def parse_followups(self, contents):
+            "Parse followups out of a displayed page in a bug or patch tracker."
+            comments = []
+            for comment in re.findall(r'''<input type="hidden" name="artifact_comment_\d*_adddate" value="\d*" />\s*<p>\s*Date: [^<]<br />Sender: (?:<a href=".*" title="[^"]">([^<])*)?''',contents):
+                comments.append({"class":"COMMENT",
+                                 'submitter': m.group(2).strip(),
+                                 'date': self.parent.canonicalize_date(m.group(1)),
+                                 'comment': blocktext(m.group(3))})
+            return comments
         def parse_history_table(self,contents,bug):
             changes = []
             previous = copy.copy(bug)
@@ -77,11 +86,8 @@ This code will capture custom trackers.
             bug['private'] = 'checked' in m.group(0)
             m = re.search(r'<input type="checkbox" name="close_comments" [^>]* />',contents)
             bug['allow_comments'] = 'checked' not in m.group(0)
-            m = re.search(r'''<p>
-?\s*Date: [^<]*<br />
-?\s*Sender: <a href="/users/mastrodomenico/" title="Lino Mastrodomenico">mastrodomenico</a>
-?\s*</p>''',contents)
-            bug['history']=self.parse_history_table(contents,bug)
+            #bug['comments'] = self.parse_followups(contents)
+            bug['history'] = self.parse_history_table(contents,bug)
     class BugTracker(Tracker):
         def __init__(self, parent):
             SourceForge.Tracker.__init__(self, "Bugs", parent)

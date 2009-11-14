@@ -249,6 +249,8 @@ class GenericForge:
         begin = text.find(header)
         if begin != -1:
             text = text[begin:]
+            end = text.find('</table>')
+            text = text[:end]
             soup = BeautifulSoup(text)
             result = soup.find(name='table')
             if result != None:
@@ -259,7 +261,7 @@ class GenericForge:
                     tds = tr.findAll(name=['td','th'])
                     if len(tds) != cols:
                         self.error(errtag+" has wrong width (%d, expecting %d)"
-                                       % (len(row), cols))
+                                       % (len(tds), cols))
                     yield map(lambda x: dehtmlize(str(x)),tds)
     def identity(self, raw):
         "Parse an identity object from a string."

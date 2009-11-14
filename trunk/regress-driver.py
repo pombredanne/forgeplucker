@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """\
 Regression-test driver for forgeplucker code.  Run the default test mode
-before committing code changes.  Use the --build mode after tchanfging the
+before committing code changes.  Use the --build mode after changing the
 content of a test project.
 
 Usage:
@@ -12,6 +12,8 @@ Usage:
     regress-driver.py --help                # Display this help
 
 The -u option can be used to set a username for access to the remote site.
+It may be a colon ':' seperated list of usernames, if you use different 
+ones on different sites
 
 The -v option enables verbose progress messages.
 """
