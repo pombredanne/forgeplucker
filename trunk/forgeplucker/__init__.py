@@ -7,10 +7,11 @@ from generic import *
 from handle_sourceforge import *
 from handle_berlios import *
 from handle_savane import *
+from handle_trac import *
 
 # Collect handler classes here, client code will introspect on this set
 # so as not to have to know about individual handler classes.
-handler_classes = (SourceForge, Berlios, Savane)
+handler_classes = (SourceForge, Berlios, Savane, Trac)
 
 # Map well-known hosting sites to forge system types. We'd try using
 # pattern-matching on the site main page for this, but forge adnmins
