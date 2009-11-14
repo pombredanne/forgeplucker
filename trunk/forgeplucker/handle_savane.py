@@ -266,6 +266,11 @@ The status of all trackers (bug, patch, support, and task) is extracted.
                              u'Patch Tracker',
                              u'Cookbook Manager',
                              u'News Manager']
+        expected_perms = [u'Group Default',
+                          u'None',
+                          u'Technician',
+                          u'Manager',
+                          u'Techn. & Manager']
         page = self.fetch("project/admin/userperms.php?group=%s" % self.project_name, "Permissions Table")
         if not "Update Permissions" in page:
             self.error("you need admin privileges to extract permissions",
@@ -302,11 +307,14 @@ The status of all trackers (bug, patch, support, and task) is extracted.
             fields = map(lambda x: x.contents, row.findAll("td"))
             namefield = fields[0]
             baseperms = fields[1]
-            trackerperms = fields[2:]
+            try:
+                trackerperms = map(lambda x: select_parse(x[1]), fields[2:])
+            except:
+                self.error("tracker permissions were not as expected")
             try:
                 name = namefield[1].contents[0]
             except:
-                self.error("name field in pemissions was not as expected")
+                self.error("name field in permissions was not as expected")
             capabilities.append([dehtmlize(name)])
             admin = trusted = False
             if "You are Admin" in baseperms[0]:
