@@ -33,13 +33,18 @@ def get_forgetype(host):
     raise SystemExit, 1
 
 def get_credentials(user, passwd, host):
-    "Assemble user's actual credentials."
+    """Assemble user's actual credentials.
+       user can be a ':' seperated list of usernames"""
+    #usernames is list of usernames to try
     if user is None:
-        user = os.getenv("LOGNAME")
+        usernames = [os.getenv("LOGNAME")]
+    else:
+        usernames = user.split(':')
     if passwd is None:
         passwords = netrc.netrc()
         auth = passwords.authenticators(host)
-        if auth and auth[0] == user:
+        if auth and auth[0] in usernames:
+            user = auth[0]
             passwd = auth[2]
     return (user, passwd)
 

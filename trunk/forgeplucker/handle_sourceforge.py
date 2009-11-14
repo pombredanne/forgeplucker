@@ -23,13 +23,13 @@ This code will capture custom trackers.
             self.chunksize = 100
             self.zerostring = None
             self.submitter_re = r'''<label>Submitted:</label>
-? *<p>
-? *.*?\( *(?:<a href=".*?">)(\w*)(?:</a>)|\w* *\) - (.*?)
-? *</p>''' #This triple quoted string is ugly, but captures identation style
+?\s*<p>
+?\s*.*?\( *(?:(?:<a href=".*?">)(\w*)(?:</a>)|\w*) *\) - (.*?)
+?\s*</p>''' #This triple quoted string is ugly, but captures identation style
             self.date_re = r'''<label>Submitted:</label>
-? *<p>
-? *.*?\( *[^)]* *\) - (.*?)
-? *</p>'''
+?\s*<p>
+?\s*.*?\( *[^)]* *\) - (.*?)
+?\s*</p>'''
             self.ignore = ("canned_response",
                            "new_artifact_type_id"
                            "words")
@@ -57,24 +57,31 @@ This code will capture custom trackers.
         def parse_history_table(self,contents,bug):
             changes = []
             previous = copy.copy(bug)
-            for (field, old, date, by) in self.parent.table_iter(contents, #This code is shakey (the table may not exist)
-                                          r'<h4 class="titlebar toggle" id="changebar">',
+            for (field, old, date, by) in self.parent.table_iter(contents,
+                                          r'<table width="100%" border="1" cellspacing="2" cellpadding="1" class="track">',
                                            4,
                                           "history",
                                           has_header=True):
-                change = {'field':field.strip(),
-                          'old':old.strip(),
-                          'date':self.parent.canonicalize_date(date.strip()),
-                          'by':by.strip(),
-                          'CLASS':'FIELDCHANGE'}
-                change['new'] = previous[field.strip()]
-                previous[field.strip()] = change['old']
-                changes.append(change)
+                if field.strip() != 'close_date':
+                    change = {'field':field.strip(),
+                              'old':old.strip(),
+                              'date':self.parent.canonicalize_date(date.strip()),
+                              'by':by.strip(),
+                              'class':'FIELDCHANGE'}
+                    change['new'] = previous[field.strip()]
+                    previous[field.strip()] = change['old']
+                    changes.append(change)
             return changes
         def custom(self,contents,bug):
-            bug['history']=self.parse_history_table(contents,bug) #FIXME This is stub
             m = re.search(r'<input type="checkbox" name="is_private" [^>]* />',contents)
             bug['private'] = 'checked' in m.group(0)
+            m = re.search(r'<input type="checkbox" name="close_comments" [^>]* />',contents)
+            bug['allow_comments'] = 'checked' not in m.group(0)
+            m = re.search(r'''<p>
+?\s*Date: [^<]*<br />
+?\s*Sender: <a href="/users/mastrodomenico/" title="Lino Mastrodomenico">mastrodomenico</a>
+?\s*</p>''',contents)
+            bug['history']=self.parse_history_table(contents,bug)
     class BugTracker(Tracker):
         def __init__(self, parent):
             SourceForge.Tracker.__init__(self, "Bugs", parent)

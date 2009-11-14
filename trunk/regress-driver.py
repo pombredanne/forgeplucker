@@ -8,7 +8,7 @@ Usage:
     regress-driver.py                       # Run all regression tests
     regress-driver.py --build site/project  # Rebuild individual .chk file
     regress-driver.py --rebuild-all         # Rebuild all .chk files
-    regress-deiver.py --diffs               # Show diffs from last regression
+    regress-driver.py --diffs               # Show diffs from last regression
     regress-driver.py --help                # Display this help
 
 The -u option can be used to set a username for access to the remote site.
