@@ -282,11 +282,49 @@ The status of all trackers (bug, patch, support, and task) is extracted.
         else:
             page = page[:trailing+7]
         form = BeautifulSoup(page)
+        # Extract feature headings
         defaults = form("table")[1]
         features = map(lambda x: x.contents[0], defaults.tr.findAll("th"))
         if features != expected_features:
             self.error("feature set %s is not as expected" % features)
-        defaults2 = map(lambda x: x, defaults.findAll("td"))
-        print defaults2
+        # Extract group default permissions
+        defvals = map(lambda x: x.contents[3].strip(), defaults.findAll("td"))
+        for d in defvals:
+            if not d.startswith("(") or not d.endswith(")"):
+                self.error("default group values were not as expected")
+        defvals = map(lambda x: x[1:-1].strip(), defvals)
+        dfltmap = dict(zip(features, defvals))
+        #print "Defaults:", defvals
+        # Extract actual permissions. The [1:] discards the header row
+        capabilities = []
+        permissions = form("table")[2].findAll("tr")[1:]
+        for row in permissions:
+            fields = map(lambda x: x.contents, row.findAll("td"))
+            namefield = fields[0]
+            baseperms = fields[1]
+            trackerperms = fields[2:]
+            try:
+                name = namefield[1].contents[0]
+            except:
+                self.error("name field in pemissions was not as expected")
+            capabilities.append([dehtmlize(name)])
+            admin = trusted = False
+            if "You are Admin" in baseperms[0]:
+                admin = True
+            else:
+                admin_input = baseperms[1]
+                if not 'admin' in `admin_input`:
+                    self.error("admin checkbox not found where expected")
+                else:
+                    admin = 'checked' in `admin_input`
+            if admin:
+                trusted = True
+            for field in baseperms:
+                if 'input' in `field` and 'privacy' in `field` and "checked" in `field`:
+                    trusted = True
+            capabilities[-1].append(("Admin", admin))
+            capabilities[-1].append(("Trusted", trusted))
+            print "Trackerperms for %s: %s" % (capabilities[-1][0], trackerperms)
+        print "Capabilities:", capabilities
         return None
 # End
