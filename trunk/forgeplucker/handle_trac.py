@@ -17,7 +17,7 @@ The Trac handler provides bug-plucking machinery for Trac sites.
         def __init__(self, parent):
             self.parent = parent
             self.optional = False
-            self.chunksize = 3
+            self.chunksize = 50
             self.type = "Bug"
             self.zerostring = "Error: Invalid Ticket Number"
             self.artifactid_re = r"""<td class="id"><a href="[^"]+" title="[^"]+">#(\d+)</a></td>"""
