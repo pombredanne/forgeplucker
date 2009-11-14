@@ -1,6 +1,6 @@
 = Forge Ontology =
 Eric S. Raymond <esr@thyrsus.com>
-Version 1.1
+Version 1.2
 
 == Scope of this document ==
 
@@ -79,8 +79,9 @@ SHORTNAME:: a project identification string that is a legal Unix path segment.
 LONGNAME:: a name for human use.
 DESCRIPTION:: a text description of the project.
 PRIVILEGE-LIST:: List of PRIVILEGE objects with the following parts.
-- IDENTITY: Identity of a project number; may not be Anonymous
-- Zero or more CAPABILITY? tokens.
+- IDENTITY:: Identity of a project number; may not be Anonymous
+- CAPABILITY-LIST:: Zero or more CAPABILITY tokens.
+- TITLE:: String describing the member's project role 
 SUBSYSTEM-LIST:: One or more SUBSYSTEM parts, which may be one of the following:
 - REPOSITORY with the following parts.
 * NAME:: a string identifying the repository.
@@ -95,6 +96,15 @@ SUBSYSTEM-LIST:: One or more SUBSYSTEM parts, which may be one of the following:
 Most forges limit projects to one REPOSITORY and one WEBSPACE.
 This ontology supports more than one repository because that may
 be useful for modeling repo conversions.
+
+A CAPABILITY consists of any of the following:
+
+- ADMINISTRATOR:: can modify capabilities (boolean)
+- TRUSTED:: can examine tracker items marked private (boolean)
+- A TRACKER-PERMISSION::
+* ID:: The ID of the tracker
+* TECHNICIAN:: can the user be assigned artifacts from here (boolean, optional) 
+* MANAGER:: can the user modify artifacts on here (boolean, optional) 
 
 === TRACKER objects and subobjects ===
 
@@ -460,8 +470,11 @@ developers.
 
 == Additional metadata not covered by the ontology ==
 
-Under Berlios and SourceForge, every tracker has a list of
+Under Berlios, SourceForge, and Savane, every tracker has a list of
 canned responses associated with it,
+
+Berlios, SourceForge, and Savane all have a notion of "squads"
+(permission groups) which we don't capture.
 
 SourceForge trackers have a set of preferences that should probably be
 considered part of project state.
@@ -473,6 +486,8 @@ considered part of project state.
 - Canned texts to be shown on the artifact submission and tracker 
   browse pages.
 - Hidden vs. visible preferences for all metadata other than ID and Summary.
+
+Savane has Cookbook and News features we don't capture.
 
 Under Savane, every modifiable ARTIFACT field has some additional
 attributes:
@@ -513,20 +528,19 @@ types.
 Savane ATTACHMENT objects lack the DESCRIPTION slot,  SourceForge
 ATTACHMENT objects lack MIMETYPE.
 
-SourceForge allows setting (in tracker preferences) the address of a
-commit list for new submissions, and its subscriptions have no
-explanation attached.  Savane allows setting a CC list for
-notification on all state changes, and each subscription can have an 
+Berlios and SourceForge allow setting (in tracker preferences) the
+address of a commit list for new submissions, and its subscriptions
+have no explanation attached.  Savane allows setting a CC list for
+notification on all state changes, and each subscription can have an
 explanatory comment.  The CFO SUBSCRIBER slot assumes Savane-like
-behavior which Berlios cannot support and SourceForge can only
-partially support.
+behavior which Berlios and SourceForge can only partially support.
 
 == Open Questions ==
 
 We need a definition of MAILING-LIST.
 
 What are the controlled vocabularies for PRODUCT::TYPE,
-PRODUCT::ARCHITECTURE, and CAPABILITY?
+PRODUCT::ARCHITECTURE?
 
 There are other kinds of objects that might be considered part of
 a project state: blogs, wikis, and forums leap to mind.  Which of
@@ -545,10 +559,10 @@ The IDENTITY class can be represented by FOAF.
 
 == Appendix: Forge permissions models ==
 
-=== Berlios ===
+These permissions models are documented here because CFO will have to
+capture at least some portions of them.  But that has not yet been done.
 
-This permissions model is documented here because CFO will have to
-capture at least some portions of it.  But that has not yet neren done.
+=== Berlios ===
 
 Each project member may be assigned a role.  The role set is as follows:
 
@@ -575,10 +589,10 @@ Each developer has two general permissions:
 Administrator:: May edit project member permissions
 Release Technician:: May create project releases
 
-There are four trackers: bugs, features, tasks, and support.  For
-each tracker, a member may be any of the following:
+There are five trackers: bugs, tasks, support, patches, and features.  For each
+tracker, a member may have either or both of the following privilege
+bits:
 
-- No permissions
 - Technician - may be assigned issues on this tracker
 - Administrator - may modify issues on this tracker
 
@@ -586,6 +600,26 @@ There are two other flags per member:
 
 - The user may be enabled as a forum moderator
 - The user may be enabled as a document-manager editor
+
+Mailing lists have separate permissions and passwords, 
+being managed through Mailman.
+
+=== Savane ===
+
+There are no named developer roles as on Berlios.
+
+Each developer has two general permissions:
+
+Administrator:: May edit project member permissions
+Trusted User:: May view private bugs (the interface does not use "Trusted")
+
+There are four trackers: bugs, tasks, patches, and support.  There are
+two special features: the cookbook mamnager and the news manager.  For
+each feature, a member may have either or both of the following privilege
+bits:
+
+- Technician - may be assigned items on this feature
+- Manager - may modify items on this tracker (like Berlios Administrator)
 
 Mailing lists have separate permissions and passwords, 
 being managed through Mailman.
@@ -598,3 +632,6 @@ Version 1.1, 2009-10-24: Add CC-LIST tracker slot and subscriber
 object. Add RELEASE and PRODUCT objects.  Describe Pending status.
 ATTACHMENT object mutates some.  CC-LIST changes to SUBSCRIBER.
 NICK member added to IDENTITY.
+
+Version 1.2, 2009-11-14: Define CAPABILITY.  Appendices on permissions
+models.
