@@ -45,6 +45,8 @@ class GenericForge:
             return page
         except urllib2.HTTPError, e:
             if softfail:
+                if self.verbosity >= 1:
+                    self.notify("fetch of %s failed, error %s" % (url, e))
                 return None
             else:
                 raise e
