@@ -288,6 +288,7 @@ The status of all trackers (bug, patch, support, and task) is extracted.
             self.error("expected trailing </form> element not found")
         else:
             page = page[:trailing+7]
+        # Actual parsing begins here
         form = BeautifulSoup(page)
         # Extract feature headings
         defaults = form("table")[1]

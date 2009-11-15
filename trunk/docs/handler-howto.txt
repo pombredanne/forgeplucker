@@ -557,7 +557,7 @@ the login failed and the GenericForge code will throw an error.
             'login':'Login'}, "My Incoming Items")
 -------------------------------------------------------------------------------
 
-Finally, the code for parsing comments on detail pages.  Older
+Now the code for parsing comments on detail pages.  Older
 SourceForge-based systems distinguish between the original submission
 and other comments, presenting them slightly differently.  Savane
 doesn't -- the submission comment is just comment #0 in the sequence.
@@ -604,6 +604,95 @@ doesn't -- the submission comment is just comment #0 in the sequence.
                 except ValueError:
                     raise ForgePluckerException("mangled followup,")
         return comments
+-------------------------------------------------------------------------------
+
+The code for fetching the member permissions table.  Not really complicated,
+there's just a lot of it. Much of it is sanity checks intended to
+detect if permissions pages ever change format.
+
+-------------------------------------------------------------------------------
+    def pluck_permissions(self):
+        "Retrieve the developer roles table."
+        expected_features = [u'Support Tracker',
+                             u'Bug Tracker',
+                             u'Task Tracker',
+                             u'Patch Tracker',
+                             u'Cookbook Manager',
+                             u'News Manager']
+        # This maps some features to standard names. 
+        feature_map = ('support', 'bugs', 'tasks', 'patch', 'Cookbook', 'News')
+        permission_map = {u'Group Default': None,
+                          u'None': [],
+                          u'Technician': ['T'],
+                          u'Manager':['M'],
+                          u'Techn. & Manager':['T', 'M']}
+        page = self.fetch("project/admin/userperms.php?group=%s" % self.project_name, "Permissions Table")
+        if not "Update Permissions" in page:
+            self.error("you need admin privileges to extract permissions",
+                       ood=False)
+        # Ignore all the site navigation crap, it's likely to mutate
+        goodstuff = page.find('<form action="/project/admin/userperms.php" method="post">')
+        if goodstuff == -1:
+            self.error("permissions form not found where expected")
+        else:
+            page = page[goodstuff:]
+        trailing = page.find("</form>")
+        if trailing == -1:
+            self.error("expected trailing </form> element not found")
+        else:
+            page = page[:trailing+7]
+        # Actual parsing begins here
+        form = BeautifulSoup(page)
+        # Extract feature headings
+        defaults = form("table")[1]
+        features = map(lambda x: x.contents[0], defaults.tr.findAll("th"))
+        if features != expected_features:
+            self.error("feature set %s is not as expected" % features)
+        # Extract group default permissions
+        defvals = map(lambda x: x.contents[3].strip(), defaults.findAll("td"))
+        for d in defvals:
+            if not d.startswith("(") or not d.endswith(")"):
+                self.error("default group values were not as expected")
+        defvals = map(lambda x: x[1:-1].strip(), defvals)
+        dfltmap = dict(zip(features, defvals))
+        # Extract actual permissions. The [1:] discards the header row
+        capabilities = {}
+        permissions = form("table")[2].findAll("tr")[1:]
+        for row in permissions:
+            fields = map(lambda x: x.contents, row.findAll("td"))
+            namefield = fields[0]
+            baseperms = fields[1]
+            try:
+                trackerperms = map(lambda x: select_parse(x[1])[0], fields[2:])
+            except:
+                self.error("tracker permissions were not as expected")
+            try:
+                name = namefield[1].contents[0]
+            except:
+                self.error("name field in permissions was not as expected")
+            person = dehtmlize(name)
+            capabilities[person] = {}
+            admin = trusted = False
+            if "You are Admin" in baseperms[0]:
+                admin = True
+            else:
+                admin_input = baseperms[1]
+                if not 'admin' in `admin_input`:
+                    self.error("admin checkbox not found where expected")
+                else:
+                    admin = 'checked' in `admin_input`
+            if admin:
+                trusted = True
+            for field in baseperms:
+                if 'input' in `field` and 'privacy' in `field` and "checked" in `field`:
+                    trusted = True
+            capabilities[person]["Admin"] = admin
+            capabilities[person]["Trusted"] = trusted
+            for (feature, value, default) in zip(feature_map, trackerperms, defvals):
+                if permission_map[value] is None:
+                    value = permission_map[default]
+                capabilities[person][feature] = value 
+        return capabilities
 -------------------------------------------------------------------------------
 
 == Testing Your Handler Class ==
