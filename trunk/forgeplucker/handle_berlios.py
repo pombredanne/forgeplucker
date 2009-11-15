@@ -365,5 +365,13 @@ submitted to them.
                                                          permissions[5:]):
                     capabilities[person][feature] = permopt!='-'
         return capabilities
-
+    def pluck_repository_urls(self):
+        "Fetch a list of repository URLs."
+        repositories = []
+        domain = ".".join(self.host.split(".")[1:])
+        svnrepo = os.path.join("http://svn." + domain,
+                               "svnroot/repos",
+                               self.project_name)
+        return [svnrepo]
+        
 # End
