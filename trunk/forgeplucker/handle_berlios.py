@@ -369,9 +369,19 @@ submitted to them.
         "Fetch a list of repository URLs."
         repositories = []
         domain = ".".join(self.host.split(".")[1:])
-        svnrepo = os.path.join("http://svn." + domain,
+        # https: prefix keeps the fetch() method from prepending its own
+        cvsrepo = os.path.join("https://cvs." + domain,
+                               "cvsroot/repos",
+                               self.project_name)
+        svnrepo = os.path.join("https://svn." + domain,
                                "svnroot/repos",
                                self.project_name)
-        return [svnrepo]
+        candidates = [cvsrepo, svnrepo]
+        # Check to see which generated repository URLs actually have content
+        existing = []
+        for url in candidates:
+            if self.fetch(url, legend="Repository", softfail=True) is not None:
+                existing.append(url)
+        return existing
         
 # End
