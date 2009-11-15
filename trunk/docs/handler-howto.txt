@@ -788,7 +788,7 @@ Run "regress-driver.py --help" to learn its control options.
 ** "patches"
 ** "support"
 ** "tasks"
-** vocabularies: a dictionary mapping names of controlleds-vocabulary 
+** vocabularies: a dictionary mapping names of controlled-vocabulary 
    fields to lists of the values they can have.
 
 - Standard fields of a PROJECT:
@@ -803,7 +803,7 @@ Run "regress-driver.py --help" to learn its control options.
 - Standard capablities of a person:
 * "Admin": can edit membership tables
 * "Trusted": can look at private items
-* Releaser Tech: can make releases
+* "Release Tech": can make releases
 * "T": (with respect to a tracker) can be assigned bugs from it
 * "M": (with respect to a tracker) can modify bugs on it
 
