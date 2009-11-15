@@ -123,6 +123,8 @@ CAPTURED:: A PULL-INTERVAL for the tracker capture.
 ARTIFACT-LIST:: One or more ARTIFACT objects.  Refer to the ARTIFACT 
                 definition below
 RANGES:: A map from ARTIFACT slots to lists of possible string values
+SUBSCRIBERS:: List of SUBSCRIBER objects describing persons to be
+              notified when an artifact is added to the tracker.
 
 A COMMENT has the collowing parts:
 
@@ -533,7 +535,7 @@ address of a commit list for new submissions, and its subscriptions
 have no explanation attached.  Savane allows setting a CC list for
 notification on all state changes, and each subscription can have an
 explanatory comment.  The CFO SUBSCRIBER slot assumes Savane-like
-behavior which Berlios and SourceForge can only partially support.
+behavior which Berlios and SourceForge cannot support.
 
 == Open Questions ==
 

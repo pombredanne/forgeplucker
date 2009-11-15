@@ -319,10 +319,11 @@ submitted to them.
         if features != expected_features:
             self.error("feature set %s is not as expected" % features)
         # Now we start on the actual data extraction
-        capabilities = []
+        capabilities = {}
         for (i, row) in enumerate(rows):
             if i % 2 == 0:
-                capabilities.append(row.td.contents)
+                person = row.td.contents[0]
+                capabilities[person] = {}
             else:
                 general = row.contents.pop(0)
                 admincheck = general("input")[0]
@@ -330,15 +331,18 @@ submitted to them.
                 (role, vocabulary) = select_parse(general.select)
                 if vocabulary != expected_roles:
                     self.error('developer roles are not as expected')
-                capabilities[-1].append(("Role", role))
-                capabilities[-1].append(("Administrator", "checked" in `admincheck`))
-                capabilities[-1].append(("Release Tech", "checked" in `reltech`))
+                capabilities[person]["Role"] = role
+                capabilities[person]["Admin"] ="checked" in `admincheck`
+                capabilities[person]["Release Tech"] = "checked" in `reltech`
                 permissions = map(select_parse, row.findAll("select"))
-                for (feature, (permopt, vocabulary)) in zip((u'Bug Tracking',
-                                                          u'Task Manager',
-                                                          u'Patch Manager',
-                                                          u'Support Manager', 
-                                                          u'Feature Manager'),
+                # Second argument of zip() is not arbitrary, it's
+                # ontology smoothing - we make Savane's names for
+                # these to standard feature tags.
+                for (feature, (permopt, vocabulary)) in zip((u'bugs',
+                                                          u'tasks',
+                                                          u'patches',
+                                                          u'support', 
+                                                          u'features'),
                                                          permissions[:5]):
                     if vocabulary != expected_trackerperms:
                         self.error("permissions vocabulary is not as expected")
@@ -355,11 +359,11 @@ submitted to them.
                     # who can edit permissions.
                     if 'A' in permopt:
                         perms.append('M')
-                    capabilities[-1].append((feature, perms))
+                    capabilities[person][feature] = perms
                 for (feature, (permopt, vocabulary)) in zip((u'Forums',
                                                           u'Doc Manager'),
                                                          permissions[5:]):
-                    capabilities[-1].append((feature, permopt!='-'))
+                    capabilities[person][feature] = permopt!='-'
         return capabilities
 
 # End

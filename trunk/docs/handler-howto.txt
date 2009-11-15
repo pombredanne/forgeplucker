@@ -711,4 +711,11 @@ Run "regress-driver.py --help" to learn its control options.
 * name: Human name of a person
 * nick: A person's ID on this forge
 
+- Standard capablities of a person:
+* "Admin": can edit membership tables
+* "Trusted": can look at private items
+* Releaser Tech: can make releases
+* "T": (with respect to a tracker) can be assigned bugs from it
+* "M": (with respect to a tracker) can modify bugs on it
+
 //End

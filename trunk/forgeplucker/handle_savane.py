@@ -266,11 +266,13 @@ The status of all trackers (bug, patch, support, and task) is extracted.
                              u'Patch Tracker',
                              u'Cookbook Manager',
                              u'News Manager']
-        expected_perms = [u'Group Default',
-                          u'None',
-                          u'Technician',
-                          u'Manager',
-                          u'Techn. & Manager']
+        # This maps some features to standard names. 
+        feature_map = ('support', 'bugs', 'tasks', 'patch', 'Cookbook', 'News')
+        permission_map = {u'Group Default': None,
+                          u'None': [],
+                          u'Technician': ['T'],
+                          u'Manager':['M'],
+                          u'Techn. & Manager':['T', 'M']}
         page = self.fetch("project/admin/userperms.php?group=%s" % self.project_name, "Permissions Table")
         if not "Update Permissions" in page:
             self.error("you need admin privileges to extract permissions",
@@ -299,23 +301,23 @@ The status of all trackers (bug, patch, support, and task) is extracted.
                 self.error("default group values were not as expected")
         defvals = map(lambda x: x[1:-1].strip(), defvals)
         dfltmap = dict(zip(features, defvals))
-        #print "Defaults:", defvals
         # Extract actual permissions. The [1:] discards the header row
-        capabilities = []
+        capabilities = {}
         permissions = form("table")[2].findAll("tr")[1:]
         for row in permissions:
             fields = map(lambda x: x.contents, row.findAll("td"))
             namefield = fields[0]
             baseperms = fields[1]
             try:
-                trackerperms = map(lambda x: select_parse(x[1]), fields[2:])
+                trackerperms = map(lambda x: select_parse(x[1])[0], fields[2:])
             except:
                 self.error("tracker permissions were not as expected")
             try:
                 name = namefield[1].contents[0]
             except:
                 self.error("name field in permissions was not as expected")
-            capabilities.append([dehtmlize(name)])
+            person = dehtmlize(name)
+            capabilities[person] = {}
             admin = trusted = False
             if "You are Admin" in baseperms[0]:
                 admin = True
@@ -330,9 +332,11 @@ The status of all trackers (bug, patch, support, and task) is extracted.
             for field in baseperms:
                 if 'input' in `field` and 'privacy' in `field` and "checked" in `field`:
                     trusted = True
-            capabilities[-1].append(("Admin", admin))
-            capabilities[-1].append(("Trusted", trusted))
-            print "Trackerperms for %s: %s" % (capabilities[-1][0], trackerperms)
-        print "Capabilities:", capabilities
-        return None
+            capabilities[person]["Admin"] = admin
+            capabilities[person]["Trusted"] = trusted
+            for (feature, value, default) in zip(feature_map, trackerperms, defvals):
+                if permission_map[value] is None:
+                    value = permission_map[default]
+                capabilities[person][feature] = value 
+        return capabilities
 # End
