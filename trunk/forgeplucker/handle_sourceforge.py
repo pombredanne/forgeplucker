@@ -57,11 +57,19 @@ This code will capture custom trackers.
         def parse_followups(self, contents):
             "Parse followups out of a displayed page in a bug or patch tracker."
             comments = []
-            for comment in re.findall(r'''<input type="hidden" name="artifact_comment_\d*_adddate" value="\d*" />\s*<p>\s*Date: [^<]<br />Sender: (?:<a href=".*" title="[^"]">([^<])*)?''',contents):
-                comments.append({"class":"COMMENT",
-                                 'submitter': m.group(2).strip(),
-                                 'date': self.parent.canonicalize_date(m.group(1)),
-                                 'comment': blocktext(m.group(3))})
+            soup = BeautifulSoup(contents)
+
+            commentblock = soup.find(name='div',attrs={'id':"comment_table_container"})
+
+            for td in commentblock.findAll(name='td'):
+                comment = {"class":"COMMENT"}
+                cleaned = dehtmlize(str(td))
+                m = re.search('Date: ([-0-9: ]+)\s*Sender: ([a-z]+)',cleaned)
+                comment['date'] = self.parent.canonicalize_date(m.group(1))
+                comment['submitter'] = m.group(2)
+                m = re.search('<!-- google_ad_section_start -->.*<!-- google_ad_section_end -->',str(td),re.DOTALL)
+                comment['comment'] = dehtmlize(m.group(0)).strip()
+                comments.append(comment)
             return comments
         def parse_history_table(self,contents,bug):
             changes = []
@@ -86,7 +94,7 @@ This code will capture custom trackers.
             bug['private'] = 'checked' in m.group(0)
             m = re.search(r'<input type="checkbox" name="close_comments" [^>]* />',contents)
             bug['allow_comments'] = 'checked' not in m.group(0)
-            #bug['comments'] = self.parse_followups(contents)
+            bug['comments'] = self.parse_followups(contents)
             bug['history'] = self.parse_history_table(contents,bug)
     class BugTracker(Tracker):
         def __init__(self, parent):
