@@ -14,7 +14,7 @@ class SourceForge(GenericForge):
 The SourceForge handler provides bug-plucking machinery for the SourceForge
 site.
 
-This code will capture custom trackers.
+This code does not capture custom trackers.
 """
     class Tracker:
         def __init__(self, label, parent):
@@ -22,14 +22,8 @@ This code will capture custom trackers.
             self.optional = False
             self.chunksize = 100
             self.zerostring = None
-            self.submitter_re = r'''<label>Submitted:</label>
-?\s*<p>
-?\s*.*?\( *(?:(?:<a href=".*?">)(\w*)(?:</a>)|\w*) *\) - (.*?)
-?\s*</p>''' #This triple quoted string is ugly, but captures identation style
-            self.date_re = r'''<label>Submitted:</label>
-?\s*<p>
-?\s*.*?\( *[^)]* *\) - (.*?)
-?\s*</p>'''
+            self.submitter_re = r'<label>Submitted:</label>\s*<p>\s*.*?\( *(?:(?:<a href=".*?">)(\w*)(?:</a>)|\w*) *\) - (.*?)\s*</p>'
+            self.date_re = r'<label>Submitted:</label>\s*<p>\s*.*?\( *[^)]* *\) - (.*?)\s*</p>'
             self.ignore = ("canned_response",
                            "new_artifact_type_id"
                            "words")
@@ -61,7 +55,7 @@ This code will capture custom trackers.
 
             commentblock = soup.find(name='div',attrs={'id':"comment_table_container"})
 
-            for td in commentblock.findAll(name='td'):
+            for td in commentblock.findAll(name='td'): #This is not a <table>, but several tables containing 1 <td> each
                 comment = {"class":"COMMENT"}
                 cleaned = dehtmlize(str(td))
                 m = re.search('Date: ([-0-9: ]+)\s*Sender: ([a-z]+)',cleaned)

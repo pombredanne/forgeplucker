@@ -6,13 +6,14 @@ content of a test project.
 
 Usage:
     regress-driver.py                       # Run all regression tests
+    regress-driver.py --run site/project    # Run an individual regression test
     regress-driver.py --build site/project  # Rebuild individual .chk file
     regress-driver.py --rebuild-all         # Rebuild all .chk files
     regress-driver.py --diffs               # Show diffs from last regression
     regress-driver.py --help                # Display this help
 
 The -u option can be used to set a username for access to the remote site.
-It may be a colon ':' seperated list of usernames, if you use different 
+It may be a ':' seperated list of usernames, if you use different 
 ones on different sites
 
 The -v option enables verbose progress messages.
@@ -36,19 +37,20 @@ def walk_tests():
                 continue
             yield ((site, project), os.path.join(testroot, site, project))
 
-
 if __name__ == '__main__':
     (options, arguments) = getopt.getopt(sys.argv[1:],
-                                         "bdhlu:v?",
+                                         "bdhlru:v?",
                                          ["rebuild-all",
                                           "build",
                                           "diffs",
                                           "help",
-                                          "list"])
+                                          "list",
+                                          "run"])
     rebuild_all = False
     build = False
     diffs = False
     listall = False
+    run = False
     username = os.getenv("LOGNAME")
     verbose = 0
     for (arg, val) in options:
@@ -72,6 +74,15 @@ if __name__ == '__main__':
             raise SystemExit, 0
         elif arg in ("-l", "--list"):
             listall = True
+        elif arg in ("-r", "--run"):
+            if arguments:
+                run = True
+            else:
+                print >>sys.stderr, "%s: -r/--run requires argument" \
+                      % sys.argv[0]
+                raise SystemExit, 1
+
+
 
     # Compute stem for use in naming files
     if '.' in testcmd:
@@ -90,17 +101,31 @@ if __name__ == '__main__':
         except (ValueError, IndexError):
             print >>sys.stderr, "usage: %s [options...] host/project" % sys.argv[0]
             raise SystemExit, 1
+        if not os.path.exists(path):
+            print >>sys.stderr, "%s: no such test %s/%s" \
+                  % (sys.argv[0], site, project)
+            raise SystemExit, 1
         if build:
             # Rebuild an individual test
-            if not os.path.exists(path):
-                print >>sys.stderr, "%s: no such test %s/%s" \
-                      % (sys.argv[0], site, project)
+            cmd = basecmd + ".chk"
+            if verbose:
+                print >>sys.stderr, "%s: running '%s'" % (sys.argv[0], cmd)
+            status = os.system(cmd)
+        elif run:
+            # Run an individual test
+            # FIXME remove code duplication with running all tests
+            cmd = basecmd + ".out"
+            if verbose:
+                print >>sys.stderr, "%s: running '%s'" % (sys.argv[0], cmd)
+            status = os.system(cmd)
+            if status:
+                print >>sys.stderr, "%s: '%s' FAILED." % (sys.argv[0], cmd)
                 raise SystemExit, 1
-            else:
-                cmd = basecmd + ".chk"
-                if verbose:
-                    print >>sys.stderr, "%s: running '%s'" % (sys.argv[0], cmd)
-                status = os.system(cmd)
+            status = os.system("diff -u %s/%s.chk %s/%s.out" \
+                               % (path, stem, path, stem))
+            if status == 0:
+                print >>sys.stderr, "%s: %s regression test on %s/%s succeeded." \
+                      % (sys.argv[0], testcmd, site, project)
     # Run operation on all tests
     else:
         if rebuild_all:
@@ -130,6 +155,7 @@ if __name__ == '__main__':
                 print "%s/%s -> %s" % (site, project, cls)
         else:
             # Run all regression tests
+            # FIXME remove code duplication with running a single test
             for ((site, project), path) in walk_tests():
                 print "Running %s/%s test..." % (site, project)
                 basecmd = testcmd +" -n -u "+ username +" "+ site +"/"+ project +" >"+ path +"/"+ stem
