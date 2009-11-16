@@ -69,11 +69,12 @@ This code does not capture custom trackers.
             changes = []
             previous = copy.copy(bug)
             for (field, old, date, by) in self.parent.table_iter(contents,
-                                          r'<table width="100%" border="1" cellspacing="2" cellpadding="1" class="track">',
+                                          r'<h4 class="titlebar toggle" id="changebar">Changes ( ',
                                            4,
                                           "history",
                                           has_header=True):
-                if field.strip() != 'close_date':
+                if field.strip() not in ('close_date','File Added'):
+                    #Ignoring 'File Added' is temporary(prevents crash)
                     change = {'field':field.strip(),
                               'old':old.strip(),
                               'date':self.parent.canonicalize_date(date.strip()),
@@ -125,7 +126,7 @@ This code does not capture custom trackers.
         return "projects/%s/" % (project,)
     @staticmethod
     def canonicalize_date(localdate):
-        "Canonicalize dates to ISO form. Assumes dares are in local time."
+        "Canonicalize dates to ISO form. Assumes dates are in local time."
         t = time.strptime(localdate, "%Y-%m-%d %H:%M")
         secs = time.mktime(t)	# Local time to seconds since epoch
         t = time.gmtime(secs)	# Seconds since epoch to UTC time in structure

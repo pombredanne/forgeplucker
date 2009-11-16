@@ -250,9 +250,7 @@ class GenericForge:
         header_passed=False
         begin = text.find(header)
         if begin != -1:
-            text = text[begin:]
-            end = text.find('</table>')
-            text = text[:end]
+            text = text[begin-len(header):]
             soup = BeautifulSoup(text)
             result = soup.find(name='table')
             if result != None:
