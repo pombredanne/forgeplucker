@@ -66,31 +66,51 @@ This code does not capture custom trackers.
                 comments.append(comment)
             return comments
         def parse_history_table(self,contents,bug):
-            changes = []
+            changes, filechanges, attachments = [],[],[]
             previous = copy.copy(bug)
             for (field, old, date, by) in self.parent.table_iter(contents,
                                           r'<h4 class="titlebar toggle" id="changebar">Changes ( ',
                                            4,
                                           "history",
                                           has_header=True):
-                if field.strip() not in ('close_date','File Added'):
+                field, old, date, by = field.strip(), old.strip(), date.strip(), by.strip()
+                if field in ('File Added','File Deleted'):
+                    filechanges.append((field, old, date, by))
+                elif field not in ('close_date'):
                     #Ignoring 'File Added' is temporary(prevents crash)
-                    change = {'field':field.strip(),
-                              'old':old.strip(),
-                              'date':self.parent.canonicalize_date(date.strip()),
-                              'by':by.strip(),
+                    #How do I represent File Addition/Deletion in history?
+                    change = {'field':field,
+                              'old':old,
+                              'date':self.parent.canonicalize_date(date),
+                              'by':by,
                               'class':'FIELDCHANGE'}
-                    change['new'] = previous[field.strip()]
-                    previous[field.strip()] = change['old']
+                    change['new'] = previous[field]
+                    previous[field] = old
                     changes.append(change)
-            return changes
+            for (action, _file, date, by) in reversed(filechanges):
+                #FIXME needs onthological smoothing
+                fileid,filename = _file.split(':')
+                if action == 'File Added':
+                    attachment = {
+                        "class":"ATTACHMENT",
+                        "filename": filename,
+                        "by": by,
+                        "date": self.parent.canonicalize_date(date),
+                        "id": fileid
+                        }
+                    attachments.append(attachment)
+                elif action == 'File Deleted':
+                    for attachment in attachments:
+                        if attachment['id'] == fileid:
+                            attachment['deleted'] = self.parent.canonicalize_date(date)
+            return changes, attachments
         def custom(self,contents,bug):
             m = re.search(r'<input type="checkbox" name="is_private" [^>]* />',contents)
             bug['private'] = 'checked' in m.group(0)
             m = re.search(r'<input type="checkbox" name="close_comments" [^>]* />',contents)
             bug['allow_comments'] = 'checked' not in m.group(0)
             bug['comments'] = self.parse_followups(contents)
-            bug['history'] = self.parse_history_table(contents,bug)
+            bug['history'], bug['attachments'] = self.parse_history_table(contents,bug)
     class BugTracker(Tracker):
         def __init__(self, parent):
             SourceForge.Tracker.__init__(self, "Bugs", parent)
