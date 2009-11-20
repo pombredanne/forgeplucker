@@ -48,7 +48,7 @@ This code does not capture custom trackers.
         def narrow(self, text):
             "Get the section of text containing editable elements."
             return text
-        def parse_followups(self, contents):
+        def parse_followups(self, contents, bug):
             "Parse followups out of a displayed page in a bug or patch tracker."
             comments = []
             soup = BeautifulSoup(contents)
@@ -64,6 +64,11 @@ This code does not capture custom trackers.
                 m = re.search('<!-- google_ad_section_start -->.*<!-- google_ad_section_end -->',str(td),re.DOTALL)
                 comment['comment'] = dehtmlize(m.group(0)).strip()
                 comments.append(comment)
+            {'class':"COMMENT",
+             'date':bug['date'],
+             'submitter':bug['submitter'],
+             'comment':blocktext(dehtmlize(re.search(r'<label>Details:</label>\s*<p>\s*<!-- google_ad_section_start -->(.*?)<!-- google_ad_section_end -->\s*</p>',contents,re.DOTALL).group(1)))} #Append the orignal report to the comments list
+            comments.reverse()
             return comments
         def parse_history_table(self,contents,bug):
             changes, filechanges, attachments = [],[],[]
@@ -109,7 +114,7 @@ This code does not capture custom trackers.
             bug['private'] = 'checked' in m.group(0)
             m = re.search(r'<input type="checkbox" name="close_comments" [^>]* />',contents)
             bug['allow_comments'] = 'checked' not in m.group(0)
-            bug['comments'] = self.parse_followups(contents)
+            bug['comments'] = self.parse_followups(contents, bug)
             bug['history'], bug['attachments'] = self.parse_history_table(contents,bug)
     class BugTracker(Tracker):
         def __init__(self, parent):
