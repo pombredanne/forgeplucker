@@ -147,6 +147,19 @@ This code does not capture custom trackers.
             SourceForge.SupportTracker(self),
             SourceForge.PatchTracker(self),
             ]
+    def pluck_permissions(self):
+        contents = self.fetch('project/admin/project_membership.php?group_id='+self.project_id,'Permissions page')
+        perms = {}
+        for (username, realname, svn, shell, release, tracker, forums, news, screenshots) in self.table_iter(contents,
+                    '<table class="memberlist tablesorter">',9,'ERROR',has_header=True):
+            perms[username.strip()] = {'svn':svn == 'Yes',
+                                 'shell':shell == 'Yes',
+                                 'releasetech':release == 'Yes',
+                                 'trackermanager':tracker == 'A',
+                                 'forummoderator':forums == 'Moderator',
+                                 'newseditor':news == '', #For some bizarre reason editors come up as '' and non editors as '-'
+                                 'screenshotseditor':screenshots == ''} #Same as above
+        return perms
     def project_page(self, project):
         return "projects/%s/" % (project,)
     @staticmethod

@@ -14,10 +14,7 @@ def select_parse(branch):
             return (x.contents[0], possibilities)
     return (None, possibilities)
 
-# This doesn't use Beautiful Soup (yet) because there's a Berlios case
-# BS may not be able to cope with. We'll check sometime.
-
-def walk_table(text):
+def walk_table(text): #DEPRACATED still used by gna! though
     "Parse out the rows of an HTML table."
     rows = []
     while True:

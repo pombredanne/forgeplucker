@@ -189,8 +189,8 @@ if __name__ == '__main__':
     user = passwd = forgetype = None
     verbose = 0
     issue = None
-    xml = timeless = permissions = repositories = False
-    (options, arguments) = getopt.getopt(sys.argv[1:], "f:i:np:PSru:v:h?")
+    xml = timeless = permissions = repositories = dump = False
+    (options, arguments) = getopt.getopt(sys.argv[1:], "f:d:i:np:PSru:v:h?")
     for (arg, val) in options:
         if arg in ('-h', '-?'):
             print __doc__
@@ -208,6 +208,9 @@ if __name__ == '__main__':
             permissions = True
         elif arg == '-S':	# Not documented
             repositories = True
+        elif arg == '-d':   # Not documented
+            dump = True     # Dump contents of a specific page to standard output
+            page = val
         elif arg == '-n':
             timeless = True
         elif arg == '-v':
@@ -250,6 +253,9 @@ if __name__ == '__main__':
         elif repositories:
             perms = bt.pluck_repository_urls()
             pp.pprint(perms)
+        elif dump:
+            page = bt.fetch(page,"Page to dump")
+            print page
         elif issue:
             (tracker, issueid) = issue.split(":")
             issue = bt.pluck_artifact(tracker, issueid)
