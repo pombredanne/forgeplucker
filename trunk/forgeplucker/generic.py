@@ -30,7 +30,7 @@ class GenericForge:
             params = None
         try:
             if not url.startswith("https"):
-                url = os.path.join("https://%s/" % self.host + url)
+                url = "https://%s/" % self.host + url
             opener = self.opener.open(url, params)
             page = opener.read()
             if self.verbosity == 1:

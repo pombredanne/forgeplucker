@@ -11,10 +11,10 @@ from handle_trac import *
 
 # Collect handler classes here, client code will introspect on this set
 # so as not to have to know about individual handler classes.
-handler_classes = (SourceForge, Berlios, Savane, Trac)
+handler_classes = (SourceForge, Berlios, Savane, Trac, Sf_Trac)
 
 # Map well-known hosting sites to forge system types. We'd try using
-# pattern-matching on the site main page for this, but forge adnmins
+# pattern-matching on the site main page for this, but forge admins
 # customize their front pages a lot and unambiguous cues about
 # forge type aren't so easy to find.
 site_to_handler = {
@@ -41,6 +41,7 @@ def get_credentials(user, passwd, host):
         usernames = [os.getenv("LOGNAME")]
     else:
         usernames = user.split(':')
+    host = host.split('/')[0] #If the host is a not a domain use just the domain
     if passwd is None:
         passwords = netrc.netrc()
         auth = passwords.authenticators(host)

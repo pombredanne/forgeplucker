@@ -151,7 +151,7 @@ This code does not capture custom trackers.
         contents = self.fetch('project/admin/project_membership.php?group_id='+self.project_id,'Permissions page')
         perms = {}
         for (username, realname, svn, shell, release, tracker, forums, news, screenshots) in self.table_iter(contents,
-                    '<table class="memberlist tablesorter">',9,'ERROR',has_header=True):
+                    '<table class="memberlist tablesorter">',9,'Permissions Table',has_header=True):
             perms[username.strip()] = {'svn':svn == 'Yes',
                                  'shell':shell == 'Yes',
                                  'releasetech':release == 'Yes',
@@ -160,6 +160,14 @@ This code does not capture custom trackers.
                                  'newseditor':news == '', #For some bizarre reason editors come up as '' and non editors as '-'
                                  'screenshotseditor':screenshots == ''} #Same as above
         return perms
+    def pluck_repository_urls(self):
+        repos = []
+        svnrepo = "https://" + self.project_name + ".svn." + self.host +"/svnroot/" + self.project_name
+        candidates = [svnrepo]
+        for repo in candidates:
+            if self.fetch(repo,"Repository exisistance test", softfail=True):
+                repos.append(repo)
+        return repos
     def project_page(self, project):
         return "projects/%s/" % (project,)
     @staticmethod
@@ -176,4 +184,14 @@ This code does not capture custom trackers.
             'return_to':"/account",
             'login':'login'}, "Preferences")
 
-# End
+from handle_trac import *
+
+class Sf_Trac(Trac):
+    def login(self, username, password):
+        GenericForge.login(self, {
+            'form_loginname':username,
+            'form_pw':password,
+            'return_to':"/account",
+            'login':'login'}, "Preferences")
+    def login_url(self):
+        return "https://%s/" % self.host.split("/")[0] + "account/login.php"

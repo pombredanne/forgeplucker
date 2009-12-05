@@ -27,11 +27,10 @@ The Trac handler provides bug-plucking machinery for Trac sites.
         def access_denied(self, page, issue_id=None):
             return issue_id is not None and not "Ticket #" in page
         def has_next_page(self, page):
-            m = re.search("""Results <span class="numresults">\((\d+) [- \d]*of (\d+)\)</span>""", page)
-            if not m:
-                self.parent.error("missing item count header")
+            if re.search("""title="Next Page">""", page):
+                return True
             else:
-                return int(m.group(1)) < int(m.group(2))
+                return False
         def chunkfetcher(self, offset):
             """Get a bugtracker index page - all open tickets."""
             page = 1 + ((offset) // self.chunksize)
@@ -54,7 +53,6 @@ The Trac handler provides bug-plucking machinery for Trac sites.
     @staticmethod
     def canonicalize_date(localdate):
         return localdate.split("+")[0]
-
     def __init__(self, host, project):
         GenericForge.__init__(self, host, project)
         self.trackers = [ Trac.Tracker(self) ]
