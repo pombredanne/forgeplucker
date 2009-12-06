@@ -70,5 +70,15 @@ The Trac handler provides bug-plucking machinery for Trac sites.
     def login_url(self):
         "Generate the site's account login page URL."
         return self.project_name + "/login"
+    def pluck_tracker_ids(self,tracker):
+        ids,num = [],0
+        firstpage = page = self.fetch(self.project_name + "/query?format=csv&max=2147483647&order=id&col=id","List of ids")
+        while "html" not in page:
+            ids += page.strip().split('\r\n')[1:]
+            num += 1
+            page = self.fetch(self.project_name + "/query?format=csv&max=2147483647&order=id&col=id&page=" + str(num),"List of ids")
+            if page == firstpage:
+                break
+        return map(int,ids)
 
 # End
