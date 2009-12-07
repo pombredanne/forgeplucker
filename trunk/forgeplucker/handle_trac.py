@@ -17,13 +17,10 @@ The Trac handler provides bug-plucking machinery for Trac sites.
         def __init__(self, parent):
             self.parent = parent
             self.optional = False
-            self.chunksize = 50
             self.type = "Bug"
-            self.zerostring = "Error: Invalid Ticket Number"
-            self.artifactid_re = r"""<td class="id"><a href="[^"]+" title="[^"]+">#(\d+)</a></td>"""
             self.submitter_re = r"""<td headers="h_reporter" class="searchable">([^<]*)</td>"""
-            self.date_re = r"""<a class="timeline" href="[^"]*" title="(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}) in Timeline">"""
-            self.ignore = () #TODO
+            self.date_re = r'<p>Opened <a class="timeline" href="[a-zA-Z/]*\?from=([-0-9A-Z%:]+)'
+            self.ignore = ('q','reporter')
         def access_denied(self, page, issue_id=None):
             return issue_id is not None and not "Ticket #" in page
         def has_next_page(self, page):
@@ -31,28 +28,51 @@ The Trac handler provides bug-plucking machinery for Trac sites.
                 return True
             else:
                 return False
-        def chunkfetcher(self, offset):
-            """Get a bugtracker index page - all open tickets."""
-            page = 1 + ((offset) // self.chunksize)
-            return "%s/query?max=%d&page=%d&order=id&col=id&col=summary&col=owner" % (self.parent.project_name, self.chunksize, page)
         def detailfetcher(self, artifactid):
             "Generate a detail URL for the specified artifact ID."
             return "%s/ticket/%d" % (self.parent.project_name, artifactid)
         def narrow(self, text):
             "Get the section of text containing editable elements."
             return text #TODO
+        def commentsandhistory(self,contents):
+            comments, history = [], []
+            if contents.find(r'<h2>Change History</h2>') != -1:
+                soup = BeautifulSoup(contents[contents.find(r'<h2>Change History</h2>'):]).find(name='div',attrs={'id':'changelog'})
+                for tag in soup.findAll(name='div',attrs={'class':'change'}):
+                    comment = blocktext(dehtmlize(str(tag.find(name='div',attrs={'class':'comment searchable'}))))
+                    date = self.parent.canonicalize_date(str(tag.find(name='a',attrs={'class':'timeline'})['title']))
+                    by = re.search(" ago by ([a-zA-Z0-9_]+)\s*?</h3>",str(tag)).group(1)
+                    changes = tag.find(name='ul',attrs={'class':'changes'})
+                    if changes != None:
+                        for change in changes.findAll(name='li'):
+                            fieldcontents = map(lambda x: str(x.string),change.findAll('em'))
+                            if len(fieldcontents) == 1:
+                                old = None
+                            else:
+                                old = fieldcontents.pop(0)
+                            new = fieldcontents[0]
+                            comments.append({'field':str(change.find('strong').string),
+                             'old': old,
+                             'new': new,
+                             'date': date,
+                             'by':by,
+                             'class':'FIELDCHANGE'})
+                    if comment != '\n':
+                        history.append({'class': 'COMMENT',
+                              'comment': comment,
+                              'date': date,
+                              'submitter': by})
+            return comments,history
         def custom(self, contents, artifact):
-            # Parse comments
-            artifact['comments'] = []
+            # Parse comments and history list
+            artifact['comments'], artifact['history'] = self.commentsandhistory(contents)
             # Capture attachments.
             artifact["attachments"] = [] #TODO
-            # Capture the history list
-            artifact["history"] = [] #TODO
             # Capture the CC list. 
             artifact["subscribers"] = [] #TODO
     @staticmethod
     def canonicalize_date(localdate):
-        return localdate.split("+")[0]
+        return remhex(localdate).split('+')[0]
     def __init__(self, host, project):
         GenericForge.__init__(self, host, project)
         self.trackers = [ Trac.Tracker(self) ]

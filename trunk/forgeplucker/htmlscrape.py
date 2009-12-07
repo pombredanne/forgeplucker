@@ -72,6 +72,9 @@ def blocktext(text):
     "Canonicalize whitespace around the text."
     return text.strip() + "\n"
 
+def remhex(string):
+    return string.replace("%3A",chr(0x3A)).replace("%2B",chr(0x2B))
+
 # This probably belongs in a separate utils module, but for one function?
 
 import time
