@@ -367,16 +367,12 @@ submitted to them.
         return capabilities
     def pluck_repository_urls(self):
         "Fetch a list of repository URLs."
-        repositories = []
         domain = ".".join(self.host.split(".")[1:])
-        # https: prefix keeps the fetch() method from prepending its own
-        cvsrepo = os.path.join("https://cvs." + domain,
-                               "cvsroot/repos",
+        # The SVN nightly dump file
+        svndump = os.path.join("http://download.%s/svndumps/%s-repos.gz",
+                               domain,
                                self.project_name)
-        svnrepo = os.path.join("https://svn." + domain,
-                               "svnroot/repos",
-                               self.project_name)
-        candidates = [cvsrepo, svnrepo]
+        candidates = [svnrepo]
         # Check to see which generated repository URLs actually have content
         existing = []
         for url in candidates:

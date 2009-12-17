@@ -96,7 +96,7 @@ if __name__ == '__main__':
     if arguments:
         try:
             pathlist = arguments[0].split("/")
-            site = os.path.join(pathlist[:-1])
+            site = os.path.join(*pathlist[:-1])
             project = pathlist[-1]
             path = os.path.join(testroot, site, project)
             basecmd = testcmd +" -n -u "+ username +" "+ site +"/"+ project +" >"+ path +"/"+ stem
