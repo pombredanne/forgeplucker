@@ -34,11 +34,12 @@ The Trac handler provides bug-plucking machinery for Trac sites.
         def narrow(self, text):
             "Get the section of text containing editable elements."
             return text #TODO
-        def commentsandhistory(self,contents):
-            comments, history = [], []
+        def custom(self,contents,artifact):
+            comments, history, attachments = [], [], []
             if contents.find(r'<h2>Change History</h2>') != -1:
                 soup = BeautifulSoup(contents[contents.find(r'<h2>Change History</h2>'):]).find(name='div',attrs={'id':'changelog'})
                 for tag in soup.findAll(name='div',attrs={'class':'change'}):
+                    attachment = False
                     comment = blocktext(dehtmlize(str(tag.find(name='div',attrs={'class':'comment searchable'}))))
                     date = self.parent.canonicalize_date(str(tag.find(name='a',attrs={'class':'timeline'})['title']))
                     by = re.search(" ago by ([a-zA-Z0-9_]+)\s*?</h3>",str(tag)).group(1)
@@ -46,30 +47,37 @@ The Trac handler provides bug-plucking machinery for Trac sites.
                     if changes != None:
                         for change in changes.findAll(name='li'):
                             fieldcontents = map(lambda x: str(x.string),change.findAll('em'))
+                            field = str(change.find('strong').string)
                             if len(fieldcontents) == 1:
                                 old = None
-                            else:
+                            elif len(fieldcontents) == 2:
                                 old = fieldcontents.pop(0)
+                            else:
+                                self.parent.error("Error reading field contents " + str(fieldcontents))
                             new = fieldcontents[0]
-                            comments.append({'field':str(change.find('strong').string),
-                             'old': old,
-                             'new': new,
-                             'date': date,
-                             'by':by,
-                             'class':'FIELDCHANGE'})
-                    if comment != '\n':
-                        history.append({'class': 'COMMENT',
-                              'comment': comment,
-                              'date': date,
-                              'submitter': by})
-            return comments,history
-        def custom(self, contents, artifact):
-            # Parse comments and history list
-            artifact['comments'], artifact['history'] = self.commentsandhistory(contents)
-            # Capture attachments.
-            artifact["attachments"] = [] #TODO
-            # Capture the CC list. 
-            artifact["subscribers"] = [] #TODO
+                            if field == 'attachment':
+                                attachment = True
+                                attachments.append({'class': 'ATTACHMENT',
+                                                    'by': by,
+                                                    'date': date,
+                                                    'description': comment,
+                                                    'url': self.parent.host + '/' + self.parent.project_name + '/attachment/ticket/' + str(artifact['id']) + '/' + new,
+                                                    'filename': new})
+                            else:
+                                history.append({'field':field,
+                                                'old': old,
+                                                'new': new,
+                                                'date': date,
+                                                'by':by,
+                                                'class':'FIELDCHANGE'})
+                    if comment != '\n' and not attachment:   #If a change/comment is the adding of an attachment then comment
+                        comments.append({'class': 'COMMENT', #is the attachment comment
+                                         'comment': comment,
+                                         'date': date,
+                                         'submitter': by})
+            artifact['comments'] = comments
+            artifact['history'] = history
+            artifact['attachments'] = attachments
     @staticmethod
     def canonicalize_date(localdate):
         return remhex(localdate).split('+')[0]
