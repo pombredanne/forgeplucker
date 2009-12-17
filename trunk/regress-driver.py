@@ -13,7 +13,7 @@ Usage:
     regress-driver.py --help                # Display this help
 
 The -u option can be used to set a username for access to the remote site.
-It may be a ':' seperated list of usernames, if you use different 
+It may be a ':' separated list of usernames, if you use different 
 ones on different sites
 
 The -v option enables verbose progress messages.
@@ -95,7 +95,9 @@ if __name__ == '__main__':
     # Argument is always parsed the same way
     if arguments:
         try:
-            (site, project) = arguments[0].split("/")
+            pathlist = arguments[0].split("/")
+            site = os.path.join(pathlist[:-1])
+            project = pathlist[-1]
             path = os.path.join(testroot, site, project)
             basecmd = testcmd +" -n -u "+ username +" "+ site +"/"+ project +" >"+ path +"/"+ stem
         except (ValueError, IndexError):
