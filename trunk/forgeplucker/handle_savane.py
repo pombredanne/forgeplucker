@@ -71,7 +71,7 @@ The status of all trackers (bug, patch, support, and task) is extracted.
             # Capture attachments.
             artifact["attachments"] = []
             for m in re.finditer(r'<a href="([^"]*)">file #([0-9]+): &nbsp;([^<]*)</a> added by (<a href="[^"]*">[^<]*</a>|None) <span class="smaller">\((.*)\)', contents):
-                url = m.group(1)
+                url = self.parent.host + m.group(1)
                 fileid = m.group(2)
                 filename = m.group(3)
                 attacher = dehtmlize(m.group(4))
@@ -91,6 +91,7 @@ The status of all trackers (bug, patch, support, and task) is extracted.
                     "by": self.parent.identity(attacher),
                     "mimetype": mimetype,
                     'description': description,
+                    'url': url
                     })
             if ("No files currently attached" in contents) != (len(artifact["attachments"])==0):
                 self.parent.error("garbled file-attachment section")

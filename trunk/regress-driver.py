@@ -47,7 +47,8 @@ def runtest(test,output):
         raise SystemExit, 1
 
 def difftest(test):
-    print >>sys.stderr, "%s: diffing %s" % (sys.argv[0], test)
+    if verbose >= 1:
+        print >>sys.stderr, "%s: diffing %s" % (sys.argv[0], test)
     return system("diff -u %s.chk %s.out" % (testtoname(test),testtoname(test)))
 
 def keep(name):

@@ -216,11 +216,11 @@ submitted to them.
             m = re.search(r'<A HREF="(/patch/download.php\?id=([0-9]*))">', contents)
             if not m:
                 self.parent.error("can't find patch URL")
-            filename = m.group(1)
+            url = self.parent.host + m.group(1)
             fileid = m.group(2)
             patch["attachments"] = [{
                 "class":"ATTACHMENT",
-                "filename": filename,
+                "url": url,
                 "by": self.parent.identity(attacher),
                 "date": patch['date'],
                 "id": fileid,
