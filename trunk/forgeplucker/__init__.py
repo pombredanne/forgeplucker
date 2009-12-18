@@ -40,6 +40,7 @@ def get_credentials(user, passwd, host):
     #usernames is list of usernames to try
     if user is None:
         usernames = [os.getenv("LOGNAME")]
+        user = os.getenv("LOGNAME")
     else:
         usernames = user.split(':')
     host = host.split('/')[0] #If the host is a not a domain use just the domain

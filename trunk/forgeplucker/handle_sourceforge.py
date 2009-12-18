@@ -141,7 +141,7 @@ This code does not capture custom trackers.
         if m:
             self.project_id = m.group(1)
         else:
-            raise ForgePluckerException("can't find a project ID for %s" % name)
+            raise ForgePluckerException("can't find a project ID for %s" % project_name)
         self.trackers = [
             SourceForge.BugTracker(self),
             SourceForge.FeatureTracker(self),
