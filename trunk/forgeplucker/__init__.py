@@ -19,6 +19,7 @@ handler_classes = (SourceForge, Berlios, Savane, Trac, Sf_Trac)
 # forge type aren't so easy to find.
 site_to_handler = {
     "sourceforge.net": SourceForge,
+    "sourceforge.net/apps/trac": Sf_Trac,
     "developer.berlios.de": Berlios,
     "savannah.gnu.org": Savane,
     "savannah.nongnu.org": Savane,

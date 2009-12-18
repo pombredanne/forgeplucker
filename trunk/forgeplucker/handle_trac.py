@@ -61,7 +61,7 @@ The Trac handler provides bug-plucking machinery for Trac sites.
                                                     'by': by,
                                                     'date': date,
                                                     'description': comment,
-                                                    'url': self.parent.host + '/' + self.parent.project_name + '/attachment/ticket/' + str(artifact['id']) + '/' + new,
+                                                    'url': self.parent.host + '/' + self.parent.project_name + '/raw-attachment/ticket/' + str(artifact['id']) + '/' + new,
                                                     'filename': new})
                             else:
                                 history.append({'field':field,
@@ -70,14 +70,26 @@ The Trac handler provides bug-plucking machinery for Trac sites.
                                                 'date': date,
                                                 'by':by,
                                                 'class':'FIELDCHANGE'})
-                    if comment != '\n' and not attachment:   #If a change/comment is the adding of an attachment then comment
+                                if field in ('status','resolution'):
+                                    artifact[field] = new
+                    if comment != '\n' and not attachment:   #If a change is the adding of an attachment then comment
                         comments.append({'class': 'COMMENT', #is the attachment comment
                                          'comment': comment,
                                          'date': date,
                                          'submitter': by})
+            if 'status' not in artifact:
+                artifact['status'] = 'new'
+            if 'resolution' not in artifact:
+                artifact['resolution'] = None
             artifact['comments'] = comments
             artifact['history'] = history
             artifact['attachments'] = attachments
+
+            m = re.search(r'<th id="h_owner">Owned by:</th>\s*<td headers="h_owner">([a-zA-Z0-9_]+)\s*</td>',contents)
+            if m.group(1) == 'somebody':
+                artifact['assigned_to'] = None
+            else:
+                artifact['assigned_to'] = m.group(1)
     @staticmethod
     def canonicalize_date(localdate):
         return remhex(localdate).split('+')[0]

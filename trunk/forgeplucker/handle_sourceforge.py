@@ -25,7 +25,7 @@ This code does not capture custom trackers.
             self.submitter_re = r'<label>Submitted:</label>\s*<p>\s*.*?\( *(?:(?:<a href=".*?">)(\w*)(?:</a>)|\w*) *\) - (.*?)\s*</p>'
             self.date_re = r'<label>Submitted:</label>\s*<p>\s*.*?\( *[^)]* *\) - (.*?)\s*</p>'
             self.ignore = ("canned_response",
-                           "new_artifact_type_id"
+                           "new_artifact_type_id",
                            "words")
             self.artifactid_re = r'/tracker/\?func=detail&aid=([0-9]+)&group_id=[0-9]+&atid=[0-9]+"'
             m = re.search('<a href="([^"]*)">%s</a>' % label,
@@ -35,6 +35,8 @@ This code does not capture custom trackers.
             else:
                 raise ForgePluckerException("can't find tracker labeled '%s'" \
                                             % label)
+            m = re.search(r'<a href="[^"]*?atid=([0-9]*)">%s</a>' % label, self.parent.basepage)
+            self.atid = m.group(1)
         def access_denied(self, page, issue_id=None):
             return issue_id is None and not "Mass Update" in page
         def has_next_page(self, page):
@@ -93,7 +95,6 @@ This code does not capture custom trackers.
                     previous[field] = old
                     changes.append(change)
             for (action, _file, date, by) in reversed(filechanges):
-                #FIXME needs onthological smoothing
                 fileid,filename = _file.split(':')
                 if action == 'File Added':
                     attachment = {
@@ -101,8 +102,8 @@ This code does not capture custom trackers.
                         "filename": filename,
                         "by": by,
                         "date": self.parent.canonicalize_date(date),
-                        "id": fileid
-                        }
+                        "id": fileid,
+                        "url": self.parent.host + '/tracker/download.php?group_id=' + self.parent.project_id + '&atid=' + self.atid + '&file_id=' + fileid + '&aid=' + str(bug['id'])}
                     attachments.append(attachment)
                 elif action == 'File Deleted':
                     for attachment in attachments:

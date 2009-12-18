@@ -21,7 +21,7 @@ def canonicalize(issues):
     "Canonicalize issue data."
     name_mappings = {
         "bug_group_id": "group",
-        "artifact_group_id": "group", #SourceForge
+        "artifact_group_id": "group", # SourceForge
         "category_id": "category",
         "category_version_id": "category_version",	# Savane
         #'comment_type_id', 'comment_type',		# Savane
