@@ -22,7 +22,9 @@ def canonicalize(issues):
     name_mappings = {
         "bug_group_id": "group",
         "artifact_group_id": "group", # SourceForge
+        "field_version": "group", # Trac
         "category_id": "category",
+        "field_component": "category", # Trac
         "category_version_id": "category_version",	# Savane
         #'comment_type_id', 'comment_type',		# Savane
         "fix_release_id": "fix_release_version",	# Savane
@@ -36,6 +38,8 @@ def canonicalize(issues):
         "resolution_id": "resolution",
         "size_id": "size",				# Savane
         "status_id": "status",
+        "field_priority": "priority", # Trac
+        "field_summary": "summary" # Trac
         }
     for tracker in issues['trackers']:
         # Delete range info for assigned_to field, it's not actually useful
@@ -184,8 +188,8 @@ def xml_dump(issues, fp=sys.stdout):
     fp.write('</trackers>\n')
 
 if __name__ == '__main__':
-    import getopt, pprint
-    pp = pprint.PrettyPrinter(indent=4)
+    import getopt, json
+    jdump = lambda x: json.dump(x, sys.stdout, sort_keys=True, indent=4)
     user = passwd = forgetype = None
     verbose = 0
     issue = None
@@ -250,24 +254,24 @@ if __name__ == '__main__':
         bt.login(user, passwd)
         if permissions:
             perms = bt.pluck_permissions()
-            pp.pprint(perms)
+            jdump(perms)
         elif repositories:
             perms = bt.pluck_repository_urls()
-            pp.pprint(perms)
+            jdump(perms)
         elif dump:
             page = bt.fetch(page,"Page to dump")
             print page
         elif issue:
             (tracker, issueid) = issue.split(":")
             issue = bt.pluck_artifact(tracker, issueid)
-            pp.pprint(issue)
+            jdump(issue)
         else:
             bugs = bt.pluck_trackers(timeless=timeless)
             bugs = canonicalize(bugs)
             if xml:
                 xml_dump(bugs)
             else:
-                pp.pprint(bugs)
+                jdump(bugs)
     except ForgePluckerException, e:
         print >>sys.stderr, e.msg
         raise SystemExit, 1

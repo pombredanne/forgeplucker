@@ -1,73 +1,116 @@
-{   'class': 'PROJECT',
-    'forgetype': 'Savane',
-    'format_version': 1,
-    'host': 'gna.org',
-    'project': 'forgepluckertest',
-    'trackers': [   {   'artifacts': [   {   'assigned_to': 'None ',
-                                             'attachments': [   {   'by': {   'class': 'IDENTITY',
-                                                                              'nick': 'ptd'},
-                                                                    'class': 'ATTACHMENT',
-                                                                    'description': 'This projects state',
-                                                                    'filename': 'gna.org:forgepluckertest.chk',
-                                                                    'id': '7519',
-                                                                    'mimetype': 'application/octet-stream',
-                                                                    'url': 'gna.org/bugs/download.php?file_id=7519'}],
-                                             'category': 'None',
-                                             'class': 'ARTIFACT',
-                                             'comments': [],
-                                             'date': '2009-11-09T22:17:00Z',
-                                             'dependents': [],
-                                             'discussion_lock': 'Unlocked',
-                                             'history': [   {   'by': 'ptd',
-                                                                'class': 'FIELDCHANGE',
-                                                                'date': '2009-12-18T15:12:00Z',
-                                                                'field': 'Attached File',
-                                                                'new': 'Added gna.org:forgepluckertest.chk, #7519',
-                                                                'old': '-'}],
-                                             'id': 14714,
-                                             'priority': '1 - Later',
-                                             'privacy': 'Public',
-                                             'resolution': 'Fixed',
-                                             'severity': '4 - Important',
-                                             'status': 'Open',
-                                             'submitter': '<a href="/users/ptd">Peter Davies &lt;ptd&gt;</a>',
-                                             'subscribers': [   {   'reason': 'Submitted the item',
-                                                                    'subscriber': {   'class': 'IDENTITY',
-                                                                                      'name': 'Peter Davies',
-                                                                                      'nick': 'ptd'}}],
-                                             'summary': 'Forge Plucker test needs a bug',
-                                             'votes': 0}],
-                        'class': 'TRACKER',
-                        'type': 'bugs',
-                        'vocabularies': {   'category': ['None'],
-                                            'discussion_lock': [   'Unlocked',
-                                                                   'Locked'],
-                                            'priority': [   '1 - Later',
-                                                            '2',
-                                                            '3 - Low',
-                                                            '4',
-                                                            '5 - Normal',
-                                                            '6',
-                                                            '7 - High',
-                                                            '8',
-                                                            '9 - Immediate'],
-                                            'privacy': [   'Public',
-                                                           'Private'],
-                                            'resolution': [   'None',
-                                                              'Fixed',
-                                                              'Wont Fix',
-                                                              'Works For Me',
-                                                              'Ready For Test',
-                                                              'In Progress',
-                                                              'Postponed',
-                                                              'Confirmed',
-                                                              'Need Info',
-                                                              'Duplicate',
-                                                              'Invalid'],
-                                            'severity': [   '1 - Wish',
-                                                            '2 - Minor',
-                                                            '3 - Normal',
-                                                            '4 - Important',
-                                                            '5 - Blocker',
-                                                            '6 - Security'],
-                                            'status': ['Open', 'Closed']}}]}
+{
+    "class": "PROJECT", 
+    "forgetype": "Savane", 
+    "format_version": 1, 
+    "host": "gna.org", 
+    "project": "forgepluckertest", 
+    "trackers": [
+        {
+            "artifacts": [
+                {
+                    "assigned_to": "None ", 
+                    "attachments": [
+                        {
+                            "by": {
+                                "class": "IDENTITY", 
+                                "nick": "ptd"
+                            }, 
+                            "class": "ATTACHMENT", 
+                            "description": "This projects state", 
+                            "filename": "gna.org:forgepluckertest.chk", 
+                            "id": "7519", 
+                            "mimetype": "application/octet-stream", 
+                            "url": "gna.org/bugs/download.php?file_id=7519"
+                        }
+                    ], 
+                    "category": "None", 
+                    "class": "ARTIFACT", 
+                    "comments": [], 
+                    "date": "2009-11-09T22:17:00Z", 
+                    "dependents": [], 
+                    "discussion_lock": "Unlocked", 
+                    "history": [
+                        {
+                            "by": "ptd", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2009-12-18T15:12:00Z", 
+                            "field": "Attached File", 
+                            "new": "Added gna.org:forgepluckertest.chk, #7519", 
+                            "old": "-"
+                        }
+                    ], 
+                    "id": 14714, 
+                    "priority": "1 - Later", 
+                    "privacy": "Public", 
+                    "resolution": "Fixed", 
+                    "severity": "4 - Important", 
+                    "status": "Open", 
+                    "submitter": "<a href=\"/users/ptd\">Peter Davies &lt;ptd&gt;</a>", 
+                    "subscribers": [
+                        {
+                            "reason": "Submitted the item", 
+                            "subscriber": {
+                                "class": "IDENTITY", 
+                                "name": "Peter Davies", 
+                                "nick": "ptd"
+                            }
+                        }
+                    ], 
+                    "summary": "Forge Plucker test needs a bug", 
+                    "votes": 0
+                }
+            ], 
+            "class": "TRACKER", 
+            "type": "bugs", 
+            "vocabularies": {
+                "category": [
+                    "None"
+                ], 
+                "discussion_lock": [
+                    "Unlocked", 
+                    "Locked"
+                ], 
+                "priority": [
+                    "1 - Later", 
+                    "2", 
+                    "3 - Low", 
+                    "4", 
+                    "5 - Normal", 
+                    "6", 
+                    "7 - High", 
+                    "8", 
+                    "9 - Immediate"
+                ], 
+                "privacy": [
+                    "Public", 
+                    "Private"
+                ], 
+                "resolution": [
+                    "None", 
+                    "Fixed", 
+                    "Wont Fix", 
+                    "Works For Me", 
+                    "Ready For Test", 
+                    "In Progress", 
+                    "Postponed", 
+                    "Confirmed", 
+                    "Need Info", 
+                    "Duplicate", 
+                    "Invalid"
+                ], 
+                "severity": [
+                    "1 - Wish", 
+                    "2 - Minor", 
+                    "3 - Normal", 
+                    "4 - Important", 
+                    "5 - Blocker", 
+                    "6 - Security"
+                ], 
+                "status": [
+                    "Open", 
+                    "Closed"
+                ]
+            }
+        }
+    ]
+}

@@ -20,7 +20,11 @@ The Trac handler provides bug-plucking machinery for Trac sites.
             self.type = "Bug"
             self.submitter_re = r"""<td headers="h_reporter" class="searchable">([^<]*)</td>"""
             self.date_re = r'<p>Opened <a class="timeline" href="[a-zA-Z/]*\?from=([-0-9A-Z%:]+)'
-            self.ignore = ('q','reporter')
+            self.ignore = ('q',
+                           'reporter',
+                           'action_reassign_reassign_owner',
+                           'action_resolve_resolve_resolution',
+                           'field_reporter') # Captured by submitter_re
         def access_denied(self, page, issue_id=None):
             return issue_id is not None and not "Ticket #" in page
         def has_next_page(self, page):
