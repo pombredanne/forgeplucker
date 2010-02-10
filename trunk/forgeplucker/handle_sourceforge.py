@@ -66,10 +66,6 @@ This code does not capture custom trackers.
                 m = re.search('<!-- google_ad_section_start -->.*<!-- google_ad_section_end -->',str(td),re.DOTALL)
                 comment['comment'] = dehtmlize(m.group(0)).strip()
                 comments.append(comment)
-            {'class':"COMMENT",
-             'date':bug['date'],
-             'submitter':bug['submitter'],
-             'comment':blocktext(dehtmlize(re.search(r'<label>Details:</label>\s*<p>\s*<!-- google_ad_section_start -->(.*?)<!-- google_ad_section_end -->\s*</p>',contents,re.DOTALL).group(1)))} #Append the orignal report to the comments list
             comments.reverse()
             return comments
         def parse_history_table(self,contents,bug):

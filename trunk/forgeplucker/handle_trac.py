@@ -40,6 +40,7 @@ The Trac handler provides bug-plucking machinery for Trac sites.
             return text #TODO
         def custom(self,contents,artifact):
             comments, history, attachments = [], [], []
+            oldCC = None
             if contents.find(r'<h2>Change History</h2>') != -1:
                 soup = BeautifulSoup(contents[contents.find(r'<h2>Change History</h2>'):]).find(name='div',attrs={'id':'changelog'})
                 for tag in soup.findAll(name='div',attrs={'class':'change'}):
@@ -54,11 +55,12 @@ The Trac handler provides bug-plucking machinery for Trac sites.
                             field = str(change.find('strong').string)
                             if len(fieldcontents) == 1:
                                 old = None
+                                new = fieldcontents[0]
                             elif len(fieldcontents) == 2:
-                                old = fieldcontents.pop(0)
+                                old = fieldcontents[0]
+                                new = fieldcontents[1]
                             else:
-                                self.parent.error("Error reading field contents " + str(fieldcontents))
-                            new = fieldcontents[0]
+                                del old, new # Make this crash if these (stale) varibles are accessed
                             if field == 'attachment':
                                 attachment = True
                                 attachments.append({'class': 'ATTACHMENT',
@@ -68,14 +70,18 @@ The Trac handler provides bug-plucking machinery for Trac sites.
                                                     'url': self.parent.host + '/' + self.parent.project_name + '/raw-attachment/ticket/' + str(artifact['id']) + '/' + new,
                                                     'filename': new})
                             else:
+                                if field in ('status','resolution'):
+                                    artifact[field] = new
+                                elif field == 'cc':
+                                    new = fieldcontents
+                                    old = oldCC
+                                    oldCC = fieldcontents
                                 history.append({'field':field,
                                                 'old': old,
                                                 'new': new,
                                                 'date': date,
                                                 'by':by,
                                                 'class':'FIELDCHANGE'})
-                                if field in ('status','resolution'):
-                                    artifact[field] = new
                     if comment != '\n' and not attachment:   #If a change is the adding of an attachment then comment
                         comments.append({'class': 'COMMENT', #is the attachment comment
                                          'comment': comment,
@@ -88,6 +94,9 @@ The Trac handler provides bug-plucking machinery for Trac sites.
             artifact['comments'] = comments
             artifact['history'] = history
             artifact['attachments'] = attachments
+
+            artifact['cc-list'] = artifact['field_cc'].split(', ')
+            del artifact['field_cc']
 
             m = re.search(r'<th id="h_owner">Owned by:</th>\s*<td headers="h_owner">([a-zA-Z0-9_]+)\s*</td>',contents)
             if m.group(1) == 'somebody':
@@ -115,14 +124,8 @@ The Trac handler provides bug-plucking machinery for Trac sites.
         "Generate the site's account login page URL."
         return self.project_name + "/login"
     def pluck_tracker_ids(self,tracker):
-        ids,num = [],0
-        firstpage = page = self.fetch(self.project_name + "/query?format=csv&max=2147483647&order=id&col=id","List of ids")
-        while "html" not in page:
-            ids += page.strip().split('\r\n')[1:]
-            num += 1
-            page = self.fetch(self.project_name + "/query?format=csv&max=2147483647&order=id&col=id&page=" + str(num),"List of ids")
-            if page == firstpage:
-                break
-        return map(int,ids)
+        page = self.fetch(self.project_name + "/query?format=csv&max=2147483647&order=id&col=id","List of ids")
+        ids = page.strip().split('\r\n')[1:] # Will only fetch the first 2147483647 bugs
+        return map(int,ids)                   # If this is a problem for you, your software is seriously buggy
 
 # End
