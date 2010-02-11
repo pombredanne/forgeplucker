@@ -121,7 +121,7 @@ class GenericForge:
         # Modification access to the tracker is required
         if tracker.access_denied(contents, issueid):
             self.error("tracker technician access to bug details was denied.", ood=False)
-        artifact = {"class":"ARTIFACT", "id":issueid}
+        artifact = {"class":"ARTIFACT", "id":issueid, "type": tracker.type}
         m = re.search(tracker.submitter_re, contents)
         if not m:
             self.error("no submitter found")
@@ -185,36 +185,23 @@ class GenericForge:
         # Hand off to the tracker classlet's custom hook 
         tracker.custom(contents, artifact)
         return artifact
-    def pluck_artifactlist(self, tracker, timeless):
+    def pluck_artifactlist(self, tracker, vocabularies, timeless):
         "Gather artifact information on a specified tracker."
         artifacts = []
-        vocabularies = {}
-        trackerwhere = self.where
-        before = timestamp()
         idlist = self.pluck_tracker_ids(tracker)
         if idlist is None:
-            return None	# Optional tracker didn't exist
+            return []	# Optional tracker didn't exist
         for issueid in idlist:
             artifacts.append(self.pluck_artifact(tracker, issueid, vocabularies))
-        self.where = trackerwhere
-        after = timestamp()
-        artifacts = {"class":"TRACKER",
-                     "type":tracker.type,
-                     "vocabularies":vocabularies,
-                     "artifacts":artifacts}
-        # The timestamps screw up regression tests,
-        # so we need to be able to suppress them.
-        if not timeless:
-            artifacts["interval"] = (before, after)
         return artifacts
     def pluck_trackers(self, timeless=False):
         "Pull the buglist, wrapping it with metadata. about the operation."
-        trackerdata = []
+        artifacts, vocabularies = [], {}
         before = timestamp()
         for tracker in self.trackers:
-            content = self.pluck_artifactlist(tracker, timeless)
+            content = self.pluck_artifactlist(tracker, vocabularies, timeless)
             if content is not None:
-                trackerdata.append(content)
+                artifacts.extend(content)
         after = timestamp()
         trackerdata = {
             "class":"PROJECT",
@@ -222,7 +209,8 @@ class GenericForge:
             "host" : self.host,
             "project" : self.project_name,
             "format_version":1,
-            "trackers":trackerdata,
+            "artifacts": artifacts,
+            "vocabularies": vocabularies,
             }
         # See above
         if not timeless:

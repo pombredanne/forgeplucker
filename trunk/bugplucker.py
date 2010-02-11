@@ -39,28 +39,29 @@ def canonicalize(issues):
         "size_id": "size",				# Savane
         "status_id": "status",
         "field_priority": "priority", # Trac
-        "field_summary": "summary" # Trac
+        "field_summary": "summary", # Trac
+        "field_cc": "cc_list", # Trac
         }
-    for tracker in issues['trackers']:
-        # Delete range info for assigned_to field, it's not actually useful
-        # to treat it as a vocablary.
-        if 'assigned_to' in tracker['vocabularies']:
-            del tracker['vocabularies']['assigned_to']
-        # Perform name smoothing so we have a semi-standard set of attributes
-        # across all forges and tracker types.
-        for (rough, smooth) in name_mappings.items():
-            if rough in tracker['vocabularies']:
-                tracker['vocabularies'][smooth] = tracker['vocabularies'][rough]
-                del tracker['vocabularies'][rough]
-            for artifact in tracker['artifacts']:
-                if rough in artifact:
-                    if smooth in artifact:
-                        raise ForgePluckerException(sys.argv[0] + ": name collision on %s" % smooth)
-                    artifact[smooth] = artifact[rough]
-                    del artifact[rough]
-                    for change in artifact['history']:
-                        if change['field'] == rough:
-                            change['field'] = smooth
+
+    # Delete range info for assigned_to field, it's not actually useful
+    # to treat it as a vocablary.
+    if 'assigned_to' in issues['vocabularies']:
+        del issues['vocabularies']['assigned_to']
+    # Perform name smoothing so we have a semi-standard set of attributes
+    # across all forges and tracker types.
+    for (rough, smooth) in name_mappings.items():
+        if rough in issues['vocabularies']:
+            issues['vocabularies'][smooth] = issues['vocabularies'][rough]
+            del issues['vocabularies'][rough]
+        for artifact in issues['artifacts']:
+            if rough in artifact:
+                if smooth in artifact:
+                    raise ForgePluckerException(sys.argv[0] + ": name collision on %s" % smooth)
+                artifact[smooth] = artifact[rough]
+                del artifact[rough]
+                for change in artifact['history']:
+                    if change['field'] == rough:
+                        change['field'] = smooth
     return issues
 
 def xml_dump(issues, fp=sys.stdout):

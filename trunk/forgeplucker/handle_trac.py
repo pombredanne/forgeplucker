@@ -95,8 +95,12 @@ The Trac handler provides bug-plucking machinery for Trac sites.
             artifact['history'] = history
             artifact['attachments'] = attachments
 
-            artifact['cc-list'] = artifact['field_cc'].split(', ')
+            if artifact['field_cc'] != "":
+                artifact['field_cc'] = artifact['field_cc'].split(', ')
             del artifact['field_cc']
+            
+            artifact['type'] = artifact['field_type']
+            del artifact['field_type']
 
             m = re.search(r'<th id="h_owner">Owned by:</th>\s*<td headers="h_owner">([a-zA-Z0-9_]+)\s*</td>',contents)
             if m.group(1) == 'somebody':
