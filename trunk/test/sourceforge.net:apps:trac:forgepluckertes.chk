@@ -4,6 +4,19 @@
             "assigned_to": "ultratwo", 
             "attachments": [], 
             "category": "component1", 
+            "cc_list": [
+                "user@example.com", 
+                "user@example.net", 
+                "user1@example.com", 
+                "user2@example.com", 
+                "user3@example.com", 
+                "user4@example.com", 
+                "user5@example.com", 
+                "user6@example.com", 
+                "user7@example.com", 
+                "user8@example.com", 
+                "user9@example.com"
+            ], 
             "class": "ARTIFACT", 
             "comments": [], 
             "date": "2009-11-24T20:28:53Z", 
@@ -31,7 +44,7 @@
                     "by": "ultratwo", 
                     "class": "FIELDCHANGE", 
                     "date": "2010-02-09T22:33:00Z", 
-                    "field": "cc", 
+                    "field": "cc_list", 
                     "new": [
                         "user@example.com", 
                         "user@example.net"
@@ -42,7 +55,7 @@
                     "by": "ultratwo", 
                     "class": "FIELDCHANGE", 
                     "date": "2010-02-10T21:41:15Z", 
-                    "field": "cc", 
+                    "field": "cc_list", 
                     "new": [
                         "user1@example.com", 
                         "user2@example.com", 
@@ -97,6 +110,7 @@
                 }
             ], 
             "category": "component2", 
+            "cc_list": [], 
             "class": "ARTIFACT", 
             "comments": [
                 {

@@ -41,6 +41,7 @@ def canonicalize(issues):
         "field_priority": "priority", # Trac
         "field_summary": "summary", # Trac
         "field_cc": "cc_list", # Trac
+        "cc": "cc_list", # Trac
         }
 
     # Delete range info for assigned_to field, it's not actually useful
@@ -59,9 +60,9 @@ def canonicalize(issues):
                     raise ForgePluckerException(sys.argv[0] + ": name collision on %s" % smooth)
                 artifact[smooth] = artifact[rough]
                 del artifact[rough]
-                for change in artifact['history']:
-                    if change['field'] == rough:
-                        change['field'] = smooth
+            for change in artifact['history']:
+                if change['field'] == rough:
+                    change['field'] = smooth
     return issues
 
 def xml_dump(issues, fp=sys.stdout):
