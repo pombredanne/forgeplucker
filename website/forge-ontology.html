@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="generator" content="AsciiDoc 8.2.7" />
+<meta name="generator" content="AsciiDoc 8.4.4" />
+<title>Forge Ontology</title>
 <style type="text/css">
 /* Debug borders */
 p, li, dt, dd, div, pre, h1, h2, h3, h4, h5, h6 {
@@ -110,11 +111,13 @@ div#footer-badges {
   padding-bottom: 0.5em;
 }
 
-div#preamble,
+div#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
 div.tableblock, div.imageblock, div.exampleblock, div.verseblock,
 div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
 div.admonitionblock {
-  margin-right: 10%;
   margin-top: 1.5em;
   margin-bottom: 1.5em;
 }
@@ -156,9 +159,6 @@ div.sidebarblock > div.content {
   padding: 0.5em;
 }
 
-div.listingblock {
-  margin-right: 0%;
-}
 div.listingblock > div.content {
   border: 1px solid silver;
   background: #f4f4f4;
@@ -167,6 +167,7 @@ div.listingblock > div.content {
 
 div.quoteblock {
   padding-left: 2.0em;
+  margin-right: 10%;
 }
 div.quoteblock > div.attribution {
   padding-top: 0.5em;
@@ -175,6 +176,7 @@ div.quoteblock > div.attribution {
 
 div.verseblock {
   padding-left: 2.0em;
+  margin-right: 10%;
 }
 div.verseblock > div.content {
   white-space: pre;
@@ -218,6 +220,7 @@ dt {
   margin-top: 0.5em;
   margin-bottom: 0;
   font-style: normal;
+  color: navy;
 }
 dd > *:first-child {
   margin-top: 0.1em;
@@ -226,11 +229,27 @@ dd > *:first-child {
 ul, ol {
     list-style-position: outside;
 }
-div.olist > ol {
+ol.arabic {
   list-style-type: decimal;
 }
-div.olist2 > ol {
+ol.loweralpha {
   list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
 }
 
 div.tableblock > table {
@@ -243,21 +262,52 @@ thead {
 tfoot {
   font-weight: bold;
 }
+td > div.verse {
+  white-space: pre;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
 
-div.hlist {
+
+div.hdlist {
   margin-top: 0.8em;
   margin-bottom: 0.8em;
 }
-div.hlist td {
+div.hdlist tr {
   padding-bottom: 15px;
 }
-td.hlist1 {
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
   vertical-align: top;
   font-style: normal;
   padding-right: 0.8em;
+  color: navy;
 }
-td.hlist2 {
+td.hdlist2 {
   vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
 }
 
 @media print {
@@ -330,84 +380,79 @@ div.exampleblock-content {
 
 /* IE6 sets dynamically generated links as visited. */
 div#toc a:visited { color: blue; }
-
-/* Because IE6 child selector is broken. */
-div.olist2 ol {
-  list-style-type: lower-alpha;
-}
-div.olist2 div.olist ol {
-  list-style-type: decimal;
-}
 </style>
-<title>Forge Ontology</title>
 </head>
 <body>
 <div id="header">
 <h1>Forge Ontology</h1>
 <span id="author">Eric S. Raymond</span><br />
 <span id="email"><tt>&lt;<a href="mailto:esr@thyrsus.com">esr@thyrsus.com</a>&gt;</tt></span><br />
-Version 1.1
+Version 1.3
 </div>
 <h2 id="_scope_of_this_document">Scope of this document</h2>
 <div class="sectionbody">
-<div class="para"><p>Forges are software-project hosting systems.  In order to support
+<div class="paragraph"><p>Forges are software-project hosting systems.  In order to support
 cross-forge migration of projects, a common representation and
 ontology of project states will be required.  This document
 informally constructs such an antology and describes how the
 representations of different forge systems map to it.</p></div>
-<div class="para"><p>The ontology described here is not yet complete.  It is being
+<div class="paragraph"><p>The ontology described here is not yet complete.  It is being
 developed in conjunction with forgeplucker, which is as
 yet only capable of extracting tracker state from forges.</p></div>
-<div class="para"><p>To motivate this, it is worth bearing in mind the forgeplucker goal:
+<div class="paragraph"><p>To motivate this, it is worth bearing in mind the forgeplucker goal:
 extraction of a complete enough sate that it could in principle
 be uploaded into another forge site and create a running project.</p></div>
 </div>
 <h2 id="_cfo_the_common_forge_ontology">CFO, the Common Forge Ontology</h2>
 <div class="sectionbody">
-<div class="para"><p>Ontology terms are in all caps.  Terms suffixed with ?
-are placeholders intended for further development. Comma-separated
-lists enclosed in [] are controlled vocabularies.</p></div>
-<h3 id="_identity_objects">IDENTITY objects</h3><div style="clear:left"></div>
-<div class="para"><p>An IDENTITY object identifies a person. An IDENTITY has the following
+<div class="paragraph"><p>Ontology terms are in all caps.  Terms suffixed with ??
+are completely. Terms suffixed with ? have unresolved issues/ambiguities or
+are not widely implemently per spec. Comma-separated lists
+enclosed in [] are controlled vocabularies.</p></div>
+<div class="paragraph"><p>The CFO is divided into JSON objects each with a CLASS attribute.
+They are listed below</p></div>
+<h3 id="_identity_objects">IDENTITY objects ?</h3><div style="clear:left"></div>
+<div class="paragraph"><p>An IDENTITY object identifies a person. An IDENTITY has the following
 parts:</p></div>
-<div class="hlist"><table>
-<tr>
-<td class="hlist1">
+<div class="dlist"><dl>
+<dt class="hdlist1">
 NICK
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 Nickname of a developer, usurally the person part of an email address
-</td>
-</tr>
-<tr>
-<td class="hlist1">
+</p>
+</dd>
+<dt class="hdlist1">
 EMAIL
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 String that is the fully qualified email address of a person
-</td>
-</tr>
-<tr>
-<td class="hlist1">
+</p>
+</dd>
+<dt class="hdlist1">
 NAME
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 String that is the name of a person.
-</td>
-</tr>
-</table></div>
-<div class="para"><p>The NICK may be the special value None representing an anonymous or
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>The NICK may be the special value null representing an anonymous or
 unspecified user, in which case the NAME and EMAIL parts are not used.</p></div>
+<div class="paragraph"><p>What to do when only part of the IDENTITY object is avalible is undecided.</p></div>
 <h3 id="_pull_interval_objects">PULL-INTERVAL OBJECTS</h3><div style="clear:left"></div>
-<div class="para"><p>A PULL-INTERVAL object represents the time interval associated with
+<div class="paragraph"><p>A PULL-INTERVAL object represents the time interval associated with
 the capture of project state or some portion of it.  The capture
 is guaranteed to contain all changes prior to the capture start date, and
 no changes after the capture end date.</p></div>
-<div class="para"><p>A PULL-INTERVAL has the following parts:</p></div>
-<div class="ilist"><ul>
+<div class="paragraph"><p>A PULL-INTERVAL has the following parts:</p></div>
+<div class="ulist"><ul>
 <li>
 <p>
-CAPTURE-START:: Timestamp, when the caprure of the parent object began
+CAPTURE-START:: Timestamp, when the capture of the parent object began
 </p>
 </li>
 <li>
@@ -416,10 +461,10 @@ CAPTURE-END:: Timestamp, when the capture of the parent object completed
 </p>
 </li>
 </ul></div>
-<h3 id="_release_objects_and_subobjects">RELEASE objects and subobjects</h3><div style="clear:left"></div>
-<div class="para"><p>A RELEASE is product files and metadata describing a software release.  It
+<h3 id="_release_objects_and_subobjects">RELEASE objects and subobjects ??</h3><div style="clear:left"></div>
+<div class="paragraph"><p>A RELEASE is product files and metadata describing a software release.  It
 has the foilowing parts:</p></div>
-<div class="ilist"><ul>
+<div class="ulist"><ul>
 <li>
 <p>
 ID:: A string naming the release
@@ -441,10 +486,10 @@ PRODUCT_LIST:: One or more PRODUCT objects
 </p>
 </li>
 </ul></div>
-<div class="para"><p>A PRODUCT is a shippable form of a release, or release component.
+<div class="paragraph"><p>A PRODUCT is a shippable form of a release, or release component.
 Possible PRODUCTs include source tarballs, RPMs, Debian packages, or
 SHA1 checksum files.  PRODUCT objects have the following parts:</p></div>
-<div class="ilist"><ul>
+<div class="ulist"><ul>
 <li>
 <p>
 FILENAME:: Product filename
@@ -462,7 +507,7 @@ MIMETYPE:: MIME type
 </li>
 <li>
 <p>
-ARCHITECTURE:: Tag for the product's target architecture
+ARCHITECTURE:: Tag for the product&#8217;s target architecture
 </p>
 </li>
 <li>
@@ -471,67 +516,74 @@ TYPE:: Controlled vocabulary describing the project resource type
 </p>
 </li>
 </ul></div>
-<h3 id="_project_state_objects">PROJECT-STATE OBJECTS</h3><div style="clear:left"></div>
-<div class="para"><p>A PROJECT-STATE object is intended to capture the entire state of
+<h3 id="_project_state_objects">PROJECT-STATE OBJECTS ??</h3><div style="clear:left"></div>
+<div class="paragraph"><p>A small subset of this is currently implemented as PROJECT objects.</p></div>
+<div class="paragraph"><p>A PROJECT-STATE object is intended to capture the entire state of
 a project for export and re-import.</p></div>
-<div class="para"><p>A PROJECT-STATE has the following parts:</p></div>
-<div class="hlist"><table>
-<tr>
-<td class="hlist1">
+<div class="paragraph"><p>A PROJECT-STATE has the following parts:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
 SHORTNAME
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 a project identification string that is a legal Unix path segment.
-</td>
-</tr>
-<tr>
-<td class="hlist1">
+</p>
+</dd>
+<dt class="hdlist1">
 LONGNAME
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 a name for human use.
-</td>
-</tr>
-<tr>
-<td class="hlist1">
+</p>
+</dd>
+<dt class="hdlist1">
 DESCRIPTION
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 a text description of the project.
-</td>
-</tr>
-<tr>
-<td class="hlist1">
+</p>
+</dd>
+<dt class="hdlist1">
 PRIVILEGE-LIST
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 List of PRIVILEGE objects with the following parts.
-<div class="ilist"><ul>
+</p>
+<div class="ulist"><ul>
 <li>
 <p>
-IDENTITY: Identity of a project number; may not be Anonymous
+IDENTITY:: Identity of a project number; may not be Anonymous
 </p>
 </li>
 <li>
 <p>
-Zero or more CAPABILITY? tokens.
+CAPABILITY-LIST:: Zero or more CAPABILITY tokens.
+</p>
+</li>
+<li>
+<p>
+TITLE:: String describing the member&#8217;s project role
 </p>
 </li>
 </ul></div>
-</td>
-</tr>
-<tr>
-<td class="hlist1">
+</dd>
+<dt class="hdlist1">
 SUBSYSTEM-LIST
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 One or more SUBSYSTEM parts, which may be one of the following:
-<div class="ilist"><ul>
+</p>
+<div class="ulist"><ul>
 <li>
 <p>
 REPOSITORY with the following parts.
 </p>
-<div class="ilist"><ul>
+<div class="ulist"><ul>
 <li>
 <p>
 NAME:: a string identifying the repository.
@@ -551,7 +603,7 @@ CONTENT:: a file or directory.
 </li>
 <li>
 <p>
-LISTS:: Zero or more MAILING-LIST? objects
+LISTS:: Zero or more MAILING-LIST?? objects
 </p>
 </li>
 <li>
@@ -575,199 +627,236 @@ CAPTURED:: A PULL-INTERVAL for the project state capture.
 </p>
 </li>
 </ul></div>
-</td>
-</tr>
-</table></div>
-<div class="para"><p>Most forges limit projects to one REPOSITORY and one WEBSPACE.
+</dd>
+</dl></div>
+<div class="paragraph"><p>Most forges limit projects to one REPOSITORY and one WEBSPACE.
 This ontology supports more than one repository because that may
 be useful for modeling repo conversions.</p></div>
+<div class="paragraph"><p>A CAPABILITY consists of any of the following:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+ADMINISTRATOR:: can modify capabilities (boolean)
+</p>
+</li>
+<li>
+<p>
+TRUSTED:: can examine tracker items marked private (boolean)
+</p>
+</li>
+<li>
+<p>
+A TRACKER-PERMISSION::
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+ID:: The ID of the tracker
+</p>
+</li>
+<li>
+<p>
+TECHNICIAN:: can the user be assigned artifacts from here (boolean, optional)
+</p>
+</li>
+<li>
+<p>
+MANAGER:: can the user modify artifacts on here (boolean, optional)
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
 <h3 id="_tracker_objects_and_subobjects">TRACKER objects and subobjects</h3><div style="clear:left"></div>
-<div class="para"><p>A TRACKER object is intended to contain the entire state of one of a
-project's issue trackers.  It has several subobject types.  All but
-ARTIFACT, the central and most complex one, are described here.  ARTIFACT
-is described in the next section.</p></div>
-<div class="para"><p>In the descriptions below, a <em>nick</em> is the site-local username of a
+<div class="paragraph"><p>The TRACKER object is intended to contain the entire state of the project&#8217;s
+issue trackers.  It has several subobject types.  All but ARTIFACT, the central
+and most complex one, are described here.  ARTIFACT is described in the next
+section.</p></div>
+<div class="paragraph"><p>In the descriptions below, a <em>nick</em> is the site-local username of a
 project developer.</p></div>
-<div class="para"><p>A TRACKER has the following parts:</p></div>
-<div class="hlist"><table>
-<tr>
-<td class="hlist1">
-TYPE
-</td>
-<td class="hlist2">
-One of [Bugs, Features, Support, Patches, Tasks].
-</td>
-</tr>
-<tr>
-<td class="hlist1">
+<div class="paragraph"><p>A TRACKER has the following parts:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
 CAPTURED
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 A PULL-INTERVAL for the tracker capture.
-</td>
-</tr>
-<tr>
-<td class="hlist1">
+</p>
+</dd>
+<dt class="hdlist1">
 ARTIFACT-LIST
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 One or more ARTIFACT objects.  Refer to the ARTIFACT
                 definition below
-</td>
-</tr>
-<tr>
-<td class="hlist1">
-RANGES
-</td>
-<td class="hlist2">
+</p>
+</dd>
+<dt class="hdlist1">
+VOCABULARIES
+</dt>
+<dd>
+<p>
 A map from ARTIFACT slots to lists of possible string values
-</td>
-</tr>
-</table></div>
-<div class="para"><p>A COMMENT has the collowing parts:</p></div>
-<div class="hlist"><table>
-<tr>
-<td class="hlist1">
-SUBMITTER
-</td>
-<td class="hlist2">
-IDENTITY, the submitting user.
-</td>
-</tr>
-<tr>
-<td class="hlist1">
+</p>
+</dd>
+<dt class="hdlist1">
+SUBSCRIBERS??
+</dt>
+<dd>
+<p>
+Map of types to lists of SUBSCRIBER objects describing persons to be
+                notified when an artifact with that type is added to the tracker.
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>A COMMENT has the collowing parts:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+SUBMITTER?
+</dt>
+<dd>
+<p>
+IDENTITY, the submitting user. Sourceforge and Trac use a plain
+             nickname instead.
+</p>
+</dd>
+<dt class="hdlist1">
 DATE
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 A timestamp.
-</td>
-</tr>
-<tr>
-<td class="hlist1">
+</p>
+</dd>
+<dt class="hdlist1">
 TEXT
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 Comment text.
-</td>
-</tr>
-</table></div>
-<div class="para"><p>A FIELDCHANGE has the following parts</p></div>
-<div class="hlist"><table>
-<tr>
-<td class="hlist1">
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>A FIELDCHANGE has the following parts:</p></div>
+<div class="paragraph"><p>Reverting a change is a simple as replacing new with old in the relevent field of ARTIFACT.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
 BY
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 Nick of developer making a change to field value (not an IDENTITY)
-</td>
-</tr>
-<tr>
-<td class="hlist1">
+</p>
+</dd>
+<dt class="hdlist1">
 DATE
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 A timestamp.
-</td>
-</tr>
-<tr>
-<td class="hlist1">
+</p>
+</dd>
+<dt class="hdlist1">
 FIELD
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 An ARTIFACT fieldname
-</td>
-</tr>
-<tr>
-<td class="hlist1">
+</p>
+</dd>
+<dt class="hdlist1">
 OLD
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 The value before the change
-</td>
-</tr>
-<tr>
-<td class="hlist1">
+</p>
+</dd>
+<dt class="hdlist1">
 NEW
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 The value after the change
-</td>
-</tr>
-</table></div>
-<div class="para"><p>An ATTACHMENT has the following parts</p></div>
-<div class="hlist"><table>
-<tr>
-<td class="hlist1">
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>An ATTACHMENT has the following parts:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
 URL
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 Where the file can be fetched
-</td>
-</tr>
-<tr>
-<td class="hlist1">
+</p>
+</dd>
+<dt class="hdlist1">
 FILENAME
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 A string, the name of the file as attached (optional)
-</td>
-</tr>
-<tr>
-<td class="hlist1">
+</p>
+</dd>
+<dt class="hdlist1">
 DATE
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 Date of attachment (optional)
-</td>
-</tr>
-<tr>
-<td class="hlist1">
+</p>
+</dd>
+<dt class="hdlist1">
 ID
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 A string that is a file attachment ID, conventionally numeric
-</td>
-</tr>
-<tr>
-<td class="hlist1">
+</p>
+</dd>
+<dt class="hdlist1">
 BY
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 IDENTITY
-</td>
-</tr>
-<tr>
-<td class="hlist1">
+</p>
+</dd>
+<dt class="hdlist1">
 DESCRIPTION
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 One-line description of file contents (optional)
-</td>
-</tr>
-</table></div>
-<div class="para"><p>A SUBSCRIBER has the following parts:</p></div>
-<div class="hlist"><table>
-<tr>
-<td class="hlist1">
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>A SUBSCRIBER has the following parts:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
 CC-TO
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 Email address
-</td>
-</tr>
-<tr>
-<td class="hlist1">
+</p>
+</dd>
+<dt class="hdlist1">
 COMMENT
-</td>
-<td class="hlist2">
+</dt>
+<dd>
+<p>
 Why this person is subscribed
-</td>
-</tr>
-</table></div>
+</p>
+</dd>
+</dl></div>
 <h3 id="_artifact_objects">ARTIFACT objects</h3><div style="clear:left"></div>
-<div class="para"><p>The ARTIFACT object is the most complex and variable one in the entuire
+<div class="paragraph"><p>The ARTIFACT object is the most complex and variable one in the entire
 ontology.  It is described by several tables.</p></div>
-<div class="para"><p>The Internal Fieldname table maps slots into the ontology to the form
+<div class="paragraph"><p>The Internal Fieldname table maps slots into the ontology to the form
 attributes used on different forge system.  The <em>Savane</em> column
 describes both Savane and Savane-Cleanup.  A <em>-</em> value means the slot
 is unsupported on that system. If the entry is <em>Unnamed</em>, the
@@ -779,7 +868,7 @@ names this slot.</p></div>
 <table rules="all"
 frame="hsides"
 cellspacing="0" cellpadding="4">
-<caption class="title">Table: Internal fieldname</caption>
+<caption class="title">Internal fieldname</caption>
 <col width="194" />
 <col width="160" />
 <col width="160" />
@@ -803,7 +892,7 @@ cellspacing="0" cellpadding="4">
 <tbody valign="top">
   <tr>
     <td align="left">
-    ATTACHMENT-LIST
+    ATTACHMENTS
     </td>
     <td align="left">
     -
@@ -831,7 +920,7 @@ cellspacing="0" cellpadding="4">
   </tr>
   <tr>
     <td align="left">
-    BUG-GROUP
+    GROUP
     </td>
     <td align="left">
     bug_group_id
@@ -859,7 +948,7 @@ cellspacing="0" cellpadding="4">
   </tr>
   <tr>
     <td align="left">
-    COMMENT-LIST
+    COMMENTS
     </td>
     <td align="left">
     Unnamed
@@ -873,7 +962,7 @@ cellspacing="0" cellpadding="4">
   </tr>
   <tr>
     <td align="left">
-    COMP-VERSION
+    VERSION?
     </td>
     <td align="left">
     -
@@ -901,7 +990,7 @@ cellspacing="0" cellpadding="4">
   </tr>
   <tr>
     <td align="left">
-    DEPENDENTS
+    DEPENDENTS??
     </td>
     <td align="left">
     Unnamed
@@ -929,7 +1018,7 @@ cellspacing="0" cellpadding="4">
   </tr>
   <tr>
     <td align="left">
-    EFFORT
+    EFFORT??
     </td>
     <td align="left">
     -
@@ -943,7 +1032,7 @@ cellspacing="0" cellpadding="4">
   </tr>
   <tr>
     <td align="left">
-    FIX-RELEASE
+    FIX-RELEASE??
     </td>
     <td align="left">
     -
@@ -999,7 +1088,7 @@ cellspacing="0" cellpadding="4">
   </tr>
   <tr>
     <td align="left">
-    ORIG_EMAIL
+    ORIG_EMAIL??
     </td>
     <td align="left">
     -
@@ -1013,7 +1102,7 @@ cellspacing="0" cellpadding="4">
   </tr>
   <tr>
     <td align="left">
-    ORIG_NAME
+    ORIG_NAME??
     </td>
     <td align="left">
     -
@@ -1027,7 +1116,7 @@ cellspacing="0" cellpadding="4">
   </tr>
   <tr>
     <td align="left">
-    ORIG_PHONE
+    ORIG_PHONE??
     </td>
     <td align="left">
     -
@@ -1037,20 +1126,6 @@ cellspacing="0" cellpadding="4">
     </td>
     <td align="left">
     originator_phone
-    </td>
-  </tr>
-  <tr>
-    <td align="left">
-    PATCH
-    </td>
-    <td align="left">
-    patch
-    </td>
-    <td align="left">
-    -
-    </td>
-    <td align="left">
-    -
     </td>
   </tr>
   <tr>
@@ -1251,7 +1326,7 @@ cellspacing="0" cellpadding="4">
   </tr>
   <tr>
     <td align="left">
-    VOTES
+    VOTES?
     </td>
     <td align="left">
     -
@@ -1266,16 +1341,16 @@ cellspacing="0" cellpadding="4">
 </tbody>
 </table>
 </div>
-<div class="para"><p>Under Savane, slots with starred field names can be defined in one of
+<div class="paragraph"><p>Under Savane, slots with starred field names can be defined in one of
 two ways: as a free-text field. or as a select box with an
 administrator-defined controlled vocabulary.  In the latter case, the
-fieldmame gets an <em>_id</em> suffix.</p></div>
-<div class="para"><p>The <em>Intended Semantics</em> table describes the intended semantics of each slot.</p></div>
+fieldname gets an <em>_id</em> suffix.</p></div>
+<div class="paragraph"><p>The <em>Intended Semantics</em> table describes the intended semantics of each slot.</p></div>
 <div class="tableblock">
 <table rules="all"
 frame="hsides"
 cellspacing="0" cellpadding="4">
-<caption class="title">Table: Intended Semantics</caption>
+<caption class="title">Intended Semantics</caption>
 <col width="182" />
 <col width="571" />
 <thead>
@@ -1339,7 +1414,7 @@ cellspacing="0" cellpadding="4">
   </tr>
   <tr>
     <td align="left">
-    COMP-VERSION
+    VERSION?
     </td>
     <td align="left">
     Version of system component impacted by artifact
@@ -1371,7 +1446,7 @@ cellspacing="0" cellpadding="4">
   </tr>
   <tr>
     <td align="left">
-    EFFORT
+    EFFORT??
     </td>
     <td align="left">
     Estimated number of hours to address
@@ -1379,7 +1454,7 @@ cellspacing="0" cellpadding="4">
   </tr>
   <tr>
     <td align="left">
-    FIX-RELEASE
+    FIX-RELEASE??
     </td>
     <td align="left">
     Release in which the artifact was actually fixed
@@ -1411,39 +1486,31 @@ cellspacing="0" cellpadding="4">
   </tr>
   <tr>
     <td align="left">
-    ORIG_EMAIL
+    ORIG_EMAIL??
     </td>
     <td align="left">
-    Originator's email address (if different from Submitter)
-    </td>
-  </tr>
-  <tr>
-    <td align="left">
-    ORIG_NAME
-    </td>
-    <td align="left">
-    Originator's name (if different from Submitter)
+    Originator&#8217;s email address (if different from Submitter)
     </td>
   </tr>
   <tr>
     <td align="left">
-    ORIG_PHONE
+    ORIG_NAME??
     </td>
     <td align="left">
-    Originator's phone number
-    </td>
-  </tr>
-  <tr>
-    <td align="left">
-    PATCH
-    </td>
-    <td align="left">
-    Editable text data
+    Originator&#8217;s name (if different from Submitter)
     </td>
   </tr>
   <tr>
     <td align="left">
-    PERCENT
+    ORIG_PHONE??
+    </td>
+    <td align="left">
+    Originator&#8217;s phone number
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PERCENT??
     </td>
     <td align="left">
     Percentage completion of task
@@ -1526,7 +1593,7 @@ cellspacing="0" cellpadding="4">
     STATUS
     </td>
     <td align="left">
-    Open/Closed status of the bug
+    Various statuses allowed for a bug (TODO: a full list should be produced)
     </td>
   </tr>
   <tr>
@@ -1547,7 +1614,7 @@ cellspacing="0" cellpadding="4">
   </tr>
   <tr>
     <td align="left">
-    VOTES
+    VOTES??
     </td>
     <td align="left">
     User votes for this bug
@@ -1556,14 +1623,14 @@ cellspacing="0" cellpadding="4">
 </tbody>
 </table>
 </div>
-<div class="para"><p>On Savane, the "PLATFORM" field is actually labeled "Operating System".</p></div>
-<div class="para"><p>The Field Type table describes what kind of data each slot contains.</p></div>
+<div class="paragraph"><p>On Savane, the "PLATFORM" field is actually labeled "Operating System".</p></div>
+<div class="paragraph"><p>The Field Type table describes what kind of data each slot contains.</p></div>
 <div class="tableblock">
 <table rules="all"
 frame="hsides"
 cellspacing="0" cellpadding="4">
-<caption class="title">Table: Field type</caption>
-<col width="182" />
+<caption class="title">Field type</caption>
+<col width="194" />
 <col width="342" />
 <thead>
   <tr>
@@ -1597,7 +1664,7 @@ cellspacing="0" cellpadding="4">
     BUG-GROUP
     </td>
     <td align="left">
-    Controlled by administrator
+    String
     </td>
   </tr>
   <tr>
@@ -1605,7 +1672,7 @@ cellspacing="0" cellpadding="4">
     CATEGORY
     </td>
     <td align="left">
-    Controlled by administrator
+    String
     </td>
   </tr>
   <tr>
@@ -1650,7 +1717,7 @@ cellspacing="0" cellpadding="4">
   </tr>
   <tr>
     <td align="left">
-    DISCUSSION_LOCK
+    DISCUSSION_LOCK?
     </td>
     <td align="left">
     Enumerated: Locked, Unlocked
@@ -1693,20 +1760,12 @@ cellspacing="0" cellpadding="4">
     KEYWORDS
     </td>
     <td align="left">
-    String
+    List of strings
     </td>
   </tr>
   <tr>
     <td align="left">
-    ORIG_EMAIL
-    </td>
-    <td align="left">
-    String
-    </td>
-  </tr>
-  <tr>
-    <td align="left">
-    ORIG_NAME
+    ORIG_EMAIL??
     </td>
     <td align="left">
     String
@@ -1714,18 +1773,18 @@ cellspacing="0" cellpadding="4">
   </tr>
   <tr>
     <td align="left">
-    PATCH
+    ORIG_NAME??
     </td>
     <td align="left">
-    Text
+    String
     </td>
   </tr>
   <tr>
     <td align="left">
-    PLATFORM
+    ORIG_PHONE??
     </td>
     <td align="left">
-    Controlled by administrator
+    String
     </td>
   </tr>
   <tr>
@@ -1734,6 +1793,14 @@ cellspacing="0" cellpadding="4">
     </td>
     <td align="left">
     String interpreted as numeric
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    PLATFORM
+    </td>
+    <td align="left">
+    Controlled by administrator
     </td>
   </tr>
   <tr>
@@ -1835,14 +1902,14 @@ cellspacing="0" cellpadding="4">
 </tbody>
 </table>
 </div>
-<div class="para"><p>The following tables describe the default controlled vocabularies
+<div class="paragraph"><p>The following tables describe the default controlled vocabularies
 associated with each slot.  Starred fields can have possible values
 added by the adminstrator.</p></div>
 <div class="tableblock">
 <table rules="all"
 frame="hsides"
 cellspacing="0" cellpadding="4">
-<caption class="title">Table: Controlled Vocabularies - All Trackers</caption>
+<caption class="title">Controlled Vocabularies - All Trackers</caption>
 <col width="182" />
 <col width="160" />
 <col width="160" />
@@ -2393,13 +2460,13 @@ cellspacing="0" cellpadding="4">
 </tbody>
 </table>
 </div>
-<div class="para"><p>The PERCENT value is encoded as the numeric string 1.
+<div class="paragraph"><p>The PERCENT value is encoded as the numeric string 1.
 Other values are encoded without the percent.</p></div>
 <div class="tableblock">
 <table rules="all"
 frame="hsides"
 cellspacing="0" cellpadding="4">
-<caption class="title">Table: Controlled Vocabularies - Bugs</caption>
+<caption class="title">Controlled Vocabularies - Bugs</caption>
 <col width="182" />
 <col width="160" />
 <col width="160" />
@@ -2629,7 +2696,7 @@ cellspacing="0" cellpadding="4">
 <table rules="all"
 frame="hsides"
 cellspacing="0" cellpadding="4">
-<caption class="title">Table: Controlled vocabularies - Features</caption>
+<caption class="title">Controlled vocabularies - Features</caption>
 <col width="182" />
 <col width="160" />
 <col width="160" />
@@ -2759,9 +2826,9 @@ cellspacing="0" cellpadding="4">
     <td align="left">
     </td>
     <td align="left">
+    Pending
     </td>
     <td align="left">
-    Pending
     </td>
     <td align="left">
     </td>
@@ -2918,7 +2985,7 @@ cellspacing="0" cellpadding="4">
 <table rules="all"
 frame="hsides"
 cellspacing="0" cellpadding="4">
-<caption class="title">Table: Controlled vocabularies - Support</caption>
+<caption class="title">Controlled vocabularies - Support</caption>
 <col width="182" />
 <col width="160" />
 <col width="160" />
@@ -3142,7 +3209,7 @@ cellspacing="0" cellpadding="4">
 <table rules="all"
 frame="hsides"
 cellspacing="0" cellpadding="4">
-<caption class="title">Table: Controlled vocabularies - Tasks</caption>
+<caption class="title">Controlled vocabularies - Tasks</caption>
 <col width="182" />
 <col width="160" />
 <col width="160" />
@@ -3285,18 +3352,20 @@ cellspacing="0" cellpadding="4">
 </tbody>
 </table>
 </div>
-<div class="para"><p>Pending is a non-closed status in which development work is considered done,
+<div class="paragraph"><p>Pending is a non-closed status in which development work is considered done,
 but some other work is needed (QA, documentation, etc.) The ideal workflow is
 Open &#8594; Pending &#8594; Closed. Of course, the real workflow is up to the
 developers.</p></div>
 </div>
 <h2 id="_additional_metadata_not_covered_by_the_ontology">Additional metadata not covered by the ontology</h2>
 <div class="sectionbody">
-<div class="para"><p>Under Berlios and SourceForge, every tracker has a list of
+<div class="paragraph"><p>Under Berlios, SourceForge, and Savane, every tracker has a list of
 canned responses associated with it,</p></div>
-<div class="para"><p>SourceForge trackers have a set of preferences that should probably be
+<div class="paragraph"><p>Berlios, SourceForge, and Savane all have a notion of "squads"
+(permission groups) which we don&#8217;t capture.</p></div>
+<div class="paragraph"><p>SourceForge trackers have a set of preferences that should probably be
 considered part of project state.</p></div>
-<div class="ilist"><ul>
+<div class="ulist"><ul>
 <li>
 <p>
 Whether or not to allow posting by anonymous users
@@ -3325,9 +3394,10 @@ Hidden vs. visible preferences for all metadata other than ID and Summary.
 </p>
 </li>
 </ul></div>
-<div class="para"><p>Under Savane, every modifiable ARTIFACT field has some additional
+<div class="paragraph"><p>Savane has Cookbook and News features we don&#8217;t capture.</p></div>
+<div class="paragraph"><p>Under Savane, every modifiable ARTIFACT field has some additional
 attributes:</p></div>
-<div class="ilist"><ul>
+<div class="ulist"><ul>
 <li>
 <p>
 Whether it is optional, mandatory, or mandatory only if it was
@@ -3350,66 +3420,250 @@ Whether or not artifact changes are stored in the HISTORY list.
 </p>
 </li>
 </ul></div>
-<div class="para"><p>Under Savane, it is also possible to selectively allow or disallow
+<div class="paragraph"><p>Under Savane, it is also possible to selectively allow or disallow
 various transitions in enumerated and controlled values.</p></div>
-<div class="para"><p>Savane also allows the definition of up to 10 each of custom text
+<div class="paragraph"><p>Savane also allows the definition of up to 10 each of custom text
 areas and select boxes, and up to 5 customizable date fields.  These
 have fieldnames of the form *_custom.</p></div>
 </div>
 <h2 id="_incompatibilities">Incompatibilities</h2>
 <div class="sectionbody">
-<div class="para"><p>Berlios and SourceForge lack many artifact fields found Savane and
+<div class="paragraph"><p>Berlios and SourceForge lack many artifact fields found Savane and
 SavaneCleanup.</p></div>
-<div class="para"><p>The RESOLUTION slot is screen-labeled "Resolution" on Berlios, but
+<div class="paragraph"><p>The RESOLUTION slot is screen-labeled "Resolution" on Berlios, but
 "Status" on Savane.  The STATUS slot is labeled "Status:" on
-Berlios, but "Open/Closed" on Savane.</p></div>
-<div class="para"><p>The Berlios PATCH field could be imported to other systems as an
-ATTACHMENT object.</p></div>
-<div class="para"><p>Berlios and SourceForge have separate bug and feature trackers.
+Berlios, but "Open/Closed" on Savane. Trac doesn&#8217;t distinghish status
+from resolution.</p></div>
+<div class="paragraph"><p>Berlios and SourceForge have separate bug and feature trackers.
 Savane has no separate feature tracker; projects separate those by
 using the Bug Category or Bug Group field.</p></div>
-<div class="para"><p>Under SourceForge, there is no predefined Task tracker, but it is
-possible to create custom trackers that don't fit one of the named
+<div class="paragraph"><p>Under SourceForge, there is no predefined Task tracker, but it is
+possible to create custom trackers that don&#8217;t fit one of the named
 types.</p></div>
-<div class="para"><p>Savane ATTACHMENT objects lack the DESCRIPTION slot,  SourceForge
-ATTACHMENT objects lack MIMETYPE.</p></div>
-<div class="para"><p>SourceForge allows setting (in tracker preferences) the address of a
-commit list for new submissions, and its subscriptions have no
-explanation attached.  Savane allows setting a CC list for
+<div class="paragraph"><p>Savane ATTACHMENT objects lack the DESCRIPTION slot,  SourceForge
+ATTACHMENT objects lack MIMETYPE. Trac attachments lack MIMETYPE.</p></div>
+<div class="paragraph"><p>Berlios and SourceForge allow setting (in tracker preferences) the
+address of a commit list for new submissions, and its subscriptions
+have no explanation attached.  Savane allows setting a CC list for
 notification on all state changes, and each subscription can have an
 explanatory comment.  The CFO SUBSCRIBER slot assumes Savane-like
-behavior which Berlios cannot support and SourceForge can only
-partially support.</p></div>
+behavior which Berlios, Trac and SourceForge cannot support.</p></div>
 </div>
 <h2 id="_open_questions">Open Questions</h2>
 <div class="sectionbody">
-<div class="para"><p>We need a definition of MAILING-LIST.</p></div>
-<div class="para"><p>What are the controlled vocabularies for PRODUCT::TYPE,
-PRODUCT::ARCHITECTURE, and CAPABILITY?</p></div>
-<div class="para"><p>There are other kinds of objects that might be considered part of
+<div class="paragraph"><p>We need a definition of MAILING-LIST.</p></div>
+<div class="paragraph"><p>What are the controlled vocabularies for PRODUCT::TYPE,
+PRODUCT::ARCHITECTURE?</p></div>
+<div class="paragraph"><p>There are other kinds of objects that might be considered part of
 a project state: blogs, wikis, and forums leap to mind.  Which of
 these should we try to capture?</p></div>
-<div class="para"><p>How much of the state described under "Additional metadata" should
+<div class="paragraph"><p>How much of the state described under "Additional metadata" should
 be brought into CFO?  Is there a principled distinction between "state
 of the project" and "state of the forge"?</p></div>
 </div>
 <h2 id="_formalizing_the_ontology">Formalizing the ontology</h2>
 <div class="sectionbody">
-<div class="para"><p>The PROJECT class is a pretty close match to DOAP.  We'll
+<div class="paragraph"><p>The PROJECT class is a pretty close match to DOAP.  We&#8217;ll
 need an extension field cfo#captured.</p></div>
-<div class="para"><p>The IDENTITY class can be represented by FOAF.</p></div>
+<div class="paragraph"><p>The IDENTITY class can be represented by FOAF.</p></div>
+</div>
+<h2 id="_appendix_forge_permissions_models">Appendix: Forge permissions models</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>These permissions models are documented here because CFO will have to
+capture at least some portions of them.  But that has not yet been done.</p></div>
+<h3 id="_berlios">Berlios</h3><div style="clear:left"></div>
+<div class="paragraph"><p>Each project member may be assigned a role.  The role set is as follows:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Undefined
+</p>
+</li>
+<li>
+<p>
+Developer
+</p>
+</li>
+<li>
+<p>
+Project Manager
+</p>
+</li>
+<li>
+<p>
+Unix Admin', u&#8217;Doc Writer
+</p>
+</li>
+<li>
+<p>
+Tester
+</p>
+</li>
+<li>
+<p>
+Support Manager
+</p>
+</li>
+<li>
+<p>
+Graphic/Other Designer
+</p>
+</li>
+<li>
+<p>
+Doc Translator
+</p>
+</li>
+<li>
+<p>
+Editorial/Content Writer
+</p>
+</li>
+<li>
+<p>
+Packager (.rpm, .deb etc)
+</p>
+</li>
+<li>
+<p>
+Analysis / Design
+</p>
+</li>
+<li>
+<p>
+Advisor/Mentor/Consultant
+</p>
+</li>
+<li>
+<p>
+Distributor/Promoter
+</p>
+</li>
+<li>
+<p>
+Content Management
+</p>
+</li>
+<li>
+<p>
+Requirements Engineering
+</p>
+</li>
+<li>
+<p>
+Web Designer
+</p>
+</li>
+<li>
+<p>
+Porter (Cross Platform Devel.)
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Each developer has two general permissions:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Administrator
+</dt>
+<dd>
+<p>
+May edit project member permissions
+</p>
+</dd>
+<dt class="hdlist1">
+Release Technician
+</dt>
+<dd>
+<p>
+May create project releases
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>There are five trackers: bugs, tasks, support, patches, and features.  For each
+tracker, a member may have either or both of the following privilege
+bits:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Technician - may be assigned issues on this tracker
+</p>
+</li>
+<li>
+<p>
+Administrator - may modify issues on this tracker
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>There are two other flags per member:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+The user may be enabled as a forum moderator
+</p>
+</li>
+<li>
+<p>
+The user may be enabled as a document-manager editor
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Mailing lists have separate permissions and passwords,
+being managed through Mailman.</p></div>
+<h3 id="_savane">Savane</h3><div style="clear:left"></div>
+<div class="paragraph"><p>There are no named developer roles as on Berlios.</p></div>
+<div class="paragraph"><p>Each developer has two general permissions:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Administrator
+</dt>
+<dd>
+<p>
+May edit project member permissions
+</p>
+</dd>
+<dt class="hdlist1">
+Trusted User
+</dt>
+<dd>
+<p>
+May view private bugs (the interface does not use "Trusted")
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>There are four trackers: bugs, tasks, patches, and support.  There are
+two special features: the cookbook mamnager and the news manager.  For
+each feature, a member may have either or both of the following privilege
+bits:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Technician - may be assigned items on this feature
+</p>
+</li>
+<li>
+<p>
+Manager - may modify items on this tracker (like Berlios Administrator)
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Mailing lists have separate permissions and passwords,
+being managed through Mailman.</p></div>
 </div>
 <h2 id="_change_history">Change History</h2>
 <div class="sectionbody">
-<div class="para"><p>Version 1.0, 2009-10-24: Initial version.</p></div>
-<div class="para"><p>Version 1.1, 2009-10-24: Add CC-LIST tracker slot and subscriber
+<div class="paragraph"><p>Version 1.0, 2009-10-24: Initial version.</p></div>
+<div class="paragraph"><p>Version 1.1, 2009-10-24: Add CC-LIST tracker slot and subscriber
 object. Add RELEASE and PRODUCT objects.  Describe Pending status.
 ATTACHMENT object mutates some.  CC-LIST changes to SUBSCRIBER.
 NICK member added to IDENTITY.</p></div>
+<div class="paragraph"><p>Version 1.2, 2009-11-14: Define CAPABILITY.  Appendices on permissions
+models.</p></div>
+<div class="paragraph"><p>Version 1.3 2010-02-16: Changed for switch from trackers to type fields.
+Added ?? for things not yet implemented and ? for things poorly implemented.</p></div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2009-11-06 16:54:37 EDT
+Last updated 2010-02-16 19:20:02 BST
 </div>
 </div>
 </body>

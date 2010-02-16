@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="generator" content="AsciiDoc 8.2.7" />
+<meta name="generator" content="AsciiDoc 8.4.4" />
+<title>Blogging And All That</title>
 <style type="text/css">
 /* Debug borders */
 p, li, dt, dd, div, pre, h1, h2, h3, h4, h5, h6 {
@@ -110,11 +111,13 @@ div#footer-badges {
   padding-bottom: 0.5em;
 }
 
-div#preamble,
+div#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
 div.tableblock, div.imageblock, div.exampleblock, div.verseblock,
 div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
 div.admonitionblock {
-  margin-right: 10%;
   margin-top: 1.5em;
   margin-bottom: 1.5em;
 }
@@ -156,9 +159,6 @@ div.sidebarblock > div.content {
   padding: 0.5em;
 }
 
-div.listingblock {
-  margin-right: 0%;
-}
 div.listingblock > div.content {
   border: 1px solid silver;
   background: #f4f4f4;
@@ -167,6 +167,7 @@ div.listingblock > div.content {
 
 div.quoteblock {
   padding-left: 2.0em;
+  margin-right: 10%;
 }
 div.quoteblock > div.attribution {
   padding-top: 0.5em;
@@ -175,6 +176,7 @@ div.quoteblock > div.attribution {
 
 div.verseblock {
   padding-left: 2.0em;
+  margin-right: 10%;
 }
 div.verseblock > div.content {
   white-space: pre;
@@ -218,6 +220,7 @@ dt {
   margin-top: 0.5em;
   margin-bottom: 0;
   font-style: normal;
+  color: navy;
 }
 dd > *:first-child {
   margin-top: 0.1em;
@@ -226,11 +229,27 @@ dd > *:first-child {
 ul, ol {
     list-style-position: outside;
 }
-div.olist > ol {
+ol.arabic {
   list-style-type: decimal;
 }
-div.olist2 > ol {
+ol.loweralpha {
   list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
 }
 
 div.tableblock > table {
@@ -243,21 +262,52 @@ thead {
 tfoot {
   font-weight: bold;
 }
+td > div.verse {
+  white-space: pre;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
 
-div.hlist {
+
+div.hdlist {
   margin-top: 0.8em;
   margin-bottom: 0.8em;
 }
-div.hlist td {
+div.hdlist tr {
   padding-bottom: 15px;
 }
-td.hlist1 {
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
   vertical-align: top;
   font-style: normal;
   padding-right: 0.8em;
+  color: navy;
 }
-td.hlist2 {
+td.hdlist2 {
   vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
 }
 
 @media print {
@@ -330,16 +380,7 @@ div.exampleblock-content {
 
 /* IE6 sets dynamically generated links as visited. */
 div#toc a:visited { color: blue; }
-
-/* Because IE6 child selector is broken. */
-div.olist2 ol {
-  list-style-type: lower-alpha;
-}
-div.olist2 div.olist ol {
-  list-style-type: decimal;
-}
 </style>
-<title>Blogging And All That</title>
 </head>
 <body>
 <div id="header">
@@ -347,25 +388,25 @@ div.olist2 div.olist ol {
 </div>
 <div id="preamble">
 <div class="sectionbody">
-<div class="para"><p>It could be said that this project began as a series of blog posts.
+<div class="paragraph"><p>It could be said that this project began as a series of blog posts.
 Some of this material has been adapted into portions of the project
 plan and design documents; much of it is out of scope and has not.</p></div>
-<div class="para"><p>If you have any interest in what the project founder was thinking,
+<div class="paragraph"><p>If you have any interest in what the project founder was thinking,
 these might be worth a browse.  If you are a new developer trying to
-grasp the design philosophy of the project, they're definitely worth
+grasp the design philosophy of the project, they&#8217;re definitely worth
 a browse.</p></div>
-<div class="para"><p>2009-10-08: <a href="http://esr.ibiblio.org/?p=1282">Three Systemic Problems with Open-Source Hosting Sites</a></p></div>
-<div class="para"><p>2009-10-09: <a href="http://esr.ibiblio.org/?p=1295">Looking Deeper into Forges, And Not Liking What I See</a></p></div>
-<div class="para"><p>2009-10-12: <a href="http://esr.ibiblio.org/?p=1302">How Not To Tackle the Mess around Forges</a></p></div>
-<div class="para"><p>2009-10-29: <a href="http://esr.ibiblio.org/?p=1359">The future of software forges</a></p></div>
-<div class="para"><p>2009-11-04: <a href="http://esr.ibiblio.org/?p=1369">Announcing ForgePlucker</a></p></div>
-<div class="para"><p>2009-11-05: <a href="http://esr.ibiblio.org/?p=1387">Structure Is Not Meaning</a></p></div>
-<div class="para"><p>More may be added in the future.</p></div>
+<div class="paragraph"><p>2009-10-08: <a href="http://esr.ibiblio.org/?p=1282">Three Systemic Problems with Open-Source Hosting Sites</a></p></div>
+<div class="paragraph"><p>2009-10-09: <a href="http://esr.ibiblio.org/?p=1295">Looking Deeper into Forges, And Not Liking What I See</a></p></div>
+<div class="paragraph"><p>2009-10-12: <a href="http://esr.ibiblio.org/?p=1302">How Not To Tackle the Mess around Forges</a></p></div>
+<div class="paragraph"><p>2009-10-29: <a href="http://esr.ibiblio.org/?p=1359">The future of software forges</a></p></div>
+<div class="paragraph"><p>2009-11-04: <a href="http://esr.ibiblio.org/?p=1369">Announcing ForgePlucker</a></p></div>
+<div class="paragraph"><p>2009-11-05: <a href="http://esr.ibiblio.org/?p=1387">Structure Is Not Meaning</a></p></div>
+<div class="paragraph"><p>More may be added in the future.</p></div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2009-11-06 16:54:39 EDT
+Last updated 2009-12-22 13:45:13 BST
 </div>
 </div>
 </body>

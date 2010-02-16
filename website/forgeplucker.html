@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>forgeplucker</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2" /></head><body><div class="refentry" lang="en" xml:lang="en"><a id="forgeplucker.1"></a><div class="titlepage"></div><div class="refnamediv"><a id="name"></a><h2>Name</h2><p>forgeplucker — capture and dump project state from a hosting site</p></div><div class="refsynopsisdiv"><a id="synopsis"></a><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">bugplucker.py</code>  [-f <em class="replaceable"><code>forgetype</code></em>] [-i <em class="replaceable"><code>trackername:id</code></em>] [-u <em class="replaceable"><code>username</code></em>] [-p <em class="replaceable"><code>password</code></em>] [-r] [-s] [-v <em class="replaceable"><code>verbosity</code></em>]  <em class="replaceable"><code>projecturl</code></em> </p></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="description"></a><h2>DESCRIPTION</h2><p>The forgeplucker program does not yet exist.  This placeholder
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>forgeplucker</title><meta name="generator" content="DocBook XSL Stylesheets V1.75.1" /></head><body><div class="refentry" title="forgeplucker"><a id="forgeplucker.1"></a><div class="titlepage"></div><div class="refnamediv"><a id="name"></a><h2>Name</h2><p>forgeplucker — capture and dump project state from a hosting site</p></div><div class="refsynopsisdiv" title="Synopsis"><a id="synopsis"></a><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">bugplucker.py</code>  [-f <em class="replaceable"><code>forgetype</code></em>] [-i <em class="replaceable"><code>trackername:id</code></em>] [-u <em class="replaceable"><code>username</code></em>] [-p <em class="replaceable"><code>password</code></em>] [-r] [-v <em class="replaceable"><code>verbosity</code></em>]  <em class="replaceable"><code>projecturl</code></em> </p></div></div><div class="refsect1" title="DESCRIPTION"><a id="description"></a><h2>DESCRIPTION</h2><p>The forgeplucker program does not yet exist.  This placeholder
 page describes an ancestor, bugplucker.py, which is demonstration code 
 expected to evolve into forgeplucker.</p><p>bugplucker.py can extract the complete state of a project's bug
 tracker from any supported hosting system.  Uses for this capability
@@ -21,22 +22,19 @@ rely on
 <span class="citerefentry"><span class="refentrytitle">localtime</span>(3)</span>.</p><p>The program accepts the following options:</p><div class="variablelist"><dl><dt><span class="term">-f</span></dt><dd><p>Specify the forge-system type. May not be necessary, as the
 program can infer a type from well-known sitenames.</p></dd><dt><span class="term">-u</span></dt><dd><p>Set your username for authentication purposes.</p></dd><dt><span class="term">-p</span></dt><dd><p>Set your password for site-authentication purposes.</p></dd><dt><span class="term">-i</span></dt><dd><p>Fetch an individual detail page and return the JSON for the
 corresponding issue. The specification should be two colon-separated
-parts, a tracker name and a bug ID. Mainly useful for debgging.</p></dd><dt><span class="term">-r</span></dt><dd><p>Dump in XML rather than JSON.</p></dd><dt><span class="term">-s</span></dt><dd><p>Sample mode. Get only the most recent bug in each
-tracker. Useful for verifying that you can read a forge type
-correctly without fetching an entire project.  Also useful if what
-you want is just the atttribute ranges for project metadata.</p></dd><dt><span class="term">-v</span></dt><dd><p>Set a numeric verbosity level, primarily for debugging. 1
+parts, a tracker name and a bug ID. Mainly useful for debgging.</p></dd><dt><span class="term">-r</span></dt><dd><p>Dump in XML rather than JSON.</p></dd><dt><span class="term">-v</span></dt><dd><p>Set a numeric verbosity level, primarily for debugging. 1
 enables various progress messages to standard error, and 2 enables
 dumping of web pages as they are fetched.</p></dd></dl></div><p>These options are mainly for testing purposes; for production it
 is recommended that you put your credentials in your .netrc file in
 order to avoid having to type your password frequently where it might
 be seen. The 'account' field, if present, will be interpreted as a
-forge type overriding the normal heuristics.</p></div><div class="refsect1" lang="en" xml:lang="en"><a id="bugs"></a><h2>BUGS</h2><p>The program will change the settings on yoor tracker search form
+forge type overriding the normal heuristics.</p></div><div class="refsect1" title="BUGS"><a id="bugs"></a><h2>BUGS</h2><p>The program will change the settings on yoor tracker search form
 in order to collect all bugs.  You will probably have to reset them
 afterwards.</p><p>It's not forgeplucker yet. Forgeplucker will capture the
 project's <span class="emphasis"><em>entire</em></span> state, not just the trackers.</p><p>Bugplucker dumps are all in JSON, but the shape and keywords are
 forge-type-specific. At a later stage of the project, once we have gained
 field experience with many hosting sites, we expect to design a
 uniform dump file format.</p><p>No tools yet exist to import the dumps into forge systems. They
-cannot be written until we have a standardized format.</p><p>The range of supported systems could be larger, and will be.</p></div><div class="refsect1" lang="en" xml:lang="en"><a id="see_also"></a><h2>SEE ALSO</h2><p>
+cannot be written until we have a standardized format.</p><p>The range of supported systems could be larger, and will be.</p></div><div class="refsect1" title="SEE ALSO"><a id="see_also"></a><h2>SEE ALSO</h2><p>
 <span class="citerefentry"><span class="refentrytitle">netrc</span>(7)</span>,
-</p></div><div class="refsect1" lang="en" xml:lang="en"><a id="maintainer"></a><h2>AUTHOR</h2><p>Eric S. Raymond <code class="email">&lt;<a class="email" href="mailto:esr@thyrsus.com">esr@thyrsus.com</a>&gt;</code></p></div></div></body></html>
+</p></div><div class="refsect1" title="AUTHOR"><a id="maintainer"></a><h2>AUTHOR</h2><p>Eric S. Raymond <code class="email">&lt;<a class="email" href="mailto:esr@thyrsus.com">esr@thyrsus.com</a>&gt;</code></p></div></div></body></html>

@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="generator" content="AsciiDoc 8.2.7" />
+<meta name="generator" content="AsciiDoc 8.4.4" />
+<title>ForgePlucker</title>
 <style type="text/css">
 /* Debug borders */
 p, li, dt, dd, div, pre, h1, h2, h3, h4, h5, h6 {
@@ -110,11 +111,13 @@ div#footer-badges {
   padding-bottom: 0.5em;
 }
 
-div#preamble,
+div#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
 div.tableblock, div.imageblock, div.exampleblock, div.verseblock,
 div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
 div.admonitionblock {
-  margin-right: 10%;
   margin-top: 1.5em;
   margin-bottom: 1.5em;
 }
@@ -156,9 +159,6 @@ div.sidebarblock > div.content {
   padding: 0.5em;
 }
 
-div.listingblock {
-  margin-right: 0%;
-}
 div.listingblock > div.content {
   border: 1px solid silver;
   background: #f4f4f4;
@@ -167,6 +167,7 @@ div.listingblock > div.content {
 
 div.quoteblock {
   padding-left: 2.0em;
+  margin-right: 10%;
 }
 div.quoteblock > div.attribution {
   padding-top: 0.5em;
@@ -175,6 +176,7 @@ div.quoteblock > div.attribution {
 
 div.verseblock {
   padding-left: 2.0em;
+  margin-right: 10%;
 }
 div.verseblock > div.content {
   white-space: pre;
@@ -218,6 +220,7 @@ dt {
   margin-top: 0.5em;
   margin-bottom: 0;
   font-style: normal;
+  color: navy;
 }
 dd > *:first-child {
   margin-top: 0.1em;
@@ -226,11 +229,27 @@ dd > *:first-child {
 ul, ol {
     list-style-position: outside;
 }
-div.olist > ol {
+ol.arabic {
   list-style-type: decimal;
 }
-div.olist2 > ol {
+ol.loweralpha {
   list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
 }
 
 div.tableblock > table {
@@ -243,21 +262,52 @@ thead {
 tfoot {
   font-weight: bold;
 }
+td > div.verse {
+  white-space: pre;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
 
-div.hlist {
+
+div.hdlist {
   margin-top: 0.8em;
   margin-bottom: 0.8em;
 }
-div.hlist td {
+div.hdlist tr {
   padding-bottom: 15px;
 }
-td.hlist1 {
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
   vertical-align: top;
   font-style: normal;
   padding-right: 0.8em;
+  color: navy;
 }
-td.hlist2 {
+td.hdlist2 {
   vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
 }
 
 @media print {
@@ -330,16 +380,7 @@ div.exampleblock-content {
 
 /* IE6 sets dynamically generated links as visited. */
 div#toc a:visited { color: blue; }
-
-/* Because IE6 child selector is broken. */
-div.olist2 ol {
-  list-style-type: lower-alpha;
-}
-div.olist2 div.olist ol {
-  list-style-type: decimal;
-}
 </style>
-<title>ForgePlucker</title>
 </head>
 <body>
 <div id="header">
@@ -347,27 +388,27 @@ div.olist2 div.olist ol {
 </div>
 <div id="preamble">
 <div class="sectionbody">
-<div class="para"><p>ForgePlucker will be a project aimed at breaking open-source projects
+<div class="paragraph"><p>ForgePlucker will be a project aimed at breaking open-source projects
 out of their data jails, one step at a time.  A central goal will be to produce
 useful data-mining and content-mirroring tools at every stage,
 gradually integrating them into smarter robots as we gain knowledge of
 the domain.</p></div>
-<div class="para"><p>ForgePlucker will write tools that rely only on the publicly exposed
+<div class="paragraph"><p>ForgePlucker will write tools that rely only on the publicly exposed
 interfaces of forge systems.  We do not expect to be able to run code
 on forge servers or get direct access to databases, if only because
 many forges would consider the security risks of allowing such access
 unacceptable.</p></div>
-<div class="para"><p>The end goal of ForgePlucker will be a tool that can recover the state
+<div class="paragraph"><p>The end goal of ForgePlucker will be a tool that can recover the state
 of a project from any of the commonly used forge systems, and dump
 that state to a standardized representation that is static, textual
 and self-describing. But we will deliberately not try to specify this
 format up front; instead, we will collect experience by capturing data
 from the most commonly used forge systems into forge-type-specific
 dump formats, unifying them at a later stage.</p></div>
-<div class="para"><p>Beyond ForgePlucker lies the goal of using these snapshots for import
+<div class="paragraph"><p>Beyond ForgePlucker lies the goal of using these snapshots for import
 to forges.  But that can happen only after experiance has taught us
 how to jailbreak the data out of them.</p></div>
-<div class="para"><p>The name "ForgePlucker" is bicapitalized, violating normal hacker
+<div class="paragraph"><p>The name "ForgePlucker" is bicapitalized, violating normal hacker
 custom, as a tip of the hat to the original SourceForge - which,
 though afflicted with bad architectural decisions that have made this
 project necessary ten years later, was nevertheless a conceptual
@@ -376,66 +417,66 @@ breakthrough in how we coordinate programming work.</p></div>
 </div>
 <h2 id="_starting_small_staying_grounded">Starting Small, Staying Grounded</h2>
 <div class="sectionbody">
-<div class="para"><p>The project plan is conditioned on the fact that while there are many
+<div class="paragraph"><p>The project plan is conditioned on the fact that while there are many
 forges out there, there are relatively few forge types.  Furthermore,
 the most commonly used family of forges (those descended from early
 SourceForge) has rigidities in its underlying architecture that mean
 not much has actually changed in the decade since SourceForge.
 Accordingly the problem of jailbreaking these sites, while not easy,
 is not as forbidding as it might at first appear</p></div>
-<div class="para"><p>We will chose a set of supported forge types to give the best tradeoff
+<div class="paragraph"><p>We will chose a set of supported forge types to give the best tradeoff
 we can manage between userbase coverage and implementation pain. At
 each stage, every piece of code delivered will solve a real
 data-jailing problem with a real forge.</p></div>
-<div class="para"><p>Later in the project, some forges may choose to cooperate with it by
-providing relatively painless export features.  We'll use those when
-they're available but but never, <strong>ever</strong> wait on them.</p></div>
+<div class="paragraph"><p>Later in the project, some forges may choose to cooperate with it by
+providing relatively painless export features.  We&#8217;ll use those when
+they&#8217;re available but but never, <strong>ever</strong> wait on them.</p></div>
 <h3 id="_phase_1a_individual_bugpluckers">Phase 1a: Individual BugPluckers</h3><div style="clear:left"></div>
-<div class="para"><p>The first step on the road to ForgePlucker has already been taken -
+<div class="paragraph"><p>The first step on the road to ForgePlucker has already been taken -
 the demonstration code can mine all items from trackers on Savane (the
 forge system used for Savannah and Gna!)  and Berlios, an instance of
 the widely-deployed GForge/FusionForge family.</p></div>
-<div class="para"><p>Despite the fact that these sites run different forge system, the
-logic for mining them is mostly shared - they're subclasses of a
+<div class="paragraph"><p>Despite the fact that these sites run different forge system, the
+logic for mining them is mostly shared - they&#8217;re subclasses of a
 GenericForge class that captures the invariants of this class of
 systems.</p></div>
-<div class="para"><p>In the rest of phase 1a we'll make the coverage of these
+<div class="paragraph"><p>In the rest of phase 1a we&#8217;ll make the coverage of these
 systems more complete and add several other forge types,
 certainly including the original SourceForge and probably
-Canonical's Launchpad as well.</p></div>
+Canonical&#8217;s Launchpad as well.</p></div>
 <h3 id="_phase_1b_a_smarter_bugplucker_and_one_dump_format">Phase 1b: A Smarter BugPlucker, and One Dump Format.</h3><div style="clear:left"></div>
-<div class="para"><p>Lather, rinse, repeat.  By the time we have done three or four of
-these we will know enough to reconcile the dump formats &#8212; and merge
+<div class="paragraph"><p>Lather, rinse, repeat.  By the time we have done three or four of
+these we will know enough to reconcile the dump formats&#8201;&#8212;&#8201;and merge
 the code into a bugplucker robot that can be given a URL to a tracker
 and figure out the right thing to do.</p></div>
 <h3 id="_phase_2_mailing_lists">Phase 2: Mailing Lists</h3><div style="clear:left"></div>
-<div class="para"><p>The principal goal of Phase Two will be to write a robot that can
+<div class="paragraph"><p>The principal goal of Phase Two will be to write a robot that can
 extract the state of MailMan lists through public interfaces.  This
 list manager is so widely used in forges that being able to pluck from
 it may reduce the rest of the problem to statistical noise.</p></div>
-<div class="para"><p>If there are other mailing-list managers out there with significant
-usage, we'll figure out how to pluck data from them, too.</p></div>
-<div class="para"><p>The deliverable of this phase will be a ListPlucker robot that, given
+<div class="paragraph"><p>If there are other mailing-list managers out there with significant
+usage, we&#8217;ll figure out how to pluck data from them, too.</p></div>
+<div class="paragraph"><p>The deliverable of this phase will be a ListPlucker robot that, given
 the URL of the administrator page for a mailing list manager instance
 and the correct credentials, can extract all the state data for the
 list - recipient addresses and options, list options, and archives.</p></div>
 </div>
 <h2 id="_phase_three_repoplucker">Phase Three: RepoPlucker</h2>
 <div class="sectionbody">
-<div class="para"><p>The goal of Phase 3 will be lossless capture of repostory data through
+<div class="paragraph"><p>The goal of Phase 3 will be lossless capture of repostory data through
 forge public interfaces.  This will be trivial for distributed VCSes
 like hg, git, and bzr; in practice, it reduces to writing a history
 grabber that can mine SVN and CVS repositories.</p></div>
 </div>
 <h2 id="_phase_4_projectplucker">Phase 4: ProjectPlucker</h2>
 <div class="sectionbody">
-<div class="para"><p>Once we have BugPlucker, ListPlucker, MailPlucker, and common dump
+<div class="paragraph"><p>Once we have BugPlucker, ListPlucker, MailPlucker, and common dump
 formats for all of these, it will be time to amalgamate them into
 ProjectPlucker.  ProjectPlucker will need to capture at least two
 additional things from projects on each forge type: the roles table
 describing the capabilities of each member, and the state of whatever
 static webspace is associated with the project.</p></div>
-<div class="para"><p>As in previous phases, we'll write custom pluckers and custom
+<div class="paragraph"><p>As in previous phases, we&#8217;ll write custom pluckers and custom
 dumpfile types for individual forges until we know enough to unify
 them.  The deliverable of Phase Four will be a robot that can produce
 a static backup dump of the entire state of any project on a
@@ -443,13 +484,13 @@ supported forge type.</p></div>
 </div>
 <h2 id="_phase_5_envoi">Phase 5: Envoi</h2>
 <div class="sectionbody">
-<div class="para"><p>In phase 5, we begin wriing tools to reanimate a state dump into a live
+<div class="paragraph"><p>In phase 5, we begin wriing tools to reanimate a state dump into a live
 project.  This may involve writing a new forge system, or bolting
 import facilities onto cooperative existing forges.</p></div>
 </div>
 <h2 id="_additional">Additional</h2>
 <div class="sectionbody">
-<div class="para"><p>The preceding has been written as if the goal of the tools will
+<div class="paragraph"><p>The preceding has been written as if the goal of the tools will
 always be one big static dump.  That was an oversimplification; for
 several reasons, beginning with bandwidth efficiency, it would be very
 desirable for pluckers to be able to read in a previously captured
@@ -457,11 +498,11 @@ state and do an incremental fetch to update it. This could prove
 difficult, as forges tend to be spotty about exposing modification
 dates.  But with a complete state dump in hand, it would at least be
 possible to report on all items created since the last fetch time.</p></div>
-<div class="para"><p>Much later, late in phase 5, incremental updates may turn into the basis
+<div class="paragraph"><p>Much later, late in phase 5, incremental updates may turn into the basis
 for dynamic synchronization between replicated live instances of a
 project, or into a facility for serving an RSS-like feed to
 subscribers as a project changes state.</p></div>
-<div class="para"><p>This goal puts some constraints on the dump format.  It means that
+<div class="paragraph"><p>This goal puts some constraints on the dump format.  It means that
 not only does the project state dump have to be self-describing as an
 entire collection, each lower-level piece (tracker state,
 mailing-list sate, repo state, webspace state, roles table) needs to
@@ -469,16 +510,16 @@ be a self-describing unit on its own.</p></div>
 </div>
 <h2 id="_tools_and_basics">Tools and Basics</h2>
 <div class="sectionbody">
-<div class="para"><p>Python (and perhaps PyCurl) for building the plucker 'bots.</p></div>
-<div class="para"><p>JSON as a metaformat for the dumpfiles, because it's better than XML for
+<div class="paragraph"><p>Python (and perhaps PyCurl) for building the plucker 'bots.</p></div>
+<div class="paragraph"><p>JSON as a metaformat for the dumpfiles, because it&#8217;s better than XML for
 stuff that is mostly attribute-value pairs, and no worse than XML
 for large binary blobs.</p></div>
-<div class="para"><p>asciidoc for documentation and web pages, because it's beautifully
+<div class="paragraph"><p>asciidoc for documentation and web pages, because it&#8217;s beautifully
 simple.</p></div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2009-11-06 16:54:34 EDT
+Last updated 2009-12-22 13:45:13 BST
 </div>
 </div>
 </body>
