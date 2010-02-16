@@ -40,6 +40,7 @@ def canonicalize(issues):
         "status_id": "status",
         "field_priority": "priority", # Trac
         "field_summary": "summary", # Trac
+        "field_keywords": "keywords", # Trac
         "field_cc": "cc_list", # Trac
         "cc": "cc_list", # Trac
         }

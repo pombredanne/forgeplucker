@@ -99,6 +99,11 @@ The Trac handler provides bug-plucking machinery for Trac sites.
                 artifact['field_cc'] = artifact['field_cc'].split(', ')
             else:
                 artifact['field_cc'] = []
+
+            if artifact['field_keywords'] != "":
+                artifact['field_keywords'] = artifact['field_keywords'].split()
+            else:
+                artifact['field_keywords'] = []
             
             artifact['type'] = artifact['field_type']
             del artifact['field_type']

@@ -1,6 +1,6 @@
 = Forge Ontology =
 Eric S. Raymond <esr@thyrsus.com>
-Version 1.2
+Version 1.3
 
 == Scope of this document ==
 
@@ -20,11 +20,15 @@ be uploaded into another forge site and create a running project.
 
 == CFO, the Common Forge Ontology ==
 
-Ontology terms are in all caps.  Terms suffixed with ? 
-are placeholders intended for further development. Comma-separated
-lists enclosed in [] are controlled vocabularies.
+Ontology terms are in all caps.  Terms suffixed with ??
+are completely. Terms suffixed with ? have unresolved issues/ambiguities or
+are not widely implemently per spec. Comma-separated lists 
+enclosed in [] are controlled vocabularies.
 
-=== IDENTITY objects ===
+The CFO is divided into JSON objects each with a CLASS attribute.
+They are listed below
+
+=== IDENTITY objects ? ===
 
 An IDENTITY object identifies a person. An IDENTITY has the following
 parts:
@@ -33,8 +37,10 @@ NICK:: Nickname of a developer, usurally the person part of an email address
 EMAIL:: String that is the fully qualified email address of a person
 NAME:: String that is the name of a person.
 
-The NICK may be the special value None representing an anonymous or
+The NICK may be the special value null representing an anonymous or
 unspecified user, in which case the NAME and EMAIL parts are not used.
+
+What to do when only part of the IDENTITY object is avalible is undecided. 
 
 === PULL-INTERVAL OBJECTS ===
 
@@ -45,10 +51,10 @@ no changes after the capture end date.
 
 A PULL-INTERVAL has the following parts:
 
-- CAPTURE-START:: Timestamp, when the caprure of the parent object began
+- CAPTURE-START:: Timestamp, when the capture of the parent object began
 - CAPTURE-END:: Timestamp, when the capture of the parent object completed
 
-=== RELEASE objects and subobjects ===
+=== RELEASE objects and subobjects ?? ===
 
 A RELEASE is product files and metadata describing a software release.  It
 has the foilowing parts:
@@ -68,7 +74,9 @@ SHA1 checksum files.  PRODUCT objects have the following parts:
 - ARCHITECTURE:: Tag for the product's target architecture 
 - TYPE:: Controlled vocabulary describing the project resource type
 
-=== PROJECT-STATE OBJECTS ===
+=== PROJECT-STATE OBJECTS ?? ===
+
+A small subset of this is currently implemented as PROJECT objects.
 
 A PROJECT-STATE object is intended to capture the entire state of
 a project for export and re-import.
@@ -87,7 +95,7 @@ SUBSYSTEM-LIST:: One or more SUBSYSTEM parts, which may be one of the following:
 * NAME:: a string identifying the repository.
 * TYPE:: a string identifying the version control system.
 * CONTENT:: a file or directory.
-- LISTS:: Zero or more MAILING-LIST? objects
+- LISTS:: Zero or more MAILING-LIST?? objects
 - WEBSPACE:: a directory.
 - RELEASE-LIST:: Zero or more RELEASE objects.
 - TRACKER:: Refer to the TRACKER definition below.
@@ -104,35 +112,37 @@ A CAPABILITY consists of any of the following:
 - A TRACKER-PERMISSION::
 * ID:: The ID of the tracker
 * TECHNICIAN:: can the user be assigned artifacts from here (boolean, optional) 
-* MANAGER:: can the user modify artifacts on here (boolean, optional) 
+* MANAGER:: can the user modify artifacts on here (boolean, optional)
 
 === TRACKER objects and subobjects ===
 
-A TRACKER object is intended to contain the entire state of one of a
-project's issue trackers.  It has several subobject types.  All but
-ARTIFACT, the central and most complex one, are described here.  ARTIFACT
-is described in the next section.
+The TRACKER object is intended to contain the entire state of the project's
+issue trackers.  It has several subobject types.  All but ARTIFACT, the central
+and most complex one, are described here.  ARTIFACT is described in the next
+section.
 
 In the descriptions below, a 'nick' is the site-local username of a
 project developer.
 
 A TRACKER has the following parts:
 
-TYPE:: One of [Bugs, Features, Support, Patches, Tasks].
 CAPTURED:: A PULL-INTERVAL for the tracker capture.
 ARTIFACT-LIST:: One or more ARTIFACT objects.  Refer to the ARTIFACT 
                 definition below
-RANGES:: A map from ARTIFACT slots to lists of possible string values
-SUBSCRIBERS:: List of SUBSCRIBER objects describing persons to be
-              notified when an artifact is added to the tracker.
+VOCABULARIES:: A map from ARTIFACT slots to lists of possible string values
+SUBSCRIBERS??:: Map of types to lists of SUBSCRIBER objects describing persons to be
+                notified when an artifact with that type is added to the tracker.
 
 A COMMENT has the collowing parts:
 
-SUBMITTER:: IDENTITY, the submitting user.
+SUBMITTER?:: IDENTITY, the submitting user. Sourceforge and Trac use a plain
+             nickname instead.
 DATE:: A timestamp.
 TEXT:: Comment text.
 
-A FIELDCHANGE has the following parts
+A FIELDCHANGE has the following parts:
+
+Reverting a change is a simple as replacing new with old in the relevent field of ARTIFACT.
 
 BY:: Nick of developer making a change to field value (not an IDENTITY)
 DATE:: A timestamp.
@@ -140,7 +150,7 @@ FIELD:: An ARTIFACT fieldname
 OLD:: The value before the change
 NEW:: The value after the change
 
-An ATTACHMENT has the following parts
+An ATTACHMENT has the following parts:
 
 URL:: Where the file can be fetched
 FILENAME:: A string, the name of the file as attached (optional)
@@ -156,7 +166,7 @@ COMMENT:: Why this person is subscribed
 
 === ARTIFACT objects ===
 
-The ARTIFACT object is the most complex and variable one in the entuire
+The ARTIFACT object is the most complex and variable one in the entire
 ontology.  It is described by several tables.
 
 The Internal Fieldname table maps slots into the ontology to the form
@@ -173,24 +183,23 @@ names this slot.
 `----------------`-------------`-------------`-----------------
 CFO field        Berlios       SourceForge   Savane           
 ---------------------------------------------------------------
-ATTACHMENT-LIST      -         Unnamed       Unnamed         
+ATTACHMENTS      -             Unnamed       Unnamed         
 ASSIGNED-TO      assigned_to   assigned_to   assigned_to     
-BUG-GROUP        bug_group_id  bug_group_id  bug_group_id    
+GROUP            bug_group_id  bug_group_id  bug_group_id    
 CATEGORY         category_id   category_id   category_id
-COMMENT-LIST     Unnamed       Unnamed       Unnamed
-COMP-VERSION     -             -             category_version*
+COMMENTS         Unnamed       Unnamed       Unnamed
+VERSION?         -             -             category_version*
 DATE             Unnamed       Unnamed       Unnamed     
-DEPENDENTS       Unnamed       Unnamed       Unnamed         
+DEPENDENTS??     Unnamed       Unnamed       Unnamed         
 DISCUSSION-LOCK  -             -             discussion_lock 
-EFFORT           -             -             effort
-FIX-RELEASE      -             -             fix_release*
+EFFORT??         -             -             effort
+FIX-RELEASE??    -             -             fix_release*
 HISTORY          Unnamed       Unnamed       Unnamed         
 ID               Unnamed       Unnamed       Unnamed
 KEYWORDS         -             -             keywords
-ORIG_EMAIL	 -             -             Unnamed
-ORIG_NAME        -             -             originator_name
-ORIG_PHONE       -             -             originator_phone
-PATCH		 patch         -             -
+ORIG_EMAIL??     -             -             Unnamed
+ORIG_NAME??      -             -             originator_name
+ORIG_PHONE??     -             -             originator_phone
 PERCENT          -             -             percent_complete
 PLAN-RELEASE     -             -             plan_release*
 PLATFORM         -             -             platform_version_id
@@ -205,13 +214,13 @@ STATUS           status_id     status_id     status_id
 SUBMITTER        Unnamed       Unnamed       Unnamed  
 SUBSCRIBER       -             Unnamed       Unnamed
 SUMMARY          Unnamed       Unnamed       summary         
-VOTES            -             -             Unnamed
+VOTES?           -             -             Unnamed
 ---------------------------------------------------------------
 
 Under Savane, slots with starred field names can be defined in one of
 two ways: as a free-text field. or as a select box with an
 administrator-defined controlled vocabulary.  In the latter case, the
-fieldmame gets an '_id' suffix.
+fieldname gets an '_id' suffix.
 
 The 'Intended Semantics' table describes the intended semantics of each slot.
 
@@ -226,20 +235,19 @@ BUG-GROUP       Controlled by administrator
 CATEGORY        Controlled by administrator
 CC-LIST         List of subscribers to be notified on changes
 COMMENT-LIST    User comments on the artifact
-COMP-VERSION    Version of system component impacted by artifact 
+VERSION?        Version of system component impacted by artifact 
 DATE            Original submission date of the artifact
 DEPENDENTS      List of IDs of bugs that depend on this one
 DISCUSSION_LOCK Whether or no discussion is closed on this bug
-EFFORT          Estimated number of hours to address
-FIX-RELEASE     Release in which the artifact was actually fixed 
+EFFORT??        Estimated number of hours to address
+FIX-RELEASE??   Release in which the artifact was actually fixed 
 HISTORY         Change history of the bug record
 ID              A string-valued bug ID, conventionally numeric in form.
 KEYWORDS        Comma-separated tags associated with the artifact
-ORIG_EMAIL      Originator's email address (if different from Submitter)
-ORIG_NAME       Originator's name (if different from Submitter)
-ORIG_PHONE      Originator's phone number
-PATCH           Editable text data
-PERCENT         Percentage completion of task
+ORIG_EMAIL??    Originator's email address (if different from Submitter)
+ORIG_NAME??     Originator's name (if different from Submitter)
+ORIG_PHONE??    Originator's phone number
+PERCENT??       Percentage completion of task
 PLAN-RELEASE    Planned release for this artifact to be
 PLATFORM        Platform (operating system) affected by artifact
 PRIORITY        How quickly the artifact should be handled
@@ -249,10 +257,10 @@ REPRODUCIBILITY How reproducible is this bug?
 RESOLUTION      Resolution status of the bug 
 SEVERITY        Impact on the system
 SIZE            Estimated size of code to be added or changed
-STATUS          Open/Closed status of the bug
+STATUS          Various statuses allowed for a bug (TODO: a full list should be produced)
 SUBMITTER       Identity of the bug submitter (string or IDENTITY)
 SUMMARY         One-line summary of the bug
-VOTES           User votes for this bug
+VOTES??         User votes for this bug
 ------------------------------------------------------------------
 
 On Savane, the "PLATFORM" field is actually labeled "Operating System".
@@ -261,41 +269,41 @@ The Field Type table describes what kind of data each slot contains.
 
 .Field type
 [grid="all"]
-`---------------`-----------------------------
-CFO field       Data type
-----------------------------------------------
-ATTACHMENT-LIST List of ATTACHMENT objects
-ASSIGNED-TO     IDENTITY
-BUG-GROUP       Controlled by administrator
-CATEGORY        Controlled by administrator
-CC-LIST         List of SUBSCRIBER objects
-COMMENT-LIST    One or more COMMENT objects
-COMP_VERSION    Controlled by administrator
-DATE            Timestamp
-DEPENDENTS      List of IDs
-DISCUSSION_LOCK Enumerated: Locked, Unlocked
-EFFORT          String interpreted as numeric
-FIX-RELEASE     Controlled or string
-HISTORY         List of FIELDCHANGE objects
-ID              Sequence number
-KEYWORDS        String
-ORIG_EMAIL      String
-ORIG_NAME       String
-PATCH           Text
-PLATFORM        Controlled by administrator
-PERCENT         String interpreted as numeric
-PLAN-RELEASE    Controlled or string
-PRIORITY        Enumerated
-PRIVACY         Enumerated
-RELEASE         Controlled or string
-REPRODUCIBILITY Enumerated
-RESOLUTION      Controlled by administrator
-SEVERITY        Enumerated
-SIZE            Enumerated
-STATUS          Controlled by administrator   
-SUBMITTER       IDENTITY
-SUMMARY         String text
-VOTES           String interpreted as numeric
+`----------------`-----------------------------
+CFO field        Data type
+-----------------------------------------------
+ATTACHMENT-LIST  List of ATTACHMENT objects
+ASSIGNED-TO      IDENTITY
+BUG-GROUP        String
+CATEGORY         String
+CC-LIST          List of SUBSCRIBER objects
+COMMENT-LIST     One or more COMMENT objects
+COMP_VERSION     Controlled by administrator
+DATE             Timestamp
+DEPENDENTS       List of IDs
+DISCUSSION_LOCK? Enumerated: Locked, Unlocked
+EFFORT           String interpreted as numeric
+FIX-RELEASE      Controlled or string
+HISTORY          List of FIELDCHANGE objects
+ID               Sequence number
+KEYWORDS         List of strings
+ORIG_EMAIL??     String
+ORIG_NAME??      String
+ORIG_PHONE??     String
+PERCENT          String interpreted as numeric
+PLATFORM         Controlled by administrator
+PLAN-RELEASE     Controlled or string
+PRIORITY         Enumerated
+PRIVACY          Enumerated
+RELEASE          Controlled or string
+REPRODUCIBILITY  Enumerated
+RESOLUTION       Controlled by administrator
+SEVERITY         Enumerated
+SIZE             Enumerated
+STATUS           Controlled by administrator   
+SUBMITTER        IDENTITY
+SUMMARY          String text
+VOTES            String interpreted as numeric
 ----------------------------------------------
 
 The following tables describe the default controlled vocabularies
@@ -387,7 +395,7 @@ CFO field       Berlios       SourceForge   Savane
 STATUS          Open          Open          Open
                 Closed        Closed        Closed
                 Deleted	      Deleted	    
-			      Pending	    
+                Pending	    
 RESOLUTION      -             None          None*
                               Accepted      Fixed
                               Duplicate     Wont Fix
@@ -514,10 +522,8 @@ SavaneCleanup.
 
 The RESOLUTION slot is screen-labeled "Resolution" on Berlios, but
 "Status" on Savane.  The STATUS slot is labeled "Status:" on
-Berlios, but "Open/Closed" on Savane.
-
-The Berlios PATCH field could be imported to other systems as an
-ATTACHMENT object.
+Berlios, but "Open/Closed" on Savane. Trac doesn't distinghish status
+from resolution.
 
 Berlios and SourceForge have separate bug and feature trackers.
 Savane has no separate feature tracker; projects separate those by
@@ -528,14 +534,14 @@ possible to create custom trackers that don't fit one of the named
 types.
 
 Savane ATTACHMENT objects lack the DESCRIPTION slot,  SourceForge
-ATTACHMENT objects lack MIMETYPE.
+ATTACHMENT objects lack MIMETYPE. Trac attachments lack MIMETYPE.
 
 Berlios and SourceForge allow setting (in tracker preferences) the
 address of a commit list for new submissions, and its subscriptions
 have no explanation attached.  Savane allows setting a CC list for
 notification on all state changes, and each subscription can have an
 explanatory comment.  The CFO SUBSCRIBER slot assumes Savane-like
-behavior which Berlios and SourceForge cannot support.
+behavior which Berlios, Trac and SourceForge cannot support.
 
 == Open Questions ==
 
@@ -637,3 +643,6 @@ NICK member added to IDENTITY.
 
 Version 1.2, 2009-11-14: Define CAPABILITY.  Appendices on permissions
 models.
+
+Version 1.3 2010-02-16: Changed for switch from trackers to type fields.
+Added ?? for things not yet implemented and ? for things poorly implemented.
