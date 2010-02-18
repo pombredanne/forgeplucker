@@ -137,5 +137,13 @@ The Trac handler provides bug-plucking machinery for Trac sites.
         page = self.fetch(self.project_name + "/query?format=csv&max=2147483647&order=id&col=id","List of ids")
         ids = page.strip().split('\r\n')[1:] # Will only fetch the first 2147483647 bugs
         return map(int,ids)                   # If this is a problem for you, your software is seriously buggy
-
-# End
+    def pluck_permissions(self):
+        contents = self.fetch('https://sourceforge.net/apps/trac/forgepluckertes/admin/general/perm', 'Permissions Page')
+        permissions = {}
+        for (subject, perms) in self.table_iter(contents, '<table class="listing" id="permlist">',
+               2, 'Permissions Table', has_header=True, keep_html=True):
+            subject = subject.string
+            permissions[subject] = []
+            for perm in perms.findAll('label'):
+                permissions[subject].append(perm.string)
+        return permissions

@@ -29,7 +29,7 @@ class GenericForge:
         else:
             params = None
         try:
-            if not url.startswith("https"):
+            if not url.startswith("http"):
                 url = "https://%s/" % self.host + url
             opener = self.opener.open(url, params)
             page = opener.read()
@@ -232,7 +232,7 @@ class GenericForge:
         startform = text.find("<" + tag)
         endform = text.find("</%s>" % tag)
         return text[startform:endform]
-    def table_iter(self, text, header, cols, errtag, has_header=False):
+    def table_iter(self, text, header, cols, errtag, has_header=False, keep_html=False):
         """An implementation of table_iter in BeautifulSoup"""
         rows = []
         header_passed=False
@@ -250,7 +250,10 @@ class GenericForge:
                     if len(tds) != cols:
                         self.error(errtag+" has wrong width (%d, expecting %d)"
                                        % (len(tds), cols))
-                    yield map(lambda x: dehtmlize(str(x)),tds)
+                    if keep_html:
+                        yield tds
+                    else:
+                        yield map(lambda x: dehtmlize(str(x)),tds)
     def identity(self, raw):
         "Parse an identity object from a string."
         cooked = {"class":"IDENTITY",}
