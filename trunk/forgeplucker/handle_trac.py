@@ -1,7 +1,10 @@
 """
 Handler class for generic Trac sites.
 
-<description here>
+Limitations:
+*Only plucks the first 2147483647 bugs. If this is a problem for you, your software is seriously buggy.
+*Over 100 levels of permission group nesting is unsupported. Having 100 permission groups alone is an achievement.
+*Treating a user as a group is not supported.
 """
 
 import sys, os, re, time, calendar
@@ -136,14 +139,27 @@ The Trac handler provides bug-plucking machinery for Trac sites.
     def pluck_tracker_ids(self,tracker):
         page = self.fetch(self.project_name + "/query?format=csv&max=2147483647&order=id&col=id","List of ids")
         ids = page.strip().split('\r\n')[1:] # Will only fetch the first 2147483647 bugs
-        return map(int,ids)                   # If this is a problem for you, your software is seriously buggy
+        return map(int,ids)                  # If this is a problem for you, your software is seriously buggy
     def pluck_permissions(self):
         contents = self.fetch('https://sourceforge.net/apps/trac/forgepluckertes/admin/general/perm', 'Permissions Page')
         permissions = {}
         for (subject, perms) in self.table_iter(contents, '<table class="listing" id="permlist">',
                2, 'Permissions Table', has_header=True, keep_html=True):
             subject = subject.string
-            permissions[subject] = []
+            permissions[subject] = set()
             for perm in perms.findAll('label'):
-                permissions[subject].append(perm.string)
+                permissions[subject].add(perm.string)
+        # Onthological Smoothing
+        groups = set()
+        for dummy in xrange(100): # About 3 lines simpler than the technically correct approach
+            for (subject, perms) in permissions.items():
+                for perm in perms.copy():
+                    if not perm.isupper(): # Perm is a group if not all letters are uppercase
+                        permissions[subject].update(permissions[perm])
+                        permissions[subject].remove(perm)
+                        groups.add(perm)
+        for group in groups:
+            del permissions[group]
+        for (key,item) in permissions.items():
+            permissions[key]=list(item)
         return permissions

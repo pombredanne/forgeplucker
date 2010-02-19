@@ -144,7 +144,7 @@ This code does not capture custom trackers.
             SourceForge.SupportTracker(self),
             SourceForge.PatchTracker(self),
             ]
-    def pluck_permissions(self):
+    def pluck_permissions(self): #FIXME broken if you add other repos
         contents = self.fetch('project/admin/project_membership.php?group_id='+self.project_id,'Permissions page')
         perms = {}
         for (username, realname, svn, shell, release, tracker, forums, news, screenshots) in self.table_iter(contents,
