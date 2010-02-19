@@ -146,17 +146,37 @@ This code does not capture custom trackers.
             ]
     def pluck_permissions(self): #FIXME broken if you add other repos
         contents = self.fetch('project/admin/project_membership.php?group_id='+self.project_id,'Permissions page')
-        perms = {}
-        for (username, realname, svn, shell, release, tracker, forums, news, screenshots) in self.table_iter(contents,
-                    '<table class="memberlist tablesorter">',9,'Permissions Table',has_header=True):
-            perms[username.strip()] = {'svn':svn == 'Yes',
-                                 'shell':shell == 'Yes',
-                                 'releasetech':release == 'Yes',
-                                 'trackermanager':tracker == 'A',
-                                 'forummoderator':forums == 'Moderator',
-                                 'newseditor':news == '', #For some bizarre reason editors come up as '' and non editors as '-'
-                                 'screenshotseditor':screenshots == ''} #Same as above
-        return perms
+        table = {}
+        rows = list(self.table_iter(contents,'<table class="memberlist tablesorter">',None,'Permissions Table'))
+        names = map(lambda x: x.lower(), rows[0][2:]) # Columns 1 & 2 are "Username" and "Real Name"
+        for row in rows[1:]:
+            username = row[0]
+            row = row[2:]
+            table[username.strip()] = dict(zip(names,row))
+            #perms[username.strip()] = {'svn':svn == 'Yes',
+            #                     'shell':shell == 'Yes',
+            #                     'releasetech':release == 'Yes',
+            #                     'trackermanager':tracker == 'A',
+            #                     'forummoderator':forums == 'Moderator',
+            #                     'newseditor':news == '', #For some bizarre reason editors come up as '' and non editors as '-'
+            #                     'screenshotseditor':screenshots == ''} #Same as above
+        # Onthological Smoothing
+        permissions = {}
+        for (user, items) in table.iteritems():
+            perms = permissions[user] = {}
+            for (name, val) in items.iteritems():
+                if name.endswith(' access'):
+                    name = ''.join(name.split()[:-1])
+                    perms[name] = val == 'Yes'
+                elif name == "Release Tech":
+                    perms[name] = val == 'Yes'
+                elif name in ('news','screenshots'):
+                    perms[name] = val == ''
+                elif name == 'forum':
+                    perms['forum_mod'] = val == 'Moderator'
+                elif name == 'tracker manager':
+                    perms['tracker_manager'] = val == 'A'
+        return permissions
     def pluck_repository_urls(self):
         repos = []
         svnrepo = "https://" + self.project_name + ".svn." + self.host +"/svnroot/" + self.project_name

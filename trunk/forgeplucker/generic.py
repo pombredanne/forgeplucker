@@ -247,7 +247,7 @@ class GenericForge:
                     trs = trs[1:]
                 for tr in trs:
                     tds = tr.findAll(name=['td','th'])
-                    if len(tds) != cols:
+                    if cols != None and len(tds) != cols:
                         self.error(errtag+" has wrong width (%d, expecting %d)"
                                        % (len(tds), cols))
                     if keep_html:
