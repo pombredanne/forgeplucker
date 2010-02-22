@@ -18,7 +18,35 @@
             ], 
             "category": "None", 
             "class": "ARTIFACT", 
-            "comments": [], 
+            "comments": [
+                {
+                    "class": "COMMENT", 
+                    "comment": "It now needs multi-line comment.\n(I was thinking of stopping on the self-fixing mantra, but this is my second line)\n", 
+                    "date": "2010-02-21T17:34:00Z", 
+                    "submitter": {
+                        "class": "IDENTITY", 
+                        "nick": "Peter"
+                    }
+                }, 
+                {
+                    "class": "COMMENT", 
+                    "comment": "It also needs a comment (this is also self-fixing).\n", 
+                    "date": "2010-02-20T11:06:00Z", 
+                    "submitter": {
+                        "class": "IDENTITY", 
+                        "nick": "Peter"
+                    }
+                }, 
+                {
+                    "class": "COMMENT", 
+                    "comment": "Fortunately this bug is self fixing.\n", 
+                    "date": "2009-11-09T22:17:00Z", 
+                    "submitter": {
+                        "class": "IDENTITY", 
+                        "nick": "Peter"
+                    }
+                }
+            ], 
             "date": "2009-11-09T22:17:00Z", 
             "dependents": [], 
             "discussion_lock": "Unlocked", 

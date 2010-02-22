@@ -219,45 +219,39 @@ The status of all trackers (bug, patch, support, and task) is extracted.
         "Parse followups out of a displayed page in a bug or patch tracker."
         comments = []
         # Look for the anchor Savane creates for the Discussion section.
-        begin = contents.find('href="#discussion"')
+        begin = contents.find('<a id="hidsubpartlinkshowdiscussion" href="#discussion">Discussion</a>')
         if begin == -1:
             self.notify("no discussion")
         else:
-            contents = contents[begin:].replace("<br />", "<br/>")
+            contents = contents.replace("<tr></tr>","")
             # There's no decorative header element in this table.
-            for row in walk_table(contents):
-                if len(row) > 1 and "Spam posted by" in row[1]:
+            for (comment, submitter) in self.table_iter(contents, '<a id="hidsubpartlinkshowdiscussion" href="#discussion">Discussion</a>',
+                        2, "Followup", has_header=False,keep_html=False):
+                if "Spam posted by" in submitter:
                     continue
                 try:
                     # Savane comments have *two* column elements per comment,
                     # one for date and text, the second for the user.
-                    (comment, submitter) = row
-                    date = comment.split("<br/>")[0]
-                    comment = "\n".join(comment.split("<br/>")[1:])
+                    m = re.search("([^,]+),[^:]+:(.*)", comment, re.DOTALL)
+                    if not m:
+                        self.error("followup garbled")
+                    date = self.isodate(m.group(1))
+                    comment = m.group(2)
                     # Submitter's name may have HTML markup in it.
                     # But first toss everything after <br/>, it's image
                     # cruft.
-                    submitter = submitter.split("<br/>")[0]
+                    submitter = submitter.split("\n")[0]
                     # Throw out everything past the terminating comma
                     # If this leads to an ill-formed date, because somebody
                     # moved the punctuation, isodate() should throw an error
-                    m = re.search("<[^>]+>([^<]+),", date)
-                    if not m:
-                        self.error("date field garbled")
-                    date = self.isodate(m.group(1))
-                    # Comment may have HTML in it. Do normal markup
-                    # stripping,but first deal with the funky way that
-                    # Savane emits paragraph delimiters.
-                    comment = comment.replace("\n\n", "\n")
-                    comment = comment.replace("\n</p>\n<p>", "\n")
-                    comment = blocktext(dehtmlize(comment))
+                    comment = blocktext(comment)
                     # Stash the result.
                     comments.append({"class":"COMMENT",
                                      'submitter':self.identity(submitter),
                                      'date':date,
                                      'comment':comment})
                 except ValueError:
-                    raise self.parent.error("mangled followup,")
+                    raise self.error("mangled followup,")
         return comments
     def pluck_permissions(self):
         "Retrieve the developer roles table."

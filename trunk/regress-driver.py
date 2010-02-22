@@ -9,7 +9,8 @@ The actions are -r/--run     # Run the tests (default)
                 -b/--build   # Build the tests
                 --diffs      # Get the diffs from the last regression for each test
                 --list       # List the tests and their handlers
-If not site/project arguments are provided do the action on all tests
+If the -e/--exclude option is provided, run on all the tests not listed.
+If no site/project arguments are provided do the action on all tests.
 
 The -u option can be used to set a username for access to the remote site.
 It may be a ':' separated list of usernames, if you use different 
@@ -71,14 +72,16 @@ def setaction(setto):
 
 if __name__ == '__main__':
     (options, arguments) = getopt.getopt(sys.argv[1:],
-                                         "bdhlru:v?",
+                                         "bdhlru:ev?",
                                          ["build",
                                           "diffs",
                                           "help",
                                           "list",
-                                          "run"])
+                                          "run",
+                                          "exclude"])
     username = None
     action = None
+    exclude = False
     verbose = 0
     for (arg,val) in options:
         if arg == '-u':
@@ -94,6 +97,8 @@ if __name__ == '__main__':
         elif arg in ('-h', '-?', '--help'):
             print __doc__
             raise SystemExit, 0
+        elif arg in ('-e','--exclude'):
+            exclude = True
         elif arg == '-v':
             verbose += 1
         else:
@@ -101,7 +106,11 @@ if __name__ == '__main__':
             raise SystemExit, 1
     if action == None:
         action = 'run'
-    if arguments == []:
+    if exclude:
+        tests = getalltests()
+        for test in arguments:
+            tests.remove(test)
+    elif arguments == []:
         tests = getalltests()
     else:
         tests = arguments
