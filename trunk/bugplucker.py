@@ -5,7 +5,7 @@ bugplucker.py -- extract bugtracker state from hosting sites.
 
 usage: bugplucker.py [-hrv?] [-f type] [-u user] [-p password] site/project
 
-State is dumped to standard output in JSON or XML.
+State is dumped to standard output in JSON.
 
 This code is Copyright (c) 2009 by Eric S. Raymond.  New BSD license applies.
 For the terms of this license, see the file COPYING included with this
@@ -23,8 +23,8 @@ if __name__ == '__main__':
     user = passwd = forgetype = None
     verbose = 0
     issue = None
-    xml = timeless = permissions = repositories = dump = False
-    (options, arguments) = getopt.getopt(sys.argv[1:], "f:d:i:np:PSru:v:h?")
+    timeless = permissions = repositories = dump = False
+    (options, arguments) = getopt.getopt(sys.argv[1:], "f:d:i:np:PSu:v:h?")
     for (arg, val) in options:
         if arg in ('-h', '-?'):
             print __doc__
@@ -36,8 +36,6 @@ if __name__ == '__main__':
             user = val
         elif arg == '-p':
             passwd = val
-        elif arg == '-r':
-            xml = True
         elif arg == '-P':	# Not documented
             permissions = True
         elif arg == '-S':	# Not documented
@@ -97,8 +95,6 @@ if __name__ == '__main__':
             jdump(issue)
         else:
             bugs = bt.pluck_trackers(timeless=timeless)
-            if xml:
-                xml_dump(bugs)
             else:
                 jdump(bugs)
     except ForgePluckerException, e:
