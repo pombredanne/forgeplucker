@@ -27,6 +27,9 @@ This code does not capture custom trackers.
             self.ignore = ("canned_response",
                            "new_artifact_type_id",
                            "words")
+            self.name_mappings = {"artifact_group_id": "group",
+                                  "status_id": "status",
+                                  "category_id": "category",}
             self.artifactid_re = r'/tracker/\?func=detail&aid=([0-9]+)&group_id=[0-9]+&atid=[0-9]+"'
             m = re.search('<a href="([^"]*)">%s</a>' % label,
                           self.parent.basepage)
@@ -117,6 +120,7 @@ This code does not capture custom trackers.
         def __init__(self, parent):
             SourceForge.Tracker.__init__(self, "Bugs", parent)
             self.type = "bugs"
+            self.name_mappings["resolution_id"] = "resolution"
     class FeatureTracker(Tracker):
         def __init__(self, parent):
             SourceForge.Tracker.__init__(self, "Feature Requests", parent)
@@ -190,7 +194,7 @@ This code does not capture custom trackers.
     @staticmethod
     def canonicalize_date(localdate):
         "Canonicalize dates to ISO form. Assumes dates are in local time."
-        t = time.strptime(localdate, "%Y-%m-%d %H:%M:%S %Z")
+        t = time.strptime(localdate, "%Y-%m-%d %H:%M:%S %Z") #FIXME strptime doesn't interpret %Z mearly barfs at bad values
         secs = time.mktime(t)	# Local time to seconds since epoch
         t = time.gmtime(secs)	# Seconds since epoch to UTC time in structure
         return time.strftime("%Y-%m-%dT%H:%M:%SZ", t)

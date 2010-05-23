@@ -1,6 +1,6 @@
 """
 The GenericForge class is the framework code for fetching state from
-forges.  Handler classes (art least for Alexandria-descended forges)
+forges.  Handler classes (at least for Alexandria-descended forges)
 are expected to derive from this, adding and overriding methods where
 necessary.
 """
@@ -184,6 +184,14 @@ class GenericForge:
             artifact[name] = dehtmlize(value)
         # Hand off to the tracker classlet's custom hook 
         tracker.custom(contents, artifact)
+        for (rough, smooth) in tracker.name_mappings.items():
+            if smooth in artifact and self.verbosity > 0:
+                self.error("name collision on %s" % smooth)
+            artifact[smooth] = artifact[rough]
+            del artifact[rough]
+            for change in artifact['history']:
+                if change['field'] == rough:
+                    change['field'] = smooth
         return artifact
     def pluck_artifactlist(self, tracker, vocabularies, timeless):
         "Gather artifact information on a specified tracker."
@@ -195,13 +203,24 @@ class GenericForge:
             artifacts.append(self.pluck_artifact(tracker, issueid, vocabularies))
         return artifacts
     def pluck_trackers(self, timeless=False):
-        "Pull the buglist, wrapping it with metadata. about the operation."
+        "Pull the buglist, wrapping it with metadata about the operation."
         artifacts, vocabularies = [], {}
         before = timestamp()
         for tracker in self.trackers:
-            content = self.pluck_artifactlist(tracker, vocabularies, timeless)
+            vocabulary = {}
+            content = self.pluck_artifactlist(tracker, vocabulary, timeless)
             if content is not None:
                 artifacts.extend(content)
+            #Smooth the vocabulary    
+            for (rough, smooth) in tracker.name_mappings.items():
+                if rough in vocabulary:
+                    vocabulary[smooth] = vocabulary[rough]
+                    del vocabulary[rough]
+            # Delete range info for assigned_to field, it's not actually useful
+            # to treat it as a vocablary.
+            if 'assigned_to' in vocabulary:
+                del vocabulary['assigned_to']
+                vocabularies[tracker.type] = vocabulary
         after = timestamp()
         trackerdata = {
             "class":"PROJECT",

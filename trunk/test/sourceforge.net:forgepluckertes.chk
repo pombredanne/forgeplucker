@@ -394,46 +394,75 @@
     "host": "sourceforge.net", 
     "project": "forgepluckertes", 
     "vocabularies": {
-        "category": [
-            "None", 
-            "Interface Improvements (example)", 
-            "Notable bugs"
-        ], 
-        "group": [
-            "None", 
-            "Eternal", 
-            "Next Release (example)"
-        ], 
-        "priority": [
-            "1 - Lowest", 
-            "2", 
-            "3", 
-            "4", 
-            "5 - Medium", 
-            "6", 
-            "7", 
-            "8", 
-            "9 - Highest"
-        ], 
-        "resolution": [
-            "Accepted", 
-            "Duplicate", 
-            "Fixed", 
-            "Invalid", 
-            "Later", 
-            "None", 
-            "Out of Date", 
-            "Postponed", 
-            "Rejected", 
-            "Remind", 
-            "Wont Fix", 
-            "Works For Me"
-        ], 
-        "status": [
-            "Open", 
-            "Closed", 
-            "Deleted", 
-            "Pending"
-        ]
+        "bugs": {
+            "category": [
+                "None", 
+                "Interface (example)"
+            ], 
+            "group": [
+                "None", 
+                "v1.0 (example)"
+            ], 
+            "priority": [
+                "1 - Lowest", 
+                "2", 
+                "3", 
+                "4", 
+                "5 - Medium", 
+                "6", 
+                "7", 
+                "8", 
+                "9 - Highest"
+            ], 
+            "resolution": [
+                "Accepted", 
+                "Duplicate", 
+                "Fixed", 
+                "Invalid", 
+                "Later", 
+                "None", 
+                "Out of Date", 
+                "Postponed", 
+                "Rejected", 
+                "Remind", 
+                "Wont Fix", 
+                "Works For Me"
+            ], 
+            "status": [
+                "Open", 
+                "Closed", 
+                "Deleted", 
+                "Pending"
+            ]
+        }, 
+        "features": {
+            "category": [
+                "None", 
+                "Interface Improvements (example)", 
+                "Notable bugs"
+            ], 
+            "group": [
+                "None", 
+                "Eternal", 
+                "Next Release (example)"
+            ], 
+            "priority": [
+                "1 - Lowest", 
+                "2", 
+                "3", 
+                "4", 
+                "5 - Medium", 
+                "6", 
+                "7", 
+                "8", 
+                "9 - Highest"
+            ], 
+            "status": [
+                "Open", 
+                "Closed", 
+                "Deleted", 
+                "Pending"
+            ]
+        }
     }
 }

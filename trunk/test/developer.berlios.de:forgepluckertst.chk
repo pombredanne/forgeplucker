@@ -172,6 +172,28 @@
         }, 
         {
             "assigned_to": "None", 
+            "category": "None", 
+            "class": "ARTIFACT", 
+            "comments": [
+                {
+                    "class": "COMMENT", 
+                    "comment": "Logged In: YES \nuser_id=53923\nBrowser: Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/533.2 (KHTML, like Gecko)\nChrome/5.0.342.9 Safari/533.2\n\nCould you implement some features?\n", 
+                    "date": "2010-05-23T16:39:00Z", 
+                    "submitter": {
+                        "class": "IDENTITY", 
+                        "nick": "ptd"
+                    }
+                }
+            ], 
+            "history": [], 
+            "id": 5023, 
+            "priority": "5 - Medium", 
+            "status": "Open", 
+            "summary": "Feature Request", 
+            "type": "feature"
+        }, 
+        {
+            "assigned_to": "None", 
             "attachments": [
                 {
                     "by": {
@@ -200,48 +222,82 @@
     "host": "developer.berlios.de", 
     "project": "forgepluckertst", 
     "vocabularies": {
-        "category": [
-            "None", 
-            "&#24341;&#12365;&#31840;&#12418;&#12426;", 
-            "Misfeatures", 
-            "Sheer headaches", 
-            "Warts"
-        ], 
-        "group": [
-            "None", 
-            "unprintable", 
-            "&#8207;&#66324;&#66304;&#66315;&#66313;&#66326;&#66334;&#66313;"
-        ], 
-        "priority": [
-            "1 - Lowest", 
-            "2", 
-            "3", 
-            "4", 
-            "5 - Medium", 
-            "6", 
-            "7", 
-            "8", 
-            "9 - Highest"
-        ], 
-        "resolution": [
-            "None", 
-            "Fixed", 
-            "Invalid", 
-            "Wont Fix", 
-            "Later", 
-            "Remind", 
-            "Works For Me", 
-            "Duplicate"
-        ], 
-        "status": [
-            "None", 
-            "Open", 
-            "Closed", 
-            "Deleted", 
-            "Postponed", 
-            "Rejected", 
-            "Accepted", 
-            "Out of date"
-        ]
+        "bugs": {
+            "category": [
+                "None", 
+                "&#24341;&#12365;&#31840;&#12418;&#12426;", 
+                "Misfeatures", 
+                "Sheer headaches", 
+                "Warts"
+            ], 
+            "group": [
+                "None", 
+                "unprintable", 
+                "&#8207;&#66324;&#66304;&#66315;&#66313;&#66326;&#66334;&#66313;"
+            ], 
+            "priority": [
+                "1 - Lowest", 
+                "2", 
+                "3", 
+                "4", 
+                "5 - Medium", 
+                "6", 
+                "7", 
+                "8", 
+                "9 - Highest"
+            ], 
+            "resolution": [
+                "None", 
+                "Fixed", 
+                "Invalid", 
+                "Wont Fix", 
+                "Later", 
+                "Remind", 
+                "Works For Me", 
+                "Duplicate"
+            ], 
+            "status": [
+                "None", 
+                "Open", 
+                "Closed"
+            ]
+        }, 
+        "feature": {
+            "category": [
+                "None"
+            ], 
+            "priority": [
+                "1 - Lowest", 
+                "2", 
+                "3", 
+                "4", 
+                "5 - Medium", 
+                "6", 
+                "7", 
+                "8", 
+                "9 - Highest"
+            ], 
+            "status": [
+                "None", 
+                "Open", 
+                "Closed", 
+                "Deleted"
+            ]
+        }, 
+        "patches": {
+            "category": [
+                "None"
+            ], 
+            "status": [
+                "None", 
+                "Open", 
+                "Closed", 
+                "Deleted", 
+                "Postponed", 
+                "Rejected", 
+                "Accepted", 
+                "Out of date"
+            ]
+        }
     }
 }

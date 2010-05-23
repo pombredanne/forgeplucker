@@ -41,6 +41,9 @@ The status of all trackers (bug, patch, support, and task) is extracted.
                            "add_cc",
                            "cc_comment",
                            "new_vote")
+            self.name_mappings = {"resolution_id" : "resolution",
+                                  "status_id": "status",
+                                  "category_id": "category",}
         def access_denied(self, page, issue_id=None):
             return issue_id is not None and re.search("This task has [0-9]+ encouragements? so far.", page)
         def has_next_page(self, page):
@@ -172,6 +175,7 @@ The status of all trackers (bug, patch, support, and task) is extracted.
         def __init__(self, parent):
             Savane.Tracker.__init__(self, parent)
             self.type = "support"
+            self.name_mappings["platform_version_id"] = "platform_version"
     def __init__(self, host, project_name):
         GenericForge.__init__(self, host, project_name);
         self.host = host

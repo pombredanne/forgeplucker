@@ -34,13 +34,16 @@ def nametotest(name):
 def testtoname(test):
     return test.replace('/',':')
 
+def msg(msg):
+    print >>sys.stderr, "%s: %s" % (sys.argv[0],msg)
+
 def runtest(test,output):
     cmd = testcmd + ' -v ' + str(verbose) + ' '
     if username != None:
         cmd += '-u ' + username + ' '
     cmd += test + '>' + output
     if verbose >= 1:
-        print >>sys.stderr, "%s: running '%s'" % (sys.argv[0],cmd)
+        msg("running '%s'" % cmd)
     if system(cmd) == 0:
         return
     else:
@@ -49,7 +52,7 @@ def runtest(test,output):
 
 def difftest(test):
     if verbose >= 1:
-        print >>sys.stderr, "%s: diffing %s" % (sys.argv[0], test)
+        msg("diffing %s" % test)
     return system("diff -u %s.chk %s.out" % (testtoname(test),testtoname(test)))
 
 def keep(name):

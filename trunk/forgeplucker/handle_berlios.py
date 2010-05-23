@@ -35,6 +35,7 @@ submitted to them.
             self.submitter_re = r"<TD><B>Submitted By:</B><BR>([^<]*)</TD>"
             self.date_re = "<TD><B>Date Submitted:</B><BR>([^<]*)</TD>"
             self.ignore = ("canned_response", "project_id")
+            self.name_mappings = {}
         def access_denied(self, page, issue_id=None):
             return issue_id is None and not "Admin:" in page
         def has_next_page(self, page):
@@ -102,6 +103,10 @@ submitted to them.
             self.type = "bugs"
             self.zerostring = "No Bugs Match Your Criteria"
             self.artifactid_re = r'<A HREF="/bugs/\?func=detailbug&bug_id=([0-9]+)&group_id=%s">' % parent.project_id
+            self.name_mappings.update({"category_id": "category",
+                                       "status_id": "status",
+                                       "bug_group_id": "group",
+                                       "resolution_id": "resolution"})
         def chunkfetcher(self, offset):
             "Get a bugtracker index page - all bug IDs, open and closed.."
             return "bugs/index.php?func=browse&group_id=%s&set=custom&offset=%d" % (self.parent.project_id, offset)
@@ -153,6 +158,8 @@ submitted to them.
             self.type = "feature"
             self.zerostring = "No Feature Requests Match Your Criteria"
             self.artifactid_re = r'<A HREF="\?func=detailfeature&feature_id=([0-9]+)&group_id=%s">' % parent.project_id
+            self.name_mappings.update({"feature_status_id": "status",
+                                       "feature_category_id": "category"})
         def chunkfetcher(self, offset):
             "Get a feature tracker index page - all bug IDs, open and closed.."
             return "feature/index.php?func=browse&group_id=%s&set=custom&offset=%d" % (self.parent.project_id, offset)
@@ -197,6 +204,8 @@ submitted to them.
             self.type = "patches"
             self.zerostring = "No Patches Match Your Criteria"
             self.artifactid_re = r'<A HREF="\?func=detailpatch&patch_id=([0-9]+)&group_id=%s">' % parent.project_id
+            self.name_mappings.update({"patch_status_id": "status",
+                                       "patch_category_id": "category"})
         def chunkfetcher(self, offset):
             "Get a patch tracker index page - all bug IDs, open and closed.."
             return "patch/index.php?func=browse&group_id=%s&set=custom&offset=%d" % (self.parent.project_id, offset)

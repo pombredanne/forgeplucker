@@ -28,6 +28,12 @@ The Trac handler provides bug-plucking machinery for Trac sites.
                            'action_reassign_reassign_owner',
                            'action_resolve_resolve_resolution',
                            'field_reporter') # Captured by submitter_re
+            self.name_mappings = {"field_priority": "priority",
+                                  "field_summary": "summary",
+                                  "field_keywords": "keywords",
+                                  "field_version": "group",
+                                  "field_component": "category",
+                                  "field_cc": "cc_list",}
         def access_denied(self, page, issue_id=None):
             return issue_id is not None and not "Ticket #" in page
         def has_next_page(self, page):
@@ -40,7 +46,7 @@ The Trac handler provides bug-plucking machinery for Trac sites.
             return "%s/ticket/%d" % (self.parent.project_name, artifactid)
         def narrow(self, text):
             "Get the section of text containing editable elements."
-            return text #TODO
+            return text
         def custom(self,contents,artifact):
             comments, history, attachments = [], [], []
             oldCC = None
