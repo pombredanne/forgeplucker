@@ -63,7 +63,7 @@ class GenericForge:
         try:
             return self.canonicalize_date(date)
         except ValueError:
-            self.error("malformed date %s" % date)
+            self.error("malformed date \"%s\"" % date)
     def login(self, params, checkstring):
         "Log in to the site."
         if self.verbosity >= 1:

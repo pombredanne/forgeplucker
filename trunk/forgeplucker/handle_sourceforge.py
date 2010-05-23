@@ -60,7 +60,7 @@ This code does not capture custom trackers.
             for td in commentblock.findAll(name='td'): #This is not a <table>, but several tables containing 1 <td> each
                 comment = {"class":"COMMENT"}
                 cleaned = dehtmlize(str(td))
-                m = re.search('Date: ([-0-9: ]+)\s*Sender: ([a-z]+)',cleaned)
+                m = re.search('Date: ([-0-9: ]+[A-Z]{3})\s*Sender: ([a-z]+)',cleaned)
                 comment['date'] = self.parent.canonicalize_date(m.group(1))
                 comment['submitter'] = m.group(2)
                 m = re.search('<!-- google_ad_section_start -->.*<!-- google_ad_section_end -->',str(td),re.DOTALL)
@@ -190,7 +190,7 @@ This code does not capture custom trackers.
     @staticmethod
     def canonicalize_date(localdate):
         "Canonicalize dates to ISO form. Assumes dates are in local time."
-        t = time.strptime(localdate, "%Y-%m-%d %H:%M")
+        t = time.strptime(localdate, "%Y-%m-%d %H:%M:%S %Z")
         secs = time.mktime(t)	# Local time to seconds since epoch
         t = time.gmtime(secs)	# Seconds since epoch to UTC time in structure
         return time.strftime("%Y-%m-%dT%H:%M:%SZ", t)
