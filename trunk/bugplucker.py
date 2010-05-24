@@ -95,8 +95,7 @@ if __name__ == '__main__':
             jdump(issue)
         else:
             bugs = bt.pluck_trackers(timeless=timeless)
-            else:
-                jdump(bugs)
+            jdump(bugs)
     except ForgePluckerException, e:
         print >>sys.stderr, e.msg
         raise SystemExit, 1
