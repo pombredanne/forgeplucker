@@ -20,7 +20,7 @@ The Trac handler provides bug-plucking machinery for Trac sites.
         def __init__(self, parent):
             self.parent = parent
             self.optional = False
-            self.type = "Bug"
+            self.type = "All"
             self.submitter_re = r"""<td headers="h_reporter" class="searchable">([^<]*)</td>"""
             self.date_re = r'<p>Opened <a class="timeline" href="[a-zA-Z/]*\?from=([-0-9A-Z%:]+)'
             self.ignore = ('q',

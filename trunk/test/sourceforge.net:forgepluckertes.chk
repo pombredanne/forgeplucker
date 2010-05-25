@@ -1,468 +1,482 @@
 {
-    "artifacts": [
-        {
-            "allow_comments": true, 
-            "assigned_to": "None", 
-            "attachments": [], 
-            "category": "None", 
-            "class": "ARTIFACT", 
-            "comments": [], 
-            "date": "2009-11-21T16:13:36Z", 
-            "group": "None", 
-            "history": [], 
-            "id": 2901809, 
-            "priority": "9 - Highest", 
-            "private": false, 
-            "resolution": "None", 
-            "status": "Open", 
-            "submitter": "ultratwo", 
-            "summary": "NO MORE BUGS", 
-            "type": "bugs"
-        }, 
-        {
-            "allow_comments": false, 
-            "assigned_to": "None", 
-            "attachments": [], 
-            "category": "None", 
-            "class": "ARTIFACT", 
-            "comments": [], 
-            "date": "2009-11-19T21:21:16Z", 
-            "group": "None", 
-            "history": [
-                {
-                    "by": "ultratwo", 
-                    "class": "FIELDCHANGE", 
-                    "date": "2009-11-21T16:16:08Z", 
-                    "field": "status", 
-                    "new": "Deleted", 
-                    "old": "Open"
-                }, 
-                {
-                    "by": "ultratwo", 
-                    "class": "FIELDCHANGE", 
-                    "date": "2009-11-21T16:16:08Z", 
-                    "field": "allow_comments", 
-                    "new": false, 
-                    "old": "1"
-                }
-            ], 
-            "id": 2900735, 
-            "priority": "5 - Medium", 
-            "private": false, 
-            "resolution": "None", 
-            "status": "Deleted", 
-            "submitter": "chris_mahan", 
-            "summary": "Make sure to capture the private bug", 
-            "type": "bugs"
-        }, 
-        {
-            "allow_comments": true, 
-            "assigned_to": "None", 
-            "attachments": [], 
-            "category": "None", 
-            "class": "ARTIFACT", 
-            "comments": [], 
-            "date": "2009-11-19T21:19:57Z", 
-            "group": "None", 
-            "history": [], 
-            "id": 2900732, 
-            "priority": "5 - Medium", 
-            "private": false, 
-            "resolution": "None", 
-            "status": "Open", 
-            "submitter": "chris_mahan", 
-            "summary": "Are there enough bugs here?", 
-            "type": "bugs"
-        }, 
-        {
-            "allow_comments": true, 
-            "assigned_to": "None", 
-            "attachments": [
-                {
-                    "by": "ultratwo", 
-                    "class": "ATTACHMENT", 
-                    "date": "2009-11-16T19:24:11Z", 
-                    "deleted": "2009-11-19T08:28:16Z", 
-                    "filename": " bugplucker.chk", 
-                    "id": "351154", 
-                    "url": "sourceforge.net/tracker/download.php?group_id=286911&atid=1215676&file_id=351154&aid=2894076"
-                }, 
-                {
-                    "by": "ultratwo", 
-                    "class": "ATTACHMENT", 
-                    "date": "2009-11-16T19:24:59Z", 
-                    "filename": " handle_sourceforge.py", 
-                    "id": "351155", 
-                    "url": "sourceforge.net/tracker/download.php?group_id=286911&atid=1215676&file_id=351155&aid=2894076"
-                }, 
-                {
-                    "by": "ultratwo", 
-                    "class": "ATTACHMENT", 
-                    "date": "2009-11-19T08:30:56Z", 
-                    "filename": " bugplucker.chk", 
-                    "id": "351595", 
-                    "url": "sourceforge.net/tracker/download.php?group_id=286911&atid=1215676&file_id=351595&aid=2894076"
-                }
-            ], 
-            "category": "Interface (example)", 
-            "class": "ARTIFACT", 
-            "comments": [], 
-            "date": "2009-11-08T10:07:54Z", 
-            "group": "v1.0 (example)", 
-            "history": [], 
-            "id": 2894076, 
-            "priority": "5 - Medium", 
-            "private": true, 
-            "resolution": "None", 
-            "status": "Open", 
-            "submitter": "chris_mahan", 
-            "summary": "A private bug. ", 
-            "type": "bugs"
-        }, 
-        {
-            "allow_comments": true, 
-            "assigned_to": "None", 
-            "attachments": [], 
-            "category": "None", 
-            "class": "ARTIFACT", 
-            "comments": [], 
-            "date": "2009-11-08T09:34:58Z", 
-            "group": "None", 
-            "history": [], 
-            "id": 2894066, 
-            "priority": "5 - Medium", 
-            "private": true, 
-            "resolution": "None", 
-            "status": "Open", 
-            "submitter": null, 
-            "summary": "Something is bugging me", 
-            "type": "bugs"
-        }, 
-        {
-            "allow_comments": false, 
-            "assigned_to": "None", 
-            "attachments": [], 
-            "category": "Interface (example)", 
-            "class": "ARTIFACT", 
-            "comments": [
-                {
-                    "class": "COMMENT", 
-                    "comment": "This was a duplicate!", 
-                    "date": "2009-11-08T08:41:32Z", 
-                    "submitter": "chris"
-                }, 
-                {
-                    "class": "COMMENT", 
-                    "comment": "This artifact has been marked as a duplicate of artifact 2893787 with\nreason:\nIt is exactly the same", 
-                    "date": "2009-11-19T20:51:48Z", 
-                    "submitter": "ultratwo"
-                }
-            ], 
-            "date": "2009-11-08T08:40:50Z", 
-            "group": "v1.0 (example)", 
-            "history": [
-                {
-                    "by": "ultratwo", 
-                    "class": "FIELDCHANGE", 
-                    "date": "2009-11-14T11:51:38Z", 
-                    "field": "status", 
-                    "new": "Closed", 
-                    "old": "Pending"
-                }, 
-                {
-                    "by": "ultratwo", 
-                    "class": "FIELDCHANGE", 
-                    "date": "2009-11-14T11:51:38Z", 
-                    "field": "allow_comments", 
-                    "new": false, 
-                    "old": "1"
-                }, 
-                {
-                    "by": "ultratwo", 
-                    "class": "FIELDCHANGE", 
-                    "date": "2009-11-14T11:51:13Z", 
-                    "field": "allow_comments", 
-                    "new": "1", 
-                    "old": "0"
-                }, 
-                {
-                    "by": "ultratwo", 
-                    "class": "FIELDCHANGE", 
-                    "date": "2009-11-14T11:51:13Z", 
-                    "field": "status", 
-                    "new": "Pending", 
-                    "old": "Closed"
-                }, 
-                {
-                    "by": "chris_mahan", 
-                    "class": "FIELDCHANGE", 
-                    "date": "2009-11-08T08:41:33Z", 
-                    "field": "resolution", 
-                    "new": "Duplicate", 
-                    "old": "None"
-                }, 
-                {
-                    "by": "chris_mahan", 
-                    "class": "FIELDCHANGE", 
-                    "date": "2009-11-08T08:41:33Z", 
-                    "field": "allow_comments", 
-                    "new": "0", 
-                    "old": "1"
-                }, 
-                {
-                    "by": "chris_mahan", 
-                    "class": "FIELDCHANGE", 
-                    "date": "2009-11-08T08:41:33Z", 
-                    "field": "status", 
-                    "new": "Closed", 
-                    "old": "Open"
-                }
-            ], 
-            "id": 2894056, 
-            "priority": "5 - Medium", 
-            "private": false, 
-            "resolution": "Duplicate", 
-            "status": "Closed", 
-            "submitter": "chris_mahan", 
-            "summary": "add chris_mahan as member of project", 
-            "type": "bugs"
-        }, 
-        {
-            "allow_comments": true, 
-            "assigned_to": "None", 
-            "attachments": [], 
-            "category": "Interface (example)", 
-            "class": "ARTIFACT", 
-            "comments": [], 
-            "date": "2009-11-07T11:29:41Z", 
-            "group": "v1.0 (example)", 
-            "history": [], 
-            "id": 2893787, 
-            "priority": "5 - Medium", 
-            "private": false, 
-            "resolution": "None", 
-            "status": "Open", 
-            "submitter": "chris_mahan", 
-            "summary": "add chris_mahan as member of project", 
-            "type": "bugs"
-        }, 
-        {
-            "allow_comments": true, 
-            "assigned_to": "None", 
-            "attachments": [], 
-            "category": "Interface (example)", 
-            "class": "ARTIFACT", 
-            "comments": [], 
-            "date": "2009-11-07T11:18:17Z", 
-            "group": "v1.0 (example)", 
-            "history": [], 
-            "id": 2893784, 
-            "priority": "5 - Medium", 
-            "private": false, 
-            "resolution": "None", 
-            "status": "Open", 
-            "submitter": "chris_mahan", 
-            "summary": "Gotta make sure we capture who monitors the artifact the ", 
-            "type": "bugs"
-        }, 
-        {
-            "allow_comments": true, 
-            "assigned_to": "None", 
-            "attachments": [], 
-            "category": "Interface (example)", 
-            "class": "ARTIFACT", 
-            "comments": [], 
-            "date": "2009-11-07T10:58:14Z", 
-            "group": "v1.0 (example)", 
-            "history": [], 
-            "id": 2893780, 
-            "priority": "5 - Medium", 
-            "private": false, 
-            "resolution": "None", 
-            "status": "Open", 
-            "submitter": null, 
-            "summary": "Unable to print the blank pages.", 
-            "type": "bugs"
-        }, 
-        {
-            "allow_comments": true, 
-            "assigned_to": "None", 
-            "attachments": [], 
-            "category": "None", 
-            "class": "ARTIFACT", 
-            "comments": [], 
-            "date": "2009-11-07T10:49:53Z", 
-            "group": "None", 
-            "history": [], 
-            "id": 2893777, 
-            "priority": "5 - Medium", 
-            "private": false, 
-            "resolution": "None", 
-            "status": "Open", 
-            "submitter": "ultratwo", 
-            "summary": "Sourceforge has a majority market share", 
-            "type": "bugs"
-        }, 
-        {
-            "allow_comments": true, 
-            "assigned_to": "esr", 
-            "attachments": [], 
-            "category": "Notable bugs", 
-            "class": "ARTIFACT", 
-            "comments": [
-                {
-                    "class": "COMMENT", 
-                    "comment": "Now it can truly go down in history", 
-                    "date": "2009-11-13T08:43:17Z", 
-                    "submitter": "ultratwo"
-                }, 
-                {
-                    "class": "COMMENT", 
-                    "comment": "It shalt go down in history", 
-                    "date": "2009-11-13T08:43:17Z", 
-                    "submitter": "ultratwo"
-                }, 
-                {
-                    "class": "COMMENT", 
-                    "comment": "It shalt go down in history", 
-                    "date": "2009-11-13T08:43:44Z", 
-                    "submitter": "ultratwo"
-                }, 
-                {
-                    "class": "COMMENT", 
-                    "comment": "For the record it is now 8:59 GMT", 
-                    "date": "2009-11-19T20:59:21Z", 
-                    "submitter": "ultratwo"
-                }
-            ], 
-            "date": "2009-11-13T08:33:34Z", 
-            "group": "Eternal", 
-            "history": [
-                {
-                    "by": "ultratwo", 
-                    "class": "FIELDCHANGE", 
-                    "date": "2009-11-13T08:46:07Z", 
-                    "field": "priority", 
-                    "new": "9 - Highest", 
-                    "old": "5"
-                }, 
-                {
-                    "by": "ultratwo", 
-                    "class": "FIELDCHANGE", 
-                    "date": "2009-11-13T08:46:07Z", 
-                    "field": "assigned_to", 
-                    "new": "esr", 
-                    "old": "chris_mahan"
-                }, 
-                {
-                    "by": "ultratwo", 
-                    "class": "FIELDCHANGE", 
-                    "date": "2009-11-13T08:43:17Z", 
-                    "field": "category", 
-                    "new": "Notable bugs", 
-                    "old": "None"
-                }, 
-                {
-                    "by": "ultratwo", 
-                    "class": "FIELDCHANGE", 
-                    "date": "2009-11-13T08:43:17Z", 
-                    "field": "group", 
-                    "new": "Eternal", 
-                    "old": "None"
-                }, 
-                {
-                    "by": "ultratwo", 
-                    "class": "FIELDCHANGE", 
-                    "date": "2009-11-13T08:43:17Z", 
-                    "field": "assigned_to", 
-                    "new": "chris_mahan", 
-                    "old": "nobody"
-                }
-            ], 
-            "id": 2897069, 
-            "priority": "9 - Highest", 
-            "private": false, 
-            "status": "Open", 
-            "submitter": "ultratwo", 
-            "summary": "Historic Bug", 
-            "type": "features"
-        }
-    ], 
     "class": "PROJECT", 
     "forgetype": "SourceForge", 
     "format_version": 1, 
     "host": "sourceforge.net", 
     "project": "forgepluckertes", 
-    "vocabularies": {
+    "trackers": {
         "bugs": {
-            "category": [
-                "None", 
-                "Interface (example)"
+            "artifacts": [
+                {
+                    "allow_comments": true, 
+                    "assigned_to": "None", 
+                    "attachments": [], 
+                    "category": "None", 
+                    "class": "ARTIFACT", 
+                    "comments": [], 
+                    "date": "2009-11-21T16:13:36Z", 
+                    "group": "None", 
+                    "history": [], 
+                    "id": 2901809, 
+                    "priority": "9 - Highest", 
+                    "private": false, 
+                    "resolution": "None", 
+                    "status": "Open", 
+                    "submitter": "ultratwo", 
+                    "summary": "NO MORE BUGS", 
+                    "type": "bugs"
+                }, 
+                {
+                    "allow_comments": false, 
+                    "assigned_to": "None", 
+                    "attachments": [], 
+                    "category": "None", 
+                    "class": "ARTIFACT", 
+                    "comments": [], 
+                    "date": "2009-11-19T21:21:16Z", 
+                    "group": "None", 
+                    "history": [
+                        {
+                            "by": "ultratwo", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2009-11-21T16:16:08Z", 
+                            "field": "status", 
+                            "new": "Deleted", 
+                            "old": "Open"
+                        }, 
+                        {
+                            "by": "ultratwo", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2009-11-21T16:16:08Z", 
+                            "field": "allow_comments", 
+                            "new": false, 
+                            "old": "1"
+                        }
+                    ], 
+                    "id": 2900735, 
+                    "priority": "5 - Medium", 
+                    "private": false, 
+                    "resolution": "None", 
+                    "status": "Deleted", 
+                    "submitter": "chris_mahan", 
+                    "summary": "Make sure to capture the private bug", 
+                    "type": "bugs"
+                }, 
+                {
+                    "allow_comments": true, 
+                    "assigned_to": "None", 
+                    "attachments": [], 
+                    "category": "None", 
+                    "class": "ARTIFACT", 
+                    "comments": [], 
+                    "date": "2009-11-19T21:19:57Z", 
+                    "group": "None", 
+                    "history": [], 
+                    "id": 2900732, 
+                    "priority": "5 - Medium", 
+                    "private": false, 
+                    "resolution": "None", 
+                    "status": "Open", 
+                    "submitter": "chris_mahan", 
+                    "summary": "Are there enough bugs here?", 
+                    "type": "bugs"
+                }, 
+                {
+                    "allow_comments": true, 
+                    "assigned_to": "None", 
+                    "attachments": [
+                        {
+                            "by": "ultratwo", 
+                            "class": "ATTACHMENT", 
+                            "date": "2009-11-16T19:24:11Z", 
+                            "deleted": "2009-11-19T08:28:16Z", 
+                            "filename": " bugplucker.chk", 
+                            "id": "351154", 
+                            "url": "sourceforge.net/tracker/download.php?group_id=286911&atid=1215676&file_id=351154&aid=2894076"
+                        }, 
+                        {
+                            "by": "ultratwo", 
+                            "class": "ATTACHMENT", 
+                            "date": "2009-11-16T19:24:59Z", 
+                            "filename": " handle_sourceforge.py", 
+                            "id": "351155", 
+                            "url": "sourceforge.net/tracker/download.php?group_id=286911&atid=1215676&file_id=351155&aid=2894076"
+                        }, 
+                        {
+                            "by": "ultratwo", 
+                            "class": "ATTACHMENT", 
+                            "date": "2009-11-19T08:30:56Z", 
+                            "filename": " bugplucker.chk", 
+                            "id": "351595", 
+                            "url": "sourceforge.net/tracker/download.php?group_id=286911&atid=1215676&file_id=351595&aid=2894076"
+                        }
+                    ], 
+                    "category": "Interface (example)", 
+                    "class": "ARTIFACT", 
+                    "comments": [], 
+                    "date": "2009-11-08T10:07:54Z", 
+                    "group": "v1.0 (example)", 
+                    "history": [], 
+                    "id": 2894076, 
+                    "priority": "5 - Medium", 
+                    "private": true, 
+                    "resolution": "None", 
+                    "status": "Open", 
+                    "submitter": "chris_mahan", 
+                    "summary": "A private bug. ", 
+                    "type": "bugs"
+                }, 
+                {
+                    "allow_comments": true, 
+                    "assigned_to": "None", 
+                    "attachments": [], 
+                    "category": "None", 
+                    "class": "ARTIFACT", 
+                    "comments": [], 
+                    "date": "2009-11-08T09:34:58Z", 
+                    "group": "None", 
+                    "history": [], 
+                    "id": 2894066, 
+                    "priority": "5 - Medium", 
+                    "private": true, 
+                    "resolution": "None", 
+                    "status": "Open", 
+                    "submitter": null, 
+                    "summary": "Something is bugging me", 
+                    "type": "bugs"
+                }, 
+                {
+                    "allow_comments": false, 
+                    "assigned_to": "None", 
+                    "attachments": [], 
+                    "category": "Interface (example)", 
+                    "class": "ARTIFACT", 
+                    "comments": [
+                        {
+                            "class": "COMMENT", 
+                            "comment": "This was a duplicate!", 
+                            "date": "2009-11-08T08:41:32Z", 
+                            "submitter": "chris"
+                        }, 
+                        {
+                            "class": "COMMENT", 
+                            "comment": "This artifact has been marked as a duplicate of artifact 2893787 with\nreason:\nIt is exactly the same", 
+                            "date": "2009-11-19T20:51:48Z", 
+                            "submitter": "ultratwo"
+                        }
+                    ], 
+                    "date": "2009-11-08T08:40:50Z", 
+                    "group": "v1.0 (example)", 
+                    "history": [
+                        {
+                            "by": "ultratwo", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2009-11-14T11:51:38Z", 
+                            "field": "status", 
+                            "new": "Closed", 
+                            "old": "Pending"
+                        }, 
+                        {
+                            "by": "ultratwo", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2009-11-14T11:51:38Z", 
+                            "field": "allow_comments", 
+                            "new": false, 
+                            "old": "1"
+                        }, 
+                        {
+                            "by": "ultratwo", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2009-11-14T11:51:13Z", 
+                            "field": "allow_comments", 
+                            "new": "1", 
+                            "old": "0"
+                        }, 
+                        {
+                            "by": "ultratwo", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2009-11-14T11:51:13Z", 
+                            "field": "status", 
+                            "new": "Pending", 
+                            "old": "Closed"
+                        }, 
+                        {
+                            "by": "chris_mahan", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2009-11-08T08:41:33Z", 
+                            "field": "resolution", 
+                            "new": "Duplicate", 
+                            "old": "None"
+                        }, 
+                        {
+                            "by": "chris_mahan", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2009-11-08T08:41:33Z", 
+                            "field": "allow_comments", 
+                            "new": "0", 
+                            "old": "1"
+                        }, 
+                        {
+                            "by": "chris_mahan", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2009-11-08T08:41:33Z", 
+                            "field": "status", 
+                            "new": "Closed", 
+                            "old": "Open"
+                        }
+                    ], 
+                    "id": 2894056, 
+                    "priority": "5 - Medium", 
+                    "private": false, 
+                    "resolution": "Duplicate", 
+                    "status": "Closed", 
+                    "submitter": "chris_mahan", 
+                    "summary": "add chris_mahan as member of project", 
+                    "type": "bugs"
+                }, 
+                {
+                    "allow_comments": true, 
+                    "assigned_to": "None", 
+                    "attachments": [], 
+                    "category": "Interface (example)", 
+                    "class": "ARTIFACT", 
+                    "comments": [], 
+                    "date": "2009-11-07T11:29:41Z", 
+                    "group": "v1.0 (example)", 
+                    "history": [], 
+                    "id": 2893787, 
+                    "priority": "5 - Medium", 
+                    "private": false, 
+                    "resolution": "None", 
+                    "status": "Open", 
+                    "submitter": "chris_mahan", 
+                    "summary": "add chris_mahan as member of project", 
+                    "type": "bugs"
+                }, 
+                {
+                    "allow_comments": true, 
+                    "assigned_to": "None", 
+                    "attachments": [], 
+                    "category": "Interface (example)", 
+                    "class": "ARTIFACT", 
+                    "comments": [], 
+                    "date": "2009-11-07T11:18:17Z", 
+                    "group": "v1.0 (example)", 
+                    "history": [], 
+                    "id": 2893784, 
+                    "priority": "5 - Medium", 
+                    "private": false, 
+                    "resolution": "None", 
+                    "status": "Open", 
+                    "submitter": "chris_mahan", 
+                    "summary": "Gotta make sure we capture who monitors the artifact the ", 
+                    "type": "bugs"
+                }, 
+                {
+                    "allow_comments": true, 
+                    "assigned_to": "None", 
+                    "attachments": [], 
+                    "category": "Interface (example)", 
+                    "class": "ARTIFACT", 
+                    "comments": [], 
+                    "date": "2009-11-07T10:58:14Z", 
+                    "group": "v1.0 (example)", 
+                    "history": [], 
+                    "id": 2893780, 
+                    "priority": "5 - Medium", 
+                    "private": false, 
+                    "resolution": "None", 
+                    "status": "Open", 
+                    "submitter": null, 
+                    "summary": "Unable to print the blank pages.", 
+                    "type": "bugs"
+                }, 
+                {
+                    "allow_comments": true, 
+                    "assigned_to": "None", 
+                    "attachments": [], 
+                    "category": "None", 
+                    "class": "ARTIFACT", 
+                    "comments": [], 
+                    "date": "2009-11-07T10:49:53Z", 
+                    "group": "None", 
+                    "history": [], 
+                    "id": 2893777, 
+                    "priority": "5 - Medium", 
+                    "private": false, 
+                    "resolution": "None", 
+                    "status": "Open", 
+                    "submitter": "ultratwo", 
+                    "summary": "Sourceforge has a majority market share", 
+                    "type": "bugs"
+                }
             ], 
-            "group": [
-                "None", 
-                "v1.0 (example)"
-            ], 
-            "priority": [
-                "1 - Lowest", 
-                "2", 
-                "3", 
-                "4", 
-                "5 - Medium", 
-                "6", 
-                "7", 
-                "8", 
-                "9 - Highest"
-            ], 
-            "resolution": [
-                "Accepted", 
-                "Duplicate", 
-                "Fixed", 
-                "Invalid", 
-                "Later", 
-                "None", 
-                "Out of Date", 
-                "Postponed", 
-                "Rejected", 
-                "Remind", 
-                "Wont Fix", 
-                "Works For Me"
-            ], 
-            "status": [
-                "Open", 
-                "Closed", 
-                "Deleted", 
-                "Pending"
-            ]
+            "vocabulary": {
+                "category": [
+                    "None", 
+                    "Interface (example)"
+                ], 
+                "group": [
+                    "None", 
+                    "v1.0 (example)"
+                ], 
+                "priority": [
+                    "1 - Lowest", 
+                    "2", 
+                    "3", 
+                    "4", 
+                    "5 - Medium", 
+                    "6", 
+                    "7", 
+                    "8", 
+                    "9 - Highest"
+                ], 
+                "resolution": [
+                    "Accepted", 
+                    "Duplicate", 
+                    "Fixed", 
+                    "Invalid", 
+                    "Later", 
+                    "None", 
+                    "Out of Date", 
+                    "Postponed", 
+                    "Rejected", 
+                    "Remind", 
+                    "Wont Fix", 
+                    "Works For Me"
+                ], 
+                "status": [
+                    "Open", 
+                    "Closed", 
+                    "Deleted", 
+                    "Pending"
+                ]
+            }
         }, 
         "features": {
-            "category": [
-                "None", 
-                "Interface Improvements (example)", 
-                "Notable bugs"
+            "artifacts": [
+                {
+                    "allow_comments": true, 
+                    "assigned_to": "esr", 
+                    "attachments": [], 
+                    "category": "Notable bugs", 
+                    "class": "ARTIFACT", 
+                    "comments": [
+                        {
+                            "class": "COMMENT", 
+                            "comment": "Now it can truly go down in history", 
+                            "date": "2009-11-13T08:43:17Z", 
+                            "submitter": "ultratwo"
+                        }, 
+                        {
+                            "class": "COMMENT", 
+                            "comment": "It shalt go down in history", 
+                            "date": "2009-11-13T08:43:17Z", 
+                            "submitter": "ultratwo"
+                        }, 
+                        {
+                            "class": "COMMENT", 
+                            "comment": "It shalt go down in history", 
+                            "date": "2009-11-13T08:43:44Z", 
+                            "submitter": "ultratwo"
+                        }, 
+                        {
+                            "class": "COMMENT", 
+                            "comment": "For the record it is now 8:59 GMT", 
+                            "date": "2009-11-19T20:59:21Z", 
+                            "submitter": "ultratwo"
+                        }
+                    ], 
+                    "date": "2009-11-13T08:33:34Z", 
+                    "group": "Eternal", 
+                    "history": [
+                        {
+                            "by": "ultratwo", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2009-11-13T08:46:07Z", 
+                            "field": "priority", 
+                            "new": "9 - Highest", 
+                            "old": "5"
+                        }, 
+                        {
+                            "by": "ultratwo", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2009-11-13T08:46:07Z", 
+                            "field": "assigned_to", 
+                            "new": "esr", 
+                            "old": "chris_mahan"
+                        }, 
+                        {
+                            "by": "ultratwo", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2009-11-13T08:43:17Z", 
+                            "field": "category", 
+                            "new": "Notable bugs", 
+                            "old": "None"
+                        }, 
+                        {
+                            "by": "ultratwo", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2009-11-13T08:43:17Z", 
+                            "field": "group", 
+                            "new": "Eternal", 
+                            "old": "None"
+                        }, 
+                        {
+                            "by": "ultratwo", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2009-11-13T08:43:17Z", 
+                            "field": "assigned_to", 
+                            "new": "chris_mahan", 
+                            "old": "nobody"
+                        }
+                    ], 
+                    "id": 2897069, 
+                    "priority": "9 - Highest", 
+                    "private": false, 
+                    "status": "Open", 
+                    "submitter": "ultratwo", 
+                    "summary": "Historic Bug", 
+                    "type": "features"
+                }
             ], 
-            "group": [
-                "None", 
-                "Eternal", 
-                "Next Release (example)"
-            ], 
-            "priority": [
-                "1 - Lowest", 
-                "2", 
-                "3", 
-                "4", 
-                "5 - Medium", 
-                "6", 
-                "7", 
-                "8", 
-                "9 - Highest"
-            ], 
-            "status": [
-                "Open", 
-                "Closed", 
-                "Deleted", 
-                "Pending"
-            ]
+            "vocabulary": {
+                "category": [
+                    "None", 
+                    "Interface Improvements (example)", 
+                    "Notable bugs"
+                ], 
+                "group": [
+                    "None", 
+                    "Eternal", 
+                    "Next Release (example)"
+                ], 
+                "priority": [
+                    "1 - Lowest", 
+                    "2", 
+                    "3", 
+                    "4", 
+                    "5 - Medium", 
+                    "6", 
+                    "7", 
+                    "8", 
+                    "9 - Highest"
+                ], 
+                "status": [
+                    "Open", 
+                    "Closed", 
+                    "Deleted", 
+                    "Pending"
+                ]
+            }
+        }, 
+        "patches": {
+            "artifacts": [], 
+            "vocabulary": {}
+        }, 
+        "support": {
+            "artifacts": [], 
+            "vocabulary": {}
         }
     }
 }

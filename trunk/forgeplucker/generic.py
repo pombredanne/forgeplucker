@@ -204,14 +204,14 @@ class GenericForge:
         return artifacts
     def pluck_trackers(self, timeless=False):
         "Pull the buglist, wrapping it with metadata about the operation."
-        artifacts, vocabularies = [], {}
+        trackers = {}
         before = timestamp()
         for tracker in self.trackers:
-            vocabulary = {}
+            vocabulary, trackers[tracker.type] = {}, {}
             content = self.pluck_artifactlist(tracker, vocabulary, timeless)
             if content is not None:
-                artifacts.extend(content)
-            #Smooth the vocabulary    
+                trackers[tracker.type]["artifacts"] = content
+            # Smooth the vocabulary    
             for (rough, smooth) in tracker.name_mappings.items():
                 if rough in vocabulary:
                     vocabulary[smooth] = vocabulary[rough]
@@ -220,7 +220,7 @@ class GenericForge:
             # to treat it as a vocablary.
             if 'assigned_to' in vocabulary:
                 del vocabulary['assigned_to']
-                vocabularies[tracker.type] = vocabulary
+            trackers[tracker.type]["vocabulary"] = vocabulary
         after = timestamp()
         trackerdata = {
             "class":"PROJECT",
@@ -228,8 +228,7 @@ class GenericForge:
             "host" : self.host,
             "project" : self.project_name,
             "format_version":1,
-            "artifacts": artifacts,
-            "vocabularies": vocabularies,
+            "trackers": trackers,
             }
         # See above
         if not timeless:
