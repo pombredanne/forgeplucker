@@ -409,7 +409,7 @@ RESOLUTION      -             None          None*
                               Wont Fix      Invalid
                               Works For Me
 -----------------------------------------------------------
--
+
 .Controlled vocabularies - Patches
 [grid="all"]
 `---------------`-------------`-------------`---------------
