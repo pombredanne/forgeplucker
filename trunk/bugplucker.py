@@ -56,6 +56,13 @@ if __name__ == '__main__':
         elif arg == '-i':
             issue = val
         elif arg == '-f':	# forge type
+            if val == "help" :	# list supported forges
+                print "Supported forge types for option", arg, ":"
+                for cls in handler_classes:
+                    print cls.__name__, " ",
+                print
+                raise SystemExit, 0
+
             for cls in handler_classes:
                 if val == cls.__name__:
                     forgetype = cls
