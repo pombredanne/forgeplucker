@@ -188,7 +188,7 @@ class GenericForge:
             #    print "Input name %s has value '%s'" % (name, value)
             artifact[name] = dehtmlize(value)
         # Hand off to the tracker classlet's custom hook 
-        tracker.custom(contents, artifact)
+        tracker.custom(contents, artifact, vocabularies)
         for (rough, smooth) in tracker.name_mappings.items():
             if smooth in artifact and self.verbosity > 0:
                 self.error("name collision on %s" % smooth)

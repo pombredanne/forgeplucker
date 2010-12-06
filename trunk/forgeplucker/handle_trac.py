@@ -47,7 +47,7 @@ The Trac handler provides bug-plucking machinery for Trac sites.
         def narrow(self, text):
             "Get the section of text containing editable elements."
             return text
-        def custom(self,contents,artifact):
+        def custom(self,contents,artifact, vocabularies=None):
             comments, history, attachments = [], [], []
             oldCC = None
             if contents.find(r'<h2>Change History</h2>') != -1:

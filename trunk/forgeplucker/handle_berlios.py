@@ -114,7 +114,7 @@ submitted to them.
             "Generate a bug detail URL for the specified bug ID."
             return "bugs/?func=detailbug&bug_id=%d&group_id=%s" % \
                    (issueid, self.parent.project_id)
-        def custom(self, contents, bug):
+        def custom(self, contents, bug, vocabularies=None):
             m = re.search("<B>Original Submission:</B><BR>", contents)
             if not m:
                 self.parent.error("no original-submission text")

@@ -109,7 +109,7 @@ This code does not capture custom trackers.
                         if attachment['id'] == fileid:
                             attachment['deleted'] = self.parent.canonicalize_date(date)
             return changes, attachments
-        def custom(self,contents,bug):
+        def custom(self,contents,bug, vocabularies=None):
             m = re.search(r'<input type="checkbox" name="is_private" [^>]* />',contents)
             bug['private'] = 'checked' in m.group(0)
             m = re.search(r'<input type="checkbox" name="close_comments" [^>]* />',contents)

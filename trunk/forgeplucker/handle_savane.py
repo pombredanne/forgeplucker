@@ -61,7 +61,7 @@ The status of all trackers (bug, patch, support, and task) is extracted.
         def narrow(self, text):
             "Get the section of text containing editable elements."
             return self.parent.skipspan(text, "form", 1)
-        def custom(self, contents, artifact):
+        def custom(self, contents, artifact, vocabularies=None):
             # Parse comments, then trim them off the front -- they can have
             # things in them that confuse later parsing.  For an example,
             # see https://gna.org/bugs/index.php?6264
