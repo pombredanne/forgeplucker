@@ -17,6 +17,9 @@ Requires Python 2.6.
 import sys, os, re, time, calendar
 from forgeplucker import *
 
+def notify(msg):
+        sys.stderr.write(sys.argv[0] + ": __main__ : " + msg + "\n")
+
 if __name__ == '__main__':
     import getopt, json
     jdump = lambda x: json.dump(x, sys.stdout, sort_keys=True, indent=4)
@@ -81,7 +84,11 @@ if __name__ == '__main__':
     try:
         # Instantiate handler for that forge to pluck the project
         bt = forgetype(host, project)
+
         bt.verbosity = verbose
+        if verbose :
+            notify("verbosity : %d" % verbose)
+
         bt.login(user, passwd)
         if permissions:
             perms = bt.pluck_permissions()
