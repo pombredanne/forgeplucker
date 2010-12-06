@@ -265,7 +265,7 @@ if __name__ == '__main__':
             data["trackers"] = bugs
 
         if not format or format == 'default' :
-            notify('Outputing with format "default"')
+            if verbose: notify('Outputing with format "default"')
             if permissions:
                 jdump(data["users"])
             elif repositories:
@@ -275,12 +275,12 @@ if __name__ == '__main__':
             else:
                 jdump(data["trackers"])
         elif format == 'coclico':
-            notify('Outputing with format "coclico"')
+            if verbose: notify('Outputing with format "coclico"')
             # dump data as JSON
             jdump(data)
             print
         elif format == 'oslccmv2json' :
-            notify('Outputing with format "oslccmv2json"')
+            if verbose: notify('Outputing with format "oslccmv2json"')
             output_oslccmv2json(data)
         else :
             error ("output format '%s' not yet implemented" % format, 1)
