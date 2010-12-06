@@ -37,18 +37,19 @@ def testtoname(test):
 def msg(msg):
     print >>sys.stderr, "%s: %s" % (sys.argv[0],msg)
 
-def runtest(test,output):
+def runtest(test, output, skip_failing = False):
     cmd = testcmd + ' -v ' + str(verbose) + ' '
     if username != None:
         cmd += '-u ' + username + ' '
     cmd += test + '>' + output
     if verbose >= 1:
         msg("running '%s'" % cmd)
-    if system(cmd) == 0:
-        return
-    else:
+    ret = system(cmd)
+    if ret != 0:
         print >>sys.stderr, "Command ('"+cmd+"') failed!"
-        raise SystemExit, 1
+        if not skip_failing:
+            raise SystemExit, 1
+    return ret
 
 def difftest(test):
     if verbose >= 1:
@@ -75,17 +76,19 @@ def setaction(setto):
 
 if __name__ == '__main__':
     (options, arguments) = getopt.getopt(sys.argv[1:],
-                                         "bdhlru:ev?",
+                                         "bdhlru:esv?",
                                          ["build",
                                           "diffs",
                                           "help",
                                           "list",
                                           "run",
-                                          "exclude"])
+                                          "exclude",
+                                          "skip"])
     username = None
     action = None
     exclude = False
     verbose = 0
+    skip_failing = None
     for (arg,val) in options:
         if arg == '-u':
             username = val
@@ -102,6 +105,8 @@ if __name__ == '__main__':
             raise SystemExit, 0
         elif arg in ('-e','--exclude'):
             exclude = True
+        elif arg in ('-s','--skip'):
+            skip_failing = True
         elif arg == '-v':
             verbose += 1
         else:
@@ -121,9 +126,9 @@ if __name__ == '__main__':
     if action == 'run':
         for test in tests:            
             print >>sys.stderr, "Running", test
-            runtest(test,output=testtoname(test)+'.out')
-            if difftest(test) == 0:
-                print >>sys.stderr, test, "succeeded"
+            if runtest(test, output=testtoname(test)+'.out', skip_failing=skip_failing) == 0:
+                if difftest(test) == 0:
+                    print >>sys.stderr, test, "succeeded"
     elif action == 'build':
         for test in tests:
             print >>sys.stderr, "Building", test
