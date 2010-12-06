@@ -3,7 +3,7 @@
 """
 bugplucker.py -- extract bugtracker state from hosting sites.
 
-usage: bugplucker.py [-hrv?] [-f type] [-u user] [-p password] site/project
+usage: bugplucker.py [-hv?] [-f type] [-u user] [-p password] [-d page] [-o format] [-PTSFDWBNK] "site/project"
 
   -h -? : displays this help message
 
@@ -19,7 +19,17 @@ usage: bugplucker.py [-hrv?] [-f type] [-u user] [-p password] site/project
 
   -P : extracts informations on users in the project
 
+  -B : extract contents of the project forums
+
+  -F : extract contents of the file release system of the project
+
+  -T : extract contents of project trackers
+
   -i val : extract one particular issue ?
+
+  -D : extract contents of the project's documents manager
+
+  -W : extract contents of the project wiki
 
   -S : resporitories ?
 
@@ -27,6 +37,10 @@ usage: bugplucker.py [-hrv?] [-f type] [-u user] [-p password] site/project
 
   -d page : dumps content of a specific page
 
+  -N : News ?
+  
+  -K : Tasks ?
+  
   -o format : (optional) choose a particular output format
 
 State is dumped to standard output in JSON.
@@ -63,8 +77,12 @@ if __name__ == '__main__':
     user = passwd = forgetype = None
     verbose = 0
     issue = None
-    timeless = permissions = repositories = dump = False
-    (options, arguments) = getopt.getopt(sys.argv[1:], "f:d:i:np:PSu:v:h?", ["help",])
+
+    xml = timeless = permissions = repositories = dump = phpWiki = trackers = getDocs = frs = forums = news = tasks = format = False
+
+    # Start with command-line args parsing
+    (options, arguments) = getopt.getopt(sys.argv[1:], "f:d:i:no:p:PTSFDWBNKru:v:h?", ["help",])
+
     for (arg, val) in options:
         if arg in ('-h', '-?', '--help'):	# help
             usage()
@@ -76,13 +94,27 @@ if __name__ == '__main__':
             permissions = True
         elif arg == '-S':	# extract Repositories ? (TODO: fix comment)
             repositories = True
+        elif arg == '-F':	# extract File Release System
+            frs = True	
+        elif arg == '-B':	# extract Forums
+            forums = True			
         elif arg == '-d':   # Dump contents of a specific page to standard output
             dump = True     
             page = val
         elif arg == '-n':	# timeless ? (TODO: fix comment)
             timeless = True
+        elif arg == '-T':	# extract trackers
+            trackers = True
+        elif arg == '-D':	# extract content of docman
+            getDocs = True
         elif arg == '-v':	# verbosity
             verbose = int(val)
+        elif arg == '-W': 	# extract wiki
+            phpWiki = True
+        elif arg == '-N':	# News ? (TODO: fix comment)
+            news = True
+        elif arg == '-K':	# Tasks ? (TODO: fix comment)
+            tasks = True
         elif arg == '-i':	# extract one particular issue ? (TODO: fix comment)
             issue = val
         elif arg == '-f':	# forge type
@@ -183,13 +215,38 @@ if __name__ == '__main__':
 
         bt.login(user, passwd)
 
-		# This is the main data structure that will be dumped out at the end
+        # This is the main data structure that will be dumped out at the end
         data = {}
         
-    	if permissions:
-    		perms = bt.pluck_permissions()
-    		data["users"] = perms
-    	elif repositories:
+        # extract common core
+        projectData = bt.pluck_project_data()
+        data["project"] = projectData
+        
+        # extract additional data
+        if phpWiki: #Not clean
+            bt.pluck_wiki()
+        if permissions:
+            perms = bt.pluck_permissions()
+            roles = bt.pluck_roles()
+            #roles = canonicalize(roles)
+            data["users"] = perms
+            data["roles"] = roles
+        if getDocs:
+            docs = bt.pluck_docman()
+            data["docman"] = docs
+        if frs:
+            frs = bt.pluck_frs()
+            data['frs'] = frs
+        if forums:
+            forums = bt.pluck_forums()
+            data['forums'] = forums
+        if news:
+            news = bt.pluck_news()
+            data['news'] = news
+        if tasks:
+            tasks = bt.pluck_tasksTrackers()
+            data['tasks'] = tasks
+        elif repositories:
             repo = bt.pluck_repository_urls()
             data["repository"]=repo
         elif dump:

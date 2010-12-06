@@ -305,3 +305,47 @@ class GenericForge:
                     # Handles 'name <nick>' as we see on Savane
                     cooked['nick'] = mailaddr
         return cooked
+
+    # To be implemented in subclasses
+    def pluck_project_data(self):
+        '''
+        Should return basic project data (type of forge, hostname, project name, format version of this plucker) and returns the corresponding array
+        '''
+        self.error("Not yet implemented")
+        
+    # May be implemented in subclasses
+    def pluck_wiki(self):
+        '''    '''
+        self.error("Not yet implemented")
+    # May be implemented in subclasses
+    def pluck_permissions(self):
+        '''    '''
+        self.error("Not yet implemented")
+    # May be implemented in subclasses
+    def pluck_roles(self):
+        '''    '''
+        self.error("Not yet implemented")
+    # May be implemented in subclasses
+    def pluck_docman(self):
+        '''    '''
+        self.error("Not yet implemented")
+    # May be implemented in subclasses
+    def pluck_frs(self):
+        '''    '''
+        self.error("Not yet implemented")
+    # May be implemented in subclasses
+    def pluck_forums(self):
+        '''    '''
+        self.error("Not yet implemented")
+    # May be implemented in subclasses
+    def pluck_news(self):
+        '''    '''
+        self.error("Not yet implemented")
+    # May be implemented in subclasses
+    def pluck_tasksTrackers(self):
+        '''    '''
+        self.error("Not yet implemented")
+    # May be implemented in subclasses
+    def pluck_repository_urls(self):
+        '''    '''
+        self.error("Not yet implemented")
