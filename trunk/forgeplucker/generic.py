@@ -126,11 +126,13 @@ class GenericForge:
         if not m:
             self.error("no submitter found")
         submitter = m.group(1)
+        #TODO:Task need no date
         m = re.search(tracker.date_re,contents)
         if not m:
             self.error("no date")
         artifact["submitter"] = submitter
-        artifact["date"] = self.isodate(m.group(1).strip())
+        if not m.group(1)=='':
+            artifact["date"] = self.isodate(m.group(1).strip())
         formpart = tracker.narrow(contents)
         for m in re.finditer('<SELECT [^>]*?NAME="([^"]*)"[^>]*>', formpart, re.I):
             key = m.group(1)
@@ -217,6 +219,12 @@ class GenericForge:
             content = self.pluck_artifactlist(tracker, vocabulary, timeless)
             if content is not None:
                 trackers[tracker.type]["artifacts"] = content
+            url = tracker.projectbase
+            if not url.startswith("http"):
+                url = "https://%s/" % self.host + url
+            trackers[tracker.type]["vocabulary"] = vocabulary
+            trackers[tracker.type]["label"] = tracker.label #adding label support to trackers
+            trackers[tracker.type]["url"] = url
             # Smooth the vocabulary    
             for (rough, smooth) in tracker.name_mappings.items():
                 if rough in vocabulary:
