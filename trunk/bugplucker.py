@@ -5,6 +5,28 @@ bugplucker.py -- extract bugtracker state from hosting sites.
 
 usage: bugplucker.py [-hrv?] [-f type] [-u user] [-p password] site/project
 
+  -h -? : displays this help message
+
+  -f ForgeType : (optional) extract for the ForgeType forge - list of
+	supported forges with '-f help'. If option is not provided, try to guess from the URL.
+
+  -u user : user's login on the forge (if none provided, then use
+	LOGNAME env var's value)
+
+  -p password : provide user's connection password to the forge
+
+  -n : timeless ?
+
+  -P : extracts informations on users in the project
+
+  -i val : extract one particular issue ?
+
+  -S : resporitories ?
+
+  -v1 -v2 : verbose : v1 : all downloaded pages are displayed / v2 : page contents is displayed too
+
+  -d page : dumps content of a specific page
+
 State is dumped to standard output in JSON.
 
 This code is Copyright (c) 2009 by Eric S. Raymond.  New BSD license applies.
@@ -27,6 +49,10 @@ def usage():
 def notify(msg):
         sys.stderr.write(sys.argv[0] + ": __main__ : " + msg + "\n")
 
+def error(msg, code):
+    print >>sys.stderr, msg
+    raise SystemExit, code
+
 if __name__ == '__main__':
     import getopt, json
     jdump = lambda x: json.dump(x, sys.stdout, sort_keys=True, indent=4)
@@ -42,18 +68,18 @@ if __name__ == '__main__':
             user = val
         elif arg == '-p':	# user password
             passwd = val
-        elif arg == '-P':	# Not documented
+        elif arg == '-P':	# extract users and Permissions
             permissions = True
-        elif arg == '-S':	# Not documented
+        elif arg == '-S':	# extract Repositories ? (TODO: fix comment)
             repositories = True
-        elif arg == '-d':   # Not documented
-            dump = True     # Dump contents of a specific page to standard output
+        elif arg == '-d':   # Dump contents of a specific page to standard output
+            dump = True     
             page = val
-        elif arg == '-n':
+        elif arg == '-n':	# timeless ? (TODO: fix comment)
             timeless = True
-        elif arg == '-v':
+        elif arg == '-v':	# verbosity
             verbose = int(val)
-        elif arg == '-i':
+        elif arg == '-i':	# extract one particular issue ? (TODO: fix comment)
             issue = val
         elif arg == '-f':	# forge type
             if val == "help" :	# list supported forges
@@ -68,8 +94,7 @@ if __name__ == '__main__':
                     forgetype = cls
                     break
             else:
-                print >>sys.stderr, "%s: unknown forge type" % sys.argv[0]
-                raise SystemExit, 1
+                error("%s: unknown forge type" % sys.argv[0], 1)
     # For convenience, so pasting URLs will work
     if arguments[0].startswith("http://"):
         arguments[0] = arguments[0][7:]
@@ -88,9 +113,8 @@ if __name__ == '__main__':
     # Try to login as user
     (user, passwd) = get_credentials(user, passwd, host)
     if user is None or passwd is None:
-        print >>sys.stderr, "Error fetching authentication details for user %s at %s" % (user,host)
-        print >>sys.stderr, "usage: %s [-hnrv?] [-i itemspec] -u username -p password -f forgetype host project" % sys.argv[0]
-        raise SystemExit, 1
+        error("Error fetching authentication details for user %s at %s" % (user,host) + "\n" 
+              + "provide user logname and password with : %s [...] -u username -p password" % sys.argv[0], 1)
     try:
         # Instantiate handler for that forge to pluck the project
         bt = forgetype(host, project)
