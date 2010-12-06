@@ -8,11 +8,12 @@ from handle_sourceforge import *
 from handle_berlios import *
 from handle_savane import *
 from handle_trac import *
+from handle_fusionforge import *
 from handle_gcode import *
 
 # Collect handler classes here, client code will introspect on this set
 # so as not to have to know about individual handler classes.
-handler_classes = (SourceForge, Berlios, Savane, Trac, Sf_Trac, GCode)
+handler_classes = (SourceForge, Berlios, Savane, Trac, Sf_Trac, GCode, FusionForge)
 
 # Map well-known hosting sites to forge system types. We'd try using
 # pattern-matching on the site main page for this, but forge admins
@@ -26,6 +27,8 @@ site_to_handler = {
     "savannah.nongnu.org": Savane,
     "gna.org": Savane,
     "code.google.com": GCode,
+    "fusionforge.org": FusionForge,
+    "gforge.inria.fr": FusionForge,
 }
 
 def get_forgetype(host):
