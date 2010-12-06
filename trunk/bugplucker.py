@@ -32,9 +32,9 @@ if __name__ == '__main__':
                 print "-" * 72
                 print cls.__doc__
             raise SystemExit, 0
-        elif arg == '-u':
+        elif arg == '-u':	# user logging in
             user = val
-        elif arg == '-p':
+        elif arg == '-p':	# user password
             passwd = val
         elif arg == '-P':	# Not documented
             permissions = True
@@ -49,7 +49,7 @@ if __name__ == '__main__':
             verbose = int(val)
         elif arg == '-i':
             issue = val
-        elif arg == '-f':
+        elif arg == '-f':	# forge type
             for cls in handler_classes:
                 if val == cls.__name__:
                     forgetype = cls
@@ -71,12 +71,15 @@ if __name__ == '__main__':
     project = segments[-1]
     if forgetype is None:
         forgetype = get_forgetype(host)
+
+    # Try to login as user
     (user, passwd) = get_credentials(user, passwd, host)
     if user is None or passwd is None:
         print >>sys.stderr, "Error fetching authentication details for user %s at %s" % (user,host)
         print >>sys.stderr, "usage: %s [-hnrv?] [-i itemspec] -u username -p password -f forgetype host project" % sys.argv[0]
         raise SystemExit, 1
     try:
+        # Instantiate handler for that forge to pluck the project
         bt = forgetype(host, project)
         bt.verbosity = verbose
         bt.login(user, passwd)
@@ -89,7 +92,7 @@ if __name__ == '__main__':
         elif dump:
             page = bt.fetch(page,"Page to dump")
             print page
-        elif issue:
+        elif issue: #modified to not only parse one case (either permissions, repositories or trackers)
             (tracker, issueid) = issue.split(":")
             issue = bt.pluck_artifact(tracker, issueid)
             jdump(issue)
