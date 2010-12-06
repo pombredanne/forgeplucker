@@ -26,7 +26,6 @@ The FusionForge handler provides machinery for the FusionForge sites.
 	class Tracker:
 		
 		def __init__(self, label, parent, projectbase):
-			#print label, parent, projectbase
 			self.parent = parent
 			self.optional = False
 			self.chunksize = 50
@@ -104,8 +103,6 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			"Parse followups out of a displayed page in a bug or patch tracker."
 	
 			comments = []
-	    	#	return comments
-			
 			soup = BeautifulSoup(contents)
 
 			commentblock = soup.find(name='div', attrs={'title':"Followups"}).findAll("tr", {"class":re.compile("altRowStyle")})
@@ -278,7 +275,23 @@ The FusionForge handler provides machinery for the FusionForge sites.
 #				
 		return GenericForge.pluck_trackers(self, timeless)
 
+	def pluck_permissions(self):
+		'''
+		Get the permissions associated with each role in the project and return the corresponding array
+		'''
+		contents = self.fetch('project/memberlist.php?group_id=' + self.project_id, 'Roles page')
+		perms = {}
+		for (realname, username, role, skills) in self.table_iter(contents, '<table>', 4, 'Roles Table', has_header=True):
+			perms[username.strip()] = {'role':role}
+			perms[username.strip()]['real_name'] = realname
 			
+		for user in perms:
+			contents = self.fetch('users/' + user, 'User page')
+			mail = re.search('''sendmessage.php\?touser=[0-9]*">([^<]*)</a>''', contents, re.DOTALL).group(1).strip().replace(" @nospam@ ","@")
+			perms[user]['mail'] = mail
+			
+		return perms
+	
 ## FusionForge.__init__
 
 	def __init__(self, host, project_name):
@@ -304,13 +317,6 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			#print "basepage :",self.basepage
 		else:
 			raise ForgePluckerException("Pas d'id correspondant au projet %s" % project_name)
-# 		self.trackers = [
-# #			FusionForge.BugTracker(self),
-# 			#FusionForge.FeatureTracker(self),
-# 			#FusionForge.SupportTracker(self),
-# 			#FusionForge.PatchTracker(self),
-# 	    ]
-		#print "end of __init__"
 
 
 	# Overloaded to customize FF paths 'host/projects/unixname'
@@ -342,15 +348,3 @@ The FusionForge handler provides machinery for the FusionForge sites.
 	'login':'login'}, "Preferences")
 
 
-	# def pluck_trackers(self, timeless=False, asList = False):
-	# 	print "pluck_trackers"
-	# 	#self.basepage = self.fetch(self.project_page(self.project_name), "Main page")
-	# 	self.basepage = self.fetch('tracker/', "Trackers page", params={'group_id': self.project_id})
-	# 	print self.basepage
-	# 	self.trackers = [
-	# 		FusionForge.BugTracker(self),
-	# 		#FusionForge.FeatureTracker(self),
-	# 		#FusionForge.SupportTracker(self),
-	# 		#FusionForge.PatchTracker(self),
-	#     ]
-	# 	return GenericForge.pluck_trackers(self, timeless)
