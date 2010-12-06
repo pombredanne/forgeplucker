@@ -96,17 +96,56 @@ if __name__ == '__main__':
             else:
                 error("%s: unknown forge type" % sys.argv[0], 1)
     # For convenience, so pasting URLs will work
+    if len(arguments) == 0 :
+        usage()
+
+    # Now try and parse args to find host and project
+    # several formats are supported :
+    # 1 URL : http[s]://hostname/projname
+    # 2 args :
+    #  - hostname (or http[s]://hostname[/]
+    #  - projname
+    if len(arguments) > 2:
+        error("host/project not understood", 1)
+    elif len(arguments) == 2:
+        hostarg = arguments[0]
+        projarg = arguments[1]
+    else:
+        # then we must split arg along the /
+        hostarg = arguments[0]
+        projarg = None
+
+    # For convenience, http[s] prefixed URLs will work
     if arguments[0].startswith("http://"):
-        arguments[0] = arguments[0][7:]
-    if arguments[0].startswith("https://"):
-        arguments[0] = arguments[0][8:]
+        hostarg = arguments[0][7:]
+    elif arguments[0].startswith("https://"):
+        hostarg = arguments[0][8:]
+
+    # split host in chunks along the '/'
     try:
-        segments = arguments[0].split("/")
+        segments = hostarg.split("/")
+        # remove trailing slashes
+        if segments[-1] == '':
+            segments = segments[:-1]
     except (ValueError, IndexError):
-        print >>sys.stderr, "usage: %s [options...] host/project" % sys.argv[0]
-        raise SystemExit, 1
-    host = "/".join(segments[:-1])
-    project = segments[-1]
+        error("usage: %s [options...] host/project" % sys.argv[0], 1)
+
+    # if projname already provided, don't try and extract things from the host
+    if projarg :
+        if len(segments) > 1 :
+            error("incorrect hostname : %s" % hostarg, 1)
+        host = segments[0]
+        project = projarg
+    else :
+        # TODO Here, should pass hostarg to the forge so that it constructs the right thing, depending on forge type
+        host = "/".join(segments[:-1])
+        project = segments[-1]
+
+    if verbose:
+        notify("host: %s" % host)
+        notify("project: %s" % project)
+
+    # try and guess the forge type from the URL if no -f option provided
     if forgetype is None:
         forgetype = get_forgetype(host)
 
@@ -115,6 +154,8 @@ if __name__ == '__main__':
     if user is None or passwd is None:
         error("Error fetching authentication details for user %s at %s" % (user,host) + "\n" 
               + "provide user logname and password with : %s [...] -u username -p password" % sys.argv[0], 1)
+
+    # Now, do the real job
     try:
         # Instantiate handler for that forge to pluck the project
         bt = forgetype(host, project)
