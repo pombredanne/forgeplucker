@@ -40,10 +40,15 @@ def output_oslccmv2json(data):
     oslc_data['rdf:type'] = 'http://planetforge.org/ns/forgeplucker_dump/project_dump#'
     
     oslc_trackers = []
-    
+
+    data = data['trackers']
+
     # Treat all trackers
     trackers = data['trackers']
+
     for tracker in trackers:
+        tracker = trackers[tracker]
+
         tracker_name = tracker['label']
     
         oslc_tracker = {'rdf:about' : tracker['url']}
