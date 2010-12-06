@@ -27,6 +27,8 @@ usage: bugplucker.py [-hrv?] [-f type] [-u user] [-p password] site/project
 
   -d page : dumps content of a specific page
 
+  -o format : (optional) choose a particular output format
+
 State is dumped to standard output in JSON.
 
 This code is Copyright (c) 2009 by Eric S. Raymond.  New BSD license applies.
@@ -52,6 +54,8 @@ def notify(msg):
 def error(msg, code):
     print >>sys.stderr, msg
     raise SystemExit, code
+
+output_formats = ('default', 'coclico', 'oslccmv2json')
 
 if __name__ == '__main__':
     import getopt, json
@@ -95,7 +99,20 @@ if __name__ == '__main__':
                     break
             else:
                 error("%s: unknown forge type" % sys.argv[0], 1)
-    # For convenience, so pasting URLs will work
+        elif arg == '-o': #output format
+            if val == "help" : #list supported output formats
+                print "Supported output formats for option", arg, ":"
+                for format in output_formats:
+                    print format,
+                print
+                raise SystemExit, 0
+            else :
+                for format in output_formats:
+                    if val == format:
+                        break
+                else:
+                    error("%s: unknown output format type '%s' !" % (sys.argv[0], val), 1)
+
     if len(arguments) == 0 :
         usage()
 
@@ -165,22 +182,49 @@ if __name__ == '__main__':
             notify("verbosity : %d" % verbose)
 
         bt.login(user, passwd)
-        if permissions:
-            perms = bt.pluck_permissions()
-            jdump(perms)
-        elif repositories:
-            perms = bt.pluck_repository_urls()
-            jdump(perms)
+
+		# This is the main data structure that will be dumped out at the end
+        data = {}
+        
+    	if permissions:
+    		perms = bt.pluck_permissions()
+    		data["users"] = perms
+    	elif repositories:
+            repo = bt.pluck_repository_urls()
+            data["repository"]=repo
         elif dump:
             page = bt.fetch(page,"Page to dump")
             print page
         elif issue: #modified to not only parse one case (either permissions, repositories or trackers)
             (tracker, issueid) = issue.split(":")
             issue = bt.pluck_artifact(tracker, issueid)
-            jdump(issue)
+            data["issue"]=issue
         else:
+            if not format or format == 'default' :
+                trackers = True
+
+        if trackers:
             bugs = bt.pluck_trackers(timeless=timeless)
-            jdump(bugs)
+            data["trackers"] = bugs
+
+        if not format or format == 'default' :
+            notify('Outputing with format "default"')
+            if permissions:
+                jdump(data["users"])
+            elif repositories:
+                jdump(data["repository"])
+            if issue:
+                jdump(data["issue"])
+            else:
+                jdump(data["trackers"])
+        elif format == 'coclico':
+            notify('Outputing with format "coclico"')
+            # dump data as JSON
+            jdump(data)
+            print
+        else :
+            error ("output format '%s' not yet implemented" % format, 1)
+
     except ForgePluckerException, e:
         print >>sys.stderr, e.msg
         raise SystemExit, 1
