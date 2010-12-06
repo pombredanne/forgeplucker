@@ -17,6 +17,13 @@ Requires Python 2.6.
 import sys, os, re, time, calendar
 from forgeplucker import *
 
+def usage():
+    print __doc__
+    for cls in handler_classes:
+        print "-" * 72
+        print cls.__doc__
+    raise SystemExit, 0
+
 def notify(msg):
         sys.stderr.write(sys.argv[0] + ": __main__ : " + msg + "\n")
 
@@ -27,14 +34,10 @@ if __name__ == '__main__':
     verbose = 0
     issue = None
     timeless = permissions = repositories = dump = False
-    (options, arguments) = getopt.getopt(sys.argv[1:], "f:d:i:np:PSu:v:h?")
+    (options, arguments) = getopt.getopt(sys.argv[1:], "f:d:i:np:PSu:v:h?", ["help",])
     for (arg, val) in options:
-        if arg in ('-h', '-?'):
-            print __doc__
-            for cls in handler_classes:
-                print "-" * 72
-                print cls.__doc__
-            raise SystemExit, 0
+        if arg in ('-h', '-?', '--help'):	# help
+            usage()
         elif arg == '-u':	# user logging in
             user = val
         elif arg == '-p':	# user password
