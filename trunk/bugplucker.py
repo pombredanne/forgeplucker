@@ -222,6 +222,9 @@ if __name__ == '__main__':
             # dump data as JSON
             jdump(data)
             print
+        elif format == 'oslccmv2json' :
+            notify('Outputing with format "oslccmv2json"')
+            output_oslccmv2json(data)
         else :
             error ("output format '%s' not yet implemented" % format, 1)
 

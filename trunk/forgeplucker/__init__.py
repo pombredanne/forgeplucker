@@ -11,6 +11,8 @@ from handle_trac import *
 from handle_fusionforge import *
 from handle_gcode import *
 
+from output_oslccmv2json import *
+
 # Collect handler classes here, client code will introspect on this set
 # so as not to have to know about individual handler classes.
 handler_classes = (SourceForge, Berlios, Savane, Trac, Sf_Trac, GCode, FusionForge)
