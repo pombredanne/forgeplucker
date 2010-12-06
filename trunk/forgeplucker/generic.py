@@ -192,8 +192,9 @@ class GenericForge:
         for (rough, smooth) in tracker.name_mappings.items():
             if smooth in artifact and self.verbosity > 0:
                 self.error("name collision on %s" % smooth)
-            artifact[smooth] = artifact[rough]
-            del artifact[rough]
+            if rough in artifact:
+                artifact[smooth] = artifact[rough]
+                del artifact[rough]
             for change in artifact['history']:
                 if change['field'] == rough:
                     change['field'] = smooth
