@@ -104,7 +104,7 @@ def output_oslccmv2json(data):
             # Treat all fields of an artifact
             for x in artifact :
                 #try:
-                    print x, artifact[x]
+                    #print x, artifact[x]
                     if x in oslc_mapping:
                         mapping = oslc_mapping[x]
                         mapping_type = type(mapping).__name__
