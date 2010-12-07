@@ -197,6 +197,8 @@
                     "type": "bugs"
                 }
             ], 
+            "label": "Bugs", 
+            "url": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse", 
             "vocabulary": {
                 "Component": [
                     "None", 
@@ -299,10 +301,14 @@
         }, 
         "features": {
             "artifacts": [], 
+            "label": "Feature Requests", 
+            "url": "https://gforge.inria.fr/tracker/?atid=9687&group_id=2827&func=browse", 
             "vocabulary": {}
         }, 
         "patches": {
             "artifacts": [], 
+            "label": "Patches", 
+            "url": "https://gforge.inria.fr/tracker/?atid=9686&group_id=2827&func=browse", 
             "vocabulary": {}
         }, 
         "support": {
@@ -404,6 +410,8 @@
                     "type": "support"
                 }
             ], 
+            "label": "Support", 
+            "url": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse", 
             "vocabulary": {
                 "Component": [
                     "None", 
