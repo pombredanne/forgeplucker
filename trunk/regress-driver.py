@@ -25,14 +25,24 @@ The -u option can be used to set a username for access to the remote site.
 It may be a ':' separated list of usernames, if you use different 
 ones on different sites
 
+Configuration files for the tests may be provided in
+test/site:project.cfg files to provide more customization. Format is :
+
+ [parameters]
+ username: specific username for this test
+ format: specific format corresponding to allowed output formats for -o option
+ options: any additional options
+
 """
 import os, sys, getopt
 from os import system
+import ConfigParser
 
 from forgeplucker import site_to_handler
 
 testdir = 'test'
 testcmd = '../bugplucker.py -n'
+config_parser = None
 
 os.chdir(testdir)
 
@@ -45,10 +55,36 @@ def testtoname(test):
 def msg(msg):
     print >>sys.stderr, "%s: %s" % (sys.argv[0],msg)
 
-def runtest(test, output, skip_failing = False):
+def runtest(testenv, output, skip_failing = False):
+    global config_parser
+    test = testenv['test']
+
+    username = None
+    if 'username' in testenv :
+        username = testenv['username']
+
+    format = None
+    if 'format' in testenv :
+        format = testenv['format']
+
+    options = None
+
+    config_file = testtoname(test) + '.cfg'
+    if os.path.exists(config_file) :
+        if not config_parser :
+            config_parser = ConfigParser.RawConfigParser(testenv)
+        config_parser.read(config_file)
+        username = config_parser.get('parameters', 'username')
+        format = config_parser.get('parameters', 'format')
+        options = config_parser.get('parameters', 'options')
+
     cmd = testcmd + ' -v ' + str(verbose) + ' '
     if username != None:
         cmd += '-u ' + username + ' '
+    if format != None:
+        cmd += '-o ' + format + ' '
+    if options != None:
+        cmd += options + ' '
     cmd += test + '>' + output
     if verbose >= 1:
         msg("running '%s'" % cmd)
@@ -134,13 +170,19 @@ if __name__ == '__main__':
     if action == 'run':
         for test in tests:            
             print >>sys.stderr, "Running", test
-            if runtest(test, output=testtoname(test)+'.out', skip_failing=skip_failing) == 0:
+            testenv = {'test': test}
+            if username :
+                testenv['username'] = username
+            if runtest(testenv, output=testtoname(test)+'.out', skip_failing=skip_failing) == 0:
                 if difftest(test) == 0:
                     print >>sys.stderr, test, "succeeded"
     elif action == 'build':
         for test in tests:
             print >>sys.stderr, "Building", test
-            runtest(test,output=testtoname(test)+'.chk')
+            testenv = {'test': test}
+            if username :
+                testenv['username'] = username
+            runtest(testenv, output=testtoname(test)+'.chk')
     elif action == 'diffs':
         for test in tests:
             difftest(test)
