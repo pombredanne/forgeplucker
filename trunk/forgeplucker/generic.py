@@ -210,11 +210,13 @@ class GenericForge:
         for issueid in idlist:
             artifacts.append(self.pluck_artifact(tracker, issueid, vocabularies))
         return artifacts
+    def get_trackers(self):
+        return self.trackers
     def pluck_trackers(self, timeless=False):
         "Pull the buglist, wrapping it with metadata about the operation."
         trackers = {}
         before = timestamp()
-        for tracker in self.trackers:
+        for tracker in self.get_trackers():
             vocabulary, trackers[tracker.type] = {}, {}
             content = self.pluck_artifactlist(tracker, vocabulary, timeless)
             if content is not None:
