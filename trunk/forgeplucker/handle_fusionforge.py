@@ -241,7 +241,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			FusionForge.Tracker.__init__(self, nameTracker, parent, projectbase)
 			self.type = 'custom'
 
-	def getTrackers(self):
+	def get_trackers(self):
 		'''
 		Get the list of trackers from the trackers page.
 		Contrary to what ForgePlucker does normally it does not use the summary page to extract the links as this page only contains the default trackers and not the custom ones.
@@ -255,25 +255,19 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			tPage = re.search('[^/]*//[^/]*/([^"]*)',a['href']).group(1)
 			tLabel = dehtmlize(a.contents[1]).strip()
 			trackers.append({'label':tLabel, 'projectbase':tPage})
-		return trackers
 
-	# wrap the pluck_trackers() 
-	def pluck_trackers(self, timeless=False):
-		'''
-		Get the trackers of the current fusionforge project. This is the method which should be called to initialize the extraction.
-		@param timeless: Record the time of extraction if true
-		'''
-		
-		listedTrackers = self.getTrackers()
 		self.trackers = []	
-		defaults = {'Bugs':FusionForge.BugTracker, 'Feature Requests':FusionForge.FeatureTracker, 'Patches':FusionForge.PatchTracker, 'Support':FusionForge.SupportTracker}
-		for tracker in listedTrackers:
+
+		defaults = {'Bugs': FusionForge.BugTracker, 
+			    'Feature Requests': FusionForge.FeatureTracker, 
+			    'Patches': FusionForge.PatchTracker, 
+			    'Support': FusionForge.SupportTracker}
+		for tracker in trackers:
 			if tracker['label'] in defaults:
 				self.trackers.append(defaults[tracker['label']](self, tracker['projectbase']))
 			else:
 				self.trackers.append(FusionForge.CustomTracker(self, tracker['label'], tracker['projectbase']))
-#				
-		return GenericForge.pluck_trackers(self, timeless)
+		return self.trackers
 
 	### PERMISSIONS/ROLES PARSING
 
