@@ -1,14 +1,23 @@
 #!/usr/bin/env python
 """\
-Regression-test driver for forgeplucker code.  Run the default test mode
-before committing code changes.  Use the --build mode after changing the
-content of a test project.
+Regression-test driver for forgeplucker code.  
+
+Recommended practice is to run the default test mode before committing code changes.
+
+To initialize a reference version of the output that will serve for
+later runs (for non-regression), use the --build mode after changing
+the content of a test project.
 
 Usage: regress-driver [action-option] [options] [site/project ...]
 The actions are -r/--run     # Run the tests (default)
                 -b/--build   # Build the tests
                 --diffs      # Get the diffs from the last regression for each test
                 --list       # List the tests and their handlers
+                -e/--exclude # Reverse role of args (see below)
+                --skip       # Skip failing tests
+                -u           # Username(s)
+                -v           # Verbose
+
 If the -e/--exclude option is provided, run on all the tests not listed.
 If no site/project arguments are provided do the action on all tests.
 
@@ -16,7 +25,6 @@ The -u option can be used to set a username for access to the remote site.
 It may be a ':' separated list of usernames, if you use different 
 ones on different sites
 
-The -v option enables verbose progress messages
 """
 import os, sys, getopt
 from os import system
