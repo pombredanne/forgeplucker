@@ -27,12 +27,12 @@ ones on different sites
 
 Configuration files for the tests may be provided in
 test/site:project.cfg files to provide more customization. Format is :
-
  [parameters]
+ project: site/project to be plucked
  username: specific username for this test
  format: specific format corresponding to allowed output formats for -o option
  options: any additional options
-
+where all attributes are optionnal
 """
 import os, sys, getopt
 from os import system
@@ -57,7 +57,7 @@ def msg(msg):
 
 def runtest(testenv, output, skip_failing = False):
     global config_parser
-    test = testenv['test']
+    test = testenv['project']
 
     username = None
     if 'username' in testenv :
@@ -77,6 +77,7 @@ def runtest(testenv, output, skip_failing = False):
         username = config_parser.get('parameters', 'username')
         format = config_parser.get('parameters', 'format')
         options = config_parser.get('parameters', 'options')
+        test = config_parser.get('parameters', 'project')
 
     cmd = testcmd + ' -v ' + str(verbose) + ' '
     if username != None:
@@ -170,7 +171,7 @@ if __name__ == '__main__':
     if action == 'run':
         for test in tests:            
             print >>sys.stderr, "Running", test
-            testenv = {'test': test}
+            testenv = {'project': test}
             if username :
                 testenv['username'] = username
             if runtest(testenv, output=testtoname(test)+'.out', skip_failing=skip_failing) == 0:
@@ -179,7 +180,7 @@ if __name__ == '__main__':
     elif action == 'build':
         for test in tests:
             print >>sys.stderr, "Building", test
-            testenv = {'test': test}
+            testenv = {'project': test}
             if username :
                 testenv['username'] = username
             runtest(testenv, output=testtoname(test)+'.chk')
