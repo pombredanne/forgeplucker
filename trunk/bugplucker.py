@@ -277,7 +277,18 @@ if __name__ == '__main__':
         elif format == 'coclico':
             if verbose: notify('Outputing with format "coclico"')
             # dump data as JSON
-            jdump(data)
+            coclico_data = {}
+            for key in data:
+                if key != 'trackers':
+                    coclico_data[key] = data[key]
+                else:
+                    coclico_data['trackers'] = []
+                    for tracker in data['trackers']['trackers']:
+                        coclico_tracker = data['trackers']['trackers'][tracker]
+                        coclico_tracker['type'] = tracker
+                        coclico_data['trackers'].append(coclico_tracker)
+
+            jdump(coclico_data)
             print
         elif format == 'oslccmv2json' :
             if verbose: notify('Outputing with format "oslccmv2json"')

@@ -1,494 +1,4 @@
 {
-    "docman": {
-        "active": {
-            "Group1": {
-                "Doc1.1": {
-                    "class": "FILE", 
-                    "description": "Description du Doc1.1", 
-                    "file_name": "f1.1.pdf", 
-                    "given_name": "Doc1.1", 
-                    "language": "French", 
-                    "url": "coclico/docman/f1.1.pdf"
-                }, 
-                "Group1.1": {
-                    "Doc1.1.1": {
-                        "class": "FILE", 
-                        "description": "Description du Doc1.1.1", 
-                        "file_name": "f1.1.1.txt", 
-                        "given_name": "Doc1.1.1", 
-                        "language": "English", 
-                        "url": "coclico/docman/f1.1.1.txt"
-                    }, 
-                    "Doc1.1.2": {
-                        "class": "FILE", 
-                        "description": "Description du Doc1.1.2", 
-                        "file_name": "f1.1.2.txt", 
-                        "given_name": "Doc1.1.2", 
-                        "language": "French", 
-                        "url": "coclico/docman/f1.1.2.txt"
-                    }
-                }, 
-                "TestDoc1.2": {
-                    "class": "FILE", 
-                    "description": "Description du TestDoc1.2", 
-                    "file_name": "TestDoc1.2.htm", 
-                    "given_name": "TestDoc1.2", 
-                    "language": "English", 
-                    "url": "coclico/docman/TestDoc1.2.htm"
-                }
-            }, 
-            "Group2": {
-                "Doc2.1": {
-                    "class": "FILE", 
-                    "description": "Description du Doc2.1", 
-                    "file_name": "f2.1.txt", 
-                    "given_name": "Doc2.1", 
-                    "language": "English", 
-                    "url": "coclico/docman/f2.1.txt"
-                }, 
-                "Doc2.2": {
-                    "class": "FILE", 
-                    "description": "Description du Doc2.2", 
-                    "file_name": "Binary+2.2.docx", 
-                    "given_name": "Doc2.2", 
-                    "language": "English", 
-                    "url": "coclico/docman/Binary+2.2.docx"
-                }
-            }, 
-            "Group3": {
-                "Group3.1": {
-                    "Group3.1.1": {
-                        "Doc3.1.1.1": {
-                            "class": "FILE", 
-                            "description": "Description du doc binaire 3.1.1.1", 
-                            "file_name": "doc3.1.1.xlsx", 
-                            "given_name": "Doc3.1.1.1", 
-                            "language": "French", 
-                            "url": "coclico/docman/doc3.1.1.xlsx"
-                        }
-                    }
-                }
-            }
-        }, 
-        "deleted": {
-            "Group2": {
-                "Doc2.3": {
-                    "class": "FILE", 
-                    "description": "Deleted copy of Doc2.1", 
-                    "file_name": "f2.1.txt", 
-                    "given_name": "Doc2.3", 
-                    "language": "English", 
-                    "url": "coclico/docman/f2.1.txt"
-                }
-            }
-        }, 
-        "hidden": {
-            "Group3": {
-                "Group3.1": {
-                    "Doc 3.1.1": {
-                        "class": "FILE", 
-                        "description": "Hidden copy of doc 1.1", 
-                        "file_name": "f1.1.pdf", 
-                        "given_name": "Doc 3.1.1", 
-                        "language": "French", 
-                        "url": "coclico/docman/f1.1.pdf"
-                    }
-                }
-            }
-        }, 
-        "pending": {}, 
-        "private": {
-            "Uncategorized Submissions": {
-                "Uncategorized Document": {
-                    "class": "FILE", 
-                    "description": "Description of the uncategorized doc", 
-                    "file_name": "TestDoc1.2.htm", 
-                    "given_name": "Uncategorized Document", 
-                    "language": "English", 
-                    "url": "coclico/docman/TestDoc1.2.htm"
-                }
-            }
-        }
-    }, 
-    "forums": [
-        {
-            "admin": {
-                "allow_anonymous_posts": "No", 
-                "email_posts_to": "", 
-                "is_public": "Yes", 
-                "moderation_level": "No Moderation"
-            }, 
-            "content": [
-                {
-                    "attachment": {}, 
-                    "children": [
-                        {
-                            "attachment": {
-                                "name": "installation.py", 
-                                "url": "coclico/forum/installation.py"
-                            }, 
-                            "children": [], 
-                            "content": "18.1", 
-                            "date": "2010-08-30 09:43", 
-                            "subject": "RE: 18", 
-                            "submitter": "fdudouet_"
-                        }
-                    ], 
-                    "content": "18", 
-                    "date": "2010-08-30 09:43", 
-                    "subject": "18", 
-                    "submitter": "fdudouet_"
-                }, 
-                {
-                    "attachment": {}, 
-                    "children": [], 
-                    "content": "20", 
-                    "date": "2010-08-30 09:43", 
-                    "subject": "20", 
-                    "submitter": "fdudouet_"
-                }, 
-                {
-                    "attachment": {
-                        "name": "configfile.py", 
-                        "url": "coclico/forum/configfile.py"
-                    }, 
-                    "children": [], 
-                    "content": "19", 
-                    "date": "2010-08-30 09:43", 
-                    "subject": "19", 
-                    "submitter": "fdudouet_"
-                }, 
-                {
-                    "attachment": {}, 
-                    "children": [], 
-                    "content": "17", 
-                    "date": "2010-08-30 09:43", 
-                    "subject": "17", 
-                    "submitter": "fdudouet_"
-                }, 
-                {
-                    "attachment": {}, 
-                    "children": [], 
-                    "content": "16", 
-                    "date": "2010-08-30 09:42", 
-                    "subject": "16", 
-                    "submitter": "fdudouet_"
-                }, 
-                {
-                    "attachment": {}, 
-                    "children": [], 
-                    "content": "15", 
-                    "date": "2010-08-30 09:42", 
-                    "subject": "15", 
-                    "submitter": "fdudouet_"
-                }, 
-                {
-                    "attachment": {}, 
-                    "children": [], 
-                    "content": "14", 
-                    "date": "2010-08-30 09:42", 
-                    "subject": "14", 
-                    "submitter": "fdudouet_"
-                }, 
-                {
-                    "attachment": {}, 
-                    "children": [], 
-                    "content": "13", 
-                    "date": "2010-08-30 09:42", 
-                    "subject": "13", 
-                    "submitter": "fdudouet_"
-                }, 
-                {
-                    "attachment": {}, 
-                    "children": [], 
-                    "content": "12", 
-                    "date": "2010-08-30 09:42", 
-                    "subject": "12", 
-                    "submitter": "fdudouet_"
-                }, 
-                {
-                    "attachment": {}, 
-                    "children": [], 
-                    "content": "11", 
-                    "date": "2010-08-30 09:42", 
-                    "subject": "11", 
-                    "submitter": "fdudouet_"
-                }, 
-                {
-                    "attachment": {}, 
-                    "children": [], 
-                    "content": "10", 
-                    "date": "2010-08-30 09:42", 
-                    "subject": "10", 
-                    "submitter": "fdudouet_"
-                }, 
-                {
-                    "attachment": {}, 
-                    "children": [], 
-                    "content": "9", 
-                    "date": "2010-08-30 09:42", 
-                    "subject": "9", 
-                    "submitter": "fdudouet_"
-                }, 
-                {
-                    "attachment": {}, 
-                    "children": [], 
-                    "content": "8", 
-                    "date": "2010-08-30 09:42", 
-                    "subject": "8", 
-                    "submitter": "fdudouet_"
-                }, 
-                {
-                    "attachment": {}, 
-                    "children": [], 
-                    "content": "7", 
-                    "date": "2010-08-30 09:42", 
-                    "subject": "7", 
-                    "submitter": "fdudouet_"
-                }, 
-                {
-                    "attachment": {}, 
-                    "children": [], 
-                    "content": "6", 
-                    "date": "2010-08-30 09:42", 
-                    "subject": "6", 
-                    "submitter": "fdudouet_"
-                }, 
-                {
-                    "attachment": {}, 
-                    "children": [], 
-                    "content": "5", 
-                    "date": "2010-08-30 09:42", 
-                    "subject": "5", 
-                    "submitter": "fdudouet_"
-                }, 
-                {
-                    "attachment": {}, 
-                    "children": [], 
-                    "content": "4", 
-                    "date": "2010-08-30 09:41", 
-                    "subject": "4", 
-                    "submitter": "fdudouet_"
-                }, 
-                {
-                    "attachment": {}, 
-                    "children": [], 
-                    "content": "3", 
-                    "date": "2010-08-30 09:41", 
-                    "subject": "3", 
-                    "submitter": "fdudouet_"
-                }, 
-                {
-                    "attachment": {
-                        "name": "configfile.py", 
-                        "url": "coclico/forum/configfile.py"
-                    }, 
-                    "children": [
-                        {
-                            "attachment": {
-                                "name": "clientparameters.py", 
-                                "url": "coclico/forum/clientparameters.py"
-                            }, 
-                            "children": [], 
-                            "content": "Answer 1", 
-                            "date": "2010-08-30 09:41", 
-                            "subject": "RE: Second thread", 
-                            "submitter": "fdudouet_"
-                        }
-                    ], 
-                    "content": "M1", 
-                    "date": "2010-08-30 09:40", 
-                    "subject": "Second thread", 
-                    "submitter": "fdudouet_"
-                }, 
-                {
-                    "attachment": {}, 
-                    "children": [
-                        {
-                            "attachment": {}, 
-                            "children": [
-                                {
-                                    "attachment": {}, 
-                                    "children": [], 
-                                    "content": "Answer 1.1", 
-                                    "date": "2010-08-30 09:32", 
-                                    "subject": "RE: Welcome to Open-Discussion", 
-                                    "submitter": "fdudouet_"
-                                }
-                            ], 
-                            "content": "Answer 1", 
-                            "date": "2010-08-30 09:31", 
-                            "subject": "RE: Welcome to Open-Discussion", 
-                            "submitter": "fdudouet_"
-                        }, 
-                        {
-                            "attachment": {}, 
-                            "children": [
-                                {
-                                    "attachment": {}, 
-                                    "children": [], 
-                                    "content": "Answer 2.1", 
-                                    "date": "2010-08-30 09:33", 
-                                    "subject": "RE: Welcome to Open-Discussion", 
-                                    "submitter": "fdudouet_"
-                                }, 
-                                {
-                                    "attachment": {}, 
-                                    "children": [
-                                        {
-                                            "attachment": {}, 
-                                            "children": [], 
-                                            "content": "Answer 2.2.1", 
-                                            "date": "2010-08-30 09:33", 
-                                            "subject": "RE: Welcome to Open-Discussion", 
-                                            "submitter": "fdudouet_"
-                                        }
-                                    ], 
-                                    "content": "Answer 2.2", 
-                                    "date": "2010-08-30 09:33", 
-                                    "subject": "RE: Welcome to Open-Discussion", 
-                                    "submitter": "fdudouet_"
-                                }
-                            ], 
-                            "content": "Answer 2", 
-                            "date": "2010-08-30 09:31", 
-                            "subject": "RE: Welcome to Open-Discussion", 
-                            "submitter": "fdudouet_"
-                        }
-                    ], 
-                    "content": "Welcome to Open-Discussion", 
-                    "date": "2010-06-29 07:35", 
-                    "subject": "Welcome to Open-Discussion", 
-                    "submitter": "fdudouet"
-                }
-            ], 
-            "description": "General Discussion", 
-            "monitoring_users": [], 
-            "name": "open-discussion"
-        }, 
-        {
-            "admin": {
-                "allow_anonymous_posts": "No", 
-                "email_posts_to": "", 
-                "is_public": "Yes", 
-                "moderation_level": "No Moderation"
-            }, 
-            "content": [
-                {
-                    "attachment": {}, 
-                    "children": [], 
-                    "content": "Welcome to Help", 
-                    "date": "2010-06-29 07:35", 
-                    "subject": "Welcome to Help", 
-                    "submitter": "fdudouet"
-                }
-            ], 
-            "description": "Get Public Help", 
-            "monitoring_users": [], 
-            "name": "help"
-        }, 
-        {
-            "admin": {
-                "allow_anonymous_posts": "No", 
-                "email_posts_to": "", 
-                "is_public": "No", 
-                "moderation_level": "No Moderation"
-            }, 
-            "content": [
-                {
-                    "attachment": {}, 
-                    "children": [], 
-                    "content": "Welcome to Developers", 
-                    "date": "2010-06-29 07:35", 
-                    "subject": "Welcome to Developers", 
-                    "submitter": "fdudouet"
-                }
-            ], 
-            "description": "Project Developer Discussion", 
-            "monitoring_users": [], 
-            "name": "developers"
-        }
-    ], 
-    "frs": {
-        "2nd package": {
-            "releases": {
-                "1st release v2": {
-                    "change_log": "", 
-                    "date": "2010-08-30 08:56", 
-                    "files": {
-                        "README": {
-                            "date": "2010-08-30", 
-                            "processor": "PPC", 
-                            "type": "text", 
-                            "url": "coclico/frs/README"
-                        }
-                    }, 
-                    "release_notes": "2nd package", 
-                    "status": "Active"
-                }, 
-                "2nd release v2": {
-                    "change_log": "No changes", 
-                    "date": "2010-08-30 09:03", 
-                    "files": {
-                        "MANIFEST.in": {
-                            "date": "2010-08-30", 
-                            "processor": "Other", 
-                            "type": ".pkg", 
-                            "url": "coclico/frs/MANIFEST.in"
-                        }, 
-                        "setup.py": {
-                            "date": "2010-08-30", 
-                            "processor": "UltraSparc", 
-                            "type": ".deb", 
-                            "url": "coclico/frs/setup.py"
-                        }
-                    }, 
-                    "release_notes": "Active release", 
-                    "status": "Active"
-                }
-            }, 
-            "status": "Active"
-        }, 
-        "coclico": {
-            "releases": {
-                "1st release": {
-                    "change_log": "v 1.0", 
-                    "date": "2010-08-30 08:46", 
-                    "files": {
-                        "api.py": {
-                            "date": "2010-08-30", 
-                            "processor": "i386", 
-                            "type": "text", 
-                            "url": "coclico/frs/api.py"
-                        }, 
-                        "dBug.php": {
-                            "date": "2010-08-30", 
-                            "processor": "i386", 
-                            "type": "Other Source File", 
-                            "url": "coclico/frs/dBug.php"
-                        }
-                    }, 
-                    "release_notes": "dBug PHP File", 
-                    "status": "Active"
-                }, 
-                "2nd release": {
-                    "change_log": "", 
-                    "date": "2010-08-30 08:56", 
-                    "files": {
-                        "cluster.py": {
-                            "date": "2010-08-30", 
-                            "processor": "IA64", 
-                            "type": ".gz", 
-                            "url": "coclico/frs/cluster.py"
-                        }
-                    }, 
-                    "release_notes": "Hidden release", 
-                    "status": "Hidden"
-                }
-            }, 
-            "status": "Active"
-        }
-    }, 
     "project": {
         "class": "PROJECT", 
         "forgetype": "FusionForge", 
@@ -496,677 +6,514 @@
         "host": "gforge.inria.fr", 
         "project": "coclico"
     }, 
-    "roles": {
-        "Admin": {
-            "Documentation Manager": "Admin", 
-            "File Release System": "Write", 
-            "Forum Admin": "Admin", 
-            "Forum:developers": "Admin", 
-            "Forum:help": "Admin", 
-            "Forum:open-discussion": "Admin", 
-            "Project Admin": "Admin", 
-            "SCM": "Write", 
-            "Tasks Admin": "Admin", 
-            "Tasks:Next Release": "Tech & Admin", 
-            "Tasks:To Do": "Tech & Admin", 
-            "Tracker Admin": "Admin", 
-            "Tracker:Bugs": "Tech & Admin", 
-            "Tracker:Feature Requests": "Tech & Admin", 
-            "Tracker:Patches": "Tech & Admin", 
-            "Tracker:Support": "Tech & Admin", 
-            "Webcal": "Modify"
-        }, 
-        "Default": {
-            "Documentation Manager": "Read/Post", 
-            "File Release System": "Read", 
-            "Forum Admin": "None", 
-            "Forum:developers": "Read", 
-            "Forum:help": "Read", 
-            "Forum:open-discussion": "Read", 
-            "Project Admin": "Admin", 
-            "SCM": "Read", 
-            "Tasks Admin": "None", 
-            "Tasks:Next Release": "Read", 
-            "Tasks:To Do": "Read", 
-            "Tracker Admin": "None", 
-            "Tracker:Bugs": "Read", 
-            "Tracker:Feature Requests": "Read", 
-            "Tracker:Patches": "Read", 
-            "Tracker:Support": "Read", 
-            "Webcal": "No access"
-        }, 
-        "Doc Writer": {
-            "Documentation Manager": "Admin", 
-            "File Release System": "Read", 
-            "Forum Admin": "None", 
-            "Forum:developers": "Post", 
-            "Forum:help": "Post", 
-            "Forum:open-discussion": "Post", 
-            "Project Admin": "None", 
-            "SCM": "Read", 
-            "Tasks Admin": "None", 
-            "Tasks:Next Release": "Read", 
-            "Tasks:To Do": "Read", 
-            "Tracker Admin": "None", 
-            "Tracker:Bugs": "Read", 
-            "Tracker:Feature Requests": "Read", 
-            "Tracker:Patches": "Read", 
-            "Tracker:Support": "Read", 
-            "Webcal": "See"
-        }, 
-        "Junior Developer": {
-            "Documentation Manager": "Read/Post", 
-            "File Release System": "Read", 
-            "Forum Admin": "None", 
-            "Forum:developers": "Post", 
-            "Forum:help": "Post", 
-            "Forum:open-discussion": "Post", 
-            "Project Admin": "None", 
-            "SCM": "Write", 
-            "Tasks Admin": "None", 
-            "Tasks:Next Release": "Tech", 
-            "Tasks:To Do": "Tech", 
-            "Tracker Admin": "None", 
-            "Tracker:Bugs": "Tech", 
-            "Tracker:Feature Requests": "Tech", 
-            "Tracker:Patches": "Tech", 
-            "Tracker:Support": "Tech", 
-            "Webcal": "See"
-        }, 
-        "Observer": {
-            "Files:2nd package": "Public", 
-            "Files:coclico": "Public", 
-            "Forum:AnonPost:developers": "No Anonymous Posts", 
-            "Forum:AnonPost:help": "No Anonymous Posts", 
-            "Forum:AnonPost:open-discussion": "No Anonymous Posts", 
-            "Forum:developers": "Private", 
-            "Forum:help": "Public", 
-            "Forum:open-discussion": "Public", 
-            "Project": "Public", 
-            "SCM": "Public (PServer)", 
-            "Tasks:Next Release": "Public", 
-            "Tasks:To Do": "Public", 
-            "Tracker:AnonPost:Bugs": "No Anonymous Posts", 
-            "Tracker:AnonPost:Feature Requests": "No Anonymous Posts", 
-            "Tracker:AnonPost:Patches": "No Anonymous Posts", 
-            "Tracker:AnonPost:Support": "No Anonymous Posts", 
-            "Tracker:Bugs": "Public", 
-            "Tracker:Feature Requests": "Public", 
-            "Tracker:Patches": "Public", 
-            "Tracker:Support": "Public"
-        }, 
-        "Senior Developer": {
-            "Documentation Manager": "Admin", 
-            "File Release System": "Write", 
-            "Forum Admin": "Admin", 
-            "Forum:developers": "Admin", 
-            "Forum:help": "Admin", 
-            "Forum:open-discussion": "Admin", 
-            "Project Admin": "None", 
-            "SCM": "Write", 
-            "Tasks Admin": "Admin", 
-            "Tasks:Next Release": "Tech & Admin", 
-            "Tasks:To Do": "Tech & Admin", 
-            "Tracker Admin": "Admin", 
-            "Tracker:Bugs": "Tech & Admin", 
-            "Tracker:Feature Requests": "Tech & Admin", 
-            "Tracker:Patches": "Tech & Admin", 
-            "Tracker:Support": "Tech & Admin", 
-            "Webcal": "See"
-        }, 
-        "Support Tech": {
-            "Documentation Manager": "Admin", 
-            "File Release System": "Read", 
-            "Forum Admin": "None", 
-            "Forum:developers": "Post", 
-            "Forum:help": "Post", 
-            "Forum:open-discussion": "Post", 
-            "Project Admin": "None", 
-            "SCM": "Read", 
-            "Tasks Admin": "None", 
-            "Tasks:Next Release": "Read", 
-            "Tasks:To Do": "Read", 
-            "Tracker Admin": "None", 
-            "Tracker:Bugs": "Tech & Admin", 
-            "Tracker:Feature Requests": "Tech & Admin", 
-            "Tracker:Patches": "Tech & Admin", 
-            "Tracker:Support": "Tech & Admin", 
-            "Webcal": "See"
-        }
-    }, 
-    "trackers": {
-        "class": "PROJECT", 
-        "forgetype": "FusionForge", 
-        "format_version": 1, 
-        "host": "gforge.inria.fr", 
-        "project": "coclico", 
-        "trackers": {
-            "bugs": {
-                "artifacts": [
-                    {
-                        "Component": "None", 
-                        "Hardware": "All", 
-                        "Operating System": "Windows XP", 
-                        "Product": "Software A", 
-                        "Resolution": "None", 
-                        "Severity": "None", 
-                        "URL": "", 
-                        "Version": "None", 
-                        "assigned_to": "Nobody", 
-                        "attachments": [], 
-                        "class": "ARTIFACT", 
-                        "comments": [], 
-                        "date": "2010-06-29T05:44:00Z", 
-                        "description": "Nothing in particular here\n", 
-                        "history": [], 
-                        "id": 10633, 
-                        "priority": "5 - Highest", 
-                        "status": "Open", 
-                        "submitter": "fdudouet", 
-                        "summary": "My first test bug", 
-                        "type": "bugs"
-                    }, 
-                    {
-                        "Component": "None", 
-                        "Hardware": "None", 
-                        "Operating System": "None", 
-                        "Product": "None", 
-                        "Resolution": "None", 
-                        "Severity": "None", 
-                        "URL": "", 
-                        "Version": "None", 
-                        "assigned_to": "Nobody", 
-                        "attachments": [], 
-                        "class": "ARTIFACT", 
-                        "closed_at": "2010-06-29T05:47:00Z", 
-                        "comments": [], 
-                        "date": "2010-06-29T05:45:00Z", 
-                        "description": "This bug will be closed ASAP!\n", 
-                        "history": [
-                            {
-                                "by": "fdudouet", 
-                                "class": "FIELDCHANGE", 
-                                "date": "2010-06-29T05:47:00Z", 
-                                "field": "close_date", 
-                                "old": "2010-06-29 07:47"
-                            }, 
-                            {
-                                "by": "fdudouet", 
-                                "class": "FIELDCHANGE", 
-                                "date": "2010-06-29T05:47:00Z", 
-                                "field": "status", 
-                                "old": "Open"
-                            }
-                        ], 
-                        "id": 10634, 
-                        "priority": "3", 
-                        "status": "Closed", 
-                        "submitter": "fdudouet", 
-                        "summary": "A closed bug", 
-                        "type": "bugs"
-                    }, 
-                    {
-                        "Component": "None", 
-                        "Hardware": "None", 
-                        "Operating System": "None", 
-                        "Product": "None", 
-                        "Resolution": "None", 
-                        "Severity": "None", 
-                        "URL": "", 
-                        "Version": "None", 
-                        "assigned_to": "Nobody", 
-                        "attachments": [
-                            {
-                                "by": "fdudouet", 
-                                "class": "ATTACHMENT", 
-                                "date": "2010-06-29T05:53:00Z", 
-                                "filename": "firstFile.txt", 
-                                "id": "1935", 
-                                "url": "coclico/bugs/firstFile.txt"
-                            }, 
-                            {
-                                "by": "fdudouet", 
-                                "class": "ATTACHMENT", 
-                                "date": "2010-06-29T05:53:00Z", 
-                                "filename": "gforge.inria.fr.htm", 
-                                "id": "1934", 
-                                "url": "coclico/bugs/gforge.inria.fr.htm"
-                            }
-                        ], 
-                        "class": "ARTIFACT", 
-                        "comments": [], 
-                        "date": "2010-06-29T05:53:00Z", 
-                        "description": "This bug contains a few files !\n", 
-                        "history": [
-                            {
-                                "by": "fdudouet", 
-                                "class": "FIELDCHANGE", 
-                                "date": "2010-06-30T05:15:00Z", 
-                                "field": "assigned_to", 
-                                "old": "none"
-                            }, 
-                            {
-                                "by": "fdudouet", 
-                                "class": "FIELDCHANGE", 
-                                "date": "2010-06-29T05:53:00Z", 
-                                "field": "File Added", 
-                                "old": "1934: gforge.inria.fr.htm"
-                            }, 
-                            {
-                                "by": "fdudouet", 
-                                "class": "FIELDCHANGE", 
-                                "date": "2010-06-29T05:53:00Z", 
-                                "field": "File Added", 
-                                "old": "1935: firstFile.txt"
-                            }
-                        ], 
-                        "id": 10637, 
-                        "priority": "3", 
-                        "status": "Open", 
-                        "submitter": "fdudouet", 
-                        "summary": "A bug with files", 
-                        "type": "bugs"
-                    }, 
-                    {
-                        "Component": "Cog B", 
-                        "Hardware": "All", 
-                        "Operating System": "Windows 3.1", 
-                        "Product": "Software A", 
-                        "Resolution": "Accepted As Bug", 
-                        "Severity": "blocker", 
-                        "URL": "", 
-                        "Version": "v1.0", 
-                        "assigned_to": "Nobody", 
-                        "attachments": [], 
-                        "class": "ARTIFACT", 
-                        "comments": [
-                            {
-                                "class": "COMMENT", 
-                                "comment": "Here is a comment", 
-                                "date": "2010-06-29T05:58:00Z", 
-                                "submitter": "fdudouet"
-                            }, 
-                            {
-                                "class": "COMMENT", 
-                                "comment": "And another.", 
-                                "date": "2010-06-29T05:59:00Z", 
-                                "submitter": "fdudouet"
-                            }
-                        ], 
-                        "date": "2010-06-29T05:58:00Z", 
-                        "description": "This bug has most of its fields filled!\n\nAnd it has some comments and changes too.\n", 
-                        "history": [
-                            {
-                                "by": "fdudouet", 
-                                "class": "FIELDCHANGE", 
-                                "date": "2010-06-29T05:59:00Z", 
-                                "field": "assigned_to", 
-                                "old": "fdudouet"
-                            }, 
-                            {
-                                "by": "fdudouet", 
-                                "class": "FIELDCHANGE", 
-                                "date": "2010-06-29T05:59:00Z", 
-                                "field": "Severity", 
-                                "old": "critical"
-                            }, 
-                            {
-                                "by": "fdudouet", 
-                                "class": "FIELDCHANGE", 
-                                "date": "2010-06-29T05:59:00Z", 
-                                "field": "Component", 
-                                "old": "Cog A"
-                            }, 
-                            {
-                                "by": "fdudouet", 
-                                "class": "FIELDCHANGE", 
-                                "date": "2010-06-29T05:59:00Z", 
-                                "field": "Operating System", 
-                                "old": "Windows XP"
-                            }
-                        ], 
-                        "id": 10638, 
-                        "priority": "3", 
-                        "status": "Open", 
-                        "submitter": "fdudouet", 
-                        "summary": "A complete bug", 
-                        "type": "bugs"
-                    }
-                ], 
-                "label": "Bugs", 
-                "url": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse", 
-                "vocabulary": {
-                    "Component": [
-                        "None", 
-                        "Cog A", 
-                        "Cog B"
+    "trackers": [
+        {
+            "artifacts": [
+                {
+                    "Component": "None", 
+                    "Hardware": "None", 
+                    "Operating System": "None", 
+                    "Product": "None", 
+                    "Severity": "None", 
+                    "URL": "", 
+                    "Version": "None", 
+                    "assigned_to": "Nobody", 
+                    "attachments": [], 
+                    "class": "ARTIFACT", 
+                    "comments": [
+                        {
+                            "class": "COMMENT", 
+                            "comment": "This one has a multi field set with 2 choices", 
+                            "date": "2010-06-29T06:02:00Z", 
+                            "submitter": "fdudouet"
+                        }
                     ], 
-                    "Hardware": [
-                        "None", 
-                        "All", 
-                        "DEC", 
-                        "HP", 
-                        "Macintosh", 
-                        "PC", 
-                        "SGI", 
-                        "Sun", 
-                        "Other"
+                    "date": "2010-06-29T05:48:00Z", 
+                    "description": "opened!opened!opened!\n", 
+                    "history": [
+                        {
+                            "by": "fdudouet", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2010-06-29T06:01:00Z", 
+                            "field": "multiChoice", 
+                            "old": "None"
+                        }
                     ], 
-                    "Operating System": [
-                        "None", 
-                        "All", 
-                        "Windows 3.1", 
-                        "Windows 95", 
-                        "Windows 98", 
-                        "Windows ME", 
-                        "Windows 2000", 
-                        "Windows NT", 
-                        "Windows XP", 
-                        "Windows Server 2003", 
-                        "Mac System 7", 
-                        "Mac System 7.5", 
-                        "Mac System 7.6.1", 
-                        "Mac System 8.0", 
-                        "Mac System 8.5", 
-                        "Mac System 8.6", 
-                        "Mac System 9.x", 
-                        "MacOS X", 
-                        "Linux", 
-                        "BSDI", 
-                        "FreeBSD", 
-                        "NetBSD", 
-                        "OpenBSD", 
-                        "AIX", 
-                        "BeOS", 
-                        "HP-UX", 
-                        "IRIX", 
-                        "Neutrino", 
-                        "OpenVMS", 
-                        "OS/2", 
-                        "OSF/1", 
-                        "Solaris", 
-                        "SunOS", 
-                        "other"
-                    ], 
-                    "Product": [
-                        "None", 
-                        "Software A"
-                    ], 
-                    "Resolution": [
-                        "None", 
-                        "Accepted As Bug", 
-                        "Fixed", 
-                        "Won't Fix", 
-                        "Invalid", 
-                        "Awaiting Response", 
-                        "Works For Me"
-                    ], 
-                    "Severity": [
-                        "None", 
-                        "blocker", 
-                        "critical", 
-                        "major", 
-                        "normal", 
-                        "minor", 
-                        "trivial", 
-                        "enhancement"
-                    ], 
-                    "Version": [
-                        "None", 
-                        "v1.0", 
-                        "v1.1"
-                    ], 
-                    "priority": [
-                        "1 - Lowest", 
-                        "2", 
-                        "3", 
-                        "4", 
-                        "5 - Highest"
-                    ], 
-                    "status": [
-                        "Open", 
-                        "Closed", 
-                        "UNCONFIRMED", 
-                        "NEW", 
-                        "ASSIGNED", 
-                        "REOPENED", 
-                        "RESOLVED", 
-                        "VERIFIED"
-                    ]
-                }
-            }, 
-            "features": {
-                "artifacts": [], 
-                "label": "Feature Requests", 
-                "url": "https://gforge.inria.fr/tracker/?atid=9687&group_id=2827&func=browse", 
-                "vocabulary": {}
-            }, 
-            "patches": {
-                "artifacts": [], 
-                "label": "Patches", 
-                "url": "https://gforge.inria.fr/tracker/?atid=9686&group_id=2827&func=browse", 
-                "vocabulary": {}
-            }, 
-            "support": {
-                "artifacts": [
-                    {
-                        "Component": "None", 
-                        "Hardware": "None", 
-                        "Operating System": "None", 
-                        "Product": "None", 
-                        "Severity": "None", 
-                        "URL": "", 
-                        "Version": "None", 
-                        "assigned_to": "Nobody", 
-                        "attachments": [], 
-                        "class": "ARTIFACT", 
-                        "comments": [
-                            {
-                                "class": "COMMENT", 
-                                "comment": "This one has a multi field set with 2 choices", 
-                                "date": "2010-06-29T06:02:00Z", 
-                                "submitter": "fdudouet"
-                            }
-                        ], 
-                        "date": "2010-06-29T05:48:00Z", 
-                        "description": "opened!opened!opened!\n", 
-                        "history": [
-                            {
-                                "by": "fdudouet", 
-                                "class": "FIELDCHANGE", 
-                                "date": "2010-06-29T06:01:00Z", 
-                                "field": "multiChoice", 
-                                "old": "None"
-                            }
-                        ], 
-                        "id": 10635, 
-                        "multiChoice": [
-                            "choice1 ", 
-                            "choice2 "
-                        ], 
-                        "priority": "3", 
-                        "status": "Open", 
-                        "submitter": "fdudouet", 
-                        "summary": "test1", 
-                        "type": "support"
-                    }, 
-                    {
-                        "Component": "None", 
-                        "Hardware": "None", 
-                        "Operating System": "None", 
-                        "Product": "None", 
-                        "Severity": "None", 
-                        "URL": "", 
-                        "Version": "None", 
-                        "assigned_to": "Nobody", 
-                        "attachments": [], 
-                        "class": "ARTIFACT", 
-                        "closed_at": "2010-06-29T06:01:00Z", 
-                        "comments": [], 
-                        "date": "2010-06-29T05:48:00Z", 
-                        "description": "closed!closed!closed!closed!\n", 
-                        "history": [
-                            {
-                                "by": "fdudouet", 
-                                "class": "FIELDCHANGE", 
-                                "date": "2010-06-29T06:01:00Z", 
-                                "field": "close_date", 
-                                "old": "2010-06-29 08:01"
-                            }, 
-                            {
-                                "by": "fdudouet", 
-                                "class": "FIELDCHANGE", 
-                                "date": "2010-06-29T06:01:00Z", 
-                                "field": "multiChoice", 
-                                "old": "None"
-                            }, 
-                            {
-                                "by": "fdudouet", 
-                                "class": "FIELDCHANGE", 
-                                "date": "2010-06-29T05:48:00Z", 
-                                "field": "status", 
-                                "old": "Open"
-                            }, 
-                            {
-                                "by": "fdudouet", 
-                                "class": "FIELDCHANGE", 
-                                "date": "2010-06-29T05:48:00Z", 
-                                "field": "close_date", 
-                                "old": "2010-06-29 07:48"
-                            }
-                        ], 
-                        "id": 10636, 
-                        "multiChoice": [
-                            "choice3 "
-                        ], 
-                        "priority": "3", 
-                        "status": "Closed", 
-                        "submitter": "fdudouet", 
-                        "summary": "test2", 
-                        "type": "support"
-                    }
-                ], 
-                "label": "Support", 
-                "url": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse", 
-                "vocabulary": {
-                    "Component": [
-                        "None", 
-                        "Cog A", 
-                        "Cog B"
-                    ], 
-                    "Hardware": [
-                        "None", 
-                        "All", 
-                        "DEC", 
-                        "HP", 
-                        "Macintosh", 
-                        "PC", 
-                        "SGI", 
-                        "Sun", 
-                        "Other"
-                    ], 
-                    "Operating System": [
-                        "None", 
-                        "All", 
-                        "Windows 3.1", 
-                        "Windows 95", 
-                        "Windows 98", 
-                        "Windows ME", 
-                        "Windows 2000", 
-                        "Windows NT", 
-                        "Windows XP", 
-                        "Windows Server 2003", 
-                        "Mac System 7", 
-                        "Mac System 7.5", 
-                        "Mac System 7.6.1", 
-                        "Mac System 8.0", 
-                        "Mac System 8.5", 
-                        "Mac System 8.6", 
-                        "Mac System 9.x", 
-                        "MacOS X", 
-                        "Linux", 
-                        "BSDI", 
-                        "FreeBSD", 
-                        "NetBSD", 
-                        "OpenBSD", 
-                        "AIX", 
-                        "BeOS", 
-                        "HP-UX", 
-                        "IRIX", 
-                        "Neutrino", 
-                        "OpenVMS", 
-                        "OS/2", 
-                        "OSF/1", 
-                        "Solaris", 
-                        "SunOS", 
-                        "other"
-                    ], 
-                    "Product": [
-                        "None", 
-                        "Software A"
-                    ], 
-                    "Severity": [
-                        "None", 
-                        "blocker", 
-                        "critical", 
-                        "major", 
-                        "normal", 
-                        "minor", 
-                        "trivial", 
-                        "enhancement"
-                    ], 
-                    "Version": [
-                        "None", 
-                        "v1.0", 
-                        "v1.1"
-                    ], 
+                    "id": 10635, 
                     "multiChoice": [
-                        "None", 
                         "choice1 ", 
-                        "choice2 ", 
+                        "choice2 "
+                    ], 
+                    "priority": "3", 
+                    "status_id": "Open", 
+                    "submitter": "fdudouet", 
+                    "summary": "test1", 
+                    "type": "support"
+                }, 
+                {
+                    "Component": "None", 
+                    "Hardware": "None", 
+                    "Operating System": "None", 
+                    "Product": "None", 
+                    "Severity": "None", 
+                    "URL": "", 
+                    "Version": "None", 
+                    "assigned_to": "Nobody", 
+                    "attachments": [], 
+                    "class": "ARTIFACT", 
+                    "closed_at": "2010-06-29T06:01:00Z", 
+                    "comments": [], 
+                    "date": "2010-06-29T05:48:00Z", 
+                    "description": "closed!closed!closed!closed!\n", 
+                    "history": [
+                        {
+                            "by": "fdudouet", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2010-06-29T06:01:00Z", 
+                            "field": "close_date", 
+                            "old": "2010-06-29 08:01"
+                        }, 
+                        {
+                            "by": "fdudouet", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2010-06-29T06:01:00Z", 
+                            "field": "multiChoice", 
+                            "old": "None"
+                        }, 
+                        {
+                            "by": "fdudouet", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2010-06-29T05:48:00Z", 
+                            "field": "status_id", 
+                            "old": "Open"
+                        }, 
+                        {
+                            "by": "fdudouet", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2010-06-29T05:48:00Z", 
+                            "field": "close_date", 
+                            "old": "2010-06-29 07:48"
+                        }
+                    ], 
+                    "id": 10636, 
+                    "multiChoice": [
                         "choice3 "
                     ], 
-                    "priority": [
-                        "1 - Lowest", 
-                        "2", 
-                        "3", 
-                        "4", 
-                        "5 - Highest"
-                    ], 
-                    "status": [
-                        "Open", 
-                        "Closed", 
-                        "UNCONFIRMED", 
-                        "NEW", 
-                        "ASSIGNED", 
-                        "REOPENED", 
-                        "RESOLVED", 
-                        "VERIFIED"
-                    ]
+                    "priority": "3", 
+                    "status_id": "Closed", 
+                    "submitter": "fdudouet", 
+                    "summary": "test2", 
+                    "type": "support"
                 }
+            ], 
+            "label": "Support", 
+            "type": "support", 
+            "url": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse", 
+            "vocabulary": {
+                "Component": [
+                    "None", 
+                    "Cog A", 
+                    "Cog B"
+                ], 
+                "Hardware": [
+                    "None", 
+                    "All", 
+                    "DEC", 
+                    "HP", 
+                    "Macintosh", 
+                    "PC", 
+                    "SGI", 
+                    "Sun", 
+                    "Other"
+                ], 
+                "Operating System": [
+                    "None", 
+                    "All", 
+                    "Windows 3.1", 
+                    "Windows 95", 
+                    "Windows 98", 
+                    "Windows ME", 
+                    "Windows 2000", 
+                    "Windows NT", 
+                    "Windows XP", 
+                    "Windows Server 2003", 
+                    "Mac System 7", 
+                    "Mac System 7.5", 
+                    "Mac System 7.6.1", 
+                    "Mac System 8.0", 
+                    "Mac System 8.5", 
+                    "Mac System 8.6", 
+                    "Mac System 9.x", 
+                    "MacOS X", 
+                    "Linux", 
+                    "BSDI", 
+                    "FreeBSD", 
+                    "NetBSD", 
+                    "OpenBSD", 
+                    "AIX", 
+                    "BeOS", 
+                    "HP-UX", 
+                    "IRIX", 
+                    "Neutrino", 
+                    "OpenVMS", 
+                    "OS/2", 
+                    "OSF/1", 
+                    "Solaris", 
+                    "SunOS", 
+                    "other"
+                ], 
+                "Product": [
+                    "None", 
+                    "Software A"
+                ], 
+                "Severity": [
+                    "None", 
+                    "blocker", 
+                    "critical", 
+                    "major", 
+                    "normal", 
+                    "minor", 
+                    "trivial", 
+                    "enhancement"
+                ], 
+                "Version": [
+                    "None", 
+                    "v1.0", 
+                    "v1.1"
+                ], 
+                "multiChoice": [
+                    "None", 
+                    "choice1 ", 
+                    "choice2 ", 
+                    "choice3 "
+                ], 
+                "priority": [
+                    "1 - Lowest", 
+                    "2", 
+                    "3", 
+                    "4", 
+                    "5 - Highest"
+                ], 
+                "status_id": [
+                    "Open", 
+                    "Closed", 
+                    "UNCONFIRMED", 
+                    "NEW", 
+                    "ASSIGNED", 
+                    "REOPENED", 
+                    "RESOLVED", 
+                    "VERIFIED"
+                ]
             }
+        }, 
+        {
+            "artifacts": [], 
+            "label": "Feature Requests", 
+            "type": "features", 
+            "url": "https://gforge.inria.fr/tracker/?atid=9687&group_id=2827&func=browse", 
+            "vocabulary": {}
+        },
+        {
+            "artifacts": [
+                {
+                    "Component": "None", 
+                    "Hardware": "All", 
+                    "Operating System": "Windows XP", 
+                    "Product": "Software A", 
+                    "Resolution": "None", 
+                    "Severity": "None", 
+                    "URL": "", 
+                    "Version": "None", 
+                    "assigned_to": "Nobody", 
+                    "attachments": [], 
+                    "class": "ARTIFACT", 
+                    "comments": [], 
+                    "date": "2010-06-29T05:44:00Z", 
+                    "description": "Nothing in particular here\n", 
+                    "history": [], 
+                    "id": 10633, 
+                    "priority": "5 - Highest", 
+                    "status_id": "Open", 
+                    "submitter": "fdudouet", 
+                    "summary": "My first test bug", 
+                    "type": "bugs"
+                }, 
+                {
+                    "Component": "None", 
+                    "Hardware": "None", 
+                    "Operating System": "None", 
+                    "Product": "None", 
+                    "Resolution": "None", 
+                    "Severity": "None", 
+                    "URL": "", 
+                    "Version": "None", 
+                    "assigned_to": "Nobody", 
+                    "attachments": [], 
+                    "class": "ARTIFACT", 
+                    "closed_at": "2010-06-29T05:47:00Z", 
+                    "comments": [], 
+                    "date": "2010-06-29T05:45:00Z", 
+                    "description": "This bug will be closed ASAP!\n", 
+                    "history": [
+                        {
+                            "by": "fdudouet", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2010-06-29T05:47:00Z", 
+                            "field": "close_date", 
+                            "old": "2010-06-29 07:47"
+                        }, 
+                        {
+                            "by": "fdudouet", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2010-06-29T05:47:00Z", 
+                            "field": "status_id", 
+                            "old": "Open"
+                        }
+                    ], 
+                    "id": 10634, 
+                    "priority": "3", 
+                    "status_id": "Closed", 
+                    "submitter": "fdudouet", 
+                    "summary": "A closed bug", 
+                    "type": "bugs"
+                }, 
+                {
+                    "Component": "None", 
+                    "Hardware": "None", 
+                    "Operating System": "None", 
+                    "Product": "None", 
+                    "Resolution": "None", 
+                    "Severity": "None", 
+                    "URL": "", 
+                    "Version": "None", 
+                    "assigned_to": "Nobody", 
+                    "attachments": [
+                        {
+                            "by": "fdudouet", 
+                            "class": "ATTACHMENT", 
+                            "date": "2010-06-29T05:53:00Z", 
+                            "filename": "firstFile.txt", 
+                            "id": "1935", 
+                            "url": "coclico/bugs/firstFile.txt"
+                        }, 
+                        {
+                            "by": "fdudouet", 
+                            "class": "ATTACHMENT", 
+                            "date": "2010-06-29T05:53:00Z", 
+                            "filename": "gforge.inria.fr.htm", 
+                            "id": "1934", 
+                            "url": "coclico/bugs/gforge.inria.fr.htm"
+                        }
+                    ], 
+                    "class": "ARTIFACT", 
+                    "comments": [], 
+                    "date": "2010-06-29T05:53:00Z", 
+                    "description": "This bug contains a few files !\n", 
+                    "history": [
+                        {
+                            "by": "fdudouet", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2010-06-30T05:15:00Z", 
+                            "field": "assigned_to", 
+                            "old": "none"
+                        }, 
+                        {
+                            "by": "fdudouet", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2010-06-29T05:53:00Z", 
+                            "field": "File Added", 
+                            "old": "1934: gforge.inria.fr.htm"
+                        }, 
+                        {
+                            "by": "fdudouet", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2010-06-29T05:53:00Z", 
+                            "field": "File Added", 
+                            "old": "1935: firstFile.txt"
+                        }
+                    ], 
+                    "id": 10637, 
+                    "priority": "3", 
+                    "status_id": "Open", 
+                    "submitter": "fdudouet", 
+                    "summary": "A bug with files", 
+                    "type": "bugs"
+                }, 
+                {
+                    "Component": "Cog B", 
+                    "Hardware": "All", 
+                    "Operating System": "Windows 3.1", 
+                    "Product": "Software A", 
+                    "Resolution": "Accepted As Bug", 
+                    "Severity": "blocker", 
+                    "URL": "", 
+                    "Version": "v1.0", 
+                    "assigned_to": "Nobody", 
+                    "attachments": [], 
+                    "class": "ARTIFACT", 
+                    "comments": [
+                        {
+                            "class": "COMMENT", 
+                            "comment": "Here is a comment", 
+                            "date": "2010-06-29T05:58:00Z", 
+                            "submitter": "fdudouet"
+                        }, 
+                        {
+                            "class": "COMMENT", 
+                            "comment": "And another.", 
+                            "date": "2010-06-29T05:59:00Z", 
+                            "submitter": "fdudouet"
+                        }
+                    ], 
+                    "date": "2010-06-29T05:58:00Z", 
+                    "description": "This bug has most of its fields filled!\n\nAnd it has some comments and changes too.\n", 
+                    "history": [
+                        {
+                            "by": "fdudouet", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2010-06-29T05:59:00Z", 
+                            "field": "assigned_to", 
+                            "old": "fdudouet"
+                        }, 
+                        {
+                            "by": "fdudouet", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2010-06-29T05:59:00Z", 
+                            "field": "Severity", 
+                            "old": "critical"
+                        }, 
+                        {
+                            "by": "fdudouet", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2010-06-29T05:59:00Z", 
+                            "field": "Component", 
+                            "old": "Cog A"
+                        }, 
+                        {
+                            "by": "fdudouet", 
+                            "class": "FIELDCHANGE", 
+                            "date": "2010-06-29T05:59:00Z", 
+                            "field": "Operating System", 
+                            "old": "Windows XP"
+                        }
+                    ], 
+                    "id": 10638, 
+                    "priority": "3", 
+                    "status_id": "Open", 
+                    "submitter": "fdudouet", 
+                    "summary": "A complete bug", 
+                    "type": "bugs"
+                }
+            ], 
+            "label": "Bugs", 
+            "type": "bugs", 
+            "url": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse", 
+            "vocabulary": {
+                "Component": [
+                    "None", 
+                    "Cog A", 
+                    "Cog B"
+                ], 
+                "Hardware": [
+                    "None", 
+                    "All", 
+                    "DEC", 
+                    "HP", 
+                    "Macintosh", 
+                    "PC", 
+                    "SGI", 
+                    "Sun", 
+                    "Other"
+                ], 
+                "Operating System": [
+                    "None", 
+                    "All", 
+                    "Windows 3.1", 
+                    "Windows 95", 
+                    "Windows 98", 
+                    "Windows ME", 
+                    "Windows 2000", 
+                    "Windows NT", 
+                    "Windows XP", 
+                    "Windows Server 2003", 
+                    "Mac System 7", 
+                    "Mac System 7.5", 
+                    "Mac System 7.6.1", 
+                    "Mac System 8.0", 
+                    "Mac System 8.5", 
+                    "Mac System 8.6", 
+                    "Mac System 9.x", 
+                    "MacOS X", 
+                    "Linux", 
+                    "BSDI", 
+                    "FreeBSD", 
+                    "NetBSD", 
+                    "OpenBSD", 
+                    "AIX", 
+                    "BeOS", 
+                    "HP-UX", 
+                    "IRIX", 
+                    "Neutrino", 
+                    "OpenVMS", 
+                    "OS/2", 
+                    "OSF/1", 
+                    "Solaris", 
+                    "SunOS", 
+                    "other"
+                ], 
+                "Product": [
+                    "None", 
+                    "Software A"
+                ], 
+                "Resolution": [
+                    "None", 
+                    "Accepted As Bug", 
+                    "Fixed", 
+                    "Won't Fix", 
+                    "Invalid", 
+                    "Awaiting Response", 
+                    "Works For Me"
+                ], 
+                "Severity": [
+                    "None", 
+                    "blocker", 
+                    "critical", 
+                    "major", 
+                    "normal", 
+                    "minor", 
+                    "trivial", 
+                    "enhancement"
+                ], 
+                "Version": [
+                    "None", 
+                    "v1.0", 
+                    "v1.1"
+                ], 
+                "priority": [
+                    "1 - Lowest", 
+                    "2", 
+                    "3", 
+                    "4", 
+                    "5 - Highest"
+                ], 
+                "status_id": [
+                    "Open", 
+                    "Closed", 
+                    "UNCONFIRMED", 
+                    "NEW", 
+                    "ASSIGNED", 
+                    "REOPENED", 
+                    "RESOLVED", 
+                    "VERIFIED"
+                ]
+            }
+        }, 
+        {
+            "artifacts": [], 
+            "label": "Patches", 
+            "type": "patches", 
+            "url": "https://gforge.inria.fr/tracker/?atid=9686&group_id=2827&func=browse", 
+            "vocabulary": {}
         }
-    }, 
-    "users": {
-        "fdudouet": {
-            "mail": "florian.dudouet@irisa.fr", 
-            "real_name": "Florian Dudouet", 
-            "role": "Admin"
-        }, 
-        "fdudouet_": {
-            "mail": "sebastien.campion@gmail.com", 
-            "real_name": "Florian Dudouet", 
-            "role": "Admin"
-        }, 
-        "mnazaria": {
-            "mail": "marc.nazarian@xrce.xerox.com", 
-            "real_name": "Marc NAZARIAN", 
-            "role": "Junior Developer"
-        }, 
-        "oberger": {
-            "mail": "olivier.berger@it-sudparis.eu", 
-            "real_name": "Olivier Berger", 
-            "role": "Admin"
-        }
-    }
+    ]
 }
