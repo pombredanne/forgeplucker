@@ -176,8 +176,8 @@ The status of all trackers (bug, patch, support, and task) is extracted.
             Savane.Tracker.__init__(self, parent)
             self.type = "support"
             self.name_mappings["platform_version_id"] = "platform_version"
-    def __init__(self, host, project_name):
-        GenericForge.__init__(self, host, project_name);
+    def __init__(self, host, project_name, params = False):
+        GenericForge.__init__(self, host, project_name, params);
         self.host = host
         self.project_name = project_name
         self.verbosity = 0

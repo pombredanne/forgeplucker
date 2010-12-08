@@ -15,7 +15,7 @@ class ForgePluckerException(Exception):
 
 class GenericForge:
     "Machinery for generic SourceForge-descended forges."
-    def __init__(self, host, project_name):
+    def __init__(self, host, project_name, params = False):
         "Set up opener with support for authentication cookies."
         self.opener = urllib2.build_opener(CacheHandler("test/cache"), urllib2.HTTPCookieProcessor())
         self.host = host

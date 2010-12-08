@@ -125,8 +125,8 @@ The Trac handler provides bug-plucking machinery for Trac sites.
     @staticmethod
     def canonicalize_date(localdate):
         return remhex(localdate).split('+')[0]
-    def __init__(self, host, project):
-        GenericForge.__init__(self, host, project)
+    def __init__(self, host, project, params = False):
+        GenericForge.__init__(self, host, project, params)
         self.trackers = [ Trac.Tracker(self) ]
     def login(self, username, password):
         """Log in to the site."""

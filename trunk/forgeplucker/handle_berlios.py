@@ -240,8 +240,8 @@ submitted to them.
             patch["comments"] = self.parse_followups(contents)
             self.parse_history_table(contents, patch)
 
-    def __init__(self, host, project_name):
-        GenericForge.__init__(self, host, project_name);
+    def __init__(self, host, project_name, params = False):
+        GenericForge.__init__(self, host, project_name, params);
         self.project_id = self.numid_from_name(self.project_name)
         self.trackers = [
             Berlios.BugTracker(self),

@@ -991,9 +991,9 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			
 ## FusionForge.__init__
 
-	def __init__(self, host, project_name):
+	def __init__(self, host, project_name, params = False):
 		"""			"""
-		GenericForge.__init__(self, host, project_name)	
+		GenericForge.__init__(self, host, project_name, params)
 		
 		self.basepage = self.fetch(self.project_page(project_name),
 				"Main page")

@@ -133,8 +133,8 @@ This code does not capture custom trackers.
         def __init__(self, parent):
             SourceForge.Tracker.__init__(self, "Support Requests", parent)
             self.type = "support"
-    def __init__(self, host, project_name):
-        GenericForge.__init__(self, host, project_name)
+    def __init__(self, host, project_name, params = False):
+        GenericForge.__init__(self, host, project_name, params)
         self.basepage = self.fetch(self.project_page(project_name)+'develop',
                                    "Develop page")
         m = re.search(r'/tracker/\?group_id=([0-9]*)', self.basepage)
