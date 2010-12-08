@@ -11,7 +11,7 @@ Contributed in the frame of the COCLICO project.
 #import psycopg2 #@UnusedImport
 import re
 import copy
-import urllib2
+#import urllib2
 import os
 import sys
 
