@@ -7,6 +7,7 @@ necessary.
 
 import sys, os, re, urllib, urllib2, time, calendar, email.utils
 from htmlscrape import *
+from cache import CacheHandler
 
 class ForgePluckerException(Exception):
     def __init__(self, msg):
@@ -16,7 +17,7 @@ class GenericForge:
     "Machinery for generic SourceForge-descended forges."
     def __init__(self, host, project_name):
         "Set up opener with support for authentication cookies."
-        self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
+        self.opener = urllib2.build_opener(CacheHandler("test/cache"), urllib2.HTTPCookieProcessor())
         self.host = host
         self.project_name = project_name
         self.verbosity = 0
