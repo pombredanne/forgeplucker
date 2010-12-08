@@ -17,7 +17,13 @@ class GenericForge:
     "Machinery for generic SourceForge-descended forges."
     def __init__(self, host, project_name, params = False):
         "Set up opener with support for authentication cookies."
-        self.opener = urllib2.build_opener(CacheHandler("test/cache"), urllib2.HTTPCookieProcessor())
+        self.use_cache = False
+        if params and 'use_cache' in params:
+            self.use_cache = params['use_cache']
+        if self.use_cache :
+            self.opener = urllib2.build_opener(CacheHandler("cache"), urllib2.HTTPCookieProcessor())
+        else :
+            self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
         self.host = host
         self.project_name = project_name
         self.verbosity = 0
@@ -32,18 +38,40 @@ class GenericForge:
         try:
             if not url.startswith("http"):
                 url = "https://%s/" % self.host + url
-            opener = self.opener.open(url, params)
-            page = opener.read()
+
             if self.verbosity == 1:
                 self.notify(legend + ": " + url)
             elif self.verbosity >= 2:
                 print >>sys.stderr, legend, url
                 print >>sys.stderr, "=" * 79
+
+            opener = self.opener.open(url, params)
+
+            if 'x-local-cache' in opener.info():
+
+                if self.verbosity >= 2:
+                    self.notify('Loaded from cache')
+
+                if not self.use_cache:
+                    if self.verbosity >= 2:
+                        print >>sys.stderr, opener.info()
+                        print >>sys.stderr, "-" * 79
+                    self.opener.recache()
+                    if self.verbosity >= 2:
+                        self.notify('Not using cache : re-loaded from network')
+
+            if self.verbosity >= 2:
                 print >>sys.stderr, opener.info()
                 print >>sys.stderr, "-" * 79
+                
+            page = opener.read()
+
+            if self.verbosity >= 2:
                 print >>sys.stderr, page
                 print >>sys.stderr, "=" * 79
+
             return page
+
         except urllib2.HTTPError, e:
             if softfail:
                 if self.verbosity >= 1:

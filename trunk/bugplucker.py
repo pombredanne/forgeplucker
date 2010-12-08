@@ -43,6 +43,8 @@ usage: bugplucker.py [-hv?] [-f type] [-u user] [-p password] [-d page] [-o form
   
   -o format : (optional) choose a particular output format
 
+  -r : force loading from the network instead of using pages cache on filesystem (in './cache/')
+
 State is dumped to standard output in JSON.
 
 This code is Copyright (c) 2009 by Eric S. Raymond.  New BSD license applies.
@@ -79,6 +81,7 @@ if __name__ == '__main__':
     issue = None
 
     xml = timeless = permissions = repositories = dump = phpWiki = trackers = getDocs = frs = forums = news = tasks = format = False
+    use_cache = True
 
     # Start with command-line args parsing
     (options, arguments) = getopt.getopt(sys.argv[1:], "f:d:i:no:p:PTSFDWBNKru:v:h?", ["help",])
@@ -144,6 +147,8 @@ if __name__ == '__main__':
                         break
                 else:
                     error("%s: unknown output format type '%s' !" % (sys.argv[0], val), 1)
+        elif arg == '-r' : #re-load from network instead of using cache
+            use_cache = False
 
     if len(arguments) == 0 :
         usage()
@@ -206,7 +211,16 @@ if __name__ == '__main__':
 
     # Now, do the real job
     try:
+        if verbose :
+            notify("verbosity : %d" % verbose)
+
+        if verbose:
+            notify("use_cache: %s" % repr(use_cache))
+
         params = None
+        if use_cache :
+            params =  {'use_cache': use_cache}
+
         # Instantiate handler for that forge to pluck the project
         if params:
             bt = forgetype(host, project, params)
@@ -214,8 +228,6 @@ if __name__ == '__main__':
             bt = forgetype(host, project)
 
         bt.verbosity = verbose
-        if verbose :
-            notify("verbosity : %d" % verbose)
 
         bt.login(user, passwd)
 
