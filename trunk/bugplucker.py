@@ -206,8 +206,12 @@ if __name__ == '__main__':
 
     # Now, do the real job
     try:
+        params = None
         # Instantiate handler for that forge to pluck the project
-        bt = forgetype(host, project)
+        if params:
+            bt = forgetype(host, project, params)
+        else:
+            bt = forgetype(host, project)
 
         bt.verbosity = verbose
         if verbose :
