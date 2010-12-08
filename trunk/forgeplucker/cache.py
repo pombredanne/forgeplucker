@@ -63,9 +63,9 @@ def check_cache_time(path, max_age):
 @locked_function
 def exists_in_cache(cache_location, url, max_age):
     """Returns if header AND body cache file exist (and are up-to-date)"""
-    print 'exists_in_cache', cache_location, url, max_age
+    #print 'exists_in_cache', cache_location, url, max_age
     hpath, bpath = calculate_cache_path(cache_location, url)
-    print 'hpath, bpath', hpath, bpath
+    #print 'hpath, bpath', hpath, bpath
     if os.path.exists(hpath) and os.path.exists(bpath):
         return(
             check_cache_time(hpath, max_age)
@@ -120,7 +120,7 @@ class CacheHandler(urllib2.BaseHandler):
     def default_open(self, request):
         """Handles GET requests, if the response is cached it returns it
         """
-        print 'default_open', request.get_full_url()
+        #print 'default_open', request.get_full_url()
         if request.get_method() is not "GET":
             return None # let the next handler try to handle the request
 
@@ -142,7 +142,7 @@ class CacheHandler(urllib2.BaseHandler):
         """Gets a HTTP response, if it was a GET request and the status code
         starts with 2 (200 OK etc) it caches it and returns a CachedResponse
         """
-        print 'http_response', request.get_full_url()
+        #print 'http_response', request.get_full_url()
         if (request.get_method() == "GET"
             and str(response.code).startswith("2")
         ):
