@@ -38,6 +38,9 @@ class GenericForge:
         self.host = host
         self.project_name = project_name
         self.where = "%s/%s" % (self.host, self.project_name)
+    def real_url(self, url):
+        url = "https://%s/" % self.host + url
+        return url
     def fetch(self, url, legend, params={}, softfail=False):
         "Instrumented page fetcher, takes optional paremeter dictionary."
         self.where = url
@@ -47,7 +50,7 @@ class GenericForge:
             params = None
         try:
             if not url.startswith("http"):
-                url = "https://%s/" % self.host + url
+                url = self.real_url(url)
 
             if self.verbosity == 1:
                 self.notify(legend + ": " + url)
