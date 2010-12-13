@@ -60,8 +60,10 @@ def output_oslccmv2json(data):
         for artifact in artifacts :
             
             oslc_changerequest = {'rdf:type': 'http://open-services.net/ns/cm#ChangeRequest'}
-            
-            url = artifact['URL']
+
+            url = None
+            if 'URL' in artifact:
+                url = artifact['URL']
             if not url:
                 url = tracker['url'] + '/%d' % artifact['id']
                 
@@ -91,7 +93,7 @@ def output_oslccmv2json(data):
                             #'priority': 5 - Highest
                             'type': 'dcterms:type',
                             'description': 'dcterms:description',
-                            'status_id': 'oslc_cm:status', 
+                            'status': 'oslc_cm:status', 
                             #'URL': 
                             'date': 'dcterms:created',
                             #'Resolution': None
