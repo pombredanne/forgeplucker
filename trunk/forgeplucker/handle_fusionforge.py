@@ -1038,10 +1038,12 @@ The FusionForge handler provides machinery for the FusionForge sites.
 ## LOGIN
 
 	def login(self, username, password):
-		GenericForge.login(self, {
-	'form_loginname':username,
-	'form_pw':password,
-	'return_to':"/account",
-	'login':'login'}, "Preferences")
+		# POST data in the login form
+		GenericForge.login(self, 
+				   {
+				'form_loginname':username,
+				'form_pw':password,
+				'login':'login'},
+				   'href="'+ self.real_url('account/logout.php') +'">')
 
 
