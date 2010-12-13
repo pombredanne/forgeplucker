@@ -1013,7 +1013,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			#self.basepage = self.fetch('tracker/', "Trackers page", params={'group_id': self.project_id})
 			#print "basepage :",self.basepage
 		else:
-			raise ForgePluckerException("Pas d'id correspondant au projet %s" % project_name)
+			raise ForgePluckerException("No matching id found for project %s" % project_name)
 
 
 	# Overloaded to customize FF paths 'host/projects/unixname'
