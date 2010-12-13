@@ -263,6 +263,8 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			    'Patches': FusionForge.PatchTracker, 
 			    'Support': FusionForge.SupportTracker}
 		for tracker in trackers:
+			if self.verbosity >= 1:
+				self.notify("found tracker: " + tracker['label'] + ':' + tracker['projectbase'])
 			if tracker['label'] in defaults:
 				self.trackers.append(defaults[tracker['label']](self, tracker['projectbase']))
 			else:
