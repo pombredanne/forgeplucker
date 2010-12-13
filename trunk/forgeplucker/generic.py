@@ -106,7 +106,7 @@ class GenericForge:
     def login(self, params, checkstring):
         "Log in to the site."
         if self.verbosity >= 1:
-            self.notify("dispatching to " + self.__class__.__name__)
+            self.notify("Logging in to " + self.__class__.__name__)
         response = self.fetch(self.login_url(), "Login Page", params)
         if checkstring not in response:
             self.error("authentication failure on login", ood=False)
