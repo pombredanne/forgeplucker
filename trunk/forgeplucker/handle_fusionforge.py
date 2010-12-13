@@ -97,29 +97,43 @@ The FusionForge handler provides machinery for the FusionForge sites.
 
 		def narrow(self, text):
 			"Get the section of text containing editable elements."
-			return text
+			soupedContents = BeautifulSoup(text)
+			text = soupedContents.find('div', id='gforge-content')
+			if not text:
+				text = soupedContents.find('div', id='maindiv')
+			return str(text)
 
 		def parse_followups(self, contents, bug):
 			"Parse followups out of a displayed page in a bug or patch tracker."
 	
 			comments = []
 			soup = BeautifulSoup(contents)
-
-			commentblock = soup.find(name='div', attrs={'title':"Followups"}).findAll("tr", {"class":re.compile("altRowStyle")})
-	
-			for tr in commentblock:	
-				comment = {"class":"COMMENT"}
-
-				m = re.search('Date: ([-0-9: ]+)\s*Sender:[^"]*"[^/]*//[^/]*/users/([^/]*)/"', str(tr)) #très améliorable...
-				comment['date'] = self.parent.canonicalize_date(m.group(1))
-				comment['submitter'] = m.group(2)
-		
-				m = re.search("</a>(.*)</pre>", str(tr), re.DOTALL)
-				comment['comment'] = m.group(1).strip()
+			soup = soup.find('div', title='Followups')
+			# 5.0 has this :
+			t = soup.find('table', attrs={'class': re.compile('.*listTable')})
+			if not t :
+				# then 4.8 which has only this :
+				t = soup.find('table').find('table')
+			if t:
+				for tr in t.findAll("tr"):
+					td=tr.find("td")
+					if td:
+						# if 4.8, then, has this :
+						pre = td.find('pre')
+						if pre:
+							td = pre
+						comment = {"class":"COMMENT"}
+						m = re.search('Date: ([-0-9: ]+)', str(td.contents))
+						if m:
+							comment['date'] = self.parent.canonicalize_date(m.group(1))
+							m = re.search('Sender: .*/users/([^/]*)/"', str(td.contents))
+							if m:
+								comment['submitter'] = m.group(1)
+							comment['comment'] = td.contents[-1].strip()
 				
-				comments.append(comment)
-			comments.reverse()
-			
+							comments.append(comment)
+			if comments :
+				comments.reverse()
 			return comments
 
 		def parse_history_table(self, contents, artifacts):
@@ -202,13 +216,40 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			return artifact, vocabularies
 
 		def custom(self, contents, artifact, vocabularies):
-			"des champs spécifiques à fusionforge qu'il serait intéressant d'ajouter, peut ne rien faire en dehors d'appeler parse_followups et parse_attachments. méthode appelée par generic"
+			"parse specific fields of FusionForge"
+			#des champs spécifiques à fusionforge qu'il serait intéressant d'ajouter, peut ne rien faire en dehors d'appeler parse_followups et parse_attachments. méthode appelée par generic
  			artifact, vocabularies = self.update_extrafields(artifact, contents, vocabularies)
 
-			#get Detailed Description (uneditable thus unfetchable directly from form)
-			dD = blocktext(dehtmlize(re.search('''<td>Detailed description</td></tr></thead><tr  class=".*"><td><pre>(.*)</pre></td></tr></table>.*</table>\n<br />\n<br />
-''',contents,re.DOTALL).group(1).strip()))
-			artifact['description'] = dD
+ 			#get Detailed Description (uneditable thus unfetchable directly from form)
+ 			dD = None
+			dDFound = False
+			bs = BeautifulSoup(self.narrow(contents))
+			# for 4.8
+			for t in bs.findAll('table'):
+				try :
+					if t.find('thead').find('tr').find('td').contents[0] == 'Detailed description':
+						dDFound = True
+						dD = t.find('tr', attrs={'class': 'altRowStyleEven'}).find('td').find('pre').contents[0]
+						dD = blocktext(dehtmlize(dD.strip()))
+						break
+				except AttributeError, e : # 
+					if str(e) != "'NoneType' object has no attribute 'find'":
+						raise
+			# Try for 5.0
+			if not dDFound:
+				bs = BeautifulSoup(self.narrow(contents))
+				for t in bs.findAll('table', attrs={'class': re.compile('.*listTable')}):
+					try :
+						if t.find('th').find('div').find('div').contents[0] == 'Detailed description':
+							dDFound = True
+							dD = t.find('tr').findNext('tr').find('td').contents[0]
+							dD = blocktext(dehtmlize(dD.strip()))
+							break
+					except AttributeError, e : # 
+						if str(e) != "'NoneType' object has no attribute 'find'":
+							raise
+ 			if dD:
+ 				artifact['description'] = dD
 			
 			m = re.search('''Date Closed:</strong><br />\s*([^<]*)\s*<''', contents)
 			if not (m == None):
@@ -249,12 +290,13 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		trackers = []
 		trackersPage = self.fetch('tracker/?group_id='+self.project_id, 'Fetching tracker list')
 		trackersPage = BeautifulSoup(trackersPage)
-		trs = trackersPage.find('table').findAll('tr')[1:]
-		for tr in trs:
-			a = tr.find('a')
-			tPage = re.search('[^/]*//[^/]*/([^"]*)',a['href']).group(1)
-			tLabel = dehtmlize(a.contents[1]).strip()
-			trackers.append({'label':tLabel, 'projectbase':tPage})
+		for table in trackersPage.findAll('table') :
+			trs = table.findAll('tr')[1:]
+			for tr in trs:
+				a = tr.find('a')
+				tPage = re.search('[^/]*//[^/]*.*/([^/]+/[^"/]*)', a['href']).group(1)
+				tLabel = dehtmlize(a.contents[1]).strip()
+				trackers.append({'label':tLabel, 'projectbase':tPage})
 
 		self.trackers = []	
 
@@ -614,6 +656,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		#TODO
 		def narrow(self, text):
 			"Get the section of text containing editable elements."
+			#Look for <div id="maindiv">
 			return text
 	
 		def parse_followups(self, contents):
