@@ -25,9 +25,16 @@ class GenericForge:
             self.verbosity = params['verbosity']
 
         if self.use_cache :
-            self.opener = urllib2.build_opener(CacheHandler("cache"), urllib2.HTTPCookieProcessor())
+            if self.verbosity >=3 :
+                self.opener = urllib2.build_opener(urllib2.HTTPSHandler(debuglevel=1), CacheHandler("cache"), urllib2.HTTPCookieProcessor())
+            else:
+                self.opener = urllib2.build_opener(CacheHandler("cache"), urllib2.HTTPCookieProcessor())
         else :
-            self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
+            if self.verbosity >=3 :
+                self.opener = urllib2.build_opener(urllib2.HTTPSHandler(debuglevel=1), urllib2.HTTPCookieProcessor())
+            else:
+                self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
+
         self.host = host
         self.project_name = project_name
         self.where = "%s/%s" % (self.host, self.project_name)
