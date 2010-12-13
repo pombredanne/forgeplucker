@@ -20,13 +20,16 @@ class GenericForge:
         self.use_cache = False
         if params and 'use_cache' in params:
             self.use_cache = params['use_cache']
+        self.verbosity = 0
+        if params and 'verbosity' in params:
+            self.verbosity = params['verbosity']
+
         if self.use_cache :
             self.opener = urllib2.build_opener(CacheHandler("cache"), urllib2.HTTPCookieProcessor())
         else :
             self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
         self.host = host
         self.project_name = project_name
-        self.verbosity = 0
         self.where = "%s/%s" % (self.host, self.project_name)
     def fetch(self, url, legend, params={}, softfail=False):
         "Instrumented page fetcher, takes optional paremeter dictionary."

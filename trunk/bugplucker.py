@@ -217,9 +217,11 @@ if __name__ == '__main__':
         if verbose:
             notify("use_cache: %s" % repr(use_cache))
 
-        params = None
+        params = {}
         if use_cache :
             params =  {'use_cache': use_cache}
+        if verbose:
+            params['verbosity'] = verbose
 
         # Instantiate handler for that forge to pluck the project
         if params:
