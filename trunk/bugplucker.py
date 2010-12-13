@@ -219,7 +219,7 @@ if __name__ == '__main__':
 
         params = {}
         if use_cache :
-            params =  {'use_cache': use_cache}
+            params['use_cache'] = use_cache
         if verbose:
             params['verbosity'] = verbose
 
