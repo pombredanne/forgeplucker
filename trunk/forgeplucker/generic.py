@@ -239,9 +239,10 @@ class GenericForge:
             if rough in artifact:
                 artifact[smooth] = artifact[rough]
                 del artifact[rough]
-            for change in artifact['history']:
-                if change['field'] == rough:
-                    change['field'] = smooth
+            if 'history' in artifact:
+                for change in artifact['history']:
+                    if change['field'] == rough:
+                        change['field'] = smooth
         return artifact
     def pluck_artifactlist(self, tracker, vocabularies, timeless):
         "Gather artifact information on a specified tracker."
