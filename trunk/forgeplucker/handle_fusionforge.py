@@ -38,7 +38,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 				"bug_group_id": "group",
 				"category_id": "category",
 				"resolution_id": "resolution",
-#				"status_id": "status",				
+				"status_id": "status",				
         		}
 			# l'auteur du bug n'est pas éditable et ne peut donc être récupérée par le crawler dans le formulaire, cette regexp ne sert qu'à lui
 			self.submitter_re = '''<tt><a href="\S*">([^<]*)</a></tt>'''
