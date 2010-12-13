@@ -42,7 +42,7 @@ a dependency on larger areas of page structure which can mutate.
 
 3. Throw away as many irrelevant parts of the page as you can before
 attempting either regexp matching or HTML parsing. (The most
-mutation-prone parts of ppsages are headers, footers, and sidebars;
+mutation-prone parts of pages are headers, footers, and sidebars;
 that's where the decorative elements and navigation stuff tend to
 cluster.) If you can identify fixed end strings for headers or fixed
 start strings for footers, use those to trim (and error out if they're
@@ -109,7 +109,7 @@ format will be identicals.  Here are some guidelines:
    forge is richer than most others.
 
 3. *Make it self-describing.*  Use "class" tags on objects to 
-   label the individual sibparts with what they're for.  This will
+   label the individual subparts with what they're for.  This will
    help client software, which should be able to use these to
    (among other things) not have to retain a lot of state about 
    where it is when it's crawling over the tree.
@@ -348,7 +348,7 @@ framework code will throw an access-denied error.
 
 The method for checking whether or not there's a next page.  Observe
 that it throws an error if it doesn't see what it's expecting.  In order
-not to get spurious data, it's vest when our web-scraping methhods
+not to get spurious data, it's best when our web-scraping methods
 have lots and lots of sanity checks, and fail loudly when one
 doesn't pass.
 
