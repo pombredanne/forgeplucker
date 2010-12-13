@@ -168,7 +168,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 
 			return changes, attachments
 		
-		def update_nodb(self, artifact, contents, vocabularies):
+		def update_extrafields(self, artifact, contents, vocabularies):
 			"Find names of extra fields by parsing the html contents"
 			tempKeys, tempValues, tempVocab = [], {}, {}
 			for arti in artifact:
@@ -203,7 +203,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 
 		def custom(self, contents, artifact, vocabularies):
 			"des champs spécifiques à fusionforge qu'il serait intéressant d'ajouter, peut ne rien faire en dehors d'appeler parse_followups et parse_attachments. méthode appelée par generic"
-			artifact, vocabularies = self.update_nodb(artifact, contents, vocabularies)
+ 			artifact, vocabularies = self.update_extrafields(artifact, contents, vocabularies)
 
 			#get Detailed Description (uneditable thus unfetchable directly from form)
 			dD = blocktext(dehtmlize(re.search('''<td>Detailed description</td></tr></thead><tr  class=".*"><td><pre>(.*)</pre></td></tr></table>.*</table>\n<br />\n<br />
