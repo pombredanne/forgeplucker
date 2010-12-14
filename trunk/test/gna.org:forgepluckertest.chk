@@ -29,7 +29,7 @@
                         {
                             "class": "COMMENT", 
                             "comment": "It now needs multi-line comment.\n(I was thinking of stopping on the self-fixing mantra, but this is my second line)\n", 
-                            "date": "2010-02-21T17:34:00Z", 
+                            "date": "2010-02-21T16:34:13Z", 
                             "submitter": {
                                 "class": "IDENTITY", 
                                 "nick": "Peter"
@@ -38,7 +38,7 @@
                         {
                             "class": "COMMENT", 
                             "comment": "It also needs a comment (this is also self-fixing).\n", 
-                            "date": "2010-02-20T11:06:00Z", 
+                            "date": "2010-02-20T10:06:38Z", 
                             "submitter": {
                                 "class": "IDENTITY", 
                                 "nick": "Peter"
@@ -47,21 +47,21 @@
                         {
                             "class": "COMMENT", 
                             "comment": "Fortunately this bug is self fixing.\n", 
-                            "date": "2009-11-09T22:17:00Z", 
+                            "date": "2009-11-09T21:17:27Z", 
                             "submitter": {
                                 "class": "IDENTITY", 
                                 "nick": "Peter"
                             }
                         }
                     ], 
-                    "date": "2009-11-09T22:17:00Z", 
+                    "date": "2009-11-09T21:17:27Z", 
                     "dependents": [], 
                     "discussion_lock": "Unlocked", 
                     "history": [
                         {
                             "by": "ptd", 
                             "class": "FIELDCHANGE", 
-                            "date": "2009-12-18T15:12:00Z", 
+                            "date": "2009-12-18T14:12:36Z", 
                             "field": "Attached File", 
                             "new": "Added gna.org:forgepluckertest.chk, #7519", 
                             "old": "-"
@@ -89,6 +89,8 @@
                     "votes": 0
                 }
             ], 
+            "label": "bugs", 
+            "url": "https://gna.org/bugs/index.php?group=forgepluckertest", 
             "vocabulary": {
                 "category": [
                     "None"
@@ -150,14 +152,14 @@
                         {
                             "class": "COMMENT", 
                             "comment": "I'm going to stop the self fixing jokes\n", 
-                            "date": "2010-05-23T12:35:00Z", 
+                            "date": "2010-05-23T11:35:22Z", 
                             "submitter": {
                                 "class": "IDENTITY", 
                                 "nick": "Peter"
                             }
                         }
                     ], 
-                    "date": "2010-05-23T12:35:00Z", 
+                    "date": "2010-05-23T11:35:22Z", 
                     "dependents": [], 
                     "discussion_lock": "Unlocked", 
                     "history": [], 
@@ -182,6 +184,8 @@
                     "votes": 0
                 }
             ], 
+            "label": "patch", 
+            "url": "https://gna.org/patch/index.php?group=forgepluckertest", 
             "vocabulary": {
                 "category": [
                     "None"
@@ -234,14 +238,14 @@
                         {
                             "class": "COMMENT", 
                             "comment": "\n", 
-                            "date": "2010-05-23T12:36:00Z", 
+                            "date": "2010-05-23T11:36:04Z", 
                             "submitter": {
                                 "class": "IDENTITY", 
                                 "nick": "Peter"
                             }
                         }
                     ], 
-                    "date": "2010-05-23T12:36:00Z", 
+                    "date": "2010-05-23T11:36:04Z", 
                     "dependents": [], 
                     "discussion_lock": "Unlocked", 
                     "history": [], 
@@ -268,6 +272,8 @@
                     "votes": 0
                 }
             ], 
+            "label": "support", 
+            "url": "https://gna.org/support/index.php?group=forgepluckertest", 
             "vocabulary": {
                 "category": [
                     "None"
@@ -336,7 +342,7 @@
                         {
                             "class": "COMMENT", 
                             "comment": "Oh, I've fixed it.\n", 
-                            "date": "2010-05-23T12:34:00Z", 
+                            "date": "2010-05-23T11:34:30Z", 
                             "submitter": {
                                 "class": "IDENTITY", 
                                 "nick": "Peter"
@@ -345,14 +351,14 @@
                         {
                             "class": "COMMENT", 
                             "comment": "\n", 
-                            "date": "2010-05-23T12:33:00Z", 
+                            "date": "2010-05-23T11:33:13Z", 
                             "submitter": {
                                 "class": "IDENTITY", 
                                 "nick": "Peter"
                             }
                         }
                     ], 
-                    "date": "2010-05-23T12:33:00Z", 
+                    "date": "2010-05-23T11:33:13Z", 
                     "dependents": [], 
                     "discussion_lock": "Unlocked", 
                     "history": [], 
@@ -385,6 +391,8 @@
                     "votes": 0
                 }
             ], 
+            "label": "task", 
+            "url": "https://gna.org/task/index.php?group=forgepluckertest", 
             "vocabulary": {
                 "category": [
                     "None"

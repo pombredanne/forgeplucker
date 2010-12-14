@@ -45,7 +45,7 @@
                         "choice2 "
                     ], 
                     "priority": "3", 
-                    "status_id": "Open", 
+                    "status": "Open", 
                     "submitter": "fdudouet", 
                     "summary": "test1", 
                     "type": "support"
@@ -84,7 +84,7 @@
                             "by": "fdudouet", 
                             "class": "FIELDCHANGE", 
                             "date": "2010-06-29T05:48:00Z", 
-                            "field": "status_id", 
+                            "field": "status", 
                             "old": "Open"
                         }, 
                         {
@@ -100,7 +100,7 @@
                         "choice3 "
                     ], 
                     "priority": "3", 
-                    "status_id": "Closed", 
+                    "status": "Closed", 
                     "submitter": "fdudouet", 
                     "summary": "test2", 
                     "type": "support"
@@ -194,7 +194,7 @@
                     "4", 
                     "5 - Highest"
                 ], 
-                "status_id": [
+                "status": [
                     "Open", 
                     "Closed", 
                     "UNCONFIRMED", 
@@ -233,7 +233,7 @@
                     "history": [], 
                     "id": 10633, 
                     "priority": "5 - Highest", 
-                    "status_id": "Open", 
+                    "status": "Open", 
                     "submitter": "fdudouet", 
                     "summary": "My first test bug", 
                     "type": "bugs"
@@ -266,13 +266,13 @@
                             "by": "fdudouet", 
                             "class": "FIELDCHANGE", 
                             "date": "2010-06-29T05:47:00Z", 
-                            "field": "status_id", 
+                            "field": "status", 
                             "old": "Open"
                         }
                     ], 
                     "id": 10634, 
                     "priority": "3", 
-                    "status_id": "Closed", 
+                    "status": "Closed", 
                     "submitter": "fdudouet", 
                     "summary": "A closed bug", 
                     "type": "bugs"
@@ -334,7 +334,7 @@
                     ], 
                     "id": 10637, 
                     "priority": "3", 
-                    "status_id": "Open", 
+                    "status": "Open", 
                     "submitter": "fdudouet", 
                     "summary": "A bug with files", 
                     "type": "bugs"
@@ -399,7 +399,7 @@
                     ], 
                     "id": 10638, 
                     "priority": "3", 
-                    "status_id": "Open", 
+                    "status": "Open", 
                     "submitter": "fdudouet", 
                     "summary": "A complete bug", 
                     "type": "bugs"
@@ -496,7 +496,7 @@
                     "4", 
                     "5 - Highest"
                 ], 
-                "status_id": [
+                "status": [
                     "Open", 
                     "Closed", 
                     "UNCONFIRMED", 
