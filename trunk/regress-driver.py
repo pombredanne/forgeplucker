@@ -177,6 +177,7 @@ if __name__ == '__main__':
             if runtest(testenv, output=testtoname(test)+'.out', skip_failing=skip_failing) == 0:
                 if difftest(test) == 0:
                     print >>sys.stderr, test, "succeeded"
+            print >>sys.stderr, '-'*20
     elif action == 'build':
         for test in tests:
             print >>sys.stderr, "Building", test
