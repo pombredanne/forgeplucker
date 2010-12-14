@@ -24,14 +24,14 @@ class FusionForge(GenericForge):
 The FusionForge handler provides machinery for the FusionForge sites.
 
 """
-	class Tracker:
+	class Tracker(GenericForge.GenericTracker):
 		
 		def __init__(self, label, parent, projectbase):
+			GenericForge.GenericTracker.__init__(self, parent, label)
 			self.parent = parent
 			self.optional = False
 			self.chunksize = 50
 			self.zerostring = None
-			self.label = label
 			self.projectbase = projectbase
 			self.atid = re.search('atid=([0-9]*)', projectbase).group(1)
 			self.name_mappings = {
@@ -66,6 +66,9 @@ The FusionForge handler provides machinery for the FusionForge sites.
 
 			#Update view mode to parse closed tickets by default
 			self.trackerSwitchViewMode()
+
+		def getUrl(self):
+			return self.projectbase
 
 		def trackerSwitchViewMode(self):
 			params = {'set':'custom','assigned_to':0,'status':100,'query_id':-1,'sort_col':'priority','_sort_ord':'DESC','submit':'Quick+Browse'}
@@ -385,19 +388,6 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		fout.write(dl)
 		fout.close
 		
-	### MAIN DATA PARSING : COCLICO NEW FEATURE
-		
-	def pluck_project_data(self):
-		'''
-		Get the basic project data (type of forge, hostname, project name, format version of this plucker) and returns the corresponding array
-		'''
-		data = {"class":"PROJECT",
-            "forgetype":self.__class__.__name__,
-            "host" : self.host,
-            "project" : self.project_name,
-            "format_version":1}
-		return data
-	
 	### DOCMAN PARSING : COCLICO NEW FEATURE
 	
 	def pluck_docman(self):
