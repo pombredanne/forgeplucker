@@ -21,9 +21,10 @@ The status of all trackers (bug, patch, support, and task) is extracted.
 # bug manager, see Savannah Bayonne. For a project with a task
 # manager, see Beaver.  For a project with more than 50 artifacts in a
 # tracker, see Gna! Wesnoth or ClanLib Savannah
-    class Tracker:
+    class Tracker(GenericForge.GenericTracker):
         "Generic tracker classlet for Savane."
-        def __init__(self, parent):
+        def __init__(self, parent, label=''):
+            GenericForge.GenericTracker.__init__(self, parent, label)
             self.parent = parent
             self.optional = True
             self.chunksize = 50
@@ -52,6 +53,8 @@ The status of all trackers (bug, patch, support, and task) is extracted.
                 self.parent.error("missing item count header")
             else:
                 return int(m.group(1)) > int(m.group(2))
+        def getUrl(self):
+            return "%s/index.php?group=%s" % (self.type, self.parent.project_name)
         def chunkfetcher(self, offset):
             "Get a tracker index page - all artifact IDs, open and closed.."
             return "%s/index.php?go_report=Apply&group=%s&func=browse&set=custom&chunksz=50&offset=%d" % (self.type, self.parent.project_name, offset)
@@ -161,26 +164,27 @@ The status of all trackers (bug, patch, support, and task) is extracted.
                     self.error("missing both dependency table and no-depemdencies message")
     class BugTracker(Tracker):
         def __init__(self, parent):
-            Savane.Tracker.__init__(self, parent)
+            Savane.Tracker.__init__(self, parent, "bugs")
             self.type = "bugs"
     class PatchTracker(Tracker):
         def __init__(self, parent):
-            Savane.Tracker.__init__(self, parent)
+            Savane.Tracker.__init__(self, parent, "patch")
             self.type = "patch"
     class TaskTracker(Tracker):
         def __init__(self, parent):
-            Savane.Tracker.__init__(self, parent)
+            Savane.Tracker.__init__(self, parent, "task")
             self.type = "task"
     class SupportTracker(Tracker):
         def __init__(self, parent):
-            Savane.Tracker.__init__(self, parent)
+            Savane.Tracker.__init__(self, parent, "support")
             self.type = "support"
             self.name_mappings["platform_version_id"] = "platform_version"
+
     def __init__(self, host, project_name, params = False):
         GenericForge.__init__(self, host, project_name, params);
         self.host = host
         self.project_name = project_name
-        self.verbosity = 0
+#        self.verbosity = 0
         self.trackers = [Savane.BugTracker(self),
                          Savane.SupportTracker(self),
                          Savane.TaskTracker(self),

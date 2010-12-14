@@ -14,6 +14,15 @@ class ForgePluckerException(Exception):
         self.msg = msg
 
 class GenericForge:
+
+    class GenericTracker:
+        def __init__(self, parent, label = ''):
+            self.label = label
+        def getUrl(self):
+            return ''
+        def getLabel(self):
+            return self.label
+
     "Machinery for generic SourceForge-descended forges."
     def __init__(self, host, project_name, params = False):
         "Set up opener with support for authentication cookies."
@@ -38,6 +47,8 @@ class GenericForge:
         self.host = host
         self.project_name = project_name
         self.where = "%s/%s" % (self.host, self.project_name)
+        self.trackers = []
+
     def real_url(self, url):
         url = "https://%s/" % self.host + url
         return url
@@ -264,11 +275,11 @@ class GenericForge:
             content = self.pluck_artifactlist(tracker, vocabulary, timeless)
             if content is not None:
                 trackers[tracker.type]["artifacts"] = content
-            url = tracker.projectbase
+            url = tracker.getUrl()
             if not url.startswith("http"):
                 url = "https://%s/" % self.host + url
             trackers[tracker.type]["vocabulary"] = vocabulary
-            trackers[tracker.type]["label"] = tracker.label #adding label support to trackers
+            trackers[tracker.type]["label"] = tracker.getLabel() #adding label support to trackers
             trackers[tracker.type]["url"] = url
             # Smooth the vocabulary    
             for (rough, smooth) in tracker.name_mappings.items():
@@ -351,12 +362,14 @@ class GenericForge:
                     cooked['nick'] = mailaddr
         return cooked
 
-    # To be implemented in subclasses
     def pluck_project_data(self):
-        '''
-        Should return basic project data (type of forge, hostname, project name, format version of this plucker) and returns the corresponding array
-        '''
-        self.error("Not yet implemented")
+        "Get the basic project data (type of forge, hostname, project name, format version of this plucker) and returns the corresponding array"
+        data = {"class":"PROJECT",
+                "forgetype":self.__class__.__name__,
+                "host" : self.host,
+                "project" : self.project_name,
+                "format_version":1}
+        return data
         
     # May be implemented in subclasses
     def pluck_wiki(self):
