@@ -321,16 +321,18 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		'''
 		Get the permissions associated with each role in the project and return the corresponding array
 		'''
+		if self.verbosity >= 1:
+			self.notify('plucking permissions from project/memberlist.php?group_id='+self.project_id)
 		contents = self.fetch('project/memberlist.php?group_id=' + self.project_id, 'Roles page')
 		perms = {}
-		for (realname, username, role, skills) in self.table_iter(contents, '<table>', 4, 'Roles Table', has_header=True):
+		for (realname, username, role, skills) in self.table_iter(self.narrow(contents), '<table', 4, 'Roles Table', has_header=True):
 			username = username.strip()
 			perms[username] = {'role':role}
 			perms[username]['real_name'] = realname
 			perms[username]['URL'] = self.real_url(self.user_page(username))
 			
 		for user in perms:
-			contents = self.fetch(self.user_page(user), 'User page')
+			contents = self.narrow(self.fetch(self.user_page(user), 'User page'))
 			mail = re.search('''sendmessage.php\?touser=[0-9]*">([^<]*)</a>''', contents, re.DOTALL).group(1).strip().replace(" @nospam@ ","@")
 			perms[user]['mail'] = mail
 			
@@ -342,9 +344,13 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		'''
 		roles = {}
 		contents = self.fetch('project/admin/?group_id=' + self.project_id, 'Admin page')
-		
 		m = re.search('''<form action="roleedit.php\?group_id=[0-9]*" method.*<select name="role_id">(.*)</select>''', contents, re.DOTALL)
-		
+
+		# above is for 4.8, then if fails, for 5.0 :
+		if not m:
+			contents = self.fetch('project/admin/users.php?group_id=' + self.project_id, 'Admin page')
+			m = re.search('''<form action="roleedit.php\?group_id=[0-9]*[^"]*" method.*<select name="role_id">(.*)</select>''', contents, re.DOTALL)
+
 		n = re.findall('''<option value="([0-9]*)">(.*)</option>''', m.group(1))
 		n.append(['1', 'Default'])#Default role for project creator, always #1
 		n.append(['observer', 'Observer'])
@@ -1145,9 +1151,17 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		project_page = self.project_page(self.project_name)
 		page = self.fetch(project_page, "Project summary")
 		mainsoup = BeautifulSoup(self.narrow(page))
-
-		description = mainsoup.find('fieldset').find('table').find('tr').find('td').find('p').contents
-		description = dehtmlize(''.join(map(str,description)))
+		
+		description = None
+		shortdesc = None
+		fieldset = mainsoup.find('fieldset')
+		# 4.8
+		if fieldset:
+			description = fieldset.find('table').find('tr').find('td').find('p').contents
+			description = dehtmlize(''.join(map(str,description)))
+		else: #5.0
+			shortdesc = mainsoup.find('h2').contents[0]
+			description = mainsoup.find('p').contents[0]
 
 		registered = None
 		for p in mainsoup.findAll('p'):
@@ -1230,6 +1244,9 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			"homepage": homepage,
 			"URL": self.real_url(project_page),
 			"format_version": 1 }
+
+		if shortdesc:
+			data['shortdesc'] = shortdesc
 
 		if trackers:
 			data['trackers_list'] = []

@@ -159,6 +159,8 @@ def output_oslccmv2json(data):
     oslc_project['rdf:about'] = project['URL']
     oslc_project['rdf:type'] = oslc_prefixes['planetforge']+'ForgeProject'
     oslc_project['doap:name'] = project_name
+    if 'shortdesc' in project:
+        oslc_project['doap:shortdesc'] = project['shortdesc']
     oslc_project['dcterms:description'] = project['description']
     oslc_project['dcterms:created'] = project['registered']
     oslc_project['doap:homepage'] = project['homepage']
