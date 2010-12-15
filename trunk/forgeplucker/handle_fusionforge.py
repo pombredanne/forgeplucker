@@ -837,6 +837,8 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		'''
 		Initializes forums parsing. This is the method which should be called from the outside
 		'''
+		if self.verbosity >= 1:
+			self.notify('plucking forums from forum/?group_id='+self.project_id)
 		init_page = self.fetch('forum/?group_id='+self.project_id, 'plucking main forum page')
 		soup = BeautifulSoup(init_page)
 		result = self.forumsParser(soup)
@@ -997,12 +999,8 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		'''
 		self.fetch('forum/forum.php?set=custom&forum_id='+str(fId)+'&style=threaded&max_rows=25&submit=Change+View', 'Updating '+str(fId) + ' view mode to Threaded')
 		return True
-		
-	def forumsParser(self, soup):
-		'''
-		Fetch a list of forums from the souped contents of the forums page, initializes the extraction ot the content of each forum and the admin parameters
-		@param soup: Souped contents of the forums page
-		'''
+
+	def forumsListing(self, soup):
 		forums = []
 		trs = soup.find('table').findAll('tr')[1:]
 		for tr in trs:
@@ -1015,6 +1013,24 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			self.forumSwitchViewMode(fId)
 			fAdminUrl = 'forum/admin/index.php?group_id='+self.project_id+'&change_status=1&group_forum_id='+fId
 			fMonitorUrl = '/forum/admin/monitor.php?group_id='+self.project_id+'&group_forum_id='+fId
+			forums.append({'name':fName, 'description':fDesc, 'URL':fUrl, 'adminUrl':fAdminUrl, 'monitoring_usersUrl':fMonitorUrl})
+		return forums
+		
+	def forumsParser(self, soup):
+		'''
+		Fetch a list of forums from the souped contents of the forums page, initializes the extraction ot the content of each forum and the admin parameters
+		@param soup: Souped contents of the forums page
+		'''
+		forums = []
+		frs = self.forumsListing(soup)
+		for f in frs:
+			fName = f['name']
+			fDesc = f['description']
+			fUrl = f['URL']
+			fAdminUrl = f['adminUrl']
+			fMonitorUrl = f['monitoring_usersUrl']
+			fId = re.search('forum_id=([0-9]*)', fUrl).group(1)
+			self.forumSwitchViewMode(fId)
 			fAdminContent = self.forumAdminParser(BeautifulSoup(self.fetch(fAdminUrl, 'forum admin content download. forum name:'+fName)))
 			fMonitorContent = self.forumMonitorParser(BeautifulSoup(self.fetch(fMonitorUrl, 'forum monitoring users content download. forum name:'+fName)))
 			fContent = self.forumParser(BeautifulSoup(self.fetch(fUrl, 'forum content downloading. forum name:'+fName))) 
@@ -1113,6 +1129,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 				break
 
 		homepage = None
+		public_forums = None
 		public_areas = None
 		for t in soup.findAll('table'):
 			tr = t.find('tr', attrs={'class': 'tableheading'})
@@ -1128,7 +1145,11 @@ The FusionForge handler provides machinery for the FusionForge sites.
 				for l in a.contents:
 					if l == '&nbsp;Project Home Page':
 						homepage = a['href']
-						break
+					if l == '&nbsp;Public Forums':
+						init_page = self.fetch('forum/?group_id='+self.project_id, 'plucking main forum page')
+						soup = BeautifulSoup(init_page)
+						public_forums = self.forumsListing(soup)
+						print 'forums:', public_forums
 				a = a.findNext('a')
 
 		data = {"class":"PROJECT",
@@ -1139,5 +1160,9 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			"registered" : registered,
 			"homepage": homepage,
 			"URL": self.real_url(project_page),
-			"format_version":1}
+			"format_version": 1 }
+		if public_forums:
+			data['public_forums'] = []
+			for f in public_forums:
+				data['public_forums'].append(self.real_url(f['URL']))
 		return data

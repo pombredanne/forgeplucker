@@ -220,6 +220,12 @@ def output_oslccmv2json(data):
         for tracker in oslc_trackers:
             project_trackers.append(tracker['rdf:about'])
         oslc_project['sioc:has_space'] = project_trackers
+        
+    if 'public_forums' in project:
+        if not 'sioc:has_space' in oslc_project:
+            oslc_project['sioc:has_space'] = []
+        for f in project['public_forums']:
+            oslc_project['sioc:has_space'].append(f)
 
     oslc_data['forgeplucker:project'] = oslc_project
 
