@@ -1,4 +1,10 @@
 {
+    "forgeplucker:project": {
+        "dcterms:created": "2010-06-29T07:35:00Z", 
+        "dcterms:description": "Provide use cases and an exhaustive example of a fusionforge project to create a significant extract using our tools and Forgeplucker.\n\nPart of WP2 from COCLICO.", 
+        "doap:homepage": "http://coclico.gforge.inria.fr", 
+        "doap:name": "coclico"
+    }, 
     "forgeplucker:trackers": [
         {
             "oslc:results": [
@@ -318,6 +324,7 @@
     ], 
     "prefixes": {
         "dcterms": "http://purl.org/dc/terms/", 
+        "doap": "http://usefulinc.com/ns/doap#", 
         "forgeplucker": "http://planetforge.org/ns/forgeplucker_dump/", 
         "oslc": "http://open-services.net/ns/core#", 
         "oslc_cm": "http://open-services.net/ns/cm#", 
