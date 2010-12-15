@@ -1149,7 +1149,6 @@ The FusionForge handler provides machinery for the FusionForge sites.
 						init_page = self.fetch('forum/?group_id='+self.project_id, 'plucking main forum page')
 						soup = BeautifulSoup(init_page)
 						public_forums = self.forumsListing(soup)
-						print 'forums:', public_forums
 				a = a.findNext('a')
 
 		data = {"class":"PROJECT",

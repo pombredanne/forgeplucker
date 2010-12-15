@@ -36,7 +36,10 @@
             "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse", 
             "https://gforge.inria.fr/tracker/?atid=9687&group_id=2827&func=browse", 
             "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse", 
-            "https://gforge.inria.fr/tracker/?atid=9686&group_id=2827&func=browse"
+            "https://gforge.inria.fr/tracker/?atid=9686&group_id=2827&func=browse", 
+            "https://gforge.inria.fr/forum/forum.php?forum_id=7971&group_id=2827", 
+            "https://gforge.inria.fr/forum/forum.php?forum_id=7972&group_id=2827", 
+            "https://gforge.inria.fr/forum/forum.php?forum_id=7973&group_id=2827"
         ], 
         "sioc:scope_of": [
             {
