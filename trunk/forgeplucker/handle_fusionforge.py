@@ -100,11 +100,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 
 		def narrow(self, text):
 			"Get the section of text containing editable elements."
-			soupedContents = BeautifulSoup(text)
-			text = soupedContents.find('div', id='gforge-content')
-			if not text:
-				text = soupedContents.find('div', id='maindiv')
-			return str(text)
+			return self.parent.narrow(text)
 
 		def parse_followups(self, contents, bug):
 			"Parse followups out of a displayed page in a bug or patch tracker."
@@ -1082,3 +1078,53 @@ The FusionForge handler provides machinery for the FusionForge sites.
 				   'href="'+ self.real_url('account/logout.php') +'">')
 
 
+	def narrow(self, text):
+		"Get the section of text containing editable elements."
+		soupedContents = BeautifulSoup(text)
+		text = soupedContents.find('div', id='gforge-content')
+		if not text:
+			text = soupedContents.find('div', id='maindiv')
+		return str(text)
+
+	def pluck_project_data(self):
+		page = self.fetch(self.project_page(self.project_name), "Project summary")
+		soup = BeautifulSoup(self.narrow(page))
+
+		description = soup.find('fieldset').find('table').find('tr').find('td').find('p').contents
+		description = dehtmlize(''.join(map(str,description)))
+
+		registered = None
+		for p in soup.findAll('p'):
+			m = re.search('Registered:&nbsp;([-0-9: ]+)', str(p.contents[0]))
+			if m:
+				registered = self.canonicalize_date(m.group(1))
+				break
+
+		homepage = None
+		public_areas = None
+		for t in soup.findAll('table'):
+			tr = t.find('tr', attrs={'class': 'tableheading'})
+			if tr:
+				td = tr.find('td').findNext('td').find('span').contents[0]
+				if td == 'Public Areas' :
+					public_areas = t
+					break
+		if public_areas:
+			t = public_areas.find('tr').findNext('tr').findNext('tr').find('td').find('table', attrs={'class': 'tablecontent'})
+			a = t.find('a')
+			while a:
+				for l in a.contents:
+					if l == '&nbsp;Project Home Page':
+						homepage = a['href']
+						break
+				a = a.findNext('a')
+
+		data = {"class":"PROJECT",
+			"forgetype":self.__class__.__name__,
+			"host" : self.host,
+			"project" : self.project_name,
+			"description" : description,
+			"registered" : registered,
+			"homepage": homepage,
+			"format_version":1}
+		return data

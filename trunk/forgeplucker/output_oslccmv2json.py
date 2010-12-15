@@ -20,7 +20,8 @@ def output_oslccmv2json(data):
                       'dcterms' : 'http://purl.org/dc/terms/',
                       'oslc': 'http://open-services.net/ns/core#',
                       'oslc_cm' : 'http://open-services.net/ns/cm#',
-                      'forgeplucker' : 'http://planetforge.org/ns/forgeplucker_dump/'}
+                      'forgeplucker' : 'http://planetforge.org/ns/forgeplucker_dump/',
+                      'doap' : 'http://usefulinc.com/ns/doap#'}
 
     project = data['project']
     
@@ -39,6 +40,14 @@ def output_oslccmv2json(data):
     oslc_data['rdf:about'] = project_dump_url
     oslc_data['rdf:type'] = 'http://planetforge.org/ns/forgeplucker_dump/project_dump#'
     
+    oslc_project = {}
+    oslc_project['doap:name'] = project_name
+    oslc_project['dcterms:description'] = project['description']
+    oslc_project['dcterms:created'] = project['registered']
+    oslc_project['doap:homepage'] = project['homepage']
+
+    oslc_data['forgeplucker:project'] = oslc_project
+
     oslc_trackers = []
 
     data = data['trackers']
@@ -76,7 +85,7 @@ def output_oslccmv2json(data):
             #  can be a litteral if no conversion is necessary
             #  or a lambda returning a dictionnary with new 'predicate' name and new converted 'object' value 
             oslc_mapping = {
-                            #'comments': 'oslc:discussion',
+                            #'comments': 'oslc:discussion' TODO
                             
                             # TODO : convert to real FOAF profile or lile
                             'assigned_to': lambda x: {'predicate': 'dcterms:contributor', 'object': x},
