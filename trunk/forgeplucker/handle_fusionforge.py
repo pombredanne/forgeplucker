@@ -1019,6 +1019,12 @@ The FusionForge handler provides machinery for the FusionForge sites.
 	
 	###### END FORUM PARSING
 
+	class ProjectDescription:
+		"Project description"
+		def __init__(self):
+			pass
+#		def extract(self, contents):
+			
 			
 ## FusionForge.__init__
 
