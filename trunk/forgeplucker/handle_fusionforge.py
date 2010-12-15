@@ -830,6 +830,34 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		return result
 		
 		
+	def mailingListsListing(self, soup):
+		mailinglists = []
+		trs = soup.find('table').findAll('tr')[1:]
+		for tr in trs:
+			tds = tr.findAll('td')
+			fHref = tds[0].find('a')['href']
+			mailinglists.append(fHref)
+		return mailinglists
+		
+	def taskTrackersListing(self, soup):
+		task_trackers = []
+		trs = soup.find('table').findAll('tr')[1:]
+		for tr in trs:
+			tds = tr.findAll('td')
+			fHref = tds[0].find('a')['href']
+			task_trackers.append(fHref)
+		return task_trackers
+
+	def scmListing(self, soup):
+		scm = scm_type = None
+		tts = soup.findAll('tt')
+		for tt in tts:
+			m = re.search('([^ ]+) checkout .* (http.*)', tt.contents[0])
+			if m:
+				scm_type = m.group(1)
+				scm = m.group(2)
+				break
+		return scm_type, scm
 
 	###### FORUM PARSING : COCLICO NEW FEATURE
 	
@@ -1116,22 +1144,30 @@ The FusionForge handler provides machinery for the FusionForge sites.
 	def pluck_project_data(self):
 		project_page = self.project_page(self.project_name)
 		page = self.fetch(project_page, "Project summary")
-		soup = BeautifulSoup(self.narrow(page))
+		mainsoup = BeautifulSoup(self.narrow(page))
 
-		description = soup.find('fieldset').find('table').find('tr').find('td').find('p').contents
+		description = mainsoup.find('fieldset').find('table').find('tr').find('td').find('p').contents
 		description = dehtmlize(''.join(map(str,description)))
 
 		registered = None
-		for p in soup.findAll('p'):
+		for p in mainsoup.findAll('p'):
 			m = re.search('Registered:&nbsp;([-0-9: ]+)', str(p.contents[0]))
 			if m:
 				registered = self.canonicalize_date(m.group(1))
 				break
 
 		homepage = None
+		trackers = None
 		public_forums = None
+		docman = None
+		mailing_lists = None
+		task_trackers = None
+		scm = None
+		news = None
+		frs = None
+
 		public_areas = None
-		for t in soup.findAll('table'):
+		for t in mainsoup.findAll('table'):
 			tr = t.find('tr', attrs={'class': 'tableheading'})
 			if tr:
 				td = tr.find('td').findNext('td').find('span').contents[0]
@@ -1139,17 +1175,51 @@ The FusionForge handler provides machinery for the FusionForge sites.
 					public_areas = t
 					break
 		if public_areas:
+			#print 'public_areas:', public_areas
 			t = public_areas.find('tr').findNext('tr').findNext('tr').find('td').find('table', attrs={'class': 'tablecontent'})
 			a = t.find('a')
 			while a:
 				for l in a.contents:
 					if l == '&nbsp;Project Home Page':
 						homepage = a['href']
+					if l == '&nbsp;Tracker':
+						trackers = self.get_trackers()
 					if l == '&nbsp;Public Forums':
 						init_page = self.fetch('forum/?group_id='+self.project_id, 'plucking main forum page')
-						soup = BeautifulSoup(init_page)
+						soup = BeautifulSoup(self.narrow(init_page))
 						public_forums = self.forumsListing(soup)
+					if l == '&nbsp;DocManager: Project Documentation':
+						docman = a['href']
+					if l == '&nbsp;Mailing Lists':
+						init_page = self.fetch('mail/?group_id='+self.project_id, 'plucking main mailing lists page')
+						soup = BeautifulSoup(self.narrow(init_page))
+						mailing_lists = self.mailingListsListing(soup)
+					if l == '&nbsp;Task Manager':
+						init_page = self.fetch('pm/?group_id='+self.project_id, 'plucking main tasks page')
+						soup = BeautifulSoup(self.narrow(init_page))
+						task_trackers = self.taskTrackersListing(soup)
+					if l == '&nbsp;SCM Repository':
+						init_page = self.fetch('scm/?group_id='+self.project_id, 'plucking scm page')
+						soup = BeautifulSoup(self.narrow(init_page))
+						scm = self.scmListing(soup)
+						
 				a = a.findNext('a')
+
+			a = public_areas.find('a')
+			while a:
+				for l in a.contents:
+					if l == '[News archive]':
+						news = a['href']
+						break
+				a = a.findNext('a')
+
+		for a in mainsoup.findAll('a'):
+			for l in a.contents:
+				if l == '[View All Project Files]':
+					frs = a['href']
+					break
+			if frs:
+				break
 
 		data = {"class":"PROJECT",
 			"forgetype":self.__class__.__name__,
@@ -1160,8 +1230,34 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			"homepage": homepage,
 			"URL": self.real_url(project_page),
 			"format_version": 1 }
+
+		if trackers:
+			data['trackers_list'] = []
+			for t in trackers:
+				data['trackers_list'].append(self.real_url(t.getUrl()))
+
 		if public_forums:
 			data['public_forums'] = []
 			for f in public_forums:
 				data['public_forums'].append(self.real_url(f['URL']))
+		if docman:
+			data['docman'] = docman
+
+		if mailing_lists:
+			data['mailing_lists'] = mailing_lists
+
+		if task_trackers:
+			data['task_trackers'] = task_trackers
+
+		if scm:
+			scm_type, scm = scm
+			data['scm_type'] = scm_type
+			data['scm'] = scm
+
+		if news:
+			data['news'] = news
+
+		if frs:
+			data['frs'] = frs
+
 		return data

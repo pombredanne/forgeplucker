@@ -220,12 +220,44 @@ def output_oslccmv2json(data):
         for tracker in oslc_trackers:
             project_trackers.append(tracker['rdf:about'])
         oslc_project['sioc:has_space'] = project_trackers
+    else :
+        if 'trackers_list' in project:
+            if not 'sioc:has_space' in oslc_project:
+                oslc_project['sioc:has_space'] = []
+            for t in project['trackers_list']:
+                oslc_project['sioc:has_space'].append(t)
         
     if 'public_forums' in project:
         if not 'sioc:has_space' in oslc_project:
             oslc_project['sioc:has_space'] = []
         for f in project['public_forums']:
             oslc_project['sioc:has_space'].append(f)
+    if 'docman' in project:
+        if not 'sioc:has_space' in oslc_project:
+            oslc_project['sioc:has_space'] = []
+        oslc_project['sioc:has_space'].append(project['docman'])
+    if 'mailing_lists' in project:
+        if not 'sioc:has_space' in oslc_project:
+            oslc_project['sioc:has_space'] = []
+        for l in project['mailing_lists']:
+            oslc_project['sioc:has_space'].append(l)
+    if 'task_trackers' in project:
+        if not 'sioc:has_space' in oslc_project:
+            oslc_project['sioc:has_space'] = []
+        for l in project['task_trackers']:
+            oslc_project['sioc:has_space'].append(l)
+    if 'scm_type' in project:
+        if not 'sioc:has_space' in oslc_project:
+            oslc_project['sioc:has_space'] = []
+        oslc_project['sioc:has_space'].append(project['scm'])
+    if 'news' in project:
+        if not 'sioc:has_space' in oslc_project:
+            oslc_project['sioc:has_space'] = []
+        oslc_project['sioc:has_space'].append(project['news'])
+    if 'frs' in project:
+        if not 'sioc:has_space' in oslc_project:
+            oslc_project['sioc:has_space'] = []
+        oslc_project['sioc:has_space'].append(project['frs'])
 
     oslc_data['forgeplucker:project'] = oslc_project
 
