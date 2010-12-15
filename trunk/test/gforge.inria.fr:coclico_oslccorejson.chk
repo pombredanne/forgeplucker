@@ -1,9 +1,54 @@
 {
+    "forgeplucker:persons": [
+        {
+            "foaf:holdsAccount": "https://gforge.inria.fr/users/mnazaria", 
+            "foaf:name": "Marc NAZARIAN", 
+            "rdf:about": "https://gforge.inria.fr/users/mnazaria#me", 
+            "rdf:type": "http://xmlns.com/foaf/0.1/Person"
+        }, 
+        {
+            "foaf:holdsAccount": "https://gforge.inria.fr/users/fdudouet_", 
+            "foaf:name": "Florian Dudouet", 
+            "rdf:about": "https://gforge.inria.fr/users/fdudouet_#me", 
+            "rdf:type": "http://xmlns.com/foaf/0.1/Person"
+        }, 
+        {
+            "foaf:holdsAccount": "https://gforge.inria.fr/users/fdudouet", 
+            "foaf:name": "Florian Dudouet", 
+            "rdf:about": "https://gforge.inria.fr/users/fdudouet#me", 
+            "rdf:type": "http://xmlns.com/foaf/0.1/Person"
+        }, 
+        {
+            "foaf:holdsAccount": "https://gforge.inria.fr/users/oberger", 
+            "foaf:name": "Olivier Berger", 
+            "rdf:about": "https://gforge.inria.fr/users/oberger#me", 
+            "rdf:type": "http://xmlns.com/foaf/0.1/Person"
+        }
+    ], 
     "forgeplucker:project": {
         "dcterms:created": "2010-06-29T07:35:00Z", 
         "dcterms:description": "Provide use cases and an exhaustive example of a fusionforge project to create a significant extract using our tools and Forgeplucker.\n\nPart of WP2 from COCLICO.", 
         "doap:homepage": "http://coclico.gforge.inria.fr", 
-        "doap:name": "coclico"
+        "doap:name": "coclico", 
+        "rdf:about": "https://gforge.inria.fr/projects/coclico/", 
+        "sioc:scope_of": [
+            {
+                "rdf:type": "http://rdfs.org/sioc/ns#Role", 
+                "sioc:function_of": [
+                    "https://gforge.inria.fr/users/fdudouet_", 
+                    "https://gforge.inria.fr/users/fdudouet", 
+                    "https://gforge.inria.fr/users/oberger"
+                ], 
+                "sioc:name": "project_admins"
+            }, 
+            {
+                "rdf:type": "http://rdfs.org/sioc/ns#Role", 
+                "sioc:function_of": [
+                    "https://gforge.inria.fr/users/mnazaria"
+                ], 
+                "sioc:name": "project_developers"
+            }
+        ]
     }, 
     "forgeplucker:trackers": [
         {
@@ -322,13 +367,53 @@
             "rdf:about": "https://gforge.inria.fr/tracker/?atid=9686&group_id=2827&func=browse"
         }
     ], 
+    "forgeplucker:users": [
+        {
+            "foaf:accountName": "fdudouet_", 
+            "rdf:about": "https://gforge.inria.fr/users/fdudouet_", 
+            "rdf:type": [
+                "http://rdfs.org/sioc/ns#User", 
+                "http://xmlns.com/foaf/0.1/OnlineAccount"
+            ], 
+            "sioc:email": "sebastien.campion@gmail.com"
+        }, 
+        {
+            "foaf:accountName": "fdudouet", 
+            "rdf:about": "https://gforge.inria.fr/users/fdudouet", 
+            "rdf:type": [
+                "http://rdfs.org/sioc/ns#User", 
+                "http://xmlns.com/foaf/0.1/OnlineAccount"
+            ], 
+            "sioc:email": "florian.dudouet@irisa.fr"
+        }, 
+        {
+            "foaf:accountName": "oberger", 
+            "rdf:about": "https://gforge.inria.fr/users/oberger", 
+            "rdf:type": [
+                "http://rdfs.org/sioc/ns#User", 
+                "http://xmlns.com/foaf/0.1/OnlineAccount"
+            ], 
+            "sioc:email": "olivier.berger@it-sudparis.eu"
+        }, 
+        {
+            "foaf:accountName": "mnazaria", 
+            "rdf:about": "https://gforge.inria.fr/users/mnazaria", 
+            "rdf:type": [
+                "http://rdfs.org/sioc/ns#User", 
+                "http://xmlns.com/foaf/0.1/OnlineAccount"
+            ], 
+            "sioc:email": "marc.nazarian@xrce.xerox.com"
+        }
+    ], 
     "prefixes": {
         "dcterms": "http://purl.org/dc/terms/", 
         "doap": "http://usefulinc.com/ns/doap#", 
+        "foaf": "http://xmlns.com/foaf/0.1/", 
         "forgeplucker": "http://planetforge.org/ns/forgeplucker_dump/", 
         "oslc": "http://open-services.net/ns/core#", 
         "oslc_cm": "http://open-services.net/ns/cm#", 
-        "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#", 
+        "sioc": "http://rdfs.org/sioc/ns#"
     }, 
     "rdf:about": "http://gforge.inria.fr/forgeplucker_dump/oslccmv2json/coclico/", 
     "rdf:type": "http://planetforge.org/ns/forgeplucker_dump/project_dump#"
