@@ -14,41 +14,12 @@ References :
 
 import json
 
-def output_oslccmv2json(data):
-    oslc_data = {}
-    oslc_prefixes = { 'rdf' : 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
-                      'dcterms' : 'http://purl.org/dc/terms/',
-                      'oslc': 'http://open-services.net/ns/core#',
-                      'oslc_cm' : 'http://open-services.net/ns/cm#',
-                      'forgeplucker' : 'http://planetforge.org/ns/forgeplucker_dump/',
-                      'doap' : 'http://usefulinc.com/ns/doap#'}
-
-    project = data['project']
-    
-    #the_class = project['class']
-    # TODO check that the_class == 'PROJECT'
-    #format_version = project['format_version']
-    # TODO check that format_version == 1
-    
-    host = project['host']
-    project_name = project['project']
-    project_dump_url = 'http://' + host + '/forgeplucker_dump/oslccmv2json/' + project_name + '/' 
-    
-    # Initialize top-level OSLC JSON dump
-    
-    oslc_data['prefixes'] = oslc_prefixes
-    oslc_data['rdf:about'] = project_dump_url
-    oslc_data['rdf:type'] = 'http://planetforge.org/ns/forgeplucker_dump/project_dump#'
-    
-    oslc_project = {}
-    oslc_project['doap:name'] = project_name
-    oslc_project['dcterms:description'] = project['description']
-    oslc_project['dcterms:created'] = project['registered']
-    oslc_project['doap:homepage'] = project['homepage']
-
-    oslc_data['forgeplucker:project'] = oslc_project
+def output_oslccmv2json_trackers(data):
 
     oslc_trackers = []
+
+    if not ('trackers' in data) :
+        return oslc_trackers
 
     data = data['trackers']
 
@@ -148,8 +119,98 @@ def output_oslccmv2json(data):
         oslc_tracker['oslc:results'] = oslc_artifacts
         
         oslc_trackers.append(oslc_tracker)
+
+    return oslc_trackers    
+
+def output_oslccmv2json(data):
+    oslc_data = {}
+    oslc_prefixes = { 'rdf' : 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+                      'dcterms' : 'http://purl.org/dc/terms/',
+                      'oslc': 'http://open-services.net/ns/core#',
+                      'oslc_cm' : 'http://open-services.net/ns/cm#',
+                      'forgeplucker' : 'http://planetforge.org/ns/forgeplucker_dump/',
+                      'doap' : 'http://usefulinc.com/ns/doap#',
+                      'sioc' : 'http://rdfs.org/sioc/ns#',
+                      'foaf' : 'http://xmlns.com/foaf/0.1/'}
+
+    project = data['project']
     
-    oslc_data['forgeplucker:trackers'] = oslc_trackers
+    #the_class = project['class']
+    # TODO check that the_class == 'PROJECT'
+    #format_version = project['format_version']
+    # TODO check that format_version == 1
+    
+    host = project['host']
+    project_name = project['project']
+    project_dump_url = 'http://' + host + '/forgeplucker_dump/oslccmv2json/' + project_name + '/' 
+    
+    # Initialize top-level OSLC JSON dump
+    
+    oslc_data['prefixes'] = oslc_prefixes
+    oslc_data['rdf:about'] = project_dump_url
+    oslc_data['rdf:type'] = 'http://planetforge.org/ns/forgeplucker_dump/project_dump#'
+    
+    oslc_project = {}
+    oslc_project['rdf:about'] = project['URL']
+    oslc_project['doap:name'] = project_name
+    oslc_project['dcterms:description'] = project['description']
+    oslc_project['dcterms:created'] = project['registered']
+    oslc_project['doap:homepage'] = project['homepage']
+
+
+    oslc_persons = []
+    oslc_admin_users = []
+    oslc_regular_users = []
+#    print data['users']
+    for user in data['users']:
+        oslc_user = {}
+        oslc_person = {}
+
+        user_data=data['users'][user]
+        oslc_user['rdf:about'] = user_data['URL']
+        oslc_user['rdf:type'] = [oslc_prefixes['sioc']+'User', oslc_prefixes['foaf']+'OnlineAccount']
+        oslc_user['foaf:accountName'] = user
+        oslc_user['sioc:email'] = user_data['mail']
+        
+        oslc_person['rdf:about'] = user_data['URL'] + '#me'
+        oslc_person['rdf:type'] = oslc_prefixes['foaf']+'Person'
+        oslc_person['foaf:name'] = user_data['real_name']
+        oslc_person['foaf:holdsAccount'] = user_data['URL']
+
+        if user_data['role'] == 'Admin' :
+            oslc_admin_users.append(oslc_user)
+        else:
+            oslc_regular_users.append(oslc_user)
+        oslc_persons.append(oslc_person)
+
+    oslc_project['sioc:scope_of'] = []
+    oslc_data['forgeplucker:users'] = []
+    if oslc_admin_users:
+        scope_of_admin = {}
+        scope_of_admin['rdf:type'] = oslc_prefixes['sioc']+'Role'
+        scope_of_admin['sioc:name'] = "project_admins"
+        scope_of_admin['sioc:function_of'] = []
+        for u in oslc_admin_users:
+            scope_of_admin['sioc:function_of'].append(u['rdf:about'])
+            oslc_data['forgeplucker:users'].append(u)
+        oslc_project['sioc:scope_of'].append(scope_of_admin)
+    if oslc_regular_users:
+        scope_of_regular = {}
+        scope_of_regular['rdf:type'] = oslc_prefixes['sioc']+'Role'
+        scope_of_regular['sioc:name'] = "project_developers"
+        scope_of_regular['sioc:function_of'] = []
+        for u in oslc_regular_users:
+            scope_of_regular['sioc:function_of'].append(u['rdf:about'])
+            oslc_data['forgeplucker:users'].append(u)
+        oslc_project['sioc:scope_of'].append(scope_of_regular)
+
+    oslc_data['forgeplucker:persons'] = oslc_persons
+    
+    oslc_data['forgeplucker:project'] = oslc_project
+
+    oslc_trackers = output_oslccmv2json_trackers(data)
+    if oslc_trackers:
+        oslc_data['forgeplucker:trackers'] = output_oslccmv2json_trackers(data)
     
     # pretty-print 
     print json.dumps(oslc_data, sort_keys=True, indent=4)
