@@ -366,7 +366,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 						permissions[section + ':' + 'AnonPost' + ':' + subsection]=t[1]
 					permissions[section + ':' + subsection] = t[0]
 				elif len(t) != 1: #Exception for project Admin.
-					permissions[section] = t[len(t) - 1]
+					permissions[section] = t[-1]
 				else:
 					permissions[section] = t[0]
 			roles[n[i][1]] = permissions
