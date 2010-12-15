@@ -31,6 +31,13 @@
         "doap:homepage": "http://coclico.gforge.inria.fr", 
         "doap:name": "coclico", 
         "rdf:about": "https://gforge.inria.fr/projects/coclico/", 
+        "rdf:type": "http://coclico-project.org/ontology/planetforge#ForgeProject", 
+        "sioc:has_space": [
+            "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse", 
+            "https://gforge.inria.fr/tracker/?atid=9687&group_id=2827&func=browse", 
+            "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse", 
+            "https://gforge.inria.fr/tracker/?atid=9686&group_id=2827&func=browse"
+        ], 
         "sioc:scope_of": [
             {
                 "rdf:type": "http://rdfs.org/sioc/ns#Role", 
@@ -154,11 +161,15 @@
                     "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }
             ], 
-            "rdf:about": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse"
+            "rdf:about": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse", 
+            "rdf:type": "http://coclico-project.org/ontology/planetforge#Tracker", 
+            "sioc:name": "Support"
         }, 
         {
             "oslc:results": [], 
-            "rdf:about": "https://gforge.inria.fr/tracker/?atid=9687&group_id=2827&func=browse"
+            "rdf:about": "https://gforge.inria.fr/tracker/?atid=9687&group_id=2827&func=browse", 
+            "rdf:type": "http://coclico-project.org/ontology/planetforge#Tracker", 
+            "sioc:name": "Feature Requests"
         }, 
         {
             "oslc:results": [
@@ -360,11 +371,15 @@
                     "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }
             ], 
-            "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse"
+            "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse", 
+            "rdf:type": "http://coclico-project.org/ontology/planetforge#Tracker", 
+            "sioc:name": "Bugs"
         }, 
         {
             "oslc:results": [], 
-            "rdf:about": "https://gforge.inria.fr/tracker/?atid=9686&group_id=2827&func=browse"
+            "rdf:about": "https://gforge.inria.fr/tracker/?atid=9686&group_id=2827&func=browse", 
+            "rdf:type": "http://coclico-project.org/ontology/planetforge#Tracker", 
+            "sioc:name": "Patches"
         }
     ], 
     "forgeplucker:users": [
@@ -412,6 +427,7 @@
         "forgeplucker": "http://planetforge.org/ns/forgeplucker_dump/", 
         "oslc": "http://open-services.net/ns/core#", 
         "oslc_cm": "http://open-services.net/ns/cm#", 
+        "planetforge": "http://coclico-project.org/ontology/planetforge#", 
         "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#", 
         "sioc": "http://rdfs.org/sioc/ns#"
     }, 

@@ -14,6 +14,16 @@ References :
 
 import json
 
+oslc_prefixes = { 'rdf' : 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+                      'dcterms' : 'http://purl.org/dc/terms/',
+                      'oslc': 'http://open-services.net/ns/core#',
+                      'oslc_cm' : 'http://open-services.net/ns/cm#',
+                      'forgeplucker' : 'http://planetforge.org/ns/forgeplucker_dump/',
+                      'doap' : 'http://usefulinc.com/ns/doap#',
+                      'sioc' : 'http://rdfs.org/sioc/ns#',
+                      'foaf' : 'http://xmlns.com/foaf/0.1/',
+                      'planetforge' : 'http://coclico-project.org/ontology/planetforge#'}
+
 def output_oslccmv2json_trackers(data):
 
     oslc_trackers = []
@@ -117,6 +127,9 @@ def output_oslccmv2json_trackers(data):
             oslc_artifacts.append(oslc_changerequest)
 
         oslc_tracker['oslc:results'] = oslc_artifacts
+
+        oslc_tracker['rdf:type'] = oslc_prefixes['planetforge']+'Tracker'
+        oslc_tracker['sioc:name'] = tracker_name
         
         oslc_trackers.append(oslc_tracker)
 
@@ -124,14 +137,6 @@ def output_oslccmv2json_trackers(data):
 
 def output_oslccmv2json(data):
     oslc_data = {}
-    oslc_prefixes = { 'rdf' : 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
-                      'dcterms' : 'http://purl.org/dc/terms/',
-                      'oslc': 'http://open-services.net/ns/core#',
-                      'oslc_cm' : 'http://open-services.net/ns/cm#',
-                      'forgeplucker' : 'http://planetforge.org/ns/forgeplucker_dump/',
-                      'doap' : 'http://usefulinc.com/ns/doap#',
-                      'sioc' : 'http://rdfs.org/sioc/ns#',
-                      'foaf' : 'http://xmlns.com/foaf/0.1/'}
 
     project = data['project']
     
@@ -152,6 +157,7 @@ def output_oslccmv2json(data):
     
     oslc_project = {}
     oslc_project['rdf:about'] = project['URL']
+    oslc_project['rdf:type'] = oslc_prefixes['planetforge']+'ForgeProject'
     oslc_project['doap:name'] = project_name
     oslc_project['dcterms:description'] = project['description']
     oslc_project['dcterms:created'] = project['registered']
@@ -206,11 +212,16 @@ def output_oslccmv2json(data):
 
     oslc_data['forgeplucker:persons'] = oslc_persons
     
-    oslc_data['forgeplucker:project'] = oslc_project
-
     oslc_trackers = output_oslccmv2json_trackers(data)
+
+    project_trackers=[]
     if oslc_trackers:
         oslc_data['forgeplucker:trackers'] = output_oslccmv2json_trackers(data)
-    
+        for tracker in oslc_trackers:
+            project_trackers.append(tracker['rdf:about'])
+        oslc_project['sioc:has_space'] = project_trackers
+
+    oslc_data['forgeplucker:project'] = oslc_project
+
     # pretty-print 
     print json.dumps(oslc_data, sort_keys=True, indent=4)
