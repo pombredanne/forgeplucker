@@ -39,7 +39,15 @@
             "https://gforge.inria.fr/tracker/?atid=9686&group_id=2827&func=browse", 
             "https://gforge.inria.fr/forum/forum.php?forum_id=7971&group_id=2827", 
             "https://gforge.inria.fr/forum/forum.php?forum_id=7972&group_id=2827", 
-            "https://gforge.inria.fr/forum/forum.php?forum_id=7973&group_id=2827"
+            "https://gforge.inria.fr/forum/forum.php?forum_id=7973&group_id=2827", 
+            "https://gforge.inria.fr/docman/?group_id=2827", 
+            "http://lists.gforge.inria.fr/pipermail/coclico-commits/", 
+            "http://lists.gforge.inria.fr/pipermail/coclico-test/", 
+            "https://gforge.inria.fr/pm/task.php?group_project_id=4891&group_id=2827&func=browse", 
+            "https://gforge.inria.fr/pm/task.php?group_project_id=4892&group_id=2827&func=browse", 
+            "https://scm.gforge.inria.fr/svn/coclico", 
+            "https://gforge.inria.fr/news/?group_id=2827", 
+            "https://gforge.inria.fr/frs/?group_id=2827"
         ], 
         "sioc:scope_of": [
             {
