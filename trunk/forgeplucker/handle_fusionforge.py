@@ -314,6 +314,9 @@ The FusionForge handler provides machinery for the FusionForge sites.
 
 	### PERMISSIONS/ROLES PARSING
 
+	def user_page(self, username):
+		return 'users/' + username
+		
 	def pluck_permissions(self):
 		'''
 		Get the permissions associated with each role in the project and return the corresponding array
@@ -321,11 +324,13 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		contents = self.fetch('project/memberlist.php?group_id=' + self.project_id, 'Roles page')
 		perms = {}
 		for (realname, username, role, skills) in self.table_iter(contents, '<table>', 4, 'Roles Table', has_header=True):
-			perms[username.strip()] = {'role':role}
-			perms[username.strip()]['real_name'] = realname
+			username = username.strip()
+			perms[username] = {'role':role}
+			perms[username]['real_name'] = realname
+			perms[username]['URL'] = self.real_url(self.user_page(username))
 			
 		for user in perms:
-			contents = self.fetch('users/' + user, 'User page')
+			contents = self.fetch(self.user_page(user), 'User page')
 			mail = re.search('''sendmessage.php\?touser=[0-9]*">([^<]*)</a>''', contents, re.DOTALL).group(1).strip().replace(" @nospam@ ","@")
 			perms[user]['mail'] = mail
 			
@@ -1093,7 +1098,8 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		return str(text)
 
 	def pluck_project_data(self):
-		page = self.fetch(self.project_page(self.project_name), "Project summary")
+		project_page = self.project_page(self.project_name)
+		page = self.fetch(project_page, "Project summary")
 		soup = BeautifulSoup(self.narrow(page))
 
 		description = soup.find('fieldset').find('table').find('tr').find('td').find('p').contents
@@ -1132,5 +1138,6 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			"description" : description,
 			"registered" : registered,
 			"homepage": homepage,
+			"URL": self.real_url(project_page),
 			"format_version":1}
 		return data
