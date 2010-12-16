@@ -33,6 +33,49 @@
         "planetforge:hosted_by": "https://gforge.inria.fr/", 
         "rdf:about": "https://gforge.inria.fr/projects/coclico/", 
         "rdf:type": "http://coclico-project.org/ontology/planetforge#ForgeProject", 
+        "scope_of": [
+            {
+                "rdf:type": "http://rdfs.org/sioc/ns#Role", 
+                "sioc:function_of": [], 
+                "sioc:name": "Default"
+            }, 
+            {
+                "rdf:type": "http://rdfs.org/sioc/ns#Role", 
+                "sioc:function_of": [], 
+                "sioc:name": "Observer"
+            }, 
+            {
+                "rdf:type": "http://rdfs.org/sioc/ns#Role", 
+                "sioc:function_of": [
+                    "https://gforge.inria.fr/users/fdudouet_", 
+                    "https://gforge.inria.fr/users/fdudouet", 
+                    "https://gforge.inria.fr/users/oberger"
+                ], 
+                "sioc:name": "Admin"
+            }, 
+            {
+                "rdf:type": "http://rdfs.org/sioc/ns#Role", 
+                "sioc:function_of": [], 
+                "sioc:name": "Senior Developer"
+            }, 
+            {
+                "rdf:type": "http://rdfs.org/sioc/ns#Role", 
+                "sioc:function_of": [], 
+                "sioc:name": "Doc Writer"
+            }, 
+            {
+                "rdf:type": "http://rdfs.org/sioc/ns#Role", 
+                "sioc:function_of": [
+                    "https://gforge.inria.fr/users/mnazaria"
+                ], 
+                "sioc:name": "Junior Developer"
+            }, 
+            {
+                "rdf:type": "http://rdfs.org/sioc/ns#Role", 
+                "sioc:function_of": [], 
+                "sioc:name": "Support Tech"
+            }
+        ], 
         "sioc:has_space": [
             "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse", 
             "https://gforge.inria.fr/tracker/?atid=9687&group_id=2827&func=browse", 
@@ -49,24 +92,6 @@
             "https://scm.gforge.inria.fr/svn/coclico", 
             "https://gforge.inria.fr/news/?group_id=2827", 
             "https://gforge.inria.fr/frs/?group_id=2827"
-        ], 
-        "sioc:scope_of": [
-            {
-                "rdf:type": "http://rdfs.org/sioc/ns#Role", 
-                "sioc:function_of": [
-                    "https://gforge.inria.fr/users/fdudouet_", 
-                    "https://gforge.inria.fr/users/fdudouet", 
-                    "https://gforge.inria.fr/users/oberger"
-                ], 
-                "sioc:name": "project_admins"
-            }, 
-            {
-                "rdf:type": "http://rdfs.org/sioc/ns#Role", 
-                "sioc:function_of": [
-                    "https://gforge.inria.fr/users/mnazaria"
-                ], 
-                "sioc:name": "project_developers"
-            }
         ]
     }, 
     "forgeplucker:tools": [
@@ -494,6 +519,15 @@
     ], 
     "forgeplucker:users": [
         {
+            "foaf:accountName": "mnazaria", 
+            "rdf:about": "https://gforge.inria.fr/users/mnazaria", 
+            "rdf:type": [
+                "http://rdfs.org/sioc/ns#User", 
+                "http://xmlns.com/foaf/0.1/OnlineAccount"
+            ], 
+            "sioc:email": "marc.nazarian@xrce.xerox.com"
+        }, 
+        {
             "foaf:accountName": "fdudouet_", 
             "rdf:about": "https://gforge.inria.fr/users/fdudouet_", 
             "rdf:type": [
@@ -519,15 +553,6 @@
                 "http://xmlns.com/foaf/0.1/OnlineAccount"
             ], 
             "sioc:email": "olivier.berger@it-sudparis.eu"
-        }, 
-        {
-            "foaf:accountName": "mnazaria", 
-            "rdf:about": "https://gforge.inria.fr/users/mnazaria", 
-            "rdf:type": [
-                "http://rdfs.org/sioc/ns#User", 
-                "http://xmlns.com/foaf/0.1/OnlineAccount"
-            ], 
-            "sioc:email": "marc.nazarian@xrce.xerox.com"
         }
     ], 
     "prefixes": {

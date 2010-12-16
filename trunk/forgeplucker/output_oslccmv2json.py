@@ -170,54 +170,49 @@ def output_oslccmv2json(data):
     oslc_project['doap:homepage'] = project['homepage']
     oslc_project['planetforge:hosted_by'] = forge
 
-    
+    # TODO : export roles
+    oslc_roles = []
+    i = 0
+    roles_number = {}
+    for role in data['roles']:
+        oslc_role = {}
+        oslc_role['rdf:type'] = oslc_prefixes['sioc']+'Role'
+        oslc_role['sioc:name'] = role
+        oslc_role['sioc:function_of'] = []
+        oslc_roles.append(oslc_role)
+        roles_number[role] = i
+        i += 1
+
     oslc_persons = []
-    oslc_admin_users = []
-    oslc_regular_users = []
-#    print data['users']
+    oslc_users = []
+
     for user in data['users']:
         oslc_user = {}
         oslc_person = {}
 
         user_data=data['users'][user]
-        oslc_user['rdf:about'] = user_data['URL']
+        user_url = user_data['URL']
+        oslc_user['rdf:about'] = user_url
         oslc_user['rdf:type'] = [oslc_prefixes['sioc']+'User', oslc_prefixes['foaf']+'OnlineAccount']
         oslc_user['foaf:accountName'] = user
         oslc_user['sioc:email'] = user_data['mail']
         
-        oslc_person['rdf:about'] = user_data['URL'] + '#me'
+        oslc_person['rdf:about'] = user_url + '#me'
         oslc_person['rdf:type'] = oslc_prefixes['foaf']+'Person'
         oslc_person['foaf:name'] = user_data['real_name']
-        oslc_person['foaf:holdsAccount'] = user_data['URL']
+        oslc_person['foaf:holdsAccount'] = user_url
 
-        if user_data['role'] == 'Admin' :
-            oslc_admin_users.append(oslc_user)
-        else:
-            oslc_regular_users.append(oslc_user)
+        i = roles_number[user_data['role']]
+        oslc_role = oslc_roles[i]
+        oslc_role['sioc:function_of'].append(user_url)
+
         oslc_persons.append(oslc_person)
-
-    oslc_project['sioc:scope_of'] = []
-    oslc_data['forgeplucker:users'] = []
-    if oslc_admin_users:
-        scope_of_admin = {}
-        scope_of_admin['rdf:type'] = oslc_prefixes['sioc']+'Role'
-        scope_of_admin['sioc:name'] = "project_admins"
-        scope_of_admin['sioc:function_of'] = []
-        for u in oslc_admin_users:
-            scope_of_admin['sioc:function_of'].append(u['rdf:about'])
-            oslc_data['forgeplucker:users'].append(u)
-        oslc_project['sioc:scope_of'].append(scope_of_admin)
-    if oslc_regular_users:
-        scope_of_regular = {}
-        scope_of_regular['rdf:type'] = oslc_prefixes['sioc']+'Role'
-        scope_of_regular['sioc:name'] = "project_developers"
-        scope_of_regular['sioc:function_of'] = []
-        for u in oslc_regular_users:
-            scope_of_regular['sioc:function_of'].append(u['rdf:about'])
-            oslc_data['forgeplucker:users'].append(u)
-        oslc_project['sioc:scope_of'].append(scope_of_regular)
+        oslc_users.append(oslc_user)
 
     oslc_data['forgeplucker:persons'] = oslc_persons
+    oslc_data['forgeplucker:users'] = oslc_users
+
+    oslc_project['scope_of'] = oslc_roles
     
     oslc_trackers = output_oslccmv2json_trackers(data)
 
