@@ -1,10 +1,247 @@
 {
     "project": {
+        "URL": "https://gforge.inria.fr/projects/coclico/", 
         "class": "PROJECT", 
+        "description": "Provide use cases and an exhaustive example of a fusionforge project to create a significant extract using our tools and Forgeplucker.\n\nPart of WP2 from COCLICO.", 
+        "docman": "https://gforge.inria.fr/docman/?group_id=2827", 
         "forgetype": "FusionForge", 
         "format_version": 1, 
+        "frs": "https://gforge.inria.fr/frs/?group_id=2827", 
+        "homepage": "http://coclico.gforge.inria.fr", 
         "host": "gforge.inria.fr", 
-        "project": "coclico"
+        "mailing_lists": [
+            "http://lists.gforge.inria.fr/pipermail/coclico-commits/", 
+            "http://lists.gforge.inria.fr/pipermail/coclico-test/"
+        ], 
+        "news": "https://gforge.inria.fr/news/?group_id=2827", 
+        "project": "coclico", 
+        "public_forums": [
+            "https://gforge.inria.fr/forum/forum.php?forum_id=7971&group_id=2827", 
+            "https://gforge.inria.fr/forum/forum.php?forum_id=7972&group_id=2827", 
+            "https://gforge.inria.fr/forum/forum.php?forum_id=7973&group_id=2827"
+        ], 
+        "registered": "2010-06-29T07:35:00Z", 
+        "scm": "https://scm.gforge.inria.fr/svn/coclico", 
+        "scm_type": "svn", 
+        "task_trackers": [
+            "https://gforge.inria.fr/pm/task.php?group_project_id=4891&group_id=2827&func=browse", 
+            "https://gforge.inria.fr/pm/task.php?group_project_id=4892&group_id=2827&func=browse"
+        ], 
+        "tools": {
+            "http://lists.gforge.inria.fr/pipermail/coclico-commits/": {
+                "provided_by": "https://gforge.inria.fr/#mailman"
+            }, 
+            "http://lists.gforge.inria.fr/pipermail/coclico-test/": {
+                "provided_by": "https://gforge.inria.fr/#mailman"
+            }, 
+            "https://gforge.inria.fr/#docman": {
+                "type": "DocumentsTool"
+            }, 
+            "https://gforge.inria.fr/#forum": {
+                "type": "ForumsTool"
+            }, 
+            "https://gforge.inria.fr/#frs": {
+                "type": "FilesReleasesTool"
+            }, 
+            "https://gforge.inria.fr/#mailman": {
+                "type": "MailingListTool"
+            }, 
+            "https://gforge.inria.fr/#news": {
+                "type": "NewsTool"
+            }, 
+            "https://gforge.inria.fr/#svn": {
+                "type": "ScmTool"
+            }, 
+            "https://gforge.inria.fr/#taskstracker": {
+                "type": "TaskTool"
+            }, 
+            "https://gforge.inria.fr/#tracker": {
+                "type": "TrackersTool"
+            }, 
+            "https://gforge.inria.fr/docman/?group_id=2827": {
+                "provided_by": "https://gforge.inria.fr/#docman"
+            }, 
+            "https://gforge.inria.fr/forum/forum.php?forum_id=7971&group_id=2827": {
+                "provided_by": "https://gforge.inria.fr/#forum"
+            }, 
+            "https://gforge.inria.fr/forum/forum.php?forum_id=7972&group_id=2827": {
+                "provided_by": "https://gforge.inria.fr/#forum"
+            }, 
+            "https://gforge.inria.fr/forum/forum.php?forum_id=7973&group_id=2827": {
+                "provided_by": "https://gforge.inria.fr/#forum"
+            }, 
+            "https://gforge.inria.fr/frs/?group_id=2827": {
+                "provided_by": "https://gforge.inria.fr/#frs"
+            }, 
+            "https://gforge.inria.fr/news/?group_id=2827": {
+                "provided_by": "https://gforge.inria.fr/#news"
+            }, 
+            "https://gforge.inria.fr/pm/task.php?group_project_id=4891&group_id=2827&func=browse": {
+                "provided_by": "https://gforge.inria.fr/#taskstracker"
+            }, 
+            "https://gforge.inria.fr/pm/task.php?group_project_id=4892&group_id=2827&func=browse": {
+                "provided_by": "https://gforge.inria.fr/#taskstracker"
+            }, 
+            "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse": {
+                "provided_by": "https://gforge.inria.fr/#tracker"
+            }, 
+            "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse": {
+                "provided_by": "https://gforge.inria.fr/#tracker"
+            }, 
+            "https://gforge.inria.fr/tracker/?atid=9686&group_id=2827&func=browse": {
+                "provided_by": "https://gforge.inria.fr/#tracker"
+            }, 
+            "https://gforge.inria.fr/tracker/?atid=9687&group_id=2827&func=browse": {
+                "provided_by": "https://gforge.inria.fr/#tracker"
+            }, 
+            "https://scm.gforge.inria.fr/svn/coclico": {
+                "provided_by": "https://gforge.inria.fr/#svn"
+            }
+        }, 
+        "trackers_list": [
+            "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse", 
+            "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse", 
+            "https://gforge.inria.fr/tracker/?atid=9686&group_id=2827&func=browse", 
+            "https://gforge.inria.fr/tracker/?atid=9687&group_id=2827&func=browse"
+        ]
+    }, 
+    "roles": {
+        "Admin": {
+            "Documentation Manager": "Admin", 
+            "File Release System": "Write", 
+            "Forum Admin": "Admin", 
+            "Forum:developers": "Admin", 
+            "Forum:help": "Admin", 
+            "Forum:open-discussion": "Admin", 
+            "Project Admin": "Admin", 
+            "SCM": "Write", 
+            "Tasks Admin": "Admin", 
+            "Tasks:Next Release": "Tech & Admin", 
+            "Tasks:To Do": "Tech & Admin", 
+            "Tracker Admin": "Admin", 
+            "Tracker:Bugs": "Tech & Admin", 
+            "Tracker:Feature Requests": "Tech & Admin", 
+            "Tracker:Patches": "Tech & Admin", 
+            "Tracker:Support": "Tech & Admin", 
+            "Webcal": "Modify"
+        }, 
+        "Default": {
+            "Documentation Manager": "Read/Post", 
+            "File Release System": "Read", 
+            "Forum Admin": "None", 
+            "Forum:developers": "Read", 
+            "Forum:help": "Read", 
+            "Forum:open-discussion": "Read", 
+            "Project Admin": "Admin", 
+            "SCM": "Read", 
+            "Tasks Admin": "None", 
+            "Tasks:Next Release": "Read", 
+            "Tasks:To Do": "Read", 
+            "Tracker Admin": "None", 
+            "Tracker:Bugs": "Read", 
+            "Tracker:Feature Requests": "Read", 
+            "Tracker:Patches": "Read", 
+            "Tracker:Support": "Read", 
+            "Webcal": "No access"
+        }, 
+        "Doc Writer": {
+            "Documentation Manager": "Admin", 
+            "File Release System": "Read", 
+            "Forum Admin": "None", 
+            "Forum:developers": "Post", 
+            "Forum:help": "Post", 
+            "Forum:open-discussion": "Post", 
+            "Project Admin": "None", 
+            "SCM": "Read", 
+            "Tasks Admin": "None", 
+            "Tasks:Next Release": "Read", 
+            "Tasks:To Do": "Read", 
+            "Tracker Admin": "None", 
+            "Tracker:Bugs": "Read", 
+            "Tracker:Feature Requests": "Read", 
+            "Tracker:Patches": "Read", 
+            "Tracker:Support": "Read", 
+            "Webcal": "See"
+        }, 
+        "Junior Developer": {
+            "Documentation Manager": "Read/Post", 
+            "File Release System": "Read", 
+            "Forum Admin": "None", 
+            "Forum:developers": "Post", 
+            "Forum:help": "Post", 
+            "Forum:open-discussion": "Post", 
+            "Project Admin": "None", 
+            "SCM": "Write", 
+            "Tasks Admin": "None", 
+            "Tasks:Next Release": "Tech", 
+            "Tasks:To Do": "Tech", 
+            "Tracker Admin": "None", 
+            "Tracker:Bugs": "Tech", 
+            "Tracker:Feature Requests": "Tech", 
+            "Tracker:Patches": "Tech", 
+            "Tracker:Support": "Tech", 
+            "Webcal": "See"
+        }, 
+        "Observer": {
+            "Files:2nd package": "Public", 
+            "Files:coclico": "Public", 
+            "Forum:AnonPost:developers": "No Anonymous Posts", 
+            "Forum:AnonPost:help": "No Anonymous Posts", 
+            "Forum:AnonPost:open-discussion": "No Anonymous Posts", 
+            "Forum:developers": "Private", 
+            "Forum:help": "Public", 
+            "Forum:open-discussion": "Public", 
+            "Project": "Public", 
+            "SCM": "Public (PServer)", 
+            "Tasks:Next Release": "Public", 
+            "Tasks:To Do": "Public", 
+            "Tracker:AnonPost:Bugs": "No Anonymous Posts", 
+            "Tracker:AnonPost:Feature Requests": "No Anonymous Posts", 
+            "Tracker:AnonPost:Patches": "No Anonymous Posts", 
+            "Tracker:AnonPost:Support": "No Anonymous Posts", 
+            "Tracker:Bugs": "Public", 
+            "Tracker:Feature Requests": "Public", 
+            "Tracker:Patches": "Public", 
+            "Tracker:Support": "Public"
+        }, 
+        "Senior Developer": {
+            "Documentation Manager": "Admin", 
+            "File Release System": "Write", 
+            "Forum Admin": "Admin", 
+            "Forum:developers": "Admin", 
+            "Forum:help": "Admin", 
+            "Forum:open-discussion": "Admin", 
+            "Project Admin": "None", 
+            "SCM": "Write", 
+            "Tasks Admin": "Admin", 
+            "Tasks:Next Release": "Tech & Admin", 
+            "Tasks:To Do": "Tech & Admin", 
+            "Tracker Admin": "Admin", 
+            "Tracker:Bugs": "Tech & Admin", 
+            "Tracker:Feature Requests": "Tech & Admin", 
+            "Tracker:Patches": "Tech & Admin", 
+            "Tracker:Support": "Tech & Admin", 
+            "Webcal": "See"
+        }, 
+        "Support Tech": {
+            "Documentation Manager": "Admin", 
+            "File Release System": "Read", 
+            "Forum Admin": "None", 
+            "Forum:developers": "Post", 
+            "Forum:help": "Post", 
+            "Forum:open-discussion": "Post", 
+            "Project Admin": "None", 
+            "SCM": "Read", 
+            "Tasks Admin": "None", 
+            "Tasks:Next Release": "Read", 
+            "Tasks:To Do": "Read", 
+            "Tracker Admin": "None", 
+            "Tracker:Bugs": "Tech & Admin", 
+            "Tracker:Feature Requests": "Tech & Admin", 
+            "Tracker:Patches": "Tech & Admin", 
+            "Tracker:Support": "Tech & Admin", 
+            "Webcal": "See"
+        }
     }, 
     "trackers": [
         {
@@ -515,5 +752,31 @@
             "url": "https://gforge.inria.fr/tracker/?atid=9686&group_id=2827&func=browse", 
             "vocabulary": {}
         }
-    ]
+    ], 
+    "users": {
+        "fdudouet": {
+            "URL": "https://gforge.inria.fr/users/fdudouet", 
+            "mail": "florian.dudouet@irisa.fr", 
+            "real_name": "Florian Dudouet", 
+            "role": "Admin"
+        }, 
+        "fdudouet_": {
+            "URL": "https://gforge.inria.fr/users/fdudouet_", 
+            "mail": "sebastien.campion@gmail.com", 
+            "real_name": "Florian Dudouet", 
+            "role": "Admin"
+        }, 
+        "mnazaria": {
+            "URL": "https://gforge.inria.fr/users/mnazaria", 
+            "mail": "marc.nazarian@xrce.xerox.com", 
+            "real_name": "Marc NAZARIAN", 
+            "role": "Junior Developer"
+        }, 
+        "oberger": {
+            "URL": "https://gforge.inria.fr/users/oberger", 
+            "mail": "olivier.berger@it-sudparis.eu", 
+            "real_name": "Olivier Berger", 
+            "role": "Admin"
+        }
+    }
 }
