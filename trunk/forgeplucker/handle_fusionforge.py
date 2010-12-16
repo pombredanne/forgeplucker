@@ -351,7 +351,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			contents = self.fetch('project/admin/users.php?group_id=' + self.project_id, 'Admin page')
 			m = re.search('''<form action="roleedit.php\?group_id=[0-9]*[^"]*" method.*<select name="role_id">(.*)</select>''', contents, re.DOTALL)
 
-		n = re.findall('''<option value="([0-9]*)">(.*)</option>''', m.group(1))
+		n = re.findall('''<option value="([0-9]*)"[^>]*>(.*)</option>''', m.group(1))
 		n.append(['1', 'Default'])#Default role for project creator, always #1
 		n.append(['observer', 'Observer'])
 		for i in range(0, len(n)):

@@ -178,7 +178,6 @@ def output_oslccmv2json(data):
         oslc_role = {}
         oslc_role['rdf:type'] = oslc_prefixes['sioc']+'Role'
         oslc_role['sioc:name'] = role
-        oslc_role['sioc:function_of'] = []
         oslc_roles.append(oslc_role)
         roles_number[role] = i
         i += 1
@@ -204,6 +203,8 @@ def output_oslccmv2json(data):
 
         i = roles_number[user_data['role']]
         oslc_role = oslc_roles[i]
+        if not 'sioc:function_of' in oslc_role:
+            oslc_role['sioc:function_of'] = []
         oslc_role['sioc:function_of'].append(user_url)
 
         oslc_persons.append(oslc_person)
@@ -212,7 +213,7 @@ def output_oslccmv2json(data):
     oslc_data['forgeplucker:persons'] = oslc_persons
     oslc_data['forgeplucker:users'] = oslc_users
 
-    oslc_project['scope_of'] = oslc_roles
+    oslc_project['sioc:scope_of'] = oslc_roles
     
     oslc_trackers = output_oslccmv2json_trackers(data)
 
