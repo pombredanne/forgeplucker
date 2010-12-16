@@ -1245,36 +1245,80 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			"URL": self.real_url(project_page),
 			"format_version": 1 }
 
+		forge = self.real_url('')
+
+		tools = {}
+
 		if shortdesc:
 			data['shortdesc'] = shortdesc
 
 		if trackers:
 			data['trackers_list'] = []
 			for t in trackers:
-				data['trackers_list'].append(self.real_url(t.getUrl()))
+				url = self.real_url(t.getUrl())
+				data['trackers_list'].append(url)
+				provided_by = forge+'#tracker'
+				tools[url] = { 'provided_by': provided_by }
+				if not provided_by in tools:
+					tools[provided_by] = { 'type': 'TrackersTool'}
 
 		if public_forums:
 			data['public_forums'] = []
 			for f in public_forums:
-				data['public_forums'].append(self.real_url(f['URL']))
+				url = self.real_url(f['URL'])
+				data['public_forums'].append(url)
+				provided_by = forge+'#forum'
+				tools[url] = { 'provided_by': provided_by }
+				if not provided_by in tools:
+					tools[provided_by] = { 'type': 'ForumsTool'}
+				
 		if docman:
 			data['docman'] = docman
+			provided_by = forge+'#docman'
+			tools[docman] = { 'provided_by': provided_by }
+			if not provided_by in tools:
+				tools[provided_by] = { 'type': 'DocumentsTool'}
 
 		if mailing_lists:
 			data['mailing_lists'] = mailing_lists
+			for m in mailing_lists:
+				provided_by = forge+'#mailman'
+				tools[m] = { 'provided_by': provided_by }
+				if not provided_by in tools:
+					tools[provided_by] = { 'type': 'MailingListTool'}
 
 		if task_trackers:
 			data['task_trackers'] = task_trackers
+			for t in task_trackers:
+				provided_by = forge+'#taskstracker'
+				tools[t] = { 'provided_by': provided_by }
+				if not provided_by in tools:
+					tools[provided_by] = { 'type': 'TaskTool'}
 
 		if scm:
 			scm_type, scm = scm
 			data['scm_type'] = scm_type
 			data['scm'] = scm
+			provided_by = forge+'#'+scm_type
+			tools[scm] = { 'provided_by': provided_by }
+			if not provided_by in tools:
+				tools[provided_by] = { 'type': 'ScmTool'}
+
 
 		if news:
 			data['news'] = news
+			provided_by = forge+'#news'
+			tools[news] = { 'provided_by': provided_by }
+			if not provided_by in tools:
+				tools[provided_by] = { 'type': 'NewsTool'}
 
 		if frs:
 			data['frs'] = frs
+			provided_by = forge+'#frs'
+			tools[frs] = { 'provided_by': provided_by }
+			if not provided_by in tools:
+				tools[provided_by] = { 'type': 'FilesReleasesTool'}
+
+		data['tools'] = tools
 
 		return data

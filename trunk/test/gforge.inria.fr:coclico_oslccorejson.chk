@@ -30,6 +30,7 @@
         "dcterms:description": "Provide use cases and an exhaustive example of a fusionforge project to create a significant extract using our tools and Forgeplucker.\n\nPart of WP2 from COCLICO.", 
         "doap:homepage": "http://coclico.gforge.inria.fr", 
         "doap:name": "coclico", 
+        "planetforge:hosted_by": "https://gforge.inria.fr/", 
         "rdf:about": "https://gforge.inria.fr/projects/coclico/", 
         "rdf:type": "http://coclico-project.org/ontology/planetforge#ForgeProject", 
         "sioc:has_space": [
@@ -68,6 +69,104 @@
             }
         ]
     }, 
+    "forgeplucker:tools": [
+        {
+            "rdf:about": "https://gforge.inria.fr/", 
+            "rdf:type": "planetforge:ForgeService"
+        }, 
+        {
+            "planetforge:provided_by": "https://gforge.inria.fr/#mailman", 
+            "rdf:about": "http://lists.gforge.inria.fr/pipermail/coclico-commits/"
+        }, 
+        {
+            "planetforge:provided_by": "https://gforge.inria.fr/#tracker", 
+            "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse"
+        }, 
+        {
+            "rdf:about": "https://gforge.inria.fr/#forum", 
+            "rdf:type": "planetforge:ForumsTool"
+        }, 
+        {
+            "planetforge:provided_by": "https://gforge.inria.fr/#tracker", 
+            "rdf:about": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse"
+        }, 
+        {
+            "planetforge:provided_by": "https://gforge.inria.fr/#forum", 
+            "rdf:about": "https://gforge.inria.fr/forum/forum.php?forum_id=7973&group_id=2827"
+        }, 
+        {
+            "rdf:about": "https://gforge.inria.fr/#tracker", 
+            "rdf:type": "planetforge:TrackersTool"
+        }, 
+        {
+            "planetforge:provided_by": "https://gforge.inria.fr/#mailman", 
+            "rdf:about": "http://lists.gforge.inria.fr/pipermail/coclico-test/"
+        }, 
+        {
+            "planetforge:provided_by": "https://gforge.inria.fr/#tracker", 
+            "rdf:about": "https://gforge.inria.fr/tracker/?atid=9687&group_id=2827&func=browse"
+        }, 
+        {
+            "rdf:about": "https://gforge.inria.fr/#mailman", 
+            "rdf:type": "planetforge:MailingListTool"
+        }, 
+        {
+            "rdf:about": "https://gforge.inria.fr/#frs", 
+            "rdf:type": "planetforge:FilesReleasesTool"
+        }, 
+        {
+            "planetforge:provided_by": "https://gforge.inria.fr/#docman", 
+            "rdf:about": "https://gforge.inria.fr/docman/?group_id=2827"
+        }, 
+        {
+            "planetforge:provided_by": "https://gforge.inria.fr/#tracker", 
+            "rdf:about": "https://gforge.inria.fr/tracker/?atid=9686&group_id=2827&func=browse"
+        }, 
+        {
+            "planetforge:provided_by": "https://gforge.inria.fr/#forum", 
+            "rdf:about": "https://gforge.inria.fr/forum/forum.php?forum_id=7971&group_id=2827"
+        }, 
+        {
+            "rdf:about": "https://gforge.inria.fr/#taskstracker", 
+            "rdf:type": "planetforge:TaskTool"
+        }, 
+        {
+            "planetforge:provided_by": "https://gforge.inria.fr/#taskstracker", 
+            "rdf:about": "https://gforge.inria.fr/pm/task.php?group_project_id=4892&group_id=2827&func=browse"
+        }, 
+        {
+            "planetforge:provided_by": "https://gforge.inria.fr/#news", 
+            "rdf:about": "https://gforge.inria.fr/news/?group_id=2827"
+        }, 
+        {
+            "rdf:about": "https://gforge.inria.fr/#svn", 
+            "rdf:type": "planetforge:ScmTool"
+        }, 
+        {
+            "planetforge:provided_by": "https://gforge.inria.fr/#svn", 
+            "rdf:about": "https://scm.gforge.inria.fr/svn/coclico"
+        }, 
+        {
+            "planetforge:provided_by": "https://gforge.inria.fr/#forum", 
+            "rdf:about": "https://gforge.inria.fr/forum/forum.php?forum_id=7972&group_id=2827"
+        }, 
+        {
+            "rdf:about": "https://gforge.inria.fr/#docman", 
+            "rdf:type": "planetforge:DocumentsTool"
+        }, 
+        {
+            "planetforge:provided_by": "https://gforge.inria.fr/#frs", 
+            "rdf:about": "https://gforge.inria.fr/frs/?group_id=2827"
+        }, 
+        {
+            "rdf:about": "https://gforge.inria.fr/#news", 
+            "rdf:type": "planetforge:NewsTool"
+        }, 
+        {
+            "planetforge:provided_by": "https://gforge.inria.fr/#taskstracker", 
+            "rdf:about": "https://gforge.inria.fr/pm/task.php?group_project_id=4891&group_id=2827&func=browse"
+        }
+    ], 
     "forgeplucker:trackers": [
         {
             "oslc:results": [

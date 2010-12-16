@@ -6,6 +6,9 @@ Contributed in the frame of the COCLICO project.
 
 (C) 2010 Olivier Berger - Institut Telecom
 
+The output format will use the PlanetForge ontology published at : 
+  http://forge.projet-coclico.org/scm/loggerhead/wp2/documents/annotate/head%3A/ontology.html
+
 References :
  - Example JSON OSLC-CM query results : http://open-services.net/bin/view/Main/CmSpecificationV2Samples?sortcol=table;table=up#Query_results_as_application_jso
  - "Open Services for Lifecycle Collaboration Change Management Specification Version 2.0" specification : http://open-services.net/bin/view/Main/CmSpecificationV2
@@ -146,6 +149,7 @@ def output_oslccmv2json(data):
     # TODO check that format_version == 1
     
     host = project['host']
+    forge = 'https://' + host + '/'
     project_name = project['project']
     project_dump_url = 'http://' + host + '/forgeplucker_dump/oslccmv2json/' + project_name + '/' 
     
@@ -164,8 +168,9 @@ def output_oslccmv2json(data):
     oslc_project['dcterms:description'] = project['description']
     oslc_project['dcterms:created'] = project['registered']
     oslc_project['doap:homepage'] = project['homepage']
+    oslc_project['planetforge:hosted_by'] = forge
 
-
+    
     oslc_persons = []
     oslc_admin_users = []
     oslc_regular_users = []
@@ -262,6 +267,20 @@ def output_oslccmv2json(data):
         oslc_project['sioc:has_space'].append(project['frs'])
 
     oslc_data['forgeplucker:project'] = oslc_project
+
+    tools = project['tools']
+    oslc_tools = [{'rdf:type': 'planetforge:ForgeService',
+                   'rdf:about': forge}]
+    for t in tools :
+        oslc_tool = {'rdf:about': t}
+        if 'type' in tools[t]:
+            ttype = tools[t]['type']
+            oslc_tool['rdf:type'] = 'planetforge:'+ttype
+        if 'provided_by' in tools[t]:
+            oslc_tool['planetforge:provided_by'] = tools[t]['provided_by']
+        oslc_tools.append(oslc_tool)
+            
+    oslc_data['forgeplucker:tools'] = oslc_tools
 
     # pretty-print 
     print json.dumps(oslc_data, sort_keys=True, indent=4)
