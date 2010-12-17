@@ -170,11 +170,13 @@ class GenericForge:
         if type(issueid) == type(""):
             issueid = int(issueid)
         # Actual logic starts here  
-        contents = self.fetch(tracker.detailfetcher(issueid), "Detail page")
+        url = tracker.detailfetcher(issueid)
+        contents = self.fetch(url, "Detail page")
         # Modification access to the tracker is required
         if tracker.access_denied(contents, issueid):
             self.error("tracker technician access to bug details was denied.", ood=False)
         artifact = {"class":"ARTIFACT", "id":issueid, "type": tracker.type}
+        artifact['URL'] = self.real_url(url)
         m = re.search(tracker.submitter_re, contents)
         if not m:
             self.error("no submitter found")
