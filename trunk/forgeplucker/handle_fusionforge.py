@@ -1260,7 +1260,8 @@ The FusionForge handler provides machinery for the FusionForge sites.
 				provided_by = forge+'#tracker'
 				tools[url] = { 'provided_by': provided_by }
 				if not provided_by in tools:
-					tools[provided_by] = { 'type': 'TrackersTool'}
+					tools[provided_by] = { 'type': 'TrackersTool',
+							       'name': 'http://fusionforge.org/tool/trackers'}
 
 		if public_forums:
 			data['public_forums'] = []
@@ -1270,14 +1271,16 @@ The FusionForge handler provides machinery for the FusionForge sites.
 				provided_by = forge+'#forum'
 				tools[url] = { 'provided_by': provided_by }
 				if not provided_by in tools:
-					tools[provided_by] = { 'type': 'ForumsTool'}
+					tools[provided_by] = { 'type': 'ForumsTool',
+							       'name': 'http://fusionforge.org/tool/forums'}
 				
 		if docman:
 			data['docman'] = docman
 			provided_by = forge+'#docman'
 			tools[docman] = { 'provided_by': provided_by }
 			if not provided_by in tools:
-				tools[provided_by] = { 'type': 'DocumentsTool'}
+				tools[provided_by] = { 'type': 'DocumentsTool',
+							       'name': 'http://fusionforge.org/tool/docman'}
 
 		if mailing_lists:
 			data['mailing_lists'] = mailing_lists
@@ -1285,7 +1288,8 @@ The FusionForge handler provides machinery for the FusionForge sites.
 				provided_by = forge+'#mailman'
 				tools[m] = { 'provided_by': provided_by }
 				if not provided_by in tools:
-					tools[provided_by] = { 'type': 'MailingListTool'}
+					tools[provided_by] = { 'type': 'MailingListTool',
+							       'name': 'mailman'}
 
 		if task_trackers:
 			data['task_trackers'] = task_trackers
@@ -1293,7 +1297,8 @@ The FusionForge handler provides machinery for the FusionForge sites.
 				provided_by = forge+'#taskstracker'
 				tools[t] = { 'provided_by': provided_by }
 				if not provided_by in tools:
-					tools[provided_by] = { 'type': 'TaskTool'}
+					tools[provided_by] = { 'type': 'TaskTool',
+							       'name': 'http://fusionforge.org/tool/tasks/'}
 
 		if scm:
 			scm_type, scm = scm
@@ -1302,7 +1307,11 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			provided_by = forge+'#'+scm_type
 			tools[scm] = { 'provided_by': provided_by }
 			if not provided_by in tools:
-				tools[provided_by] = { 'type': 'ScmTool'}
+				if scm_type == 'svn':
+					tools[provided_by] = { 'type': 'SvnScmTool',
+							       'name': 'svn'}
+				else:
+					tools[provided_by] = { 'type': 'ScmTool'}
 
 
 		if news:
@@ -1310,14 +1319,16 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			provided_by = forge+'#news'
 			tools[news] = { 'provided_by': provided_by }
 			if not provided_by in tools:
-				tools[provided_by] = { 'type': 'NewsTool'}
+				tools[provided_by] = { 'type': 'NewsTool',
+						       'name': 'http://fusionforge.org/tool/news/'}
 
 		if frs:
 			data['frs'] = frs
 			provided_by = forge+'#frs'
 			tools[frs] = { 'provided_by': provided_by }
 			if not provided_by in tools:
-				tools[provided_by] = { 'type': 'FilesReleasesTool'}
+				tools[provided_by] = { 'type': 'FilesReleasesTool',
+						       'name': 'http://fusionforge.org/tool/frs/'}
 
 		data['tools'] = tools
 
