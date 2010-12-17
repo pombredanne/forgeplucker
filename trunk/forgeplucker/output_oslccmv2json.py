@@ -157,8 +157,10 @@ def output_oslccmv2json_trackers(data, oslc_project, oslc_users):
                         # elif mapping_type == 'str' :
                         value = artifact[x]
                         if mapping in ['dcterms:contributor', 'dcterms:creator'] :
-                            print 'creator:', mapping, value
+#                            print 'creator:', mapping, value
                             value = username_to_resource(value, oslc_users)
+                            if mapping == 'dcterms:contributor' and value == 'Nobody' :
+                                continue
                         oslc_changerequest[mapping] = value
                         #else :
                         #    print >>sys.stderr, 'Incorrect mapping in oslc_mapping'
