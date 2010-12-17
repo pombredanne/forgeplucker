@@ -42,8 +42,8 @@
             "https://gforge.inria.fr/forum/forum.php?forum_id=7972&group_id=2827", 
             "https://gforge.inria.fr/forum/forum.php?forum_id=7973&group_id=2827", 
             "https://gforge.inria.fr/docman/?group_id=2827", 
-            "http://lists.gforge.inria.fr/pipermail/coclico-commits/", 
-            "http://lists.gforge.inria.fr/pipermail/coclico-test/", 
+            "http://lists.gforge.inria.fr/mailman/listinfo/coclico-commits", 
+            "http://lists.gforge.inria.fr/mailman/listinfo/coclico-test", 
             "https://gforge.inria.fr/pm/task.php?group_project_id=4891&group_id=2827&func=browse", 
             "https://gforge.inria.fr/pm/task.php?group_project_id=4892&group_id=2827&func=browse", 
             "https://scm.gforge.inria.fr/svn/coclico", 
@@ -96,13 +96,14 @@
         }, 
         {
             "planetforge:provided_by": "https://gforge.inria.fr/#mailman", 
-            "rdf:about": "http://lists.gforge.inria.fr/pipermail/coclico-commits/"
+            "rdf:about": "http://lists.gforge.inria.fr/mailman/listinfo/coclico-test"
         }, 
         {
             "planetforge:provided_by": "https://gforge.inria.fr/#tracker", 
             "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse"
         }, 
         {
+            "planetforge:name": "http://fusionforge.org/tool/forums", 
             "rdf:about": "https://gforge.inria.fr/#forum", 
             "rdf:type": "planetforge:ForumsTool"
         }, 
@@ -115,22 +116,25 @@
             "rdf:about": "https://gforge.inria.fr/forum/forum.php?forum_id=7973&group_id=2827"
         }, 
         {
-            "rdf:about": "https://gforge.inria.fr/#tracker", 
-            "rdf:type": "planetforge:TrackersTool"
+            "planetforge:provided_by": "https://gforge.inria.fr/#mailman", 
+            "rdf:about": "http://lists.gforge.inria.fr/mailman/listinfo/coclico-commits"
         }, 
         {
-            "planetforge:provided_by": "https://gforge.inria.fr/#mailman", 
-            "rdf:about": "http://lists.gforge.inria.fr/pipermail/coclico-test/"
+            "planetforge:name": "http://fusionforge.org/tool/trackers", 
+            "rdf:about": "https://gforge.inria.fr/#tracker", 
+            "rdf:type": "planetforge:TrackersTool"
         }, 
         {
             "planetforge:provided_by": "https://gforge.inria.fr/#tracker", 
             "rdf:about": "https://gforge.inria.fr/tracker/?atid=9687&group_id=2827&func=browse"
         }, 
         {
+            "planetforge:name": "mailman", 
             "rdf:about": "https://gforge.inria.fr/#mailman", 
             "rdf:type": "planetforge:MailingListTool"
         }, 
         {
+            "planetforge:name": "http://fusionforge.org/tool/frs/", 
             "rdf:about": "https://gforge.inria.fr/#frs", 
             "rdf:type": "planetforge:FilesReleasesTool"
         }, 
@@ -147,6 +151,7 @@
             "rdf:about": "https://gforge.inria.fr/forum/forum.php?forum_id=7971&group_id=2827"
         }, 
         {
+            "planetforge:name": "http://fusionforge.org/tool/tasks/", 
             "rdf:about": "https://gforge.inria.fr/#taskstracker", 
             "rdf:type": "planetforge:TaskTool"
         }, 
@@ -159,8 +164,9 @@
             "rdf:about": "https://gforge.inria.fr/news/?group_id=2827"
         }, 
         {
+            "planetforge:name": "svn", 
             "rdf:about": "https://gforge.inria.fr/#svn", 
-            "rdf:type": "planetforge:ScmTool"
+            "rdf:type": "planetforge:SvnScmTool"
         }, 
         {
             "planetforge:provided_by": "https://gforge.inria.fr/#svn", 
@@ -171,6 +177,7 @@
             "rdf:about": "https://gforge.inria.fr/forum/forum.php?forum_id=7972&group_id=2827"
         }, 
         {
+            "planetforge:name": "http://fusionforge.org/tool/docman", 
             "rdf:about": "https://gforge.inria.fr/#docman", 
             "rdf:type": "planetforge:DocumentsTool"
         }, 
@@ -179,6 +186,7 @@
             "rdf:about": "https://gforge.inria.fr/frs/?group_id=2827"
         }, 
         {
+            "planetforge:name": "http://fusionforge.org/tool/news/", 
             "rdf:about": "https://gforge.inria.fr/#news", 
             "rdf:type": "planetforge:NewsTool"
         }, 
@@ -189,25 +197,156 @@
     ], 
     "forgeplucker:trackers": [
         {
+            "forgeplucker:vocabulary": {
+                "oslc:property": [
+                    {
+                        "dcterms:title": "status", 
+                        "osl:allowedValue": [
+                            "Open", 
+                            "Closed", 
+                            "UNCONFIRMED", 
+                            "NEW", 
+                            "ASSIGNED", 
+                            "REOPENED", 
+                            "RESOLVED", 
+                            "VERIFIED"
+                        ], 
+                        "oslc:name": "status", 
+                        "rdf:type": "oslc:Property"
+                    }, 
+                    {
+                        "dcterms:title": "Product", 
+                        "osl:allowedValue": [
+                            "None", 
+                            "Software A"
+                        ], 
+                        "oslc:name": "product", 
+                        "rdf:type": "oslc:Property"
+                    }, 
+                    {
+                        "dcterms:title": "Operating System", 
+                        "osl:allowedValue": [
+                            "None", 
+                            "All", 
+                            "Windows 3.1", 
+                            "Windows 95", 
+                            "Windows 98", 
+                            "Windows ME", 
+                            "Windows 2000", 
+                            "Windows NT", 
+                            "Windows XP", 
+                            "Windows Server 2003", 
+                            "Mac System 7", 
+                            "Mac System 7.5", 
+                            "Mac System 7.6.1", 
+                            "Mac System 8.0", 
+                            "Mac System 8.5", 
+                            "Mac System 8.6", 
+                            "Mac System 9.x", 
+                            "MacOS X", 
+                            "Linux", 
+                            "BSDI", 
+                            "FreeBSD", 
+                            "NetBSD", 
+                            "OpenBSD", 
+                            "AIX", 
+                            "BeOS", 
+                            "HP-UX", 
+                            "IRIX", 
+                            "Neutrino", 
+                            "OpenVMS", 
+                            "OS/2", 
+                            "OSF/1", 
+                            "Solaris", 
+                            "SunOS", 
+                            "other"
+                        ], 
+                        "oslc:name": "operatingSystem", 
+                        "rdf:type": "oslc:Property"
+                    }, 
+                    {
+                        "dcterms:title": "Severity", 
+                        "osl:allowedValue": [
+                            "None", 
+                            "blocker", 
+                            "critical", 
+                            "major", 
+                            "normal", 
+                            "minor", 
+                            "trivial", 
+                            "enhancement"
+                        ], 
+                        "oslc:name": "severity", 
+                        "rdf:type": "oslc:Property"
+                    }, 
+                    {
+                        "dcterms:title": "multiChoice", 
+                        "osl:allowedValue": [
+                            "None", 
+                            "choice1 ", 
+                            "choice2 ", 
+                            "choice3 "
+                        ], 
+                        "oslc:name": "multichoice", 
+                        "rdf:type": "oslc:Property"
+                    }, 
+                    {
+                        "dcterms:title": "Component", 
+                        "osl:allowedValue": [
+                            "None", 
+                            "Cog A", 
+                            "Cog B"
+                        ], 
+                        "oslc:name": "component", 
+                        "rdf:type": "oslc:Property"
+                    }, 
+                    {
+                        "dcterms:title": "Hardware", 
+                        "osl:allowedValue": [
+                            "None", 
+                            "All", 
+                            "DEC", 
+                            "HP", 
+                            "Macintosh", 
+                            "PC", 
+                            "SGI", 
+                            "Sun", 
+                            "Other"
+                        ], 
+                        "oslc:name": "hardware", 
+                        "rdf:type": "oslc:Property"
+                    }, 
+                    {
+                        "dcterms:title": "Version", 
+                        "osl:allowedValue": [
+                            "None", 
+                            "v1.0", 
+                            "v1.1"
+                        ], 
+                        "oslc:name": "version", 
+                        "rdf:type": "oslc:Property"
+                    }, 
+                    {
+                        "dcterms:title": "priority", 
+                        "osl:allowedValue": [
+                            "1 - Lowest", 
+                            "2", 
+                            "3", 
+                            "4", 
+                            "5 - Highest"
+                        ], 
+                        "oslc:name": "priority", 
+                        "rdf:type": "oslc:Property"
+                    }
+                ], 
+                "rdf:about": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse#shape", 
+                "rdf:type": "oslc:ResourceShape"
+            }, 
             "oslc:results": [
                 {
-                    "dcterms:contributor": "Nobody", 
-                    "dcterms:created": "2010-06-29T05:48:00Z", 
-                    "dcterms:creator": "fdudouet", 
-                    "dcterms:description": "opened!opened!opened!\n", 
-                    "dcterms:identifier": 10635, 
-                    "dcterms:title": "test1", 
-                    "dcterms:type": "support", 
-                    "forgeplucker:Component": "None", 
-                    "forgeplucker:Hardware": "None", 
-                    "forgeplucker:Operating System": "None", 
-                    "forgeplucker:Product": "None", 
-                    "forgeplucker:Severity": "None", 
-                    "forgeplucker:URL": "", 
-                    "forgeplucker:Version": "None", 
-                    "forgeplucker:attachments": [], 
-                    "forgeplucker:class": "ARTIFACT", 
-                    "forgeplucker:comments": [
+                    "attachments": [], 
+                    "class": "ARTIFACT", 
+                    "comments": [
                         {
                             "class": "COMMENT", 
                             "comment": "This one has a multi field set with 2 choices", 
@@ -215,7 +354,16 @@
                             "submitter": "fdudouet"
                         }
                     ], 
-                    "forgeplucker:history": [
+                    "component": "None", 
+                    "dcterms:contributor": "Nobody", 
+                    "dcterms:created": "2010-06-29T05:48:00Z", 
+                    "dcterms:creator": "fdudouet", 
+                    "dcterms:description": "opened!opened!opened!\n", 
+                    "dcterms:identifier": 10635, 
+                    "dcterms:title": "test1", 
+                    "dcterms:type": "support", 
+                    "hardware": "None", 
+                    "history": [
                         {
                             "by": "fdudouet", 
                             "class": "FIELDCHANGE", 
@@ -224,16 +372,27 @@
                             "old": "None"
                         }
                     ], 
-                    "forgeplucker:multiChoice": [
+                    "multichoice": [
                         "choice1 ", 
                         "choice2 "
                     ], 
-                    "forgeplucker:priority": "3", 
+                    "operatingSystem": "None", 
+                    "oslc:instanceShape": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse#shape", 
                     "oslc_cm:status": "Open", 
+                    "priority": "3", 
+                    "product": "None", 
                     "rdf:about": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse/10635", 
-                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
+                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest", 
+                    "severity": "None", 
+                    "url": "", 
+                    "version": "None"
                 }, 
                 {
+                    "attachments": [], 
+                    "class": "ARTIFACT", 
+                    "closed_at": "2010-06-29T06:01:00Z", 
+                    "comments": [], 
+                    "component": "None", 
                     "dcterms:contributor": "Nobody", 
                     "dcterms:created": "2010-06-29T05:48:00Z", 
                     "dcterms:creator": "fdudouet", 
@@ -241,18 +400,8 @@
                     "dcterms:identifier": 10636, 
                     "dcterms:title": "test2", 
                     "dcterms:type": "support", 
-                    "forgeplucker:Component": "None", 
-                    "forgeplucker:Hardware": "None", 
-                    "forgeplucker:Operating System": "None", 
-                    "forgeplucker:Product": "None", 
-                    "forgeplucker:Severity": "None", 
-                    "forgeplucker:URL": "", 
-                    "forgeplucker:Version": "None", 
-                    "forgeplucker:attachments": [], 
-                    "forgeplucker:class": "ARTIFACT", 
-                    "forgeplucker:closed_at": "2010-06-29T06:01:00Z", 
-                    "forgeplucker:comments": [], 
-                    "forgeplucker:history": [
+                    "hardware": "None", 
+                    "history": [
                         {
                             "by": "fdudouet", 
                             "class": "FIELDCHANGE", 
@@ -282,13 +431,19 @@
                             "old": "2010-06-29 07:48"
                         }
                     ], 
-                    "forgeplucker:multiChoice": [
+                    "multichoice": [
                         "choice3 "
                     ], 
-                    "forgeplucker:priority": "3", 
+                    "operatingSystem": "None", 
+                    "oslc:instanceShape": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse#shape", 
                     "oslc_cm:status": "Closed", 
+                    "priority": "3", 
+                    "product": "None", 
                     "rdf:about": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse/10636", 
-                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
+                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest", 
+                    "severity": "None", 
+                    "url": "", 
+                    "version": "None"
                 }
             ], 
             "rdf:about": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse", 
@@ -302,8 +457,160 @@
             "sioc:name": "Feature Requests"
         }, 
         {
+            "forgeplucker:vocabulary": {
+                "oslc:property": [
+                    {
+                        "dcterms:title": "status", 
+                        "osl:allowedValue": [
+                            "Open", 
+                            "Closed", 
+                            "UNCONFIRMED", 
+                            "NEW", 
+                            "ASSIGNED", 
+                            "REOPENED", 
+                            "RESOLVED", 
+                            "VERIFIED"
+                        ], 
+                        "oslc:name": "status", 
+                        "rdf:type": "oslc:Property"
+                    }, 
+                    {
+                        "dcterms:title": "Hardware", 
+                        "osl:allowedValue": [
+                            "None", 
+                            "All", 
+                            "DEC", 
+                            "HP", 
+                            "Macintosh", 
+                            "PC", 
+                            "SGI", 
+                            "Sun", 
+                            "Other"
+                        ], 
+                        "oslc:name": "hardware", 
+                        "rdf:type": "oslc:Property"
+                    }, 
+                    {
+                        "dcterms:title": "Product", 
+                        "osl:allowedValue": [
+                            "None", 
+                            "Software A"
+                        ], 
+                        "oslc:name": "product", 
+                        "rdf:type": "oslc:Property"
+                    }, 
+                    {
+                        "dcterms:title": "Operating System", 
+                        "osl:allowedValue": [
+                            "None", 
+                            "All", 
+                            "Windows 3.1", 
+                            "Windows 95", 
+                            "Windows 98", 
+                            "Windows ME", 
+                            "Windows 2000", 
+                            "Windows NT", 
+                            "Windows XP", 
+                            "Windows Server 2003", 
+                            "Mac System 7", 
+                            "Mac System 7.5", 
+                            "Mac System 7.6.1", 
+                            "Mac System 8.0", 
+                            "Mac System 8.5", 
+                            "Mac System 8.6", 
+                            "Mac System 9.x", 
+                            "MacOS X", 
+                            "Linux", 
+                            "BSDI", 
+                            "FreeBSD", 
+                            "NetBSD", 
+                            "OpenBSD", 
+                            "AIX", 
+                            "BeOS", 
+                            "HP-UX", 
+                            "IRIX", 
+                            "Neutrino", 
+                            "OpenVMS", 
+                            "OS/2", 
+                            "OSF/1", 
+                            "Solaris", 
+                            "SunOS", 
+                            "other"
+                        ], 
+                        "oslc:name": "operatingSystem", 
+                        "rdf:type": "oslc:Property"
+                    }, 
+                    {
+                        "dcterms:title": "Severity", 
+                        "osl:allowedValue": [
+                            "None", 
+                            "blocker", 
+                            "critical", 
+                            "major", 
+                            "normal", 
+                            "minor", 
+                            "trivial", 
+                            "enhancement"
+                        ], 
+                        "oslc:name": "severity", 
+                        "rdf:type": "oslc:Property"
+                    }, 
+                    {
+                        "dcterms:title": "Component", 
+                        "osl:allowedValue": [
+                            "None", 
+                            "Cog A", 
+                            "Cog B"
+                        ], 
+                        "oslc:name": "component", 
+                        "rdf:type": "oslc:Property"
+                    }, 
+                    {
+                        "dcterms:title": "priority", 
+                        "osl:allowedValue": [
+                            "1 - Lowest", 
+                            "2", 
+                            "3", 
+                            "4", 
+                            "5 - Highest"
+                        ], 
+                        "oslc:name": "priority", 
+                        "rdf:type": "oslc:Property"
+                    }, 
+                    {
+                        "dcterms:title": "Version", 
+                        "osl:allowedValue": [
+                            "None", 
+                            "v1.0", 
+                            "v1.1"
+                        ], 
+                        "oslc:name": "version", 
+                        "rdf:type": "oslc:Property"
+                    }, 
+                    {
+                        "dcterms:title": "Resolution", 
+                        "osl:allowedValue": [
+                            "None", 
+                            "Accepted As Bug", 
+                            "Fixed", 
+                            "Won't Fix", 
+                            "Invalid", 
+                            "Awaiting Response", 
+                            "Works For Me"
+                        ], 
+                        "oslc:name": "resolution", 
+                        "rdf:type": "oslc:Property"
+                    }
+                ], 
+                "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse#shape", 
+                "rdf:type": "oslc:ResourceShape"
+            }, 
             "oslc:results": [
                 {
+                    "attachments": [], 
+                    "class": "ARTIFACT", 
+                    "comments": [], 
+                    "component": "None", 
                     "dcterms:contributor": "Nobody", 
                     "dcterms:created": "2010-06-29T05:44:00Z", 
                     "dcterms:creator": "fdudouet", 
@@ -311,24 +618,26 @@
                     "dcterms:identifier": 10633, 
                     "dcterms:title": "My first test bug", 
                     "dcterms:type": "bugs", 
-                    "forgeplucker:Component": "None", 
-                    "forgeplucker:Hardware": "All", 
-                    "forgeplucker:Operating System": "Windows XP", 
-                    "forgeplucker:Product": "Software A", 
-                    "forgeplucker:Resolution": "None", 
-                    "forgeplucker:Severity": "None", 
-                    "forgeplucker:URL": "", 
-                    "forgeplucker:Version": "None", 
-                    "forgeplucker:attachments": [], 
-                    "forgeplucker:class": "ARTIFACT", 
-                    "forgeplucker:comments": [], 
-                    "forgeplucker:history": [], 
-                    "forgeplucker:priority": "5 - Highest", 
+                    "hardware": "All", 
+                    "history": [], 
+                    "operatingSystem": "Windows XP", 
+                    "oslc:instanceShape": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse#shape", 
                     "oslc_cm:status": "Open", 
+                    "priority": "5 - Highest", 
+                    "product": "Software A", 
                     "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse/10633", 
-                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
+                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest", 
+                    "resolution": "None", 
+                    "severity": "None", 
+                    "url": "", 
+                    "version": "None"
                 }, 
                 {
+                    "attachments": [], 
+                    "class": "ARTIFACT", 
+                    "closed_at": "2010-06-29T05:47:00Z", 
+                    "comments": [], 
+                    "component": "None", 
                     "dcterms:contributor": "Nobody", 
                     "dcterms:created": "2010-06-29T05:45:00Z", 
                     "dcterms:creator": "fdudouet", 
@@ -336,19 +645,8 @@
                     "dcterms:identifier": 10634, 
                     "dcterms:title": "A closed bug", 
                     "dcterms:type": "bugs", 
-                    "forgeplucker:Component": "None", 
-                    "forgeplucker:Hardware": "None", 
-                    "forgeplucker:Operating System": "None", 
-                    "forgeplucker:Product": "None", 
-                    "forgeplucker:Resolution": "None", 
-                    "forgeplucker:Severity": "None", 
-                    "forgeplucker:URL": "", 
-                    "forgeplucker:Version": "None", 
-                    "forgeplucker:attachments": [], 
-                    "forgeplucker:class": "ARTIFACT", 
-                    "forgeplucker:closed_at": "2010-06-29T05:47:00Z", 
-                    "forgeplucker:comments": [], 
-                    "forgeplucker:history": [
+                    "hardware": "None", 
+                    "history": [
                         {
                             "by": "fdudouet", 
                             "class": "FIELDCHANGE", 
@@ -364,28 +662,20 @@
                             "old": "Open"
                         }
                     ], 
-                    "forgeplucker:priority": "3", 
+                    "operatingSystem": "None", 
+                    "oslc:instanceShape": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse#shape", 
                     "oslc_cm:status": "Closed", 
+                    "priority": "3", 
+                    "product": "None", 
                     "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse/10634", 
-                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
+                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest", 
+                    "resolution": "None", 
+                    "severity": "None", 
+                    "url": "", 
+                    "version": "None"
                 }, 
                 {
-                    "dcterms:contributor": "Nobody", 
-                    "dcterms:created": "2010-06-29T05:53:00Z", 
-                    "dcterms:creator": "fdudouet", 
-                    "dcterms:description": "This bug contains a few files !\n", 
-                    "dcterms:identifier": 10637, 
-                    "dcterms:title": "A bug with files", 
-                    "dcterms:type": "bugs", 
-                    "forgeplucker:Component": "None", 
-                    "forgeplucker:Hardware": "None", 
-                    "forgeplucker:Operating System": "None", 
-                    "forgeplucker:Product": "None", 
-                    "forgeplucker:Resolution": "None", 
-                    "forgeplucker:Severity": "None", 
-                    "forgeplucker:URL": "", 
-                    "forgeplucker:Version": "None", 
-                    "forgeplucker:attachments": [
+                    "attachments": [
                         {
                             "by": "fdudouet", 
                             "class": "ATTACHMENT", 
@@ -403,9 +693,18 @@
                             "url": "coclico/bugs/gforge.inria.fr.htm"
                         }
                     ], 
-                    "forgeplucker:class": "ARTIFACT", 
-                    "forgeplucker:comments": [], 
-                    "forgeplucker:history": [
+                    "class": "ARTIFACT", 
+                    "comments": [], 
+                    "component": "None", 
+                    "dcterms:contributor": "Nobody", 
+                    "dcterms:created": "2010-06-29T05:53:00Z", 
+                    "dcterms:creator": "fdudouet", 
+                    "dcterms:description": "This bug contains a few files !\n", 
+                    "dcterms:identifier": 10637, 
+                    "dcterms:title": "A bug with files", 
+                    "dcterms:type": "bugs", 
+                    "hardware": "None", 
+                    "history": [
                         {
                             "by": "fdudouet", 
                             "class": "FIELDCHANGE", 
@@ -428,30 +727,22 @@
                             "old": "1935: firstFile.txt"
                         }
                     ], 
-                    "forgeplucker:priority": "3", 
+                    "operatingSystem": "None", 
+                    "oslc:instanceShape": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse#shape", 
                     "oslc_cm:status": "Open", 
+                    "priority": "3", 
+                    "product": "None", 
                     "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse/10637", 
-                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
+                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest", 
+                    "resolution": "None", 
+                    "severity": "None", 
+                    "url": "", 
+                    "version": "None"
                 }, 
                 {
-                    "dcterms:contributor": "Nobody", 
-                    "dcterms:created": "2010-06-29T05:58:00Z", 
-                    "dcterms:creator": "fdudouet", 
-                    "dcterms:description": "This bug has most of its fields filled!\n\nAnd it has some comments and changes too.\n", 
-                    "dcterms:identifier": 10638, 
-                    "dcterms:title": "A complete bug", 
-                    "dcterms:type": "bugs", 
-                    "forgeplucker:Component": "Cog B", 
-                    "forgeplucker:Hardware": "All", 
-                    "forgeplucker:Operating System": "Windows 3.1", 
-                    "forgeplucker:Product": "Software A", 
-                    "forgeplucker:Resolution": "Accepted As Bug", 
-                    "forgeplucker:Severity": "blocker", 
-                    "forgeplucker:URL": "", 
-                    "forgeplucker:Version": "v1.0", 
-                    "forgeplucker:attachments": [], 
-                    "forgeplucker:class": "ARTIFACT", 
-                    "forgeplucker:comments": [
+                    "attachments": [], 
+                    "class": "ARTIFACT", 
+                    "comments": [
                         {
                             "class": "COMMENT", 
                             "comment": "Here is a comment", 
@@ -465,7 +756,16 @@
                             "submitter": "fdudouet"
                         }
                     ], 
-                    "forgeplucker:history": [
+                    "component": "Cog B", 
+                    "dcterms:contributor": "Nobody", 
+                    "dcterms:created": "2010-06-29T05:58:00Z", 
+                    "dcterms:creator": "fdudouet", 
+                    "dcterms:description": "This bug has most of its fields filled!\n\nAnd it has some comments and changes too.\n", 
+                    "dcterms:identifier": 10638, 
+                    "dcterms:title": "A complete bug", 
+                    "dcterms:type": "bugs", 
+                    "hardware": "All", 
+                    "history": [
                         {
                             "by": "fdudouet", 
                             "class": "FIELDCHANGE", 
@@ -495,10 +795,17 @@
                             "old": "Windows XP"
                         }
                     ], 
-                    "forgeplucker:priority": "3", 
+                    "operatingSystem": "Windows 3.1", 
+                    "oslc:instanceShape": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse#shape", 
                     "oslc_cm:status": "Open", 
+                    "priority": "3", 
+                    "product": "Software A", 
                     "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse/10638", 
-                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
+                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest", 
+                    "resolution": "Accepted As Bug", 
+                    "severity": "blocker", 
+                    "url": "", 
+                    "version": "v1.0"
                 }
             ], 
             "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse", 
