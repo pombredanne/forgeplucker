@@ -339,13 +339,12 @@
                         "rdf:type": "oslc:Property"
                     }
                 ], 
-                "rdf:about": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse#shape", 
+                "rdf:about": "https://gforge.inria.fr/projects/coclico//tracker/9685/shape", 
                 "rdf:type": "oslc:ResourceShape"
             }, 
             "oslc:results": [
                 {
                     "attachments": [], 
-                    "class": "ARTIFACT", 
                     "comments": [
                         {
                             "class": "COMMENT", 
@@ -354,7 +353,6 @@
                             "submitter": "fdudouet"
                         }
                     ], 
-                    "component": "None", 
                     "dcterms:contributor": "Nobody", 
                     "dcterms:created": "2010-06-29T05:48:00Z", 
                     "dcterms:creator": "fdudouet", 
@@ -362,7 +360,6 @@
                     "dcterms:identifier": 10635, 
                     "dcterms:title": "test1", 
                     "dcterms:type": "support", 
-                    "hardware": "None", 
                     "history": [
                         {
                             "by": "fdudouet", 
@@ -372,27 +369,26 @@
                             "old": "None"
                         }
                     ], 
-                    "multichoice": [
+                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#component": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#hardware": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#multichoice": [
                         "choice1 ", 
                         "choice2 "
                     ], 
-                    "operatingSystem": "None", 
-                    "oslc:instanceShape": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse#shape", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#operatingSystem": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#priority": "3", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#product": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#severity": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#version": "None", 
+                    "oslc:instanceShape": "https://gforge.inria.fr/projects/coclico//tracker/9685/shape", 
                     "oslc_cm:status": "Open", 
-                    "priority": "3", 
-                    "product": "None", 
-                    "rdf:about": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse/10635", 
-                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest", 
-                    "severity": "None", 
-                    "url": "", 
-                    "version": "None"
+                    "rdf:about": "https://gforge.inria.fr/projects/coclico//tracker/9685/artifact/10635", 
+                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }, 
                 {
                     "attachments": [], 
-                    "class": "ARTIFACT", 
                     "closed_at": "2010-06-29T06:01:00Z", 
                     "comments": [], 
-                    "component": "None", 
                     "dcterms:contributor": "Nobody", 
                     "dcterms:created": "2010-06-29T05:48:00Z", 
                     "dcterms:creator": "fdudouet", 
@@ -400,7 +396,6 @@
                     "dcterms:identifier": 10636, 
                     "dcterms:title": "test2", 
                     "dcterms:type": "support", 
-                    "hardware": "None", 
                     "history": [
                         {
                             "by": "fdudouet", 
@@ -431,19 +426,20 @@
                             "old": "2010-06-29 07:48"
                         }
                     ], 
-                    "multichoice": [
+                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#component": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#hardware": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#multichoice": [
                         "choice3 "
                     ], 
-                    "operatingSystem": "None", 
-                    "oslc:instanceShape": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse#shape", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#operatingSystem": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#priority": "3", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#product": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#severity": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#version": "None", 
+                    "oslc:instanceShape": "https://gforge.inria.fr/projects/coclico//tracker/9685/shape", 
                     "oslc_cm:status": "Closed", 
-                    "priority": "3", 
-                    "product": "None", 
-                    "rdf:about": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse/10636", 
-                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest", 
-                    "severity": "None", 
-                    "url": "", 
-                    "version": "None"
+                    "rdf:about": "https://gforge.inria.fr/projects/coclico//tracker/9685/artifact/10636", 
+                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }
             ], 
             "rdf:about": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse", 
@@ -602,15 +598,13 @@
                         "rdf:type": "oslc:Property"
                     }
                 ], 
-                "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse#shape", 
+                "rdf:about": "https://gforge.inria.fr/projects/coclico//tracker/9684/shape", 
                 "rdf:type": "oslc:ResourceShape"
             }, 
             "oslc:results": [
                 {
                     "attachments": [], 
-                    "class": "ARTIFACT", 
                     "comments": [], 
-                    "component": "None", 
                     "dcterms:contributor": "Nobody", 
                     "dcterms:created": "2010-06-29T05:44:00Z", 
                     "dcterms:creator": "fdudouet", 
@@ -618,26 +612,24 @@
                     "dcterms:identifier": 10633, 
                     "dcterms:title": "My first test bug", 
                     "dcterms:type": "bugs", 
-                    "hardware": "All", 
                     "history": [], 
-                    "operatingSystem": "Windows XP", 
-                    "oslc:instanceShape": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse#shape", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#component": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#hardware": "All", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#operatingSystem": "Windows XP", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#priority": "5 - Highest", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#product": "Software A", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#resolution": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#severity": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#version": "None", 
+                    "oslc:instanceShape": "https://gforge.inria.fr/projects/coclico//tracker/9684/shape", 
                     "oslc_cm:status": "Open", 
-                    "priority": "5 - Highest", 
-                    "product": "Software A", 
-                    "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse/10633", 
-                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest", 
-                    "resolution": "None", 
-                    "severity": "None", 
-                    "url": "", 
-                    "version": "None"
+                    "rdf:about": "https://gforge.inria.fr/projects/coclico//tracker/9684/artifact/10633", 
+                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }, 
                 {
                     "attachments": [], 
-                    "class": "ARTIFACT", 
                     "closed_at": "2010-06-29T05:47:00Z", 
                     "comments": [], 
-                    "component": "None", 
                     "dcterms:contributor": "Nobody", 
                     "dcterms:created": "2010-06-29T05:45:00Z", 
                     "dcterms:creator": "fdudouet", 
@@ -645,7 +637,6 @@
                     "dcterms:identifier": 10634, 
                     "dcterms:title": "A closed bug", 
                     "dcterms:type": "bugs", 
-                    "hardware": "None", 
                     "history": [
                         {
                             "by": "fdudouet", 
@@ -662,17 +653,18 @@
                             "old": "Open"
                         }
                     ], 
-                    "operatingSystem": "None", 
-                    "oslc:instanceShape": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse#shape", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#component": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#hardware": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#operatingSystem": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#priority": "3", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#product": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#resolution": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#severity": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#version": "None", 
+                    "oslc:instanceShape": "https://gforge.inria.fr/projects/coclico//tracker/9684/shape", 
                     "oslc_cm:status": "Closed", 
-                    "priority": "3", 
-                    "product": "None", 
-                    "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse/10634", 
-                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest", 
-                    "resolution": "None", 
-                    "severity": "None", 
-                    "url": "", 
-                    "version": "None"
+                    "rdf:about": "https://gforge.inria.fr/projects/coclico//tracker/9684/artifact/10634", 
+                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }, 
                 {
                     "attachments": [
@@ -693,9 +685,7 @@
                             "url": "coclico/bugs/gforge.inria.fr.htm"
                         }
                     ], 
-                    "class": "ARTIFACT", 
                     "comments": [], 
-                    "component": "None", 
                     "dcterms:contributor": "Nobody", 
                     "dcterms:created": "2010-06-29T05:53:00Z", 
                     "dcterms:creator": "fdudouet", 
@@ -703,7 +693,6 @@
                     "dcterms:identifier": 10637, 
                     "dcterms:title": "A bug with files", 
                     "dcterms:type": "bugs", 
-                    "hardware": "None", 
                     "history": [
                         {
                             "by": "fdudouet", 
@@ -727,21 +716,21 @@
                             "old": "1935: firstFile.txt"
                         }
                     ], 
-                    "operatingSystem": "None", 
-                    "oslc:instanceShape": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse#shape", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#component": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#hardware": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#operatingSystem": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#priority": "3", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#product": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#resolution": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#severity": "None", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#version": "None", 
+                    "oslc:instanceShape": "https://gforge.inria.fr/projects/coclico//tracker/9684/shape", 
                     "oslc_cm:status": "Open", 
-                    "priority": "3", 
-                    "product": "None", 
-                    "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse/10637", 
-                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest", 
-                    "resolution": "None", 
-                    "severity": "None", 
-                    "url": "", 
-                    "version": "None"
+                    "rdf:about": "https://gforge.inria.fr/projects/coclico//tracker/9684/artifact/10637", 
+                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }, 
                 {
                     "attachments": [], 
-                    "class": "ARTIFACT", 
                     "comments": [
                         {
                             "class": "COMMENT", 
@@ -756,7 +745,6 @@
                             "submitter": "fdudouet"
                         }
                     ], 
-                    "component": "Cog B", 
                     "dcterms:contributor": "Nobody", 
                     "dcterms:created": "2010-06-29T05:58:00Z", 
                     "dcterms:creator": "fdudouet", 
@@ -764,7 +752,6 @@
                     "dcterms:identifier": 10638, 
                     "dcterms:title": "A complete bug", 
                     "dcterms:type": "bugs", 
-                    "hardware": "All", 
                     "history": [
                         {
                             "by": "fdudouet", 
@@ -795,17 +782,18 @@
                             "old": "Windows XP"
                         }
                     ], 
-                    "operatingSystem": "Windows 3.1", 
-                    "oslc:instanceShape": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse#shape", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#component": "Cog B", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#hardware": "All", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#operatingSystem": "Windows 3.1", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#priority": "3", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#product": "Software A", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#resolution": "Accepted As Bug", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#severity": "blocker", 
+                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#version": "v1.0", 
+                    "oslc:instanceShape": "https://gforge.inria.fr/projects/coclico//tracker/9684/shape", 
                     "oslc_cm:status": "Open", 
-                    "priority": "3", 
-                    "product": "Software A", 
-                    "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse/10638", 
-                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest", 
-                    "resolution": "Accepted As Bug", 
-                    "severity": "blocker", 
-                    "url": "", 
-                    "version": "v1.0"
+                    "rdf:about": "https://gforge.inria.fr/projects/coclico//tracker/9684/artifact/10638", 
+                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }
             ], 
             "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse", 
