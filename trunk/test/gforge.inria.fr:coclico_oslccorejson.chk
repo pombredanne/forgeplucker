@@ -344,22 +344,24 @@
             }, 
             "oslc:results": [
                 {
-                    "dcterms:contributor": "Nobody", 
                     "dcterms:created": "2010-06-29T05:48:00Z", 
                     "dcterms:creator": "https://gforge.inria.fr/users/fdudouet", 
                     "dcterms:description": "opened!opened!opened!\n", 
                     "dcterms:identifier": 10635, 
                     "dcterms:title": "test1", 
                     "dcterms:type": "support", 
-                    "history": [
-                        {
-                            "by": "fdudouet", 
-                            "class": "FIELDCHANGE", 
-                            "date": "2010-06-29T06:01:00Z", 
-                            "field": "multiChoice", 
-                            "old": "None"
-                        }
-                    ], 
+                    "forgeplucker:history": {
+                        "forgeplucker:changes": [
+                            {
+                                "dcterms:contributor": "https://gforge.inria.fr/users/fdudouet", 
+                                "dcterms:modified": "2010-06-29T06:01:00Z", 
+                                "forgeplucker:oldValue": "None", 
+                                "oslc:property": "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#multichoice", 
+                                "rdf:type": "forgeplucker:PropertyChange"
+                            }
+                        ], 
+                        "rdf:type": "forgeplucker:ResourceHistory"
+                    }, 
                     "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#component": "None", 
                     "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#hardware": "None", 
                     "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#multichoice": [
@@ -384,48 +386,49 @@
                     }, 
                     "oslc:instanceShape": "https://gforge.inria.fr/projects/coclico//tracker/9685/shape", 
                     "oslc_cm:status": "Open", 
-                    "rdf:about": "https://gforge.inria.fr/projects/coclico//tracker/9685/artifact/10635", 
+                    "rdf:about": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse&func=detail&aid=10635", 
                     "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }, 
                 {
-                    "closed_at": "2010-06-29T06:01:00Z", 
-                    "dcterms:contributor": "Nobody", 
                     "dcterms:created": "2010-06-29T05:48:00Z", 
                     "dcterms:creator": "https://gforge.inria.fr/users/fdudouet", 
                     "dcterms:description": "closed!closed!closed!closed!\n", 
                     "dcterms:identifier": 10636, 
                     "dcterms:title": "test2", 
                     "dcterms:type": "support", 
-                    "history": [
-                        {
-                            "by": "fdudouet", 
-                            "class": "FIELDCHANGE", 
-                            "date": "2010-06-29T06:01:00Z", 
-                            "field": "close_date", 
-                            "old": "2010-06-29 08:01"
-                        }, 
-                        {
-                            "by": "fdudouet", 
-                            "class": "FIELDCHANGE", 
-                            "date": "2010-06-29T06:01:00Z", 
-                            "field": "multiChoice", 
-                            "old": "None"
-                        }, 
-                        {
-                            "by": "fdudouet", 
-                            "class": "FIELDCHANGE", 
-                            "date": "2010-06-29T05:48:00Z", 
-                            "field": "status", 
-                            "old": "Open"
-                        }, 
-                        {
-                            "by": "fdudouet", 
-                            "class": "FIELDCHANGE", 
-                            "date": "2010-06-29T05:48:00Z", 
-                            "field": "close_date", 
-                            "old": "2010-06-29 07:48"
-                        }
-                    ], 
+                    "forgeplucker:history": {
+                        "forgeplucker:changes": [
+                            {
+                                "dcterms:contributor": "https://gforge.inria.fr/users/fdudouet", 
+                                "dcterms:modified": "2010-06-29T06:01:00Z", 
+                                "forgeplucker:oldValue": "2010-06-29 08:01", 
+                                "oslc:property": "close_date", 
+                                "rdf:type": "forgeplucker:PropertyChange"
+                            }, 
+                            {
+                                "dcterms:contributor": "https://gforge.inria.fr/users/fdudouet", 
+                                "dcterms:modified": "2010-06-29T06:01:00Z", 
+                                "forgeplucker:oldValue": "None", 
+                                "oslc:property": "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#multichoice", 
+                                "rdf:type": "forgeplucker:PropertyChange"
+                            }, 
+                            {
+                                "dcterms:contributor": "https://gforge.inria.fr/users/fdudouet", 
+                                "dcterms:modified": "2010-06-29T05:48:00Z", 
+                                "forgeplucker:oldValue": "Open", 
+                                "oslc:property": "oslc_cm:status", 
+                                "rdf:type": "forgeplucker:PropertyChange"
+                            }, 
+                            {
+                                "dcterms:contributor": "https://gforge.inria.fr/users/fdudouet", 
+                                "dcterms:modified": "2010-06-29T05:48:00Z", 
+                                "forgeplucker:oldValue": "2010-06-29 07:48", 
+                                "oslc:property": "close_date", 
+                                "rdf:type": "forgeplucker:PropertyChange"
+                            }
+                        ], 
+                        "rdf:type": "forgeplucker:ResourceHistory"
+                    }, 
                     "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#component": "None", 
                     "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#hardware": "None", 
                     "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#multichoice": [
@@ -437,8 +440,9 @@
                     "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#severity": "None", 
                     "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#version": "None", 
                     "oslc:instanceShape": "https://gforge.inria.fr/projects/coclico//tracker/9685/shape", 
+                    "oslc_cm:closeDate": "2010-06-29T06:01:00Z", 
                     "oslc_cm:status": "Closed", 
-                    "rdf:about": "https://gforge.inria.fr/projects/coclico//tracker/9685/artifact/10636", 
+                    "rdf:about": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse&func=detail&aid=10636", 
                     "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }
             ], 
@@ -603,7 +607,6 @@
             }, 
             "oslc:results": [
                 {
-                    "dcterms:contributor": "Nobody", 
                     "dcterms:created": "2010-06-29T05:44:00Z", 
                     "dcterms:creator": "https://gforge.inria.fr/users/fdudouet", 
                     "dcterms:description": "Nothing in particular here\n", 
@@ -620,34 +623,35 @@
                     "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#version": "None", 
                     "oslc:instanceShape": "https://gforge.inria.fr/projects/coclico//tracker/9684/shape", 
                     "oslc_cm:status": "Open", 
-                    "rdf:about": "https://gforge.inria.fr/projects/coclico//tracker/9684/artifact/10633", 
+                    "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse&func=detail&aid=10633", 
                     "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }, 
                 {
-                    "closed_at": "2010-06-29T05:47:00Z", 
-                    "dcterms:contributor": "Nobody", 
                     "dcterms:created": "2010-06-29T05:45:00Z", 
                     "dcterms:creator": "https://gforge.inria.fr/users/fdudouet", 
                     "dcterms:description": "This bug will be closed ASAP!\n", 
                     "dcterms:identifier": 10634, 
                     "dcterms:title": "A closed bug", 
                     "dcterms:type": "bugs", 
-                    "history": [
-                        {
-                            "by": "fdudouet", 
-                            "class": "FIELDCHANGE", 
-                            "date": "2010-06-29T05:47:00Z", 
-                            "field": "close_date", 
-                            "old": "2010-06-29 07:47"
-                        }, 
-                        {
-                            "by": "fdudouet", 
-                            "class": "FIELDCHANGE", 
-                            "date": "2010-06-29T05:47:00Z", 
-                            "field": "status", 
-                            "old": "Open"
-                        }
-                    ], 
+                    "forgeplucker:history": {
+                        "forgeplucker:changes": [
+                            {
+                                "dcterms:contributor": "https://gforge.inria.fr/users/fdudouet", 
+                                "dcterms:modified": "2010-06-29T05:47:00Z", 
+                                "forgeplucker:oldValue": "2010-06-29 07:47", 
+                                "oslc:property": "close_date", 
+                                "rdf:type": "forgeplucker:PropertyChange"
+                            }, 
+                            {
+                                "dcterms:contributor": "https://gforge.inria.fr/users/fdudouet", 
+                                "dcterms:modified": "2010-06-29T05:47:00Z", 
+                                "forgeplucker:oldValue": "Open", 
+                                "oslc:property": "oslc_cm:status", 
+                                "rdf:type": "forgeplucker:PropertyChange"
+                            }
+                        ], 
+                        "rdf:type": "forgeplucker:ResourceHistory"
+                    }, 
                     "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#component": "None", 
                     "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#hardware": "None", 
                     "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#operatingSystem": "None", 
@@ -657,8 +661,9 @@
                     "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#severity": "None", 
                     "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#version": "None", 
                     "oslc:instanceShape": "https://gforge.inria.fr/projects/coclico//tracker/9684/shape", 
+                    "oslc_cm:closeDate": "2010-06-29T05:47:00Z", 
                     "oslc_cm:status": "Closed", 
-                    "rdf:about": "https://gforge.inria.fr/projects/coclico//tracker/9684/artifact/10634", 
+                    "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse&func=detail&aid=10634", 
                     "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }, 
                 {
@@ -680,36 +685,38 @@
                             "url": "coclico/bugs/gforge.inria.fr.htm"
                         }
                     ], 
-                    "dcterms:contributor": "Nobody", 
                     "dcterms:created": "2010-06-29T05:53:00Z", 
                     "dcterms:creator": "https://gforge.inria.fr/users/fdudouet", 
                     "dcterms:description": "This bug contains a few files !\n", 
                     "dcterms:identifier": 10637, 
                     "dcterms:title": "A bug with files", 
                     "dcterms:type": "bugs", 
-                    "history": [
-                        {
-                            "by": "fdudouet", 
-                            "class": "FIELDCHANGE", 
-                            "date": "2010-06-30T05:15:00Z", 
-                            "field": "assigned_to", 
-                            "old": "none"
-                        }, 
-                        {
-                            "by": "fdudouet", 
-                            "class": "FIELDCHANGE", 
-                            "date": "2010-06-29T05:53:00Z", 
-                            "field": "File Added", 
-                            "old": "1934: gforge.inria.fr.htm"
-                        }, 
-                        {
-                            "by": "fdudouet", 
-                            "class": "FIELDCHANGE", 
-                            "date": "2010-06-29T05:53:00Z", 
-                            "field": "File Added", 
-                            "old": "1935: firstFile.txt"
-                        }
-                    ], 
+                    "forgeplucker:history": {
+                        "forgeplucker:changes": [
+                            {
+                                "dcterms:contributor": "https://gforge.inria.fr/users/fdudouet", 
+                                "dcterms:modified": "2010-06-30T05:15:00Z", 
+                                "forgeplucker:oldValue": "none", 
+                                "oslc:property": "dcterms:contributor", 
+                                "rdf:type": "forgeplucker:PropertyChange"
+                            }, 
+                            {
+                                "dcterms:contributor": "https://gforge.inria.fr/users/fdudouet", 
+                                "dcterms:modified": "2010-06-29T05:53:00Z", 
+                                "forgeplucker:oldValue": "1934: gforge.inria.fr.htm", 
+                                "oslc:property": "File Added", 
+                                "rdf:type": "forgeplucker:PropertyChange"
+                            }, 
+                            {
+                                "dcterms:contributor": "https://gforge.inria.fr/users/fdudouet", 
+                                "dcterms:modified": "2010-06-29T05:53:00Z", 
+                                "forgeplucker:oldValue": "1935: firstFile.txt", 
+                                "oslc:property": "File Added", 
+                                "rdf:type": "forgeplucker:PropertyChange"
+                            }
+                        ], 
+                        "rdf:type": "forgeplucker:ResourceHistory"
+                    }, 
                     "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#component": "None", 
                     "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#hardware": "None", 
                     "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#operatingSystem": "None", 
@@ -720,47 +727,49 @@
                     "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#version": "None", 
                     "oslc:instanceShape": "https://gforge.inria.fr/projects/coclico//tracker/9684/shape", 
                     "oslc_cm:status": "Open", 
-                    "rdf:about": "https://gforge.inria.fr/projects/coclico//tracker/9684/artifact/10637", 
+                    "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse&func=detail&aid=10637", 
                     "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }, 
                 {
-                    "dcterms:contributor": "Nobody", 
                     "dcterms:created": "2010-06-29T05:58:00Z", 
                     "dcterms:creator": "https://gforge.inria.fr/users/fdudouet", 
                     "dcterms:description": "This bug has most of its fields filled!\n\nAnd it has some comments and changes too.\n", 
                     "dcterms:identifier": 10638, 
                     "dcterms:title": "A complete bug", 
                     "dcterms:type": "bugs", 
-                    "history": [
-                        {
-                            "by": "fdudouet", 
-                            "class": "FIELDCHANGE", 
-                            "date": "2010-06-29T05:59:00Z", 
-                            "field": "assigned_to", 
-                            "old": "fdudouet"
-                        }, 
-                        {
-                            "by": "fdudouet", 
-                            "class": "FIELDCHANGE", 
-                            "date": "2010-06-29T05:59:00Z", 
-                            "field": "Severity", 
-                            "old": "critical"
-                        }, 
-                        {
-                            "by": "fdudouet", 
-                            "class": "FIELDCHANGE", 
-                            "date": "2010-06-29T05:59:00Z", 
-                            "field": "Component", 
-                            "old": "Cog A"
-                        }, 
-                        {
-                            "by": "fdudouet", 
-                            "class": "FIELDCHANGE", 
-                            "date": "2010-06-29T05:59:00Z", 
-                            "field": "Operating System", 
-                            "old": "Windows XP"
-                        }
-                    ], 
+                    "forgeplucker:history": {
+                        "forgeplucker:changes": [
+                            {
+                                "dcterms:contributor": "https://gforge.inria.fr/users/fdudouet", 
+                                "dcterms:modified": "2010-06-29T05:59:00Z", 
+                                "forgeplucker:oldValue": "fdudouet", 
+                                "oslc:property": "dcterms:contributor", 
+                                "rdf:type": "forgeplucker:PropertyChange"
+                            }, 
+                            {
+                                "dcterms:contributor": "https://gforge.inria.fr/users/fdudouet", 
+                                "dcterms:modified": "2010-06-29T05:59:00Z", 
+                                "forgeplucker:oldValue": "critical", 
+                                "oslc:property": "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#severity", 
+                                "rdf:type": "forgeplucker:PropertyChange"
+                            }, 
+                            {
+                                "dcterms:contributor": "https://gforge.inria.fr/users/fdudouet", 
+                                "dcterms:modified": "2010-06-29T05:59:00Z", 
+                                "forgeplucker:oldValue": "Cog A", 
+                                "oslc:property": "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#component", 
+                                "rdf:type": "forgeplucker:PropertyChange"
+                            }, 
+                            {
+                                "dcterms:contributor": "https://gforge.inria.fr/users/fdudouet", 
+                                "dcterms:modified": "2010-06-29T05:59:00Z", 
+                                "forgeplucker:oldValue": "Windows XP", 
+                                "oslc:property": "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#operatingSystem", 
+                                "rdf:type": "forgeplucker:PropertyChange"
+                            }
+                        ], 
+                        "rdf:type": "forgeplucker:ResourceHistory"
+                    }, 
                     "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#component": "Cog B", 
                     "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#hardware": "All", 
                     "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#operatingSystem": "Windows 3.1", 
@@ -788,7 +797,7 @@
                     }, 
                     "oslc:instanceShape": "https://gforge.inria.fr/projects/coclico//tracker/9684/shape", 
                     "oslc_cm:status": "Open", 
-                    "rdf:about": "https://gforge.inria.fr/projects/coclico//tracker/9684/artifact/10638", 
+                    "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse&func=detail&aid=10638", 
                     "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }
             ], 
