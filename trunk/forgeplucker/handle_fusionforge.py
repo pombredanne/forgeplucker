@@ -187,8 +187,8 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			for arti in artifact:
 				if (arti[:13] == "extra_fields["):
 					try:
-						name = re.search('.*<strong>([a-zA-Z0-9_-|\s]*)[:|<br />|</strong>].*%s' % re.escape(arti), contents, re.DOTALL).group(1)
-							
+						name = re.search('.*<strong>([a-zA-Z0-9_-|\s]*)[:|<br />|</strong>].*%s' % re.escape(arti), 
+								 contents, re.DOTALL).group(1)
 					except:
 						print "extra field parsing error"
 						continue
