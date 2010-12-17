@@ -1257,7 +1257,6 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			for t in trackers:
 				url = self.real_url(t.getUrl())
 				data['trackers_list'].append(url)
-				data['URI'] = project_url+'/tracker/'+t.atid+'/'
 				provided_by = forge+'#tracker'
 				tools[url] = { 'provided_by': provided_by }
 				if not provided_by in tools:
