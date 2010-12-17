@@ -10,8 +10,8 @@
         "homepage": "http://coclico.gforge.inria.fr", 
         "host": "gforge.inria.fr", 
         "mailing_lists": [
-            "http://lists.gforge.inria.fr/pipermail/coclico-commits/", 
-            "http://lists.gforge.inria.fr/pipermail/coclico-test/"
+            "http://lists.gforge.inria.fr/mailman/listinfo/coclico-commits", 
+            "http://lists.gforge.inria.fr/mailman/listinfo/coclico-test"
         ], 
         "news": "https://gforge.inria.fr/news/?group_id=2827", 
         "project": "coclico", 
@@ -28,34 +28,42 @@
             "https://gforge.inria.fr/pm/task.php?group_project_id=4892&group_id=2827&func=browse"
         ], 
         "tools": {
-            "http://lists.gforge.inria.fr/pipermail/coclico-commits/": {
+            "http://lists.gforge.inria.fr/mailman/listinfo/coclico-commits": {
                 "provided_by": "https://gforge.inria.fr/#mailman"
             }, 
-            "http://lists.gforge.inria.fr/pipermail/coclico-test/": {
+            "http://lists.gforge.inria.fr/mailman/listinfo/coclico-test": {
                 "provided_by": "https://gforge.inria.fr/#mailman"
             }, 
             "https://gforge.inria.fr/#docman": {
+                "name": "http://fusionforge.org/tool/docman", 
                 "type": "DocumentsTool"
             }, 
             "https://gforge.inria.fr/#forum": {
+                "name": "http://fusionforge.org/tool/forums", 
                 "type": "ForumsTool"
             }, 
             "https://gforge.inria.fr/#frs": {
+                "name": "http://fusionforge.org/tool/frs/", 
                 "type": "FilesReleasesTool"
             }, 
             "https://gforge.inria.fr/#mailman": {
+                "name": "mailman", 
                 "type": "MailingListTool"
             }, 
             "https://gforge.inria.fr/#news": {
+                "name": "http://fusionforge.org/tool/news/", 
                 "type": "NewsTool"
             }, 
             "https://gforge.inria.fr/#svn": {
-                "type": "ScmTool"
+                "name": "svn", 
+                "type": "SvnScmTool"
             }, 
             "https://gforge.inria.fr/#taskstracker": {
+                "name": "http://fusionforge.org/tool/tasks/", 
                 "type": "TaskTool"
             }, 
             "https://gforge.inria.fr/#tracker": {
+                "name": "http://fusionforge.org/tool/trackers", 
                 "type": "TrackersTool"
             }, 
             "https://gforge.inria.fr/docman/?group_id=2827": {
@@ -252,7 +260,7 @@
                     "Operating System": "None", 
                     "Product": "None", 
                     "Severity": "None", 
-                    "URL": "", 
+                    "URL": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse&func=detail&aid=10635", 
                     "Version": "None", 
                     "assigned_to": "Nobody", 
                     "attachments": [], 
@@ -293,7 +301,7 @@
                     "Operating System": "None", 
                     "Product": "None", 
                     "Severity": "None", 
-                    "URL": "", 
+                    "URL": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse&func=detail&aid=10636", 
                     "Version": "None", 
                     "assigned_to": "Nobody", 
                     "attachments": [], 
@@ -459,7 +467,7 @@
                     "Product": "Software A", 
                     "Resolution": "None", 
                     "Severity": "None", 
-                    "URL": "", 
+                    "URL": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse&func=detail&aid=10633", 
                     "Version": "None", 
                     "assigned_to": "Nobody", 
                     "attachments": [], 
@@ -482,7 +490,7 @@
                     "Product": "None", 
                     "Resolution": "None", 
                     "Severity": "None", 
-                    "URL": "", 
+                    "URL": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse&func=detail&aid=10634", 
                     "Version": "None", 
                     "assigned_to": "Nobody", 
                     "attachments": [], 
@@ -521,7 +529,7 @@
                     "Product": "None", 
                     "Resolution": "None", 
                     "Severity": "None", 
-                    "URL": "", 
+                    "URL": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse&func=detail&aid=10637", 
                     "Version": "None", 
                     "assigned_to": "Nobody", 
                     "attachments": [
@@ -583,7 +591,7 @@
                     "Product": "Software A", 
                     "Resolution": "Accepted As Bug", 
                     "Severity": "blocker", 
-                    "URL": "", 
+                    "URL": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse&func=detail&aid=10638", 
                     "Version": "v1.0", 
                     "assigned_to": "Nobody", 
                     "attachments": [], 
