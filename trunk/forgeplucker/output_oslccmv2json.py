@@ -15,7 +15,7 @@ References :
  - OSLC Core Specification - JSON Representation Examples : http://open-services.net/bin/view/Main/OSLCCoreSpecJSONExamples
 """
 
-import json
+import json, string
 
 oslc_prefixes = { 'rdf' : 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
                       'dcterms' : 'http://purl.org/dc/terms/',
@@ -45,6 +45,28 @@ def output_oslccmv2json_trackers(data):
         tracker_name = tracker['label']
     
         oslc_tracker = {'rdf:about' : tracker['url']}
+
+        oslc_shape = {'rdf:type' : 'oslc:ResourceShape'}
+        oslc_shape['rdf:about'] = tracker['url']+'#shape'
+
+        vocabulary = tracker['vocabulary']
+        for field in vocabulary:
+            oslc_property = {'rdf:type' : 'oslc:Property'}
+            fieldname = string.replace(string.capwords(field), ' ', '')
+            fieldname = string.lower(fieldname[:1])+fieldname[1:]
+            oslc_property['oslc:name'] = fieldname
+            oslc_property['dcterms:title'] = field
+            if len(vocabulary[field]):
+                oslc_property['osl:allowedValue'] = []
+            for allowed_val in vocabulary[field]:
+                oslc_property['osl:allowedValue'].append(allowed_val)
+
+            if not 'oslc:property' in oslc_shape:
+                oslc_shape['oslc:property'] = []
+            oslc_shape['oslc:property'].append(oslc_property)
+ 
+        if 'oslc:property' in oslc_shape :
+            oslc_tracker['forgeplucker:vocabulary'] = oslc_shape
         
         oslc_artifacts = []
         
@@ -114,7 +136,10 @@ def output_oslccmv2json_trackers(data):
                             print >>sys.stderr, 'Incorrect mapping in oslc_mapping'
                             raise SystemExit, 1
                     else :
-                        predicate = 'forgeplucker:' + x
+                        if not 'oslc:instanceShape' in  oslc_changerequest:
+                             oslc_changerequest['oslc:instanceShape'] = oslc_shape['rdf:about']
+                        predicate = string.replace(string.capwords(x), ' ', '')
+                        predicate = string.lower(predicate[:1])+predicate[1:]
                         oslc_changerequest[predicate] = artifact[x]
                         
                 #except TypeError:
