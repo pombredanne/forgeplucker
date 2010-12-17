@@ -344,18 +344,9 @@
             }, 
             "oslc:results": [
                 {
-                    "attachments": [], 
-                    "comments": [
-                        {
-                            "class": "COMMENT", 
-                            "comment": "This one has a multi field set with 2 choices", 
-                            "date": "2010-06-29T06:02:00Z", 
-                            "submitter": "fdudouet"
-                        }
-                    ], 
                     "dcterms:contributor": "Nobody", 
                     "dcterms:created": "2010-06-29T05:48:00Z", 
-                    "dcterms:creator": "fdudouet", 
+                    "dcterms:creator": "https://gforge.inria.fr/users/fdudouet", 
                     "dcterms:description": "opened!opened!opened!\n", 
                     "dcterms:identifier": 10635, 
                     "dcterms:title": "test1", 
@@ -380,18 +371,27 @@
                     "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#product": "None", 
                     "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#severity": "None", 
                     "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#version": "None", 
+                    "oslc:discussion": {
+                        "oslc:comment": [
+                            {
+                                "dcterms:created": "2010-06-29T06:02:00Z", 
+                                "dcterms:creator": "https://gforge.inria.fr/users/fdudouet", 
+                                "dcterms:description": "This one has a multi field set with 2 choices", 
+                                "rdf:type": "oslc:Comment"
+                            }
+                        ], 
+                        "rdf:type": "oslc:Discussion"
+                    }, 
                     "oslc:instanceShape": "https://gforge.inria.fr/projects/coclico//tracker/9685/shape", 
                     "oslc_cm:status": "Open", 
                     "rdf:about": "https://gforge.inria.fr/projects/coclico//tracker/9685/artifact/10635", 
                     "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }, 
                 {
-                    "attachments": [], 
                     "closed_at": "2010-06-29T06:01:00Z", 
-                    "comments": [], 
                     "dcterms:contributor": "Nobody", 
                     "dcterms:created": "2010-06-29T05:48:00Z", 
-                    "dcterms:creator": "fdudouet", 
+                    "dcterms:creator": "https://gforge.inria.fr/users/fdudouet", 
                     "dcterms:description": "closed!closed!closed!closed!\n", 
                     "dcterms:identifier": 10636, 
                     "dcterms:title": "test2", 
@@ -603,16 +603,13 @@
             }, 
             "oslc:results": [
                 {
-                    "attachments": [], 
-                    "comments": [], 
                     "dcterms:contributor": "Nobody", 
                     "dcterms:created": "2010-06-29T05:44:00Z", 
-                    "dcterms:creator": "fdudouet", 
+                    "dcterms:creator": "https://gforge.inria.fr/users/fdudouet", 
                     "dcterms:description": "Nothing in particular here\n", 
                     "dcterms:identifier": 10633, 
                     "dcterms:title": "My first test bug", 
                     "dcterms:type": "bugs", 
-                    "history": [], 
                     "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#component": "None", 
                     "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#hardware": "All", 
                     "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#operatingSystem": "Windows XP", 
@@ -627,12 +624,10 @@
                     "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }, 
                 {
-                    "attachments": [], 
                     "closed_at": "2010-06-29T05:47:00Z", 
-                    "comments": [], 
                     "dcterms:contributor": "Nobody", 
                     "dcterms:created": "2010-06-29T05:45:00Z", 
-                    "dcterms:creator": "fdudouet", 
+                    "dcterms:creator": "https://gforge.inria.fr/users/fdudouet", 
                     "dcterms:description": "This bug will be closed ASAP!\n", 
                     "dcterms:identifier": 10634, 
                     "dcterms:title": "A closed bug", 
@@ -685,10 +680,9 @@
                             "url": "coclico/bugs/gforge.inria.fr.htm"
                         }
                     ], 
-                    "comments": [], 
                     "dcterms:contributor": "Nobody", 
                     "dcterms:created": "2010-06-29T05:53:00Z", 
-                    "dcterms:creator": "fdudouet", 
+                    "dcterms:creator": "https://gforge.inria.fr/users/fdudouet", 
                     "dcterms:description": "This bug contains a few files !\n", 
                     "dcterms:identifier": 10637, 
                     "dcterms:title": "A bug with files", 
@@ -730,24 +724,9 @@
                     "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }, 
                 {
-                    "attachments": [], 
-                    "comments": [
-                        {
-                            "class": "COMMENT", 
-                            "comment": "Here is a comment", 
-                            "date": "2010-06-29T05:58:00Z", 
-                            "submitter": "fdudouet"
-                        }, 
-                        {
-                            "class": "COMMENT", 
-                            "comment": "And another.", 
-                            "date": "2010-06-29T05:59:00Z", 
-                            "submitter": "fdudouet"
-                        }
-                    ], 
                     "dcterms:contributor": "Nobody", 
                     "dcterms:created": "2010-06-29T05:58:00Z", 
-                    "dcterms:creator": "fdudouet", 
+                    "dcterms:creator": "https://gforge.inria.fr/users/fdudouet", 
                     "dcterms:description": "This bug has most of its fields filled!\n\nAnd it has some comments and changes too.\n", 
                     "dcterms:identifier": 10638, 
                     "dcterms:title": "A complete bug", 
@@ -790,6 +769,23 @@
                     "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#resolution": "Accepted As Bug", 
                     "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#severity": "blocker", 
                     "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#version": "v1.0", 
+                    "oslc:discussion": {
+                        "oslc:comment": [
+                            {
+                                "dcterms:created": "2010-06-29T05:58:00Z", 
+                                "dcterms:creator": "https://gforge.inria.fr/users/fdudouet", 
+                                "dcterms:description": "Here is a comment", 
+                                "rdf:type": "oslc:Comment"
+                            }, 
+                            {
+                                "dcterms:created": "2010-06-29T05:59:00Z", 
+                                "dcterms:creator": "https://gforge.inria.fr/users/fdudouet", 
+                                "dcterms:description": "And another.", 
+                                "rdf:type": "oslc:Comment"
+                            }
+                        ], 
+                        "rdf:type": "oslc:Discussion"
+                    }, 
                     "oslc:instanceShape": "https://gforge.inria.fr/projects/coclico//tracker/9684/shape", 
                     "oslc_cm:status": "Open", 
                     "rdf:about": "https://gforge.inria.fr/projects/coclico//tracker/9684/artifact/10638", 

@@ -27,7 +27,11 @@ oslc_prefixes = { 'rdf' : 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
                       'foaf' : 'http://xmlns.com/foaf/0.1/',
                       'planetforge' : 'http://coclico-project.org/ontology/planetforge#'}
 
-def output_oslccmv2json_trackers(data, oslc_project):
+def username_to_resource(username, oslc_users):
+    found = filter(lambda x: (x['foaf:accountName'] == username), oslc_users)
+    return found[0]['rdf:about']
+
+def output_oslccmv2json_trackers(data, oslc_project, oslc_users):
 
     oslc_trackers = []
 
@@ -94,12 +98,10 @@ def output_oslccmv2json_trackers(data, oslc_project):
             #  can be a litteral if no conversion is necessary
             #  or a lambda returning a dictionnary with new 'predicate' name and new converted 'object' value 
             oslc_mapping = {
-                            #'comments': 'oslc:discussion' TODO
-                            
                             # TODO : convert to real FOAF profile or lile
                             'assigned_to': lambda x: {'predicate': 'dcterms:contributor', 'object': x},
                             # TODO : convert to real FOAF profile or lile
-                            'submitter': lambda x: {'predicate': 'dcterms:creator', 'object': x},
+                            'submitter': lambda x: {'predicate': 'dcterms:creator', 'object': username_to_resource(comment['submitter'], oslc_users)},
                             
                             #'Severity': None
                             #'Version': None
@@ -142,13 +144,27 @@ def output_oslccmv2json_trackers(data, oslc_project):
                         if x not in vocabulary:
                             if x in ['URL', 'class']:
                                 continue
-                            predicate = x
                             if x == 'attachments':
-                                pass
-                            if x == 'comments':
-                                pass
+                                if not len(artifact[x]):
+                                    continue
+                            if x == 'comments' :
+                                if len(artifact[x]):
+                                    oslc_discussion = { 'rdf:type': 'oslc:Discussion' }
+                                    comments = artifact[x]
+                                    oslc_discussion['oslc:comment'] = []
+                                    for comment in comments :
+                                        oslc_comment = {'rdf:type': 'oslc:Comment'}
+                                        oslc_comment['dcterms:description'] = comment['comment']
+                                        oslc_comment['dcterms:created'] = comment['date']
+                                        oslc_comment['dcterms:creator'] = username_to_resource(comment['submitter'], oslc_users)
+                                        oslc_discussion['oslc:comment'].append(oslc_comment)
+                                    predicate = 'oslc:discussion'
+                                    oslc_changerequest[predicate] = oslc_discussion
+                                continue
                             if x == 'history':
-                                pass
+                                if not len(artifact[x]):
+                                    continue
+                            predicate = x
                         else :
                             if not 'oslc:instanceShape' in  oslc_changerequest:
                                 oslc_changerequest['oslc:instanceShape'] = oslc_shape['rdf:about']
@@ -255,7 +271,7 @@ def output_oslccmv2json(data):
 
     oslc_project['sioc:scope_of'] = oslc_roles
     
-    oslc_trackers = output_oslccmv2json_trackers(data, oslc_project)
+    oslc_trackers = output_oslccmv2json_trackers(data, oslc_project, oslc_users)
 
     project_trackers=[]
     if oslc_trackers:
