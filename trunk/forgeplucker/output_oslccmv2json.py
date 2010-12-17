@@ -15,7 +15,7 @@ References :
  - OSLC Core Specification - JSON Representation Examples : http://open-services.net/bin/view/Main/OSLCCoreSpecJSONExamples
 """
 
-import json, string
+import json, string, re
 
 oslc_prefixes = { 'rdf' : 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
                       'dcterms' : 'http://purl.org/dc/terms/',
@@ -27,7 +27,7 @@ oslc_prefixes = { 'rdf' : 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
                       'foaf' : 'http://xmlns.com/foaf/0.1/',
                       'planetforge' : 'http://coclico-project.org/ontology/planetforge#'}
 
-def output_oslccmv2json_trackers(data):
+def output_oslccmv2json_trackers(data, oslc_project):
 
     oslc_trackers = []
 
@@ -47,7 +47,10 @@ def output_oslccmv2json_trackers(data):
         oslc_tracker = {'rdf:about' : tracker['url']}
 
         oslc_shape = {'rdf:type' : 'oslc:ResourceShape'}
-        oslc_shape['rdf:about'] = tracker['url']+'#shape'
+        project_url = oslc_project['rdf:about']
+        if not 'URI' in tracker :
+            tracker['URI'] = project_url+'/tracker/'+ re.search('atid=([0-9]*)', tracker['url']).group(1)
+        oslc_shape['rdf:about'] = tracker['URI']+'/shape'
 
         vocabulary = tracker['vocabulary']
         for field in vocabulary:
@@ -80,7 +83,7 @@ def output_oslccmv2json_trackers(data):
             if 'URL' in artifact:
                 url = artifact['URL']
             if not url:
-                url = tracker['url'] + '/%d' % artifact['id']
+                url = tracker['URI'] + '/artifact/%d' % artifact['id']
                 
             oslc_changerequest['rdf:about'] = url
             
@@ -136,10 +139,22 @@ def output_oslccmv2json_trackers(data):
                             print >>sys.stderr, 'Incorrect mapping in oslc_mapping'
                             raise SystemExit, 1
                     else :
-                        if not 'oslc:instanceShape' in  oslc_changerequest:
-                             oslc_changerequest['oslc:instanceShape'] = oslc_shape['rdf:about']
-                        predicate = string.replace(string.capwords(x), ' ', '')
-                        predicate = string.lower(predicate[:1])+predicate[1:]
+                        if x not in vocabulary:
+                            if x in ['URL', 'class']:
+                                continue
+                            predicate = x
+                            if x == 'attachments':
+                                pass
+                            if x == 'comments':
+                                pass
+                            if x == 'history':
+                                pass
+                        else :
+                            if not 'oslc:instanceShape' in  oslc_changerequest:
+                                oslc_changerequest['oslc:instanceShape'] = oslc_shape['rdf:about']
+                            predicate = string.replace(string.capwords(x), ' ', '')
+                            predicate = string.lower(predicate[:1])+predicate[1:]
+                            predicate = tracker['URI']+'/shape#'+predicate
                         oslc_changerequest[predicate] = artifact[x]
                         
                 #except TypeError:
@@ -240,11 +255,11 @@ def output_oslccmv2json(data):
 
     oslc_project['sioc:scope_of'] = oslc_roles
     
-    oslc_trackers = output_oslccmv2json_trackers(data)
+    oslc_trackers = output_oslccmv2json_trackers(data, oslc_project)
 
     project_trackers=[]
     if oslc_trackers:
-        oslc_data['forgeplucker:trackers'] = output_oslccmv2json_trackers(data)
+        oslc_data['forgeplucker:trackers'] = oslc_trackers
         for tracker in oslc_trackers:
             project_trackers.append(tracker['rdf:about'])
         oslc_project['sioc:has_space'] = project_trackers
