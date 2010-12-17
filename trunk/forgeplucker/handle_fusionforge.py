@@ -1234,6 +1234,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			if frs:
 				break
 
+		project_url = self.real_url(project_page)
 		data = {"class":"PROJECT",
 			"forgetype":self.__class__.__name__,
 			"host" : self.host,
@@ -1241,7 +1242,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			"description" : description,
 			"registered" : registered,
 			"homepage": homepage,
-			"URL": self.real_url(project_page),
+			"URL": project_url,
 			"format_version": 1 }
 
 		forge = self.real_url('')
@@ -1256,6 +1257,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			for t in trackers:
 				url = self.real_url(t.getUrl())
 				data['trackers_list'].append(url)
+				data['URI'] = project_url+'/tracker/'+t.atid+'/'
 				provided_by = forge+'#tracker'
 				tools[url] = { 'provided_by': provided_by }
 				if not provided_by in tools:
