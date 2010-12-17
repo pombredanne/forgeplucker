@@ -29,8 +29,52 @@ oslc_prefixes = { 'rdf' : 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
 
 def username_to_resource(username, oslc_users):
     found = filter(lambda x: (x['foaf:accountName'] == username), oslc_users)
-    return found[0]['rdf:about']
+    if found :
+        return found[0]['rdf:about']
+    else :
+        return username
 
+oslc_mapping = {
+                            # TODO : convert to real FOAF profile or lile
+#                            'assigned_to': lambda x: {'predicate': 'dcterms:contributor', 'object': x},
+                            'assigned_to': 'dcterms:contributor',
+                            # TODO : convert to real FOAF profile or lile
+#                            'submitter': lambda x: {'predicate': 'dcterms:creator', 'object': username_to_resource(comment['submitter'], oslc_users)},
+                            'submitter': 'dcterms:creator',
+                            #'Severity': None
+                            #'Version': None
+                            'id': 'dcterms:identifier',
+                            #'attachments': []
+                            #'Product': Software A
+                            #'Operating System': Windows XP
+                            #'Component': None
+                            #'priority': 5 - Highest
+                            'type': 'dcterms:type',
+                            'description': 'dcterms:description',
+                            'status': 'oslc_cm:status', 
+                            #'URL': 
+                            'date': 'dcterms:created',
+                            #'Resolution': None
+                            'summary': 'dcterms:title',
+                            #'Hardware': All
+                            
+                            #'history': []
+                            'closed_at': 'oslc_cm:closeDate'
+                            }
+
+def field_to_property(fieldname, shape, vocabulary):
+    predicate = None
+    if fieldname in oslc_mapping:
+        predicate = oslc_mapping[fieldname]
+    else :
+        if fieldname in vocabulary:
+            predicate = string.replace(string.capwords(fieldname), ' ', '')
+            predicate = string.lower(predicate[:1])+predicate[1:]
+            predicate = shape +'#'+ predicate
+        else :
+            predicate = fieldname
+    return predicate
+                        
 def output_oslccmv2json_trackers(data, oslc_project, oslc_users):
 
     oslc_trackers = []
@@ -97,31 +141,6 @@ def output_oslccmv2json_trackers(data, oslc_project, oslc_users):
             # Mapping for plucked attributes :
             #  can be a litteral if no conversion is necessary
             #  or a lambda returning a dictionnary with new 'predicate' name and new converted 'object' value 
-            oslc_mapping = {
-                            # TODO : convert to real FOAF profile or lile
-                            'assigned_to': lambda x: {'predicate': 'dcterms:contributor', 'object': x},
-                            # TODO : convert to real FOAF profile or lile
-                            'submitter': lambda x: {'predicate': 'dcterms:creator', 'object': username_to_resource(comment['submitter'], oslc_users)},
-                            
-                            #'Severity': None
-                            #'Version': None
-                            'id': 'dcterms:identifier',
-                            #'attachments': []
-                            #'Product': Software A
-                            #'Operating System': Windows XP
-                            #'Component': None
-                            #'priority': 5 - Highest
-                            'type': 'dcterms:type',
-                            'description': 'dcterms:description',
-                            'status': 'oslc_cm:status', 
-                            #'URL': 
-                            'date': 'dcterms:created',
-                            #'Resolution': None
-                            'summary': 'dcterms:title',
-                            #'Hardware': All
-                            
-                            #'history': []
-                            }
 
             # Treat all fields of an artifact
             for x in artifact :
@@ -129,17 +148,21 @@ def output_oslccmv2json_trackers(data, oslc_project, oslc_users):
                     #print x, artifact[x]
                     if x in oslc_mapping:
                         mapping = oslc_mapping[x]
-                        mapping_type = type(mapping).__name__
-                        if mapping_type == 'function' :
-                            transformed = mapping(artifact[x])
-                            predicate = transformed['predicate']
-                            object = transformed['object']
-                            oslc_changerequest[predicate] = object
-                        elif mapping_type == 'str' :
-                            oslc_changerequest[mapping] = artifact[x]
-                        else :
-                            print >>sys.stderr, 'Incorrect mapping in oslc_mapping'
-                            raise SystemExit, 1
+                        # mapping_type = type(mapping).__name__
+                        # if mapping_type == 'function' :
+                        #     transformed = mapping(artifact[x])
+                        #     predicate = transformed['predicate']
+                        #     object = transformed['object']
+                        #     oslc_changerequest[predicate] = object
+                        # elif mapping_type == 'str' :
+                        value = artifact[x]
+                        if mapping in ['dcterms:contributor', 'dcterms:creator'] :
+                            print 'creator:', mapping, value
+                            value = username_to_resource(value, oslc_users)
+                        oslc_changerequest[mapping] = value
+                        #else :
+                        #    print >>sys.stderr, 'Incorrect mapping in oslc_mapping'
+                        #    raise SystemExit, 1
                     else :
                         if x not in vocabulary:
                             if x in ['URL', 'class']:
@@ -162,8 +185,25 @@ def output_oslccmv2json_trackers(data, oslc_project, oslc_users):
                                     oslc_changerequest[predicate] = oslc_discussion
                                 continue
                             if x == 'history':
-                                if not len(artifact[x]):
-                                    continue
+                                if len(artifact[x]):
+                                    
+                                    rdf_history = {'rdf:type': 'forgeplucker:ResourceHistory'}
+                                    rdf_changes = []
+                                    
+                                    for fact in artifact[x]:
+                                        by = fact['by']
+                                        date = fact['date']
+                                        field = fact['field']
+                                        old = fact['old']
+                                        shape = tracker['URI']+'/shape'
+                                        rdf_changes.append({'rdf:type': 'forgeplucker:PropertyChange',
+                                                            'dcterms:contributor': username_to_resource(by, oslc_users),
+                                                            'dcterms:modified': date,
+                                                            'oslc:property' : field_to_property(field, shape, vocabulary),
+                                                            'forgeplucker:oldValue': old})
+                                    rdf_history['forgeplucker:changes'] = rdf_changes
+                                    oslc_changerequest['forgeplucker:history'] = rdf_history
+                                continue
                             predicate = x
                         else :
                             if not 'oslc:instanceShape' in  oslc_changerequest:
