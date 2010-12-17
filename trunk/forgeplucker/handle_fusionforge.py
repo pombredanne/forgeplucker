@@ -838,10 +838,9 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		
 	def mailingListsListing(self, soup):
 		mailinglists = []
-		trs = soup.find('table').findAll('tr')[1:]
-		for tr in trs:
-			tds = tr.findAll('td')
-			fHref = tds[0].find('a')['href']
+		for (archive_html, description_html, listinfo_html) in self.table_iter(str(soup), '<table', 3, 'Mailing Lists Table', has_header=True, keep_html=True):
+			a = listinfo_html.find('a')
+			fHref = a['href']
 			mailinglists.append(fHref)
 		return mailinglists
 		
