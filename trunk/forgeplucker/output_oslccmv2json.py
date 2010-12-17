@@ -269,11 +269,15 @@ def output_oslccmv2json(data):
                    'rdf:about': forge}]
     for t in tools :
         oslc_tool = {'rdf:about': t}
-        if 'type' in tools[t]:
-            ttype = tools[t]['type']
+        tool = tools[t]
+        if 'type' in tool:
+            ttype = tool['type']
             oslc_tool['rdf:type'] = 'planetforge:'+ttype
-        if 'provided_by' in tools[t]:
-            oslc_tool['planetforge:provided_by'] = tools[t]['provided_by']
+        if 'provided_by' in tool:
+            oslc_tool['planetforge:provided_by'] = tool['provided_by']
+        if 'name' in tool:
+            oslc_tool['planetforge:name'] = tool['name']
+        # TODO : version of tools
         oslc_tools.append(oslc_tool)
             
     oslc_data['forgeplucker:tools'] = oslc_tools
