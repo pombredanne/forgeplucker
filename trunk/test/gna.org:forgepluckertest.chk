@@ -8,6 +8,7 @@
         "bugs": {
             "artifacts": [
                 {
+                    "URL": "https://gna.org/bugs/index.php?14714", 
                     "assigned_to": "None ", 
                     "attachments": [
                         {
@@ -144,6 +145,7 @@
         "patch": {
             "artifacts": [
                 {
+                    "URL": "https://gna.org/patch/index.php?1679", 
                     "assigned_to": "ptd", 
                     "attachments": [], 
                     "category": "None", 
@@ -230,6 +232,7 @@
         "support": {
             "artifacts": [
                 {
+                    "URL": "https://gna.org/support/index.php?2550", 
                     "assigned_to": "None ", 
                     "attachments": [], 
                     "category": "None", 
@@ -334,6 +337,7 @@
         "task": {
             "artifacts": [
                 {
+                    "URL": "https://gna.org/task/index.php?7086", 
                     "assigned_to": "ptd", 
                     "attachments": [], 
                     "category": "None", 
