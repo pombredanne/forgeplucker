@@ -175,8 +175,19 @@ def output_oslccmv2json_trackers(data, oslc_project, oslc_users):
                             if x in ['URL', 'class']:
                                 continue
                             if x == 'attachments':
-                                if not len(artifact[x]):
-                                    continue
+                                if len(artifact[x]):
+                                    rdf_attachments = []
+                                    attachments = artifact[x]
+                                    for attachment in attachments:
+                                        rdf_attachment = {'rdf:about': attachment['uri']}
+                                        rdf_attachment['dcterms:creator'] = username_to_resource(attachment['by'], oslc_users)
+                                        rdf_attachment['dcterms:created'] = attachment['date']
+                                        rdf_attachment['sioc:name'] = attachment['filename']
+                                        rdf_attachment['dcterms:identifier'] = attachment['id']
+                                        rdf_attachment['forgeplucker:rawdump'] = attachment['url']
+                                        rdf_attachments.append(rdf_attachment)
+                                    oslc_changerequest['sioc:attachment'] = rdf_attachments
+                                continue
                             if x == 'comments' :
                                 if len(artifact[x]):
                                     oslc_discussion = { 'rdf:type': 'oslc:Discussion' }
