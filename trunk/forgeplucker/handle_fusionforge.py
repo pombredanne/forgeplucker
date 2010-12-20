@@ -163,18 +163,21 @@ The FusionForge handler provides machinery for the FusionForge sites.
 						if attachment['id'] == fileid:
 							attachment['deleted'] = self.parent.canonicalize_date(date)
 			for attachment in attachments:
-				try:		
-					m = re.search('<a href="[^"]*/(tracker/[^"]*/%s)">Download</a></td>' % attachment['filename'], contents)
-					dl = self.parent.fetch(m.group(1), "download")
+				try:
+					filename = attachment['filename']
+					m = re.search('<a href="[^"]*/(tracker/[^"]*/%s)">Download</a></td>' % filename, contents)
+					url = m.group(1)
+					dl = self.parent.fetch(url, "download")
 					rep_dest = self.parent.project_name + '/' + self.type
 					if not os.path.exists(self.parent.project_name):
 						os.mkdir(self.parent.project_name)
 					if not os.path.exists(rep_dest):
 						os.mkdir(rep_dest)
-					fnout = rep_dest + '/' + attachment['filename']
+					fnout = rep_dest + '/' + filename
 					fout = open(fnout, "wb")
 					fout.write(dl)
 					fout.close
+					attachment['uri'] = self.parent.real_url(url)
 					attachment['url'] = fnout
 				except Exception, e:
 					continue
