@@ -539,6 +539,7 @@
                             "date": "2010-06-29T05:53:00Z", 
                             "filename": "firstFile.txt", 
                             "id": "1935", 
+                            "uri": "https://gforge.inria.fr/tracker/download.php/2827/9684/10637/1935/firstFile.txt", 
                             "url": "coclico/bugs/firstFile.txt"
                         }, 
                         {
@@ -547,6 +548,7 @@
                             "date": "2010-06-29T05:53:00Z", 
                             "filename": "gforge.inria.fr.htm", 
                             "id": "1934", 
+                            "uri": "https://gforge.inria.fr/tracker/download.php/2827/9684/10637/1934/gforge.inria.fr.htm", 
                             "url": "coclico/bugs/gforge.inria.fr.htm"
                         }
                     ], 

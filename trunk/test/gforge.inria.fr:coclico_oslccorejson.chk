@@ -685,24 +685,6 @@
                     "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }, 
                 {
-                    "attachments": [
-                        {
-                            "by": "fdudouet", 
-                            "class": "ATTACHMENT", 
-                            "date": "2010-06-29T05:53:00Z", 
-                            "filename": "firstFile.txt", 
-                            "id": "1935", 
-                            "url": "coclico/bugs/firstFile.txt"
-                        }, 
-                        {
-                            "by": "fdudouet", 
-                            "class": "ATTACHMENT", 
-                            "date": "2010-06-29T05:53:00Z", 
-                            "filename": "gforge.inria.fr.htm", 
-                            "id": "1934", 
-                            "url": "coclico/bugs/gforge.inria.fr.htm"
-                        }
-                    ], 
                     "dcterms:created": "2010-06-29T05:53:00Z", 
                     "dcterms:creator": "https://gforge.inria.fr/users/fdudouet", 
                     "dcterms:description": "This bug contains a few files !\n", 
@@ -746,7 +728,25 @@
                     "oslc:instanceShape": "https://gforge.inria.fr/projects/coclico//tracker/9684/shape", 
                     "oslc_cm:status": "Open", 
                     "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse&func=detail&aid=10637", 
-                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
+                    "rdf:type": "http://open-services.net/ns/cm#ChangeRequest", 
+                    "sioc:attachment": [
+                        {
+                            "dcterms:created": "2010-06-29T05:53:00Z", 
+                            "dcterms:creator": "https://gforge.inria.fr/users/fdudouet", 
+                            "dcterms:identifier": "1935", 
+                            "forgeplucker:rawdump": "coclico/bugs/firstFile.txt", 
+                            "rdf:about": "https://gforge.inria.fr/tracker/download.php/2827/9684/10637/1935/firstFile.txt", 
+                            "sioc:name": "firstFile.txt"
+                        }, 
+                        {
+                            "dcterms:created": "2010-06-29T05:53:00Z", 
+                            "dcterms:creator": "https://gforge.inria.fr/users/fdudouet", 
+                            "dcterms:identifier": "1934", 
+                            "forgeplucker:rawdump": "coclico/bugs/gforge.inria.fr.htm", 
+                            "rdf:about": "https://gforge.inria.fr/tracker/download.php/2827/9684/10637/1934/gforge.inria.fr.htm", 
+                            "sioc:name": "gforge.inria.fr.htm"
+                        }
+                    ]
                 }, 
                 {
                     "dcterms:created": "2010-06-29T05:58:00Z", 
