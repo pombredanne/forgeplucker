@@ -220,7 +220,10 @@ class GenericForge:
             if key not in tracker.ignore:
                 artifact[key] = selected
                 if vocabularies is not None:
-                    vocabularies[key] = possible
+                    if not key in vocabularies:
+                        vocabularies[key] = { 'values': possible }
+                        if isMultiField:
+                            vocabularies[key]['multi'] = isMultiField
         for m in re.finditer('<INPUT[^>]*TEXT[^>]*>', formpart, re.I):
             input_element = m.group(0)
             v = re.search('value="([^"]*)"', input_element)

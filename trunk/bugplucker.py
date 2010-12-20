@@ -291,6 +291,15 @@ if __name__ == '__main__':
             if issue:
                 jdump(data["issue"])
             else:
+                # Ensure non-regression on vocabularies where ['values'] and ['multi'] was introduced
+                for tracker in data['trackers']['trackers']:
+                    tracker = data['trackers']['trackers'][tracker]
+                    if 'vocabulary' in tracker:
+                        vocab = tracker['vocabulary']
+                        new_vocab = {}
+                        for field in vocab:
+                            new_vocab[field] = vocab[field]['values']
+                        tracker['vocabulary'] = new_vocab
                 jdump(data["trackers"])
         elif format == 'coclico':
             if verbose: notify('Outputing with format "coclico"')
@@ -301,8 +310,15 @@ if __name__ == '__main__':
                     coclico_data[key] = data[key]
                 else:
                     coclico_data['trackers'] = []
+                    # Ensure non-regression on vocabularies where ['values'] and ['multi'] was introduced
                     for tracker in data['trackers']['trackers']:
                         coclico_tracker = data['trackers']['trackers'][tracker]
+                        if 'vocabulary' in coclico_tracker:
+                            vocab = coclico_tracker['vocabulary']
+                            new_vocab = {}
+                            for field in vocab:
+                                new_vocab[field] = vocab[field]['values']
+                            coclico_tracker['vocabulary'] = new_vocab
                         coclico_tracker['type'] = tracker
                         coclico_data['trackers'].append(coclico_tracker)
 

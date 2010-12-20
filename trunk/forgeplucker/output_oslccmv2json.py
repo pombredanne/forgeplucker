@@ -107,9 +107,14 @@ def output_oslccmv2json_trackers(data, oslc_project, oslc_users):
             fieldname = string.lower(fieldname[:1])+fieldname[1:]
             oslc_property['oslc:name'] = fieldname
             oslc_property['dcterms:title'] = field
-            if len(vocabulary[field]):
+            if 'multi' in vocabulary[field]:
+                oslc_property['oslc:occurs'] = 'http://open-service.net/ns/core#Zero-or-many'
+            else:
+                oslc_property['oslc:occurs'] = 'http://open-service.net/ns/core#Zero-or-one'
+            values = vocabulary[field]['values']
+            if len(values):
                 oslc_property['osl:allowedValue'] = []
-            for allowed_val in vocabulary[field]:
+            for allowed_val in values:
                 oslc_property['osl:allowedValue'].append(allowed_val)
 
             if not 'oslc:property' in oslc_shape:
