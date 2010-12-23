@@ -96,8 +96,10 @@ def output_oslccmv2json_trackers(data, oslc_project, oslc_users):
 
         oslc_shape = {'rdf:type' : 'oslc:ResourceShape'}
         project_url = oslc_project['rdf:about']
+        if not 'id' in tracker :
+            tracker['id'] = re.search('atid=([0-9]*)', tracker['url']).group(1)
         if not 'URI' in tracker :
-            tracker['URI'] = project_url+'/tracker/'+ re.search('atid=([0-9]*)', tracker['url']).group(1)
+            tracker['URI'] = project_url+'/tracker/'+ tracker['id']
         oslc_shape['rdf:about'] = tracker['URI']+'/shape'
 
         vocabulary = tracker['vocabulary']
@@ -226,9 +228,14 @@ def output_oslccmv2json_trackers(data, oslc_project, oslc_users):
                         else :
                             if not 'oslc:instanceShape' in  oslc_changerequest:
                                 oslc_changerequest['oslc:instanceShape'] = oslc_shape['rdf:about']
+                            prefix = 'oslc_shape'+tracker['id']
+                            if not 'prefixes' in oslc_tracker:
+                                oslc_tracker['prefixes'] = {}
+                            oslc_tracker['prefixes'][prefix] = tracker['URI']+'/shape#'
                             predicate = string.replace(string.capwords(x), ' ', '')
                             predicate = string.lower(predicate[:1])+predicate[1:]
-                            predicate = tracker['URI']+'/shape#'+predicate
+                            #predicate = tracker['URI']+'/shape#'+predicate
+                            predicate = prefix+':'+predicate
                         oslc_changerequest[predicate] = artifact[x]
                         
                 #except TypeError:
