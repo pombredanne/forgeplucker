@@ -201,7 +201,7 @@
                 "oslc:property": [
                     {
                         "dcterms:title": "status", 
-                        "osl:allowedValue": [
+                        "oslc:allowedValue": [
                             "Open", 
                             "Closed", 
                             "UNCONFIRMED", 
@@ -217,7 +217,7 @@
                     }, 
                     {
                         "dcterms:title": "Product", 
-                        "osl:allowedValue": [
+                        "oslc:allowedValue": [
                             "None", 
                             "Software A"
                         ], 
@@ -227,7 +227,7 @@
                     }, 
                     {
                         "dcterms:title": "Operating System", 
-                        "osl:allowedValue": [
+                        "oslc:allowedValue": [
                             "None", 
                             "All", 
                             "Windows 3.1", 
@@ -269,7 +269,7 @@
                     }, 
                     {
                         "dcterms:title": "Severity", 
-                        "osl:allowedValue": [
+                        "oslc:allowedValue": [
                             "None", 
                             "blocker", 
                             "critical", 
@@ -285,7 +285,7 @@
                     }, 
                     {
                         "dcterms:title": "multiChoice", 
-                        "osl:allowedValue": [
+                        "oslc:allowedValue": [
                             "None", 
                             "choice1 ", 
                             "choice2 ", 
@@ -297,7 +297,7 @@
                     }, 
                     {
                         "dcterms:title": "Component", 
-                        "osl:allowedValue": [
+                        "oslc:allowedValue": [
                             "None", 
                             "Cog A", 
                             "Cog B"
@@ -308,7 +308,7 @@
                     }, 
                     {
                         "dcterms:title": "Hardware", 
-                        "osl:allowedValue": [
+                        "oslc:allowedValue": [
                             "None", 
                             "All", 
                             "DEC", 
@@ -325,7 +325,7 @@
                     }, 
                     {
                         "dcterms:title": "Version", 
-                        "osl:allowedValue": [
+                        "oslc:allowedValue": [
                             "None", 
                             "v1.0", 
                             "v1.1"
@@ -336,7 +336,7 @@
                     }, 
                     {
                         "dcterms:title": "priority", 
-                        "osl:allowedValue": [
+                        "oslc:allowedValue": [
                             "1 - Lowest", 
                             "2", 
                             "3", 
@@ -371,17 +371,6 @@
                         ], 
                         "rdf:type": "forgeplucker:ResourceHistory"
                     }, 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#component": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#hardware": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#multichoice": [
-                        "choice1 ", 
-                        "choice2 "
-                    ], 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#operatingSystem": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#priority": "3", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#product": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#severity": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#version": "None", 
                     "oslc:discussion": {
                         "oslc:comment": [
                             {
@@ -395,6 +384,17 @@
                     }, 
                     "oslc:instanceShape": "https://gforge.inria.fr/projects/coclico//tracker/9685/shape", 
                     "oslc_cm:status": "Open", 
+                    "oslc_shape9685:component": "None", 
+                    "oslc_shape9685:hardware": "None", 
+                    "oslc_shape9685:multichoice": [
+                        "choice1 ", 
+                        "choice2 "
+                    ], 
+                    "oslc_shape9685:operatingSystem": "None", 
+                    "oslc_shape9685:priority": "3", 
+                    "oslc_shape9685:product": "None", 
+                    "oslc_shape9685:severity": "None", 
+                    "oslc_shape9685:version": "None", 
                     "rdf:about": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse&func=detail&aid=10635", 
                     "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }, 
@@ -438,23 +438,26 @@
                         ], 
                         "rdf:type": "forgeplucker:ResourceHistory"
                     }, 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#component": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#hardware": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#multichoice": [
-                        "choice3 "
-                    ], 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#operatingSystem": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#priority": "3", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#product": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#severity": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#version": "None", 
                     "oslc:instanceShape": "https://gforge.inria.fr/projects/coclico//tracker/9685/shape", 
                     "oslc_cm:closeDate": "2010-06-29T06:01:00Z", 
                     "oslc_cm:status": "Closed", 
+                    "oslc_shape9685:component": "None", 
+                    "oslc_shape9685:hardware": "None", 
+                    "oslc_shape9685:multichoice": [
+                        "choice3 "
+                    ], 
+                    "oslc_shape9685:operatingSystem": "None", 
+                    "oslc_shape9685:priority": "3", 
+                    "oslc_shape9685:product": "None", 
+                    "oslc_shape9685:severity": "None", 
+                    "oslc_shape9685:version": "None", 
                     "rdf:about": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse&func=detail&aid=10636", 
                     "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }
             ], 
+            "prefixes": {
+                "oslc_shape9685": "https://gforge.inria.fr/projects/coclico//tracker/9685/shape#"
+            }, 
             "rdf:about": "https://gforge.inria.fr/tracker/?atid=9685&group_id=2827&func=browse", 
             "rdf:type": "http://coclico-project.org/ontology/planetforge#Tracker", 
             "sioc:name": "Support"
@@ -470,7 +473,7 @@
                 "oslc:property": [
                     {
                         "dcterms:title": "status", 
-                        "osl:allowedValue": [
+                        "oslc:allowedValue": [
                             "Open", 
                             "Closed", 
                             "UNCONFIRMED", 
@@ -486,7 +489,7 @@
                     }, 
                     {
                         "dcterms:title": "Hardware", 
-                        "osl:allowedValue": [
+                        "oslc:allowedValue": [
                             "None", 
                             "All", 
                             "DEC", 
@@ -503,7 +506,7 @@
                     }, 
                     {
                         "dcterms:title": "Product", 
-                        "osl:allowedValue": [
+                        "oslc:allowedValue": [
                             "None", 
                             "Software A"
                         ], 
@@ -513,7 +516,7 @@
                     }, 
                     {
                         "dcterms:title": "Operating System", 
-                        "osl:allowedValue": [
+                        "oslc:allowedValue": [
                             "None", 
                             "All", 
                             "Windows 3.1", 
@@ -555,7 +558,7 @@
                     }, 
                     {
                         "dcterms:title": "Severity", 
-                        "osl:allowedValue": [
+                        "oslc:allowedValue": [
                             "None", 
                             "blocker", 
                             "critical", 
@@ -571,7 +574,7 @@
                     }, 
                     {
                         "dcterms:title": "Component", 
-                        "osl:allowedValue": [
+                        "oslc:allowedValue": [
                             "None", 
                             "Cog A", 
                             "Cog B"
@@ -582,7 +585,7 @@
                     }, 
                     {
                         "dcterms:title": "priority", 
-                        "osl:allowedValue": [
+                        "oslc:allowedValue": [
                             "1 - Lowest", 
                             "2", 
                             "3", 
@@ -595,7 +598,7 @@
                     }, 
                     {
                         "dcterms:title": "Version", 
-                        "osl:allowedValue": [
+                        "oslc:allowedValue": [
                             "None", 
                             "v1.0", 
                             "v1.1"
@@ -606,7 +609,7 @@
                     }, 
                     {
                         "dcterms:title": "Resolution", 
-                        "osl:allowedValue": [
+                        "oslc:allowedValue": [
                             "None", 
                             "Accepted As Bug", 
                             "Fixed", 
@@ -631,16 +634,16 @@
                     "dcterms:identifier": 10633, 
                     "dcterms:title": "My first test bug", 
                     "dcterms:type": "bugs", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#component": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#hardware": "All", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#operatingSystem": "Windows XP", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#priority": "5 - Highest", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#product": "Software A", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#resolution": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#severity": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#version": "None", 
                     "oslc:instanceShape": "https://gforge.inria.fr/projects/coclico//tracker/9684/shape", 
                     "oslc_cm:status": "Open", 
+                    "oslc_shape9684:component": "None", 
+                    "oslc_shape9684:hardware": "All", 
+                    "oslc_shape9684:operatingSystem": "Windows XP", 
+                    "oslc_shape9684:priority": "5 - Highest", 
+                    "oslc_shape9684:product": "Software A", 
+                    "oslc_shape9684:resolution": "None", 
+                    "oslc_shape9684:severity": "None", 
+                    "oslc_shape9684:version": "None", 
                     "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse&func=detail&aid=10633", 
                     "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }, 
@@ -670,17 +673,17 @@
                         ], 
                         "rdf:type": "forgeplucker:ResourceHistory"
                     }, 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#component": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#hardware": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#operatingSystem": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#priority": "3", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#product": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#resolution": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#severity": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#version": "None", 
                     "oslc:instanceShape": "https://gforge.inria.fr/projects/coclico//tracker/9684/shape", 
                     "oslc_cm:closeDate": "2010-06-29T05:47:00Z", 
                     "oslc_cm:status": "Closed", 
+                    "oslc_shape9684:component": "None", 
+                    "oslc_shape9684:hardware": "None", 
+                    "oslc_shape9684:operatingSystem": "None", 
+                    "oslc_shape9684:priority": "3", 
+                    "oslc_shape9684:product": "None", 
+                    "oslc_shape9684:resolution": "None", 
+                    "oslc_shape9684:severity": "None", 
+                    "oslc_shape9684:version": "None", 
                     "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse&func=detail&aid=10634", 
                     "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }, 
@@ -717,16 +720,16 @@
                         ], 
                         "rdf:type": "forgeplucker:ResourceHistory"
                     }, 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#component": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#hardware": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#operatingSystem": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#priority": "3", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#product": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#resolution": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#severity": "None", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#version": "None", 
                     "oslc:instanceShape": "https://gforge.inria.fr/projects/coclico//tracker/9684/shape", 
                     "oslc_cm:status": "Open", 
+                    "oslc_shape9684:component": "None", 
+                    "oslc_shape9684:hardware": "None", 
+                    "oslc_shape9684:operatingSystem": "None", 
+                    "oslc_shape9684:priority": "3", 
+                    "oslc_shape9684:product": "None", 
+                    "oslc_shape9684:resolution": "None", 
+                    "oslc_shape9684:severity": "None", 
+                    "oslc_shape9684:version": "None", 
                     "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse&func=detail&aid=10637", 
                     "rdf:type": "http://open-services.net/ns/cm#ChangeRequest", 
                     "sioc:attachment": [
@@ -788,14 +791,6 @@
                         ], 
                         "rdf:type": "forgeplucker:ResourceHistory"
                     }, 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#component": "Cog B", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#hardware": "All", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#operatingSystem": "Windows 3.1", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#priority": "3", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#product": "Software A", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#resolution": "Accepted As Bug", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#severity": "blocker", 
-                    "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#version": "v1.0", 
                     "oslc:discussion": {
                         "oslc:comment": [
                             {
@@ -815,10 +810,21 @@
                     }, 
                     "oslc:instanceShape": "https://gforge.inria.fr/projects/coclico//tracker/9684/shape", 
                     "oslc_cm:status": "Open", 
+                    "oslc_shape9684:component": "Cog B", 
+                    "oslc_shape9684:hardware": "All", 
+                    "oslc_shape9684:operatingSystem": "Windows 3.1", 
+                    "oslc_shape9684:priority": "3", 
+                    "oslc_shape9684:product": "Software A", 
+                    "oslc_shape9684:resolution": "Accepted As Bug", 
+                    "oslc_shape9684:severity": "blocker", 
+                    "oslc_shape9684:version": "v1.0", 
                     "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse&func=detail&aid=10638", 
                     "rdf:type": "http://open-services.net/ns/cm#ChangeRequest"
                 }
             ], 
+            "prefixes": {
+                "oslc_shape9684": "https://gforge.inria.fr/projects/coclico//tracker/9684/shape#"
+            }, 
             "rdf:about": "https://gforge.inria.fr/tracker/?atid=9684&group_id=2827&func=browse", 
             "rdf:type": "http://coclico-project.org/ontology/planetforge#Tracker", 
             "sioc:name": "Bugs"
