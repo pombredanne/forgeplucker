@@ -1,6 +1,6 @@
 The ForgePlucker project aims to produce a robot that can extract a
-project's state from a hosting site sourch as SourceForge, Berlios, or
-Savane.  
+project's state from a hosting site such as SourceForge, Berlios, or
+Savane, or from installations of FusionForge for instance.
 
 The use cases for such a tool, and future possibilities springing from
 it, are described in the ForgePlucker project plan: look in
@@ -12,4 +12,13 @@ ForgePlucker classes for particular forge systems.
 
 New BSD license applies.  See the file COPYING for license terms.
 
+You may try to use regress-driver to test non-regression on test forge
+projects (see --help for options). The tests/ dir contains .chk files
+used by regress-driver, and corresponding to the output of bugplucker
+for these projects.
 
+The bugplucker script will connect to a forge project and extract some
+of its contents to the JSON format(s) supported by forgeplucker. See
+--help for details of options.
+
+Homepage of the project : http://home.gna.org/forgeplucker/

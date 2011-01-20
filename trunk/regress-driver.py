@@ -4,9 +4,13 @@ Regression-test driver for forgeplucker code.
 
 Recommended practice is to run the default test mode before committing code changes.
 
+regress-driver will run bugplucker on recognized test forge projects
+and compare its output to the recorded reference output. Recognized
+projects are defined by files named .chk or .cfg in tests/ dir.
+
 To initialize a reference version of the output that will serve for
 later runs (for non-regression), use the --build mode after changing
-the content of a test project.
+the content of a test project on the forge.
 
 Usage: regress-driver [action-option] [options] [site/project ...]
 The actions are -r/--run     # Run the tests (default)
@@ -34,6 +38,7 @@ test/site:project.cfg files to provide more customization. Format is :
  options: any additional options
 where all attributes are optionnal
 """
+
 import os, sys, getopt
 from os import system
 import ConfigParser
