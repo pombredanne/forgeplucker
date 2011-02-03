@@ -19,7 +19,7 @@ The form of the header is as follows:
 
 <meta name="Forge-Identification" content="NAME\:VERSION[\:OPTIONS]">
 
-(The slashes in the above are an ASCIIDOC markup glitch.  Ignoore them.)
+(The slashes in the above are an ASCIIDOC markup glitch.  Ignore them.)
 
 where NAME is replaced by the name of the forge suite, VERSION
 by its version level, and OPTIONS by a comma-separated list of
