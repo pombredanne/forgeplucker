@@ -1084,8 +1084,8 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			fHref = tds[0].find('a')['href']
 			fId = re.search('forum_id=([0-9]*)', fHref).group(1)
 			fUrl = 'forum/'+fHref
-			fName = tds[0].find('a').contents[1][6:]
-			fDesc = tds[1].contents[0]
+			fName = tds[0].find('a').contents[1][6:].encode('utf-8')
+			fDesc = tds[1].contents[0].encode('utf-8')
 			self.forumSwitchViewMode(fId)
 			fAdminUrl = 'forum/admin/index.php?group_id='+self.project_id+'&change_status=1&group_forum_id='+fId
 			fMonitorUrl = '/forum/admin/monitor.php?group_id='+self.project_id+'&group_forum_id='+fId
