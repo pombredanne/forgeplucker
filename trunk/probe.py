@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
-# This script should probe a web app's page to detect if it's a page rendered by a supported forge, and if possible find if it's a project's page.
+# This script should probe a web app's page to detect if it's a page
+# rendered by a supported forge, and if possible find if it's a
+# project's page.
 # Then, it could report to the user if it can extract data and which kind of.
 #
 # Supported formats to detect which forge it is :
@@ -92,6 +94,31 @@ class Forge:
 
             if href :
                 self.url = str(href)
+
+        if self.software == 'Redmine':
+            response = urllib2.urlopen(url)
+            the_page = response.read()
+            soup = BeautifulSoup(the_page)
+
+            # First FF 4.8 inherited from GForge
+            links = soup.findAll('a', {'class': 'home'})
+            href=None
+            for link in links:
+                href=link['href']
+                href=urlparse.urljoin(url, href)
+                break
+
+            title = soup.find('title')
+            title = title.text
+            redmine_overview_title = re.compile('.* - Overview - (.*)')
+            m = redmine_overview_title.match(title)
+            name = m.group(1)
+            self.name = name
+
+            if href :
+                self.url = str(href)
+            
+            
 
     def check_version(self):
 
@@ -201,12 +228,25 @@ def find_powered_by_ala_fusionforge(url) :
 
     if href == 'http://fusionforge.org/' and forge == 'FusionForge':
         return Forge(software='FusionForge')
-    if forge[:6] == 'Savane':
+    if forge and forge[:6] == 'Savane':
         r = Forge(software='Savane')
         r.swvariant = forge
         return r
-    else :
-        return None
+
+    # Try Redmine
+    if not forge:
+        divs = soup.findAll('div', id='footer')
+        for div in divs:
+            if powered_by_re.match(div.text):
+                links = div.findAll('a')
+                for link in links:
+                    href = link['href']
+                    forge = link.text
+                    break
+                if forge == 'Redmine' and href == 'http://www.redmine.org/' :
+                    return Forge(software=forge)
+                    
+    return None
 
 
 def usage():
