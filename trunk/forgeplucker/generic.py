@@ -179,8 +179,10 @@ class GenericForge:
         artifact['URL'] = self.real_url(url)
         m = re.search(tracker.submitter_re, contents)
         if not m:
-            self.error("no submitter found")
-        submitter = m.group(1)
+		    #self.error("no submitter found")
+            submitter = 'Nobody'
+        else:
+            submitter = m.group(1)
         #TODO:Task need no date
         m = re.search(tracker.date_re,contents)
         if not m:

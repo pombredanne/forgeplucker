@@ -75,7 +75,7 @@ output_formats = ('default', 'coclico', 'oslccmv2json')
 
 if __name__ == '__main__':
     import getopt, json
-    jdump = lambda x: json.dump(x, sys.stdout, sort_keys=True, indent=4)
+    jdump = lambda x: json.dump(x, sys.stdout, sort_keys=True, indent=4, ensure_ascii = False)
     user = passwd = forgetype = None
     verbose = 0
     issue = None
