@@ -83,14 +83,19 @@ class Forge:
 
             # If not matched, then try with more recent FF
             if not href:
-                alt="FusionForge Home"
                 links = soup.findAll('a')
                 href=None
                 for link in links:
-
                     for tag in link.findAll(alt='FusionForge Home') :
                         href=link['href']
                         break
+
+            # try with Evolvis variant
+            if not href:
+                headblock = soup.find('span', {'class': 'headblock'})
+                a = headblock.find('a', {'class': 'headlink'})
+                href = a['href']
+                href=urlparse.urljoin(url, href)
 
             if href :
                 self.url = str(href)
@@ -245,7 +250,23 @@ def find_powered_by_ala_fusionforge(url) :
                     break
                 if forge == 'Redmine' and href == 'http://www.redmine.org/' :
                     return Forge(software=forge)
-                    
+
+    # Try forge identification meta header
+    if not forge:
+        forge_identification = re.compile('([^:]+):([^:]+)(:.*)?')
+        metas = soup.findAll('meta', {'name' : 'Forge-Identification'})
+        for meta in metas:
+            content = meta['content']
+            m = forge_identification.match(content)
+            forge = m.group(1)
+            version = m.group(2)
+            options = m.group(3)
+            r = Forge(software=forge)
+            r.swvariant = forge + "_" + version
+            break
+        if forge:
+            return r
+
     return None
 
 
