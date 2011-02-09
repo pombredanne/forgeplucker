@@ -133,7 +133,7 @@ if __name__ == '__main__':
                     forgetype = cls
                     break
             else:
-                error("%s: unknown forge type" % sys.argv[0], 1)
+                error("%s: unknown forge type '%s'" % (sys.argv[0], val), 1)
         elif arg == '-o': #output format
             if val == "help" : #list supported output formats
                 print "Supported output formats for option", arg, ":"
