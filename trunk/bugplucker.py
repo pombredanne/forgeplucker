@@ -124,16 +124,16 @@ if __name__ == '__main__':
             if val == "help" :	# list supported forges
                 print "Supported forge types for option", arg, ":"
                 for cls in handler_classes:
-                    print cls.__name__, " ",
+                    print "  %s" % cls.__name__
                 print
                 raise SystemExit, 0
 
             for cls in handler_classes:
-                if val == cls.__name__:
+                if val.lower() == cls.__name__.lower():
                     forgetype = cls
                     break
             else:
-                error("%s: unknown forge type" % sys.argv[0], 1)
+                error("%s: unknown forge type '%s', try -f help" % (sys.argv[0], val), 1)
         elif arg == '-o': #output format
             if val == "help" : #list supported output formats
                 print "Supported output formats for option", arg, ":"
