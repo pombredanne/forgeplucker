@@ -52,11 +52,17 @@ def get_credentials(user, passwd, host):
         usernames = user.split(':')
     host = host.split('/')[0] #If the host is a not a domain use just the domain
     if passwd is None:
-        passwords = netrc.netrc()
-        auth = passwords.authenticators(host)
+        try:
+            passwords = netrc.netrc()
+            auth = passwords.authenticators(host)
+        except IOError:
+            auth = None
         if auth and auth[0] in usernames:
             user = auth[0]
             passwd = auth[2]
+        else :
+            user = None
+            passwd = None
     return (user, passwd)
 
 # End
