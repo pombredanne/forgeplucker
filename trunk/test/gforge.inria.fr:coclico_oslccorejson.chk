@@ -853,7 +853,7 @@
                 "http://rdfs.org/sioc/ns#User", 
                 "http://xmlns.com/foaf/0.1/OnlineAccount"
             ], 
-            "sioc:email": "sebastien.campion@gmail.com"
+            "sioc:email": "florian.dudouet@gmail.com"
         }, 
         {
             "foaf:accountName": "fdudouet", 
