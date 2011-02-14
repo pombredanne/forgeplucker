@@ -22,3 +22,5 @@ of its contents to the JSON format(s) supported by forgeplucker. See
 --help for details of options.
 
 Homepage of the project : http://home.gna.org/forgeplucker/
+
+Development is handled in Gna! via SVN, or on gitorious.org for git fans.
