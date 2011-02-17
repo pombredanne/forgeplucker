@@ -328,11 +328,28 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			self.notify('plucking permissions from project/memberlist.php?group_id='+self.project_id)
 		contents = self.fetch('project/memberlist.php?group_id=' + self.project_id, 'Roles page')
 		perms = {}
-		for (realname, username, role, skills) in self.table_iter(self.narrow(contents), '<table', 4, 'Roles Table', has_header=True):
-			username = username.strip()
-			perms[username] = {'role':role}
-			perms[username]['real_name'] = realname
-			perms[username]['URL'] = self.real_url(self.user_page(username))
+		soup = BeautifulSoup(contents)			
+		trs = soup.find('table')
+		if trs != None:
+			trs = trs.findAllNext('tr')[1:]
+			for tr in trs:
+				tds = tr.findAll('td')
+				username = tds[1].next.contents[0]
+				try:
+					realname = tds[0].next.contents[0]
+				except AttributeError:
+					realname = tds[0].contents[0]
+				role = tds[2].contents[0]
+				perms[username] = {'role':role.encode('utf-8')}
+				perms[username]['real_name'] = realname.encode('utf-8')
+
+
+
+#		for (realname, username, role, skills) in self.table_iter(contents, '<table>', 4, 'Roles Table', has_header=True):
+#			perms[username.strip().encode('utf-8')] = {'role':role}
+#			
+#			perms[username.strip().encode('utf-8')]['real_name'] = realname.encode('utf-8')
+			
 			
 		for user in perms:
 			contents = self.narrow(self.fetch(self.user_page(user), 'User page'))
