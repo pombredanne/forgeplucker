@@ -74,7 +74,9 @@ def error(msg, code):
 output_formats = ('default', 'coclico', 'oslccmv2json')
 
 if __name__ == '__main__':
-    import getopt, json
+    import getopt
+    try: import simplejson as json
+    except ImportError: import json
     jdump = lambda x: json.dump(x, sys.stdout, sort_keys=True, indent=4, ensure_ascii = False)
     user = passwd = forgetype = None
     verbose = 0

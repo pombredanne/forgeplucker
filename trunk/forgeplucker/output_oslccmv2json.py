@@ -15,7 +15,10 @@ References :
  - OSLC Core Specification - JSON Representation Examples : http://open-services.net/bin/view/Main/OSLCCoreSpecJSONExamples
 """
 
-import json, string, re
+try: import simplejson as json
+except ImportError: import json
+
+import string, re
 
 oslc_prefixes = { 'rdf' : 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
                       'dcterms' : 'http://purl.org/dc/terms/',
