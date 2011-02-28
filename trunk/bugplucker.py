@@ -281,9 +281,20 @@ if __name__ == '__main__':
                 trackers = True
 
         if trackers:
+            bugs = bt.pluck_trackers(timeless,True)
+            data["trackers"] = bugs
+        """
+        #Or, if we absolutely need to keep the trackers as a dictionary for non coclico format:
+        if trackers and format == 'coclico':
+            bugs = bt.pluck_trackers(timeless=timeless, True)
+            data["trackers"] = bugs
+        elif trackers:
             bugs = bt.pluck_trackers(timeless=timeless)
             data["trackers"] = bugs
-
+        """
+        #next if (not format or default) is broken unless the above code is used, two corections possible : 
+        #   uncomment the above and it works but in default or oslccore, more than 1 custom tracker will not be recognized
+        #   update the code to work just like coclico format below
         if not format or format == 'default' :
             if verbose: notify('Outputing with format "default"')
             if permissions:
@@ -306,25 +317,18 @@ if __name__ == '__main__':
         elif format == 'coclico':
             if verbose: notify('Outputing with format "coclico"')
             # dump data as JSON
-            coclico_data = {}
             for key in data:
-                if key != 'trackers':
-                    coclico_data[key] = data[key]
-                else:
-                    coclico_data['trackers'] = []
+                if key == 'trackers':   
                     # Ensure non-regression on vocabularies where ['values'] and ['multi'] was introduced
-                    for tracker in data['trackers']['trackers']:
-                        coclico_tracker = data['trackers']['trackers'][tracker]
-                        if 'vocabulary' in coclico_tracker:
-                            vocab = coclico_tracker['vocabulary']
+                    for tracker in data['trackers']:
+                        if 'vocabulary' in tracker:
+                            vocab = tracker['vocabulary']
                             new_vocab = {}
                             for field in vocab:
                                 new_vocab[field] = vocab[field]['values']
-                            coclico_tracker['vocabulary'] = new_vocab
-                        coclico_tracker['type'] = tracker
-                        coclico_data['trackers'].append(coclico_tracker)
-
-            jdump(coclico_data)
+                            tracker['vocabulary'] = new_vocab
+                            
+            jdump(data)
             print
         elif format == 'oslccmv2json' :
             if verbose: notify('Outputing with format "oslccmv2json"')

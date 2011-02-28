@@ -273,21 +273,19 @@ class GenericForge:
         return artifacts
     def get_trackers(self):
         return self.trackers
-    def pluck_trackers(self, timeless=False):
+    def pluck_trackers(self, timeless=False, asList = False):
         "Pull the buglist, wrapping it with metadata about the operation."
-        trackers = {}
+        if asList:
+            trackers = []
+        else:
+            trackers = {}
         before = timestamp()
         for tracker in self.get_trackers():
-            vocabulary, trackers[tracker.type] = {}, {}
+            vocabulary = {}
             content = self.pluck_artifactlist(tracker, vocabulary, timeless)
-            if content is not None:
-                trackers[tracker.type]["artifacts"] = content
             url = tracker.getUrl()
             if not url.startswith("http"):
                 url = "https://%s/" % self.host + url
-            trackers[tracker.type]["vocabulary"] = vocabulary
-            trackers[tracker.type]["label"] = tracker.getLabel() #adding label support to trackers
-            trackers[tracker.type]["url"] = url
             # Smooth the vocabulary    
             for (rough, smooth) in tracker.name_mappings.items():
                 if rough in vocabulary:
@@ -297,7 +295,25 @@ class GenericForge:
             # to treat it as a vocablary.
             if 'assigned_to' in vocabulary:
                 del vocabulary['assigned_to']
-            trackers[tracker.type]["vocabulary"] = vocabulary
+            if not asList:
+                #trackers = {}
+                trackers[tracker.type] = {}
+                if content is not None:
+                    trackers[tracker.type]["artifacts"] = content
+                trackers[tracker.type]["vocabulary"] = vocabulary
+                trackers[tracker.type]["label"] = tracker.label #adding label support to trackers
+                trackers[tracker.type]["url"] = url
+            else:
+                #trackers = []
+                current = {'type':tracker.type}
+                #content = self.pluck_artifactlist(tracker, vocabulary, timeless)
+                if content is not None:
+                    current['artifacts'] = content
+                current['vocabulary'] = vocabulary
+                current['label'] = tracker.label
+                current['url'] = url
+                trackers.append(current)
+        """This code is really outdated, only used for tracker only exports from original forgeplucker otherwise this data is badly placed, should we really keep supporting it?
         after = timestamp()
         trackerdata = {
             "class":"PROJECT",
@@ -310,6 +326,8 @@ class GenericForge:
         # See above
         if not timeless:
             trackerdata["interval"] = (before, after)
+        """
+        trackerdata = trackers
         return trackerdata
     def login_url(self):
         "Generate the site's account login page URL."
