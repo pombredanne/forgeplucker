@@ -315,6 +315,18 @@ The FusionForge handler provides machinery for the FusionForge sites.
 				self.trackers.append(FusionForge.CustomTracker(self, tracker['label'], tracker['projectbase']))
 		return self.trackers
 
+
+	# wrap the pluck_trackers() 
+	def pluck_trackers(self, timeless=False,  asList = False):
+		'''
+		Get the trackers of the current fusionforge project. This is the method which should be called to initialize the extraction.
+		@param timeless: Record the time of extraction if true
+		@param asList: Boolean true if trackers should be returned as a list, false otherwise
+		'''
+		self.get_trackers()
+		return GenericForge.pluck_trackers(self, timeless, asList)
+
+
 	### PERMISSIONS/ROLES PARSING
 
 	def user_page(self, username):
@@ -625,9 +637,10 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		
 	###### TASKS PARSING : COCLICO NEW FEATURE
 	
-	class Task:
+	class Task(GenericForge.GenericTracker):
 		## CLASSE DES TASKS
 		def __init__(self, label, parent, projectbase):
+			GenericForge.GenericTracker.__init__(self, parent, label)
 			self.parent = parent
 			self.optional = False
 			self.chunksize = 50
@@ -816,8 +829,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		self.trackers = [] #Reset trackers to empty
 		for tasksTracker in self.getTasksTrackers():
 			self.trackers.append(FusionForge.CustomizableTaskTracker(self, tasksTracker['label'], tasksTracker['type'], tasksTracker['projectbase']))
-		return self.pluck_trackers(timeless, True)
-
+		return GenericForge.pluck_trackers(self,  timeless, True)
 	###### NEWS PARSING : COCLICO NEW FEATURE
 	
 	def pluck_news(self):

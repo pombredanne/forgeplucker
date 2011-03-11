@@ -280,7 +280,7 @@ class GenericForge:
         else:
             trackers = {}
         before = timestamp()
-        for tracker in self.get_trackers():
+        for tracker in self.trackers:
             vocabulary = {}
             content = self.pluck_artifactlist(tracker, vocabulary, timeless)
             url = tracker.getUrl()
