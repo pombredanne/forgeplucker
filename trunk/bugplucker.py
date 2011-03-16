@@ -86,7 +86,7 @@ if __name__ == '__main__':
     use_cache = True
 
     # Start with command-line args parsing
-    (options, arguments) = getopt.getopt(sys.argv[1:], "f:d:i:no:p:PTSFDWBNKru:v:h?", ["help",])
+    (options, arguments) = getopt.getopt(sys.argv[1:], "f:d:i:no:p:s:PTSFDWBNKru:v:h?", ["help",])
 
     for (arg, val) in options:
         if arg in ('-h', '-?', '--help'):	# help
@@ -231,6 +231,9 @@ if __name__ == '__main__':
         else:
             bt = forgetype(host, project)
 
+        if version:
+            bt.setVersion(version)
+        
         bt.verbosity = verbose
 
         bt.login(user, passwd)

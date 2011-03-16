@@ -124,6 +124,9 @@ class GenericForge:
         response = self.fetch(self.login_url(), "Login Page", params)
         if checkstring not in response:
             self.error("authentication failure on login", ood=False)
+    def setVersion(self,  version):
+        "Set a current version number"
+        self.version = version
     def pluck_tracker_ids(self, tracker):
         "Fetch the ID list from the specified tracker."
         chunk_offset = 0
