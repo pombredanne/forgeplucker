@@ -1058,18 +1058,32 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		Parse a single news page
 		@param news: a news page soup
 		'''
-		newsTable = newsSoup.find('table')
+		if not self.version or self.version == '4.8':
+			newsTable = newsSoup.find('table')
+		elif self.version == '5.x':
+			newsTable = newsSoup.find('div', {'id':'maindiv'}).findNext('table')
 		poster_name = newsTable.find(text=re.compile('Posted')).next.strip()
 		news_date = newsTable.find(text=re.compile('Date')).next.strip()
 		news_summary = newsTable.find(text=re.compile('Summary')).next.contents[0].encode('utf-8')
 		news_content=''
-		for s in newsTable.find('p').contents:
-			if s.string != None:
-				news_content+=s.string
-		news_content = news_content.strip().replace('\r','\n')
-		news_content = news_content.encode('utf-8')
-#		news_content = dehtmlize(''.join(blocktext(str(s)) for s in newsTable.find('p').contents)) #Couldn't make a correct code to handle both the <br /> and the \n without either too many \n or none at all... replaced by the length above code
-		news_forum = self.forumParser(newsSoup, 5, 4, 3)
+		if not self.version or self.version == '4.8':
+			for s in newsTable.find('p').contents:
+				if s.string != None:
+					news_content+=s.string
+			news_content = news_content.strip().replace('\r','\n')
+			news_content = news_content.encode('utf-8')
+#		   TODO:Correct news content extraction for 5.x
+#	   elif self.version == '5.x':
+#		   init = newsTable.find('p').nextSibling
+#		   news_content = init.strip()
+#		   valid = True
+#		   while valid:
+		news_content = ''
+#	 news_content = dehtmlize(''.join(blocktext(str(s)) for s in newsTable.find('p').contents)) #Couldn't make a correct code to handle both the <br /> and the \n without either too many \n or none at all... replaced by the length above code
+		if not self.version or self.version == '4.8':
+			news_forum = self.forumParser(newsSoup, 5, 4, 3)
+		elif self.version == '5.x':
+			news_forum = self.forumParser(newsSoup, 4, 3, 4)
 		result = {'poster_name':poster_name, 'date':news_date,'summary':news_summary,'news_content':news_content,'forum':news_forum}
 		return result
 		
