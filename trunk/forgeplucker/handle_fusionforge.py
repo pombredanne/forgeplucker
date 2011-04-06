@@ -55,11 +55,11 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			# m = re.search('<a href="[^/]*//[^/]*/([^"]*)">.*%s</a>' % label, self.parent.basepage)
 			
 			# if m:
-			# 	print m.groups()
-			# 	self.projectbase = dehtmlize(m.group(1))
+			#   print m.groups()
+			#   self.projectbase = dehtmlize(m.group(1))
 			# else:
-			# 	raise ForgePluckerException("Le tracker '%s' n'a pas été trouvé" \
-			# 		    % label)
+			#   raise ForgePluckerException("Le tracker '%s' n'a pas été trouvé" \
+			#		 % label)
 			# m = re.search('<a href="[^"]*atid=([0-9]*)[^"]*">.*%s</a>' % label, self.parent.basepage)
 			# print m.groups()
 			# self.atid = m.group(1)
@@ -220,38 +220,42 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		def custom(self, contents, artifact, vocabularies):
 			"parse specific fields of FusionForge"
 			#des champs spécifiques à fusionforge qu'il serait intéressant d'ajouter, peut ne rien faire en dehors d'appeler parse_followups et parse_attachments. méthode appelée par generic
- 			artifact, vocabularies = self.update_extrafields(artifact, contents, vocabularies)
+			artifact, vocabularies = self.update_extrafields(artifact, contents, vocabularies)
 
- 			#get Detailed Description (uneditable thus unfetchable directly from form)
- 			dD = None
+			#get Detailed Description (uneditable thus unfetchable directly from form)
+			dD = None
 			dDFound = False
 			bs = BeautifulSoup(self.narrow(contents))
 			# for 4.8
-			for t in bs.findAll('table'):
-				try :
-					if t.find('thead').find('tr').find('td').contents[0] == 'Detailed description':
-						dDFound = True
-						dD = t.find('tr', attrs={'class': 'altRowStyleEven'}).find('td').find('pre').contents[0]
-						dD = blocktext(dehtmlize(dD.strip()))
-						break
-				except AttributeError, e : # 
-					if str(e) != "'NoneType' object has no attribute 'find'":
-						raise
-			# Try for 5.0
-			if not dDFound:
-				bs = BeautifulSoup(self.narrow(contents))
-				for t in bs.findAll('table', attrs={'class': re.compile('.*listTable')}):
+			if not self.parent.version or self.parent.version == '4.8':
+				for t in bs.findAll('table'):
 					try :
-						if t.find('th').find('div').find('div').contents[0] == 'Detailed description':
+						if t.find('thead').find('tr').find('td').contents[0] == 'Detailed description':
 							dDFound = True
-							dD = t.find('tr').findNext('tr').find('td').contents[0]
+							dD = t.find('tr', attrs={'class': 'altRowStyleEven'}).find('td').find('pre').contents[0]
 							dD = blocktext(dehtmlize(dD.strip()))
 							break
 					except AttributeError, e : # 
 						if str(e) != "'NoneType' object has no attribute 'find'":
 							raise
- 			if dD:
- 				artifact['description'] = dD
+			elif self.parent.version == '5.x':
+				bs = BeautifulSoup(self.narrow(contents))
+				t= bs.find('div', text='Detailed description')
+				if t:
+					dDFound = True
+					dD = t.findNext('td').contents[0].encode('utf-8')
+#				for t in bs.findAll('table', attrs={'class': re.compile('.*listTable')}):
+#					try :
+#						if t.find('th').find('div').find('div').contents[0] == 'Detailed description':
+#							dDFound = True
+#							dD = t.find('tr').findNext('tr').find('td').contents[0]
+#							dD = blocktext(dehtmlize(dD.strip()))
+#							break
+#					except AttributeError, e : # 
+#						if str(e) != "'NoneType' object has no attribute 'find'":
+#							raise
+			if dD:
+				artifact['description'] = dD
 			
 			m = re.search('''Date Closed:</strong><br />\s*([^<]*)\s*<''', contents)
 			if not (m == None):
@@ -292,20 +296,31 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		trackers = []
 		trackersPage = self.fetch('tracker/?group_id='+self.project_id, 'Fetching tracker list')
 		trackersPage = BeautifulSoup(trackersPage)
-		for table in trackersPage.findAll('table') :
-			trs = table.findAll('tr')[1:]
+		if not self.version or self.version == '4.8':
+			tables = trackersPage.findAll('table') 
+			for table in tables :
+				trs = table.findAll('tr')[2:]
 			for tr in trs:
 				a = tr.find('a')
 				tPage = re.search('[^/]*//[^/]*.*/([^/]+/[^"/]*)', a['href']).group(1)
 				tLabel = dehtmlize(a.contents[1]).strip()
 				trackers.append({'label':tLabel, 'projectbase':tPage})
-
-		self.trackers = []	
+		elif self.version == '5.x':
+			table = trackersPage.find('table', {'id':'sortable_table_tracker'})
+			trs = table.findAll('tr')[1:]
+			for tr in trs:
+				a = tr.find('a')
+				tPage = a['href']
+				tLabel = dehtmlize(a.contents[1]).strip()
+				trackers.append({'label':tLabel, 'projectbase':tPage})
+			
+			
+		self.trackers = []  
 
 		defaults = {'Bugs': FusionForge.BugTracker, 
-			    'Feature Requests': FusionForge.FeatureTracker, 
-			    'Patches': FusionForge.PatchTracker, 
-			    'Support': FusionForge.SupportTracker}
+				'Feature Requests': FusionForge.FeatureTracker, 
+				'Patches': FusionForge.PatchTracker, 
+				'Support': FusionForge.SupportTracker}
 		for tracker in trackers:
 			if self.verbosity >= 1:
 				self.notify("found tracker: " + tracker['label'] + ':' + tracker['projectbase'])
@@ -313,6 +328,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 				self.trackers.append(defaults[tracker['label']](self, tracker['projectbase']))
 			else:
 				self.trackers.append(FusionForge.CustomTracker(self, tracker['label'], tracker['projectbase']))
+		self.bugtrackers = self.trackers
 		return self.trackers
 
 
