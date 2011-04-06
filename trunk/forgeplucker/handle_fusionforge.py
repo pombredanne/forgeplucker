@@ -494,25 +494,139 @@ The FusionForge handler provides machinery for the FusionForge sites.
 	def pluck_docman(self):
 		'''
 		Get the Document Manager's data of the project and returns the corresponding array, plus downloads any attached files in the local directory $(PROJECT_NAME)/docman
+		
+		Totally differs between 4.8 and 5.x
 		'''
-		# First page of a docman admin web page.
-		init_page = self.fetch('docman/admin/?group_id='+ self.project_id, 'main docman page')
 		result = {}
-		#get each category (active/deleted/hidden/private)
-		m=re.findall('''<li><strong>(.*)</strong>(.*)''',init_page)
-		#for each category
-		for lis in m:
-		#execute the recursive function at the root of this category
-			result[lis[0]] = self.pluck_docman_list(init_page, docman_type = lis[0])
+		if self.version == '4.8':
+			# First page of a docman admin web page.
+			init_page = self.fetch('docman/admin/?group_id='+ self.project_id, 'main docman page')
+			#get each category (active/deleted/hidden/private)
+			m=re.findall('''<li><strong>(.*)</strong>(.*)''',init_page)
+			#for each category
+			for lis in m:
+			#execute the recursive function at the root of this category
+				result[lis[0]] = self.pluck_docman_list(init_page, docman_type = lis[0])
+		elif self.version == '5.x':
+#			init_url = 'docman/?group_id='+self.project_id+'&view=listfile&dirid=0'
+#			self.pluck_docman_list_5(init_url)
+			result = self.pluck_docman_list_5_m2()
+			#no category for dirs in 5.x
 		return result
 
+	def pluck_docman_list_5(self,  url,  id='ctSubTreeID1'):
+		content = self.fetch(url,  'fetching docman directories for id:'+str(id))
+		result=[]
+		content = BeautifulSoup(content)
+		tree = content.find('div',  {'id':id})
+		if len(tree.contents) !=0:
+			tables = tree.findNext('table')
+			tables = [tables] + tables.findNextSiblings('table')
+			for table in tables:
+				subres = {}
+				#find table id
+				a = table.find('a')
+				href  = re.search('(docman.*)', a['href']).group(1)
+				id = re.search('dirid=([0-9]*)', e['href']).group(1)
+				#get dir name
+				subres['name'] = a.contents[0]
+				#get table content
+				subres['files'] = pluck_docman_files(content)
+				#get subdirs content
+				subres['subdirectories']=self.pluck_docman_list_5(href,  id)
+				result.append(subres)
+		return result
+		
+	def pluck_docman_list_5_m2(self):
+		content = self.fetch('docman/?group_id='+self.project_id+'&view=additem',  'fetching docman directories')
+		content = BeautifulSoup(content)
+		opts = content.find('select', {'name':'doc_group'}).findAll('option')
+		subdirs = {}
+		resultObj = []
+		result=[]
+		for opt in opts:
+			name = opt.contents[0]
+			id = opt['value']
+			match = re.match('[-]+',  name)
+			if not match:
+				dg = self.DocumentGroup(self,  name,  id)
+				resultObj.append(dg)
+				subdirs[0] = dg
+			if match:
+				length = len(match.group())
+				depth = length/2
+				name = name[length:]
+				dg = self.DocumentGroup(self,  name,  id)
+				subdirs[depth-1].addChild(dg)
+				subdirs[depth] = dg
+		
+		for element in resultObj:
+			result.append(element.toDict())
+		return result
+		
+	class DocumentGroup():
+		def __init__(self, parent,  name,  id):
+			self.name = name
+			self.id = id
+			self.parent = parent
+			self.children = []
+			self.files = self.pluck_docman_files('docman/?group_id='+self.parent.project_id+'&view=listfile&dirid='+self.id)
+		def addChild(self,  dg):
+			self.children.append(dg)
+		def __str__(self):
+			return {'name':self.name, 'id':self.id}
+		
+		def pluck_docman_files(self,  url):
+			files = []
+			content = self.parent.fetch(url,  'fetching files for docgroup named: '+self.name)
+			content = BeautifulSoup(content)
+			table = content.find('table', {'class':'listing sortable_docman_listfile'})
+			if table != None:
+				trs = table.find('tbody').findAll('tr')
+				for tr in trs:
+					file = {}
+					tds = tr.findAll('td')
+					if len(tds[2].contents)>1:
+						file['file_name'] = tds[2].contents[1]
+					else:
+						file['file_name'] = tds[2].contents[0]
+					file['given_name']  = tds[3].contents[0]
+					file['submitter'] = re.search('/users/([^/]*)',tds[5].contents[0]['href']).group(1)
+					file['status']  = tds[7].contents[0]
+					file['description'] = tds[4].contents[0]
+					rep_dest = self.parent.project_name + '/docman'
+					if not os.path.exists(self.parent.project_name):
+						os.mkdir(self.parent.project_name)
+					if not os.path.exists(rep_dest):
+						os.mkdir(rep_dest)
+					furl = tds[1].find('a')['href']
+					dl = self.parent.fetch(furl, 'docman file fetching')
+					fnout = rep_dest + '/' + file['file_name']
+					fout = open(fnout, "wb")
+					fout.write(dl)
+					fout.close()
+					file['url'] = fnout
+					files.append(file)
+			return files   
+		
+		def toDict(self):
+			dict = {}
+			dict['name'] = self.name
+			dict['children'] = []
+			for child in self.children:
+				dict['children'].append(child.toDict())
+			dict['files'] = [self.files]
+			return dict
+			
+			
+ 
 	def pluck_docman_list(self, contents, url = None, docman_type = None):
 		'''
 		Get the documents and directories at the specified page and return a corresponding array
 		@param contents: The considered HTML to be parsed.
 		@param url: The URL where this HTML can be retrieved
 		@param docman_type: 
-		'''		
+		'''  
 		#TODO:Check usefulness of docman_type 
 		result = {}
 		#Init a FusionForge_DocMan instance, used to parse contents.
