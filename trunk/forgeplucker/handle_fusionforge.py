@@ -356,10 +356,13 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			self.notify('plucking permissions from project/memberlist.php?group_id='+self.project_id)
 		contents = self.fetch('project/memberlist.php?group_id=' + self.project_id, 'Roles page')
 		perms = {}
-		soup = BeautifulSoup(contents)			
-		trs = soup.find('table')
-		if trs != None:
-			trs = trs.findAllNext('tr')[1:]
+		soup = BeautifulSoup(contents)	  
+		if not self.version or self.version == '4.8':
+			table = soup.find('table')
+		elif self.version == '5.x':
+			table = soup.find('div',  {'id':'maindiv'}).find('table')
+		if table != None:
+			trs = table.findAllNext('tr')[1:]
 			for tr in trs:
 				tds = tr.findAll('td')
 				username = tds[1].next.contents[0]
@@ -368,15 +371,20 @@ The FusionForge handler provides machinery for the FusionForge sites.
 				except AttributeError:
 					realname = tds[0].contents[0]
 				role = tds[2].contents[0]
-				perms[username] = {'role':role.encode('utf-8')}
+				#Temporarily preserve legacy role:ROLENAME(string) for 4.8 import
+				#TODO: Update for role:[ROLE1, ROLE2,...] for 4.8 too
+				if not self.version or self.version == '4.8':
+					perms[username] = {'role':role.encode('utf-8')}
+				elif self.version == '5.x':
+					perms[username] = {'role': role.encode('utf-8').rsplit(', ')}
 				perms[username]['real_name'] = realname.encode('utf-8')
 
 
 
-#		for (realname, username, role, skills) in self.table_iter(contents, '<table>', 4, 'Roles Table', has_header=True):
-#			perms[username.strip().encode('utf-8')] = {'role':role}
-#			
-#			perms[username.strip().encode('utf-8')]['real_name'] = realname.encode('utf-8')
+#	 for (realname, username, role, skills) in self.table_iter(contents, '<table>', 4, 'Roles Table', has_header=True):
+#		 perms[username.strip().encode('utf-8')] = {'role':role}
+#		 
+#		 perms[username.strip().encode('utf-8')]['real_name'] = realname.encode('utf-8')
 			
 			
 		for user in perms:
@@ -391,33 +399,71 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		Get the roles of each registered user of the project and returns the corresponding array
 		'''
 		roles = {}
-		contents = self.fetch('project/admin/?group_id=' + self.project_id, 'Admin page')
-		m = re.search('''<form action="roleedit.php\?group_id=[0-9]*" method.*<select name="role_id">(.*)</select>''', contents, re.DOTALL)
-
-		# above is for 4.8, then if fails, for 5.0 :
-		if not m:
+		
+		if not self.version or self.version == '4.8':
+			contents = self.fetch('project/admin/?group_id=' + self.project_id, 'Admin page')
+			m = re.search('''<form action="roleedit.php\?group_id=[0-9]*" method.*<select name="role_id">(.*)</select>''', contents, re.DOTALL)
+			n = re.findall('''<option value="([0-9]*)"[^>]*>(.*)</option>''', m.group(1))
+			n.append(['1', 'Default'])#Default role for project creator, always #1
+			n.append(['observer', 'Observer'])
+			for i in range(0, len(n)):
+				permissions = {}
+				editpagecontents = self.fetch('project/admin/roleedit.php?group_id=' + self.project_id + '&role_id=' + n[i][0], 'Edit Role ' + n[i][1] + ' page')
+				for (section, subsection, setting) in self.table_iter(editpagecontents, '<table>', 3, 'Edit Table', has_header=True, keep_html=True):
+					subsection = dehtmlize(str(subsection)).strip()
+					section = dehtmlize(str(section)).strip()
+					t = re.findall('''<option value="[-\w]*" selected="selected">([^<]*)</option>''', str(setting))
+					if subsection != '-':
+						if len(t)>1:
+							permissions[section + ':' + 'AnonPost' + ':' + subsection]=t[1]
+						permissions[section + ':' + subsection] = t[0]
+					elif len(t) != 1: #Exception for project Admin.
+						permissions[section] = t[-1]
+					else:
+						permissions[section] = t[0]
+				roles[n[i][1]] = permissions
+		elif self.version =='5.x':
 			contents = self.fetch('project/admin/users.php?group_id=' + self.project_id, 'Admin page')
-			m = re.search('''<form action="roleedit.php\?group_id=[0-9]*[^"]*" method.*<select name="role_id">(.*)</select>''', contents, re.DOTALL)
-
-		n = re.findall('''<option value="([0-9]*)"[^>]*>(.*)</option>''', m.group(1))
-		n.append(['1', 'Default'])#Default role for project creator, always #1
-		n.append(['observer', 'Observer'])
-		for i in range(0, len(n)):
-			permissions = {}
-			editpagecontents = self.fetch('project/admin/roleedit.php?group_id=' + self.project_id + '&role_id=' + n[i][0], 'Edit Role ' + n[i][1] + ' page')
-			for (section, subsection, setting) in self.table_iter(editpagecontents, '<table>', 3, 'Edit Table', has_header=True, keep_html=True):
-				subsection = dehtmlize(str(subsection)).strip()
-				section = dehtmlize(str(section)).strip()
-				t = re.findall('''<option value="[-\w]*" selected="selected">([^<]*)</option>''', str(setting))
-				if subsection != '-':
-					if len(t)>1:
-						permissions[section + ':' + 'AnonPost' + ':' + subsection]=t[1]
-					permissions[section + ':' + subsection] = t[0]
-				elif len(t) != 1: #Exception for project Admin.
-					permissions[section] = t[-1]
-				else:
-					permissions[section] = t[0]
-			roles[n[i][1]] = permissions
+			contents = BeautifulSoup(contents)
+#			m = re.search('''<form action="roleedit.php\?group_id=[0-9]*[^"]*" method.*<select name="role_id">(.*)</select>''', contents, re.DOTALL)
+			input = contents.findAll('form', {'action':re.compile('roleedit.php')})[:-1]
+#			n = re.findall('''<option value="([0-9]*)"[^>]*>(.*)</option>''', m.group(1))
+#			n.append(['1', 'Default'])#Default role for project creator, always #1
+#			n.append(['observer', 'Observer'])
+			n = []
+			for  id in input:
+				n.append([id.contents[0]['value'],  id.findNext('td').contents[0]])
+			for i in range(0, len(n)):
+				permissions = {}
+#				editpagecontents = self.fetch('project/admin/roleedit.php?group_id=' + self.project_id + '&role_id=' + n[i][0], 'Edit Role ' + n[i][1] + ' page')
+				contents = self.fetch('project/admin/roleedit.php?group_id=' + self.project_id,  'Edit Role ' + n[i][1] + ' page', {'role_id':n[i][0]})
+				contents = BeautifulSoup(contents)
+				table = contents.find('form', {'action':re.compile('/project/admin/roleedit.php')}).findNext('table')
+				trs = table.findAll('tr')[1:]
+				for tr in trs:
+					tds = tr.findAll('td')
+					if len(tds)==2:#No subsection
+						section = tds[0].findNext('strong').contents[0]
+						val = tds[1].findNext('option', {'selected':'selected'}).contents[0]
+						permissions[section] = val
+					else:#A subsection
+						section = tds[0].contents[0]
+						subsection = tds[1].contents[0]
+						val = tds[2].findNext('option', {'selected':'selected'}).contents[0]
+						permissions[section + ':' + subsection] = val
+#				for (section, subsection, setting) in self.table_iter(editpagecontents, '<table>', 3, 'Edit Table', has_header=True, keep_html=True):
+#					subsection = dehtmlize(str(subsection)).strip()
+#					section = dehtmlize(str(section)).strip()
+#					t = re.findall('''<option value="[-\w]*" selected="selected">([^<]*)</option>''', str(setting))
+#					if subsection != '-':
+#						if len(t)>1:
+#							permissions[section + ':' + 'AnonPost' + ':' + subsection]=t[1]
+#						permissions[section + ':' + subsection] = t[0]
+#					elif len(t) != 1: #Exception for project Admin.
+#						permissions[section] = t[-1]
+#					else:
+#						permissions[section] = t[0]
+				roles[n[i][1]] = permissions
 		return roles
 	
 	### WIKI PARSING : COCLICO NEW FEATURE
