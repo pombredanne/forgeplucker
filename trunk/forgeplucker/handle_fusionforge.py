@@ -675,12 +675,14 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		Get the contents of the File Release System of the project and return a corresponding data array.
 		This is the function which should be called from the extractor.
 		'''
-		temp = self.fetch('forum/forum.php?forum_id=1&group_id=6', 'frs file fetching')
 		init_page = self.fetch('frs/admin/?group_id=' + self.project_id, 'main FRS Admin page')
 		result = {}
 		
 		soup = BeautifulSoup(init_page)
-		trs = soup.find('table').findAllNext('tr')[1:]
+		if not self.version or self.version =='4.8':
+			trs = soup.find('table').findAllNext('tr')[1:]
+		elif self.version == '5.x':
+			trs = soup.find('div', {'id':'maindiv'}).find('table').findAllNext('tr')[1:]
 		
 		for tr in trs:
 			pk_name = tr.find('input', attrs={'name':'package_name'})['value']
@@ -757,7 +759,11 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		result = {}
 		init_page = self.fetch('frs/admin/' + pk_releases, 'Releases')
 		soup = BeautifulSoup(init_page)
-		trs = soup.find('table')
+		if not self.version or self.version =='4.8':
+			trs = soup.find('table')
+		elif self.version == '5.x':
+			trs = soup.find('div', {'id':'maindiv'}).find('table')
+
 		if trs != None:
 			trs = trs.findAllNext('tr')[1:]
 			for tr in trs:
@@ -789,9 +795,11 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			r_change=""
 		
 		r_files = {}
-		
-		table = soup.findAll('table')[2]
-		trs = soup.findAll('table')[2].findAll('tr')[1:]
+		if not self.version or self.version =='4.8':
+			table = soup.findAll('table')[2]
+		elif self.version == '5.x':
+			table = soup.find('div', {'id':'maindiv'}).findAll('table')[2]
+		trs = table.findAll('tr')[1:]
 		i = 0
 		while i<len(trs):
 			tr = trs[i]
