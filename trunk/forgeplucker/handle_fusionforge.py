@@ -1153,9 +1153,23 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			message = self.parent.fetch(self.href, 'Retrieving message info for msg_id '+self.href)
 			message = BeautifulSoup(message)
 			table = message.findAll('table')[self.index]
-			submitter_login = table.find('a', {'href':re.compile('/users/')}).contents[0]
-			date = table.find(text=re.compile('DATE:'))[6:]
-			if table.find(text=re.compile('No attachment')) != None:
+			if not self.parent.version or self.parent.version == '4.8':
+				submitter_login = table.find('a', {'href':re.compile('/users/')}).contents[0]
+				date = table.find(text=re.compile('DATE:'))[6:]
+				attachementCheck = table.find(text=re.compile('No attachment')) != None
+				subject = (table.find(text=re.compile('SUBJECT:'))[9:]).encode('utf-8')
+				content = re.search('<p>&nbsp;</p>(.*)</td></tr></table>',str(table),re.DOTALL).group(1)
+				content = content.decode('iso-8859-1')
+				content = content.encode('utf-8')
+			elif self.parent.version == '5.x':
+				href = table.find('a',{'href':re.compile('/users/')})
+				submitter_login = re.search('/users/([^/]*)',href['href']).group(1)
+				date = href.nextSibling[-16:]
+				attachementCheck = table.find('img',{'src':re.compile('forum_add')}) !=None
+				subject = message.find('div', {'id':'maindiv'}).findNext('h1').contents[0]
+				listContent = message.find('td', {'colspan':'2'}).contents
+				content = ''.join(str(i) for i in listContent[2:]).replace('<br />','\n').replace('\r', '')
+			if attachementCheck:
 				#No attachment
 				attachment = {}
 			else:
@@ -1174,10 +1188,11 @@ The FusionForge handler provides machinery for the FusionForge sites.
 				fout.write(dl)
 				fout.close()
 				attachment = {'name':fname, 'url':fnout}
-			subject = (table.find(text=re.compile('SUBJECT:'))[9:]).encode('utf-8')
-			content = re.search('<p>&nbsp;</p>(.*)</td></tr></table>',str(table),re.DOTALL).group(1)
-			content = content.decode('iso-8859-1')
-			content = content.encode('utf-8')
+				
+				
+				
+			
+
 			
 			return {'submitter':submitter_login, 'date':date, 'attachment':attachment, 'subject':subject, 'content':content}
 	
@@ -1219,12 +1234,18 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		#Stores the last message seen in a {depth:msg object} dictionary, even if the message has already been seen
 		lastMsgAtDepth = {}
 		while nextPage:
-			
-			tables = soup.findAll('table')
-			nextTable = tables[nextTableIndex]
+			if not self.version or self.version == '4.8':
+				tables = soup.findAll('table')
+				nextTable = tables[nextTableIndex]
+			elif self.version == '5.x':
+				div = soup.find('div', {'id':'maindiv'})
+				tables = soup.find('div', {'id':'maindiv'}).findAll('table')
+				if len(tables)<nextTableIndex+1:
+					nextTable = False
+				else:
+					nextTable = tables[nextTableIndex]
 			dataTable = tables[dataTableIndex]
 			trs = dataTable.findAll('tr')[1:]
-
 			for tr in trs:
 				href = tr.find('a')['href']
 				#check each time?
@@ -1233,10 +1254,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 				depth = (len(str(tr.contents[0]).split(';'))-1)/3
 				#Si l'id du message n'a pas déjà été parcourue:
 				if not msg_id in liste_ids:
-
 					liste_ids.append(msg_id)
-					
-					
 					if depth == 0:
 						try:
 							listeMessagesObjects.append(liste[0])
@@ -1267,17 +1285,22 @@ The FusionForge handler provides machinery for the FusionForge sites.
 					
 			if len(liste)>0:
 				listeMessagesObjects.append(liste[0])
-			
-			hasNextPage = nextTable.find(text=' Next Messages')
-			if hasNextPage == None:
-				nextPage = False
+			if nextTable:
+				if not self.version or self.version == '4.8':
+					nextPage = nextTable.find(text=' Next Messages') != None
+				elif self.version == '5.x':
+					nextPage = nextTable.find('span',  {'class':'next'}) != None
+				if nextPage:
+					if not self.version or self.version == '4.8':
+						nextPageHtml = self.fetch(nextTable.find(text=' Next Messages').findPrevious('a')['href'], 'Fetching next forum page')
+					elif self.version == '5.x':
+						nextPageHtml = self.fetch(nextTable.find('span',  {'class':'next'}) .findNext('a')['href'], 'Fetching next forum page')
+					soup = BeautifulSoup(nextPageHtml)
 			else:
-				nextPageHtml = self.fetch(hasNextPage.findPrevious('a')['href'], 'Fetching next forum page')
-				soup = BeautifulSoup(nextPageHtml)
-		
+				nextPage = False
 		listeMessagesDicts = []
 		for message in listeMessagesObjects:
-			listeMessagesDicts.append(message.toDict())	
+			listeMessagesDicts.append(message.toDict()) 
 		return listeMessagesDicts
 
 	def forumAdminParser(self, soup):
@@ -1313,12 +1336,21 @@ The FusionForge handler provides machinery for the FusionForge sites.
 
 	def forumsListing(self, soup):
 		forums = []
-		trs = soup.find('table').findAll('tr')[1:]
+		if not self.version or self.version=='4.8':
+			trs = soup.find('table').findAll('tr')[1:]
+		elif self.version == '5.x':
+			#trs = soup.find('table',  attrs={'cellspacing':'1',  'cellpadding':'2',  'width':'100%'}).findAll('tr')[1:]
+#		TODO: 5.x is a false assumption here, the trs above will work for ~5.1 but not for trunk as of 04052011 because said cellspacing and cellpadding attrs were replaced by class="listing full"
+			trs = soup.find('table',  attrs={'class':'listing full'}).findAll('tr')[1:]
+#		TODO: If there is only one forum, FF skips the index page of forums and goes directly to the forum which breaks this function, a workaround has to be made in this case
 		for tr in trs:
 			tds = tr.findAll('td')
 			fHref = tds[0].find('a')['href']
 			fId = re.search('forum_id=([0-9]*)', fHref).group(1)
-			fUrl = 'forum/'+fHref
+			if not self.version or self.version=='4.8':
+				fUrl = 'forum/'+fHref
+			elif self.version == '5.x':
+				fUrl = fHref
 			fName = tds[0].find('a').contents[1][6:].encode('utf-8')
 			fDesc = tds[1].contents[0].encode('utf-8')
 			self.forumSwitchViewMode(fId)
@@ -1334,6 +1366,17 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		'''
 		forums = []
 		frs = self.forumsListing(soup)
+		#Index for different FF versions
+		if not self.version or self.version =='4.8':
+			dataTableIndex = 1
+			nextTableIndex = 2
+			messageTableIndex = 0
+		elif self.version =='5.x':
+#			dataTableIndex = 2
+			dataTableIndex = 1#Modified for trunk as of 04052011, may break 5.0
+#			nextTableIndex = 3
+			nextTableIndex = 2#Modified for trunk as of 04052011, may break 5.0
+			messageTableIndex = 3
 		for f in frs:
 			fName = f['name']
 			fDesc = f['description']
@@ -1341,10 +1384,10 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			fAdminUrl = f['adminUrl']
 			fMonitorUrl = f['monitoring_usersUrl']
 			fId = re.search('forum_id=([0-9]*)', fUrl).group(1)
-			self.forumSwitchViewMode(fId)
+#		   self.forumSwitchViewMode(fId)
 			fAdminContent = self.forumAdminParser(BeautifulSoup(self.fetch(fAdminUrl, 'forum admin content download. forum name:'+fName)))
 			fMonitorContent = self.forumMonitorParser(BeautifulSoup(self.fetch(fMonitorUrl, 'forum monitoring users content download. forum name:'+fName)))
-			fContent = self.forumParser(BeautifulSoup(self.fetch(fUrl, 'forum content downloading. forum name:'+fName))) 
+			fContent = self.forumParser(BeautifulSoup(self.fetch(fUrl, 'forum content downloading. forum name:'+fName)),  nextTableIndex, dataTableIndex,   messageTableIndex) 
 			forums.append({'name':fName, 'description':fDesc, 'content':fContent, 'admin':fAdminContent, 'monitoring_users':fMonitorContent})
 		return forums
 		
