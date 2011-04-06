@@ -959,6 +959,11 @@ The FusionForge handler provides machinery for the FusionForge sites.
 #			Get the first comment of the task which cannot be modified and is the description of the task
 			artifact['description'] = soupedContents.find('td', attrs={'colspan':'2'}).find('strong').nextSibling.nextSibling.strip() #Use colspan because the original comment + add comment box are always in a colspan 2 td with no id
 #			Gather the number of the projected end moth of the task
+			desc = soupedContents.find('td', attrs={'colspan':'2'}).find('strong')
+			if not desc: #then 5.0
+				desc = soupedContents.find('td', attrs={'colspan':'3'}).find('strong')
+			artifact['description'] = desc.nextSibling.nextSibling.strip() #Use colspan because the original comment + add comment box are always in a colspan 2 (3 for 5.0) td with no id
+#		 Gather the number of the projected end moth of the task
 			end_month = soupedContents.find('select',attrs={'name':'end_month'}).find('option', attrs={'selected':'selected'})['value'] #Maybe use a corresponding tab, Plucker give the content value, the name of the month (January, Feb..., etc) instead of the number
 #			Format the end date as a normal date as used for comment or followups date
 			end_date = artifact['end_year']+'-'+end_month+'-'+artifact['end_day']+' '+artifact['end_hour']+':'+artifact['end_minute']
@@ -990,7 +995,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			FusionForge.Task.__init__(self, nameTracker, parent, projectbase)
 			self.type = typeTracker
 		
-	def getTasksTrackers(self):	
+	def getTasksTrackers(self): 
 		'''
 		Parse the tasks initial page and return a list of dictionaries containing (tasks tracker name, tasks tracker type (default custom)).
 		If type corresponds to one of the fixated types, register it
@@ -999,7 +1004,10 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		basepage = BeautifulSoup(self.basepage)
 		tT = basepage.findAll('a', {'href':re.compile('task.php')})
 		for t in tT:
-			tPage = re.search('[^/]*//[^/]*/([^"]*)',t['href']).group(1)
+			if not self.version or self.version == '4.8':
+				tPage = re.search('[^/]*//[^/]*/([^"]*)',t['href']).group(1) #TODO: Check if the version check is really useful or if the 5.x version is sufficient
+			elif self.version == '5.x':
+				tPage = t['href']
 			tLabel = t.contents[0]
 			tasksTrackers.append({'label':tLabel, 'type':'custom', 'projectbase':tPage})
 		return tasksTrackers
