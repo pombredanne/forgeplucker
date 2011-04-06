@@ -82,7 +82,7 @@ if __name__ == '__main__':
     verbose = 0
     issue = None
 
-    xml = timeless = permissions = repositories = dump = phpWiki = trackers = getDocs = frs = forums = news = tasks = format = False
+    xml = timeless = permissions = repositories = dump = phpWiki = trackers = getDocs = frs = forums = news = tasks = format = version = False
     use_cache = True
 
     # Start with command-line args parsing
