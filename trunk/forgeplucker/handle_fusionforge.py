@@ -498,7 +498,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		Totally differs between 4.8 and 5.x
 		'''
 		result = {}
-		if self.version == '4.8':
+		if not self.version or self.version == '4.8':
 			# First page of a docman admin web page.
 			init_page = self.fetch('docman/admin/?group_id='+ self.project_id, 'main docman page')
 			#get each category (active/deleted/hidden/private)
