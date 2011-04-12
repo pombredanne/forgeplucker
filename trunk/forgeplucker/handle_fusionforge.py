@@ -1654,3 +1654,12 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		data['tools'] = tools
 
 		return data
+
+	def login_url(self):
+		"Generate the site's account login page URL."
+		# Works for SourceForge, Berlios, Savannah, and Gna!.
+		# Override in derived classes if necessary.
+		if not self.version or self.version == '4.8':
+			return "account/login.php"
+		elif self.version == '5.x':
+			return "plugins/authbuiltin/post-login.php"
