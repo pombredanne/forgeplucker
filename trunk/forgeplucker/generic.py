@@ -48,6 +48,7 @@ class GenericForge:
         self.project_name = project_name
         self.where = "%s/%s" % (self.host, self.project_name)
         self.trackers = []
+        self.version = None
 
     def real_url(self, url):
         url = "https://%s/" % self.host + url
