@@ -1,0 +1,45 @@
+Utilisation de ForgePlucker
+
+L'extraction de données se lance via le script bugplucker.py assorti d'options obligatoires ou non. La liste de paramètres disponibles a été étendue spécialement pour l'extraction de données d'une forge FusionForge (v 4.8).
+
+Spécialement pour FusionForge, un accès administrateur du projet est requis.
+
+Langue
+
+L'utilisateur configuré pour l'export doit utiliser la forge en langue anglaise
+
+Options obligatoires
+
+-u nom d'utilisateur (l'utilisateur doit être administrateur du projet cible)
+
+-p mot de passe
+
+-f Type de la forge cible (FusionForge par exemple)
+
+Options facultatives (au moins un paramètre d'extraction doit être utilisé pour obtenir une réponse)
+
+-P Extrait les informations sur les utilisateurs du projet, leurs rôles et les droits associés à ces rôles
+
+-B Extrait les forums du projet
+
+-F Extrait le gestionnaire de fichiers du projet
+
+-T Extrait les trackers du projet
+
+-D Extrait le gestionnaire de documents du projet
+
+-K Extrait les tâches enregistrées
+
+-N Extrait les nouvelles du projet
+
+-v1, -v2 Mode verbose v1 : Toutes les pages téléchargées sont indiquées, v2, tout le contenu de ces pages est affiché à chaque appel
+
+-s Permet d'indiquer un numéro de version de la forge cible (exemple : -s 4.8 pour une forge FusionForge)
+
+-o [default|coclico|oslccmv2json] Permet de spécifier le format de sortie du dump
+
+L'adresse de la forge cible doit être ajoutée à la ligne de commande à la suite des paramètres choisis, sous la forge https://ADRESSE/NOM_PROJET
+
+Une commande complète pour FusionForge a donc cette forme:
+
+./bugplucker.py -u LOGIN -p PASSWORD -f FusionForge -P -B -D -T -F https://ADRESSE/NOM_PROJET 
