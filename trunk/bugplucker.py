@@ -240,12 +240,7 @@ if __name__ == '__main__':
 
         # This is the main data structure that will be dumped out at the end
         data = {}
-        
-        # extract common core
-        projectData = bt.pluck_project_data()
-        data["project"] = projectData
-        
-        # extract additional data
+        # extract data
         if phpWiki: #Not clean
             bt.pluck_wiki()
         if permissions:
@@ -295,6 +290,12 @@ if __name__ == '__main__':
             bugs = bt.pluck_trackers(timeless=timeless)
             data["trackers"] = bugs
         """
+        
+        # extract common core
+        projectData = bt.pluck_project_data()
+        data["project"] = projectData
+        
+        
         #next if (not format or default) is broken unless the above code is used, two corections possible : 
         #   uncomment the above and it works but in default or oslccore, more than 1 custom tracker will not be recognized
         #   update the code to work just like coclico format below

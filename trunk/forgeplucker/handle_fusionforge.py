@@ -1456,7 +1456,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 				'form_loginname':username,
 				'form_pw':password,
 				'login':'login'},
-				   'href="'+ self.real_url('account/logout.php') +'">')
+				   'account/logout.php')
 
 
 	def narrow(self, text):
@@ -1480,8 +1480,11 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			description = fieldset.find('table').find('tr').find('td').find('p').contents
 			description = dehtmlize(''.join(map(str,description)))
 		else: #5.0
-			shortdesc = mainsoup.find('h2').contents[0]
-			description = mainsoup.find('p').contents[0]
+		#TODO:Correction pour 5.0 ne semble pas marcher
+			#shortdesc = mainsoup.find('h2').contents[0]
+			#description = mainsoup.find('p').contents[0]
+			shortdesc = 'a'
+			description = 'b'
 
 		registered = None
 		for p in mainsoup.findAll('p'):
@@ -1517,7 +1520,8 @@ The FusionForge handler provides machinery for the FusionForge sites.
 					if l == '&nbsp;Project Home Page':
 						homepage = a['href']
 					if l == '&nbsp;Tracker':
-						trackers = self.get_trackers()
+#					  trackers = self.get_trackers()
+						trackers = self.bugtrackers
 					if l == '&nbsp;Public Forums':
 						init_page = self.fetch('forum/?group_id='+self.project_id, 'plucking main forum page')
 						soup = BeautifulSoup(self.narrow(init_page))
