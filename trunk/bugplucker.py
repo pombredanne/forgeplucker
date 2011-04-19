@@ -151,6 +151,8 @@ if __name__ == '__main__':
                     error("%s: unknown output format type '%s' !" % (sys.argv[0], val), 1)
         elif arg == '-r' : #re-load from network instead of using cache
             use_cache = False
+        elif arg == '-s':#version
+            version = val
 
     if len(arguments) == 0 :
         usage()
