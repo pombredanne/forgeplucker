@@ -957,7 +957,6 @@ The FusionForge handler provides machinery for the FusionForge sites.
 #			Get linked tasks
 			artifact['linked_tasks'] = self.parse_linkedTasks(soupedContents)
 #			Get the first comment of the task which cannot be modified and is the description of the task
-			artifact['description'] = soupedContents.find('td', attrs={'colspan':'2'}).find('strong').nextSibling.nextSibling.strip() #Use colspan because the original comment + add comment box are always in a colspan 2 td with no id
 #			Gather the number of the projected end moth of the task
 			desc = soupedContents.find('td', attrs={'colspan':'2'}).find('strong')
 			if not desc: #then 5.0
