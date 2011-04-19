@@ -47,7 +47,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			# vérifier les champs de formulaire à ignorer
 			self.ignore = ("canned_response",
 			"new_artifact_type_id",
-			"words", "type_of_search")
+			"words", "type_of_search",  "quicknav")
 			# identifie les ids d'artefacts (bug, patches...) : aid
 			self.artifactid_re = r'/tracker/index.php\?func=detail&amp;aid=([0-9]+)&amp;group_id=[0-9]+&amp;atid=[0-9]+"'
 			# # chaque tracker a également un atid propre, indépendant du projet et global (utilité?????). ex, bugs de projet A : id 1, patch de projet 1 : id 2, bug de projet 2 : id 3...
@@ -844,7 +844,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			# vérifier les champs de formulaire à ignorer
 			self.ignore = ("canned_response",
 			"new_artifact_type_id",
-			"words", "type_of_search", "start_month", "end_month")
+			"words", "type_of_search", "start_month", "end_month",  "quicknav")
 			# identifie les ids d'artefacts (bug, patches...) : aid
 
 			self.artifactid_re = r'/pm/task.php\?func=detailtask&amp;project_task_id=([0-9]+)&amp;group_id=[0-9]*&amp;group_project_id=[0-9]*'
