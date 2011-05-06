@@ -85,13 +85,13 @@ def output_oslccmv2json_trackers(data, oslc_project, oslc_users):
     if not ('trackers' in data) :
         return oslc_trackers
 
-    data = data['trackers']
+   # data = data['trackers']
 
     # Treat all trackers
     trackers = data['trackers']
 
     for tracker in trackers:
-        tracker = trackers[tracker]
+        #tracker = trackers[tracker]
 
         tracker_name = tracker['label']
     
@@ -314,7 +314,10 @@ def output_oslccmv2json(data):
         oslc_person = {}
 
         user_data=data['users'][user]
-        user_url = user_data['URL']
+        if 'URL' in user_data:
+            user_url = user_data['URL']
+        else:
+            user_url = ""
         oslc_user['rdf:about'] = user_url
         oslc_user['rdf:type'] = [oslc_prefixes['sioc']+'User', oslc_prefixes['foaf']+'OnlineAccount']
         oslc_user['foaf:accountName'] = user
@@ -325,8 +328,11 @@ def output_oslccmv2json(data):
         oslc_person['foaf:name'] = user_data['real_name']
         oslc_person['foaf:holdsAccount'] = user_url
 
-        i = roles_number[user_data['role']]
-        oslc_role = oslc_roles[i]
+        roles = user_data['role']
+        for role in roles:
+            i = roles_number[role]
+            oslc_role = oslc_roles[i]
+#handle multiple roles?
         if not 'sioc:function_of' in oslc_role:
             oslc_role['sioc:function_of'] = []
         oslc_role['sioc:function_of'].append(user_url)

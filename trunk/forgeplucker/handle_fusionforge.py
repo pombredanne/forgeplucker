@@ -1549,14 +1549,32 @@ The FusionForge handler provides machinery for the FusionForge sites.
 						news = a['href']
 						break
 				a = a.findNext('a')
+		
+		frs = mainsoup.findAll('a',  text='[View All Project Files]')
+		if frs:
+			frs = frs['href']
+#		for a in mainsoup.findAll('a'):
+#			for l in a.contents:
+#				if l == '[View All Project Files]':
+#					frs = a['href']
+#					break
+#			if frs:
+#				break
 
-		for a in mainsoup.findAll('a'):
-			for l in a.contents:
-				if l == '[View All Project Files]':
-					frs = a['href']
-					break
-			if frs:
-				break
+		public_areas = mainsoup.find('div',  text='Public Areas')
+		if public_areas:
+			a = public_areas.findNext(text='&nbsp;Project Home Page')
+			if a:
+				homepage = a.findPrevious('a')['href']
+			a = public_areas.findNext(text='&nbsp;Tracker')
+			if a:
+				trackers = self.bugtrackers #only works if trackers plucked, as they are normally,, might be interesting to write a trackers listing later
+			a = public_areas.findNext(text='&nbsp;DocManager: Project Documentation')
+			if a:
+				docman = a.findPrevious('a')["href"]
+			#complete with rest later
+
+
 
 		project_url = self.real_url(project_page)
 		data = {"class":"PROJECT",
