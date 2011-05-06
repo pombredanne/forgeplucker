@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import tempfile, os, sys,re, getopt, shutil, tarfile
+import tempfile, os, sys,re, getopt, shutil, zipfile
 #import scp, paramiko
 from forgeplucker import *
 import subprocess
@@ -7,7 +7,7 @@ import subprocess
 
 class mainExtract(object):
 
-	def __init__(self, address, projectName, www_username, www_password, tempSaveFolder, outputDir, typeF = 'FusionForge', useLocalServer = False, getSCM = True, getMailings = True, getWiki = False, getTrackers=False, getTasks = False, getNews = False, getFRS=False, getForums = False, getDocs = False):
+	def __init__(self, address, projectName, www_username, www_password, tempSaveFolder, outputDir, typeF = 'FusionForge', useLocalServer = False, version = False,  getSCM = True, getMailings = True, getWiki = False, getTrackers=False, getTasks = False, getNews = False, getFRS=False, getForums = False, getDocs = False):
 		self.address = address
 		self.projectName = projectName
 		self.www_username = self.ssh_username = www_username
@@ -25,7 +25,8 @@ class mainExtract(object):
 		self.getForums = getForums
 		self.getDocs = getDocs
 		self.outputDir = outputDir
-	
+		self.version = version
+		
 	def setSSH(self, ssh_username = None, pKeyPassword = None, usePKeyPwd = True, ssh_password = None,):
 		if ssh_password != None:
 			self.ssh_password = ssh_password
@@ -60,9 +61,11 @@ class mainExtract(object):
 			param_string += '-B '
 		if self.getDocs:
 			param_string += '-D '
+		if self.version:
+			param_string += '-s '+self.version+' '
 		
 		param_string += self.address
-	
+		print "/bugplucker.py "+ param_string
 		res=os.popen(os.getcwd()+"/bugplucker.py "+ param_string).read()
 		try: #a modifier avec des exists moins ignobles
 			os.mkdir(self.tempSaveFolder+'/Plucker/')
@@ -89,7 +92,7 @@ class mainExtract(object):
 
 	def getCVS(self, incremental=False):
 	    return True
-			
+
 	def getGIT(self, incremental=False):
 		if not os.path.isdir('/gitroot/'+self.projectName):
 			return False
@@ -180,14 +183,40 @@ class mainExtract(object):
 			scpC.get_rp(self.mailman + status + '/' + mailingListName + '/', localSave)#TODO:Update with archives
 			transport.close()
 		
+#	def makeArchive(self):
+#		tar = tarfile.open(os.getcwd()+'/'+self.projectName+'.tar.gz','w:gz')
+#		for name in os.listdir(self.tempSaveFolder):
+#			print name
+#			tar.add(self.tempSaveFolder+'/'+name, arcname = self.projectName+'/'+name)
+#		tar.close()
+#		
+#		if self.outputDir != ".":
+#			shutil.move(os.getcwd()+'/'+self.projectName+'.tar.gz', self.outputDir+'/'+self.projectName+'.tar.gz')	
+	def zipdir(self, path, archive):
+		paths = os.listdir(path)
+		for p in paths:
+			p = os.path.join(path, p) # Make the path relative
+			if os.path.isdir(p): # Recursive case
+				self.zipdir(p, archive)
+			else:
+				#projectname not really needed?
+#				archive.write(p,  arcname = self.projectName+p[len(self.tempSaveFolder):]) # Write the file to the zipfile
+				archive.write(p,  arcname = p[len(self.tempSaveFolder):]) # Write the file to the zipfile
+		return
+
 	def makeArchive(self):
-		tar = tarfile.open(os.getcwd()+'/'+self.projectName+'.tar.gz','w:gz')
-		for name in os.listdir(self.tempSaveFolder):
-			tar.add(self.tempSaveFolder+'/'+name, arcname = self.projectName+'/'+name)
-		tar.close()
+		# Create a ZipFile Object primed to write
+		archive = zipfile.ZipFile(os.getcwd()+'/'+self.projectName+'.zip','w') # "a" to append, "r" to read
+		# Recurse or not, depending on what path is
+		if os.path.isdir(self.tempSaveFolder):
+			self.zipdir(self.tempSaveFolder, archive)
+		else:
+			archive.write(self.tempSaveFolder)
+		archive.writestr('mimetype',  'application/x-planetforge-forge-export-coclicoformat')
+		archive.close()
 		if self.outputDir != ".":
-			shutil.move(os.getcwd()+'/'+self.projectName+'.tar.gz', self.outputDir+'/'+self.projectName+'.tar.gz')	
-	
+			shutil.move(os.getcwd()+'/'+self.projectName+'.zip', self.outputDir+'/'+self.projectName+'.zip')	
+		
 	def delete_query(self, name):
 		query = 'The following temporary directory '+name+' will be permanently deleted, please confirm. yes (y)/ no (n) : y/n? '
 		results = {'y':True, 'n':False}
@@ -201,10 +230,10 @@ if __name__ == '__main__':
 	forgetype = FusionForge #temp
 	verbose = 1
 	
-	useLocalServer = repository = trackers = mailings = phpWiki = mediaWiki = docs = frs = forums = news = tasks = False
+	useLocalServer = repository = trackers = mailings = phpWiki = mediaWiki = docs = frs = forums = news = tasks = version = False
 	outputDir = "."
 	
-	(options, arguments) = getopt.getopt(sys.argv[1:], "R:TANFBDM:W:vlo:t:u:p:")
+	(options, arguments) = getopt.getopt(sys.argv[1:], "R:TANFBDM:W:vlo:s:t:u:p:")
 	for (arg, val) in options:
 		if arg == '-R':
 			repository = True
@@ -243,6 +272,8 @@ if __name__ == '__main__':
 			docs = True
 		elif arg == '-K':
 			tasks = True
+		elif arg == '-s':
+			version = val
 	tempLink = arguments[len(arguments)-1]
 	if tempLink.startswith("http://"):
 		tempLink = tempLink[7:]
@@ -265,9 +296,12 @@ if __name__ == '__main__':
 	try:
 		bt = forgetype(host, project)
 		bt.verbosity = verbose
+		if version:
+			bt.setVersion(version)
 		bt.login(user, passwd)
+
 		tempDir = tempfile.mkdtemp()
-		myForge = mainExtract(arguments[0], project, user, passwd, tempDir, outputDir, typeF, useLocalServer, repository, mailings, phpWiki, trackers, tasks, news, frs, forums, docs )
+		myForge = mainExtract(arguments[0], project, user, passwd, tempDir, outputDir, typeF, useLocalServer, version,  repository, mailings, phpWiki, trackers, tasks, news, frs, forums, docs )
 		if repository:
 			myForge.setSCM(scmAddress)
 		if mailings:
