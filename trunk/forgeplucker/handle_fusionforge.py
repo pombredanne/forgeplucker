@@ -1550,9 +1550,9 @@ The FusionForge handler provides machinery for the FusionForge sites.
 						break
 				a = a.findNext('a')
 		
-		frs = mainsoup.findAll('a',  text='[View All Project Files]')
+		frs = mainsoup.find(text='[View All Project Files]')
 		if frs:
-			frs = frs['href']
+			frs = frs.findPrevious('a')['href']
 #		for a in mainsoup.findAll('a'):
 #			for l in a.contents:
 #				if l == '[View All Project Files]':
