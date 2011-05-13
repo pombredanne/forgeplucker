@@ -299,7 +299,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		if not self.version or self.version == '4.8':
 			tables = trackersPage.findAll('table') 
 			for table in tables :
-				trs = table.findAll('tr')[2:]
+				trs = table.findAll('tr')[1:] #changed from 1 to 2, check why it was ever changed to 2??
 			for tr in trs:
 				a = tr.find('a')
 				tPage = re.search('[^/]*//[^/]*.*/([^/]+/[^"/]*)', a['href']).group(1)
