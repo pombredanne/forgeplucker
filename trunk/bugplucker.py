@@ -44,6 +44,8 @@ usage: bugplucker.py [-hv?] [-f type] [-u user] [-p password] [-d page] [-o form
   -o format : (optional) choose a particular output format
 
   -r : force loading from the network instead of using pages cache on filesystem (in './cache/')
+  
+  -s : specific version of the target forge
 
 State is dumped to standard output in JSON.
 
