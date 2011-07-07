@@ -10,7 +10,7 @@
 </refmeta>
 <refnamediv id='name'>
 <refname>forgeplucker</refname>
-<refpurpose>capture and dump project state from a hosting site</refpurpose>
+<refpurpose>capture and dump project state from a forge / hosting site</refpurpose>
 </refnamediv>
 <refsynopsisdiv id='synopsis'>
 
@@ -40,20 +40,22 @@ network access, and statistical analyses of project histories.</para>
 <para>For a list of supported systems, use the <option>-?</option>
 option or <option>-h</option> option.</para>
 
-<para>The program requires one argument, a hosting-site name and
-project name separated by a slash. It produces a dump of the
-bugtracker state in JSON on output.</para>
+<para>The program requires one (projecturl) argument, a hosting-site
+name and project name separated by a slash ('/'). It produces a dump
+of the bugtracker state in JSON format on output. An alternative form
+for the 'projecturl' argument is in the form
+'https://ADRESS/PROJECT_NAME'.</para>
 
 <para>The program requires that you be a member of the project you
 are pulling state for, with the authority to modify tracker entries.
 This is not because the program modifies entries (it doesn't) but
 because its parsing techniques rely heavily on the structure of HTML
-select elements in order to make sense out of what would otherwise be
-text soup.</para>
+'select' elements in order to make sense out of what would otherwise be
+"text soup".</para>
 
-<para>The program also requires that you have your user preforences on
-the site you are pulling from set to display messages in English and
-display dates as local time for your timezone. Many hostiong sites do
+<para>The program also requires that you have your user preferences on
+the site you are pulling from, set to display messages in English and
+display dates as local time for your timezone. Many hosting sites do
 not reliably display a timezone in dates, and timezone conversion is
 intrinsically unreliable where it is supported. Thus, the code must
 rely on
@@ -66,13 +68,15 @@ rely on
 <term>-f</term>
 <listitem>
 <para>Specify the forge-system type. May not be necessary, as the
-program can infer a type from well-known sitenames.</para>
+program can infer a type from well-known hosting sitenames, if invoked
+with URL. A list of supported forges is provided with '-f help'</para>
 </listitem>
 </varlistentry>
 <varlistentry>
 <term>-u</term>
 <listitem>
-<para>Set your username for authentication purposes.</para>
+<para>Set your username for authentication purposes (if none provided,
+then use LOGNAME env var's value)</para>
 </listitem>
 </varlistentry>
 <varlistentry>
@@ -92,7 +96,7 @@ parts, a tracker name and a bug ID. Mainly useful for debgging.</para>
 <varlistentry>
 <term>-r</term>
 <listitem>
-<para>Dump in XML rather than JSON.</para>
+<para>Dump in XML format rather than JSON.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
@@ -112,9 +116,17 @@ be seen. The 'account' field, if present, will be interpreted as a
 forge type overriding the normal heuristics.</para>
 
 </refsect1>
+
+<refsect1>
+	<title>USAGE</title>
+	<para>
+	<command>./bugplucker.py</command> -u LOGIN -p PASSWORD -f FusionForge https://ADRESS/PROJ_NAME
+	</para>
+</refsect1>
+
 <refsect1 id='bugs'><title>BUGS</title>
 
-<para>The program will change the settings on yoor tracker search form
+<para>The program will change the settings on your tracker search form
 in order to collect all bugs.  You will probably have to reset them
 afterwards.</para>
 
