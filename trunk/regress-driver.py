@@ -79,13 +79,30 @@ def runtest(testenv, output, skip_failing = False):
         if not config_parser :
             config_parser = ConfigParser.RawConfigParser(testenv)
         config_parser.read(config_file)
+        
+        if username is None:
+            try: 
+                username = config_parser.get('parameters', 'username')
+            except ConfigParser.NoOptionError, e:
+                pass
+                #msg('Warning : ' + config_file + ': ' + e.message)
+        
+        if format is None:
+            try:
+                format = config_parser.get('parameters', 'format')
+            except ConfigParser.NoOptionError, e:
+                msg('Warning : ' + config_file + ': ' + e.message)
+                
         try:
-            username = config_parser.get('parameters', 'username')
-            format = config_parser.get('parameters', 'format')
             options = config_parser.get('parameters', 'options')
-            test = config_parser.get('parameters', 'project')
         except ConfigParser.NoOptionError, e:
             msg('Warning : ' + config_file + ': ' + e.message)
+            
+        try:
+            test = config_parser.get('parameters', 'project')
+        except ConfigParser.NoOptionError, e:
+            pass
+            #msg('Warning : ' + config_file + ': ' + e.message)
 
     cmd = testcmd + ' -v ' + str(verbose) + ' '
     if username != None:
