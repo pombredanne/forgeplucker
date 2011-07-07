@@ -8,7 +8,7 @@ how to extract data from that forge. This document explains how to
 write a handler class.
 
 Before coding, it would probably be a good idea for you to
-at least skim the http:external.html[blog entries that gave birth to
+at least skim the link:external.html[blog entries that gave birth to
 this project].  It may help you understand the design philosophy
 of the code better.
 
@@ -715,7 +715,7 @@ We presently have forgeplucker-test projects at the following places:
 
 We'll join you to all of these with the required access for testing.
 Don't forget to add your site credentials to .netrc where our code will
-see them; see the http:forgeplucker.html[forgeplucker manual page] for
+see them; see the link:forgeplucker.html[forgeplucker manual page] for
 details.
 
 There is a 'test' subdirectory containing regression check files, and

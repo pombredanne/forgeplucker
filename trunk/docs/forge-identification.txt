@@ -1,4 +1,5 @@
 = The Forge-Identification Meta Header =
+Eric S. Raymond <esr@thyrsus.com>
 Version 1.0
 
 The Forge-Identification meta header is intended to identify the

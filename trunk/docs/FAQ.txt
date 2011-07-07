@@ -8,13 +8,14 @@ around the project launch.
 
 We aim to recover everything needed to get a project up and running on
 another forge site. Source-code repositories, bug tracker state,
-webspace and wikis, mailing lists, the whole thing.
+webspace and wikis, mailing lists, participants roles and permissions,
+the whole thing.
 
 === Why web-scrape rather than trying to build exporters into existing forges? ===
 
 The architectures of most forge systems would be very difficult to
 modify to support native exporters: see
-file:jail-breaking-the-forges.html[this discussion]. Even if they
+link:jail-breaking-the-forges.html[this discussion]. Even if they
 weren't, developing and deploying to each and every forge site out
 there would be way too much like work. Most hosting sites are run on a
 shoestring budget by dedicated but overworked administrators who are
@@ -58,12 +59,13 @@ format that will really work.
 
 First: put a meta tag on your generated main page with type and
 version attributes identifying your forge software, so our bot will
-know what it's dealing with. Second: Provide a per-project URL that
-returns a machine-parseable report on as much of the state as you can
-conveniently dump.  It doesn't have to be our format, as long as it's
-unambiguous and version-stamped and relatively easy to parse (XML or
-JSON are good bases).  You give us the spec, we'll write the parser.
-For other things you can do, ask on our dev list.
+know what it's dealing with (see link:forge-identification.html[The
+Forge-Identification Meta Header]). Second: Provide a per-project URL
+that returns a machine-parseable report on as much of the state as you
+can conveniently dump.  It doesn't have to be our format, as long as
+it's unambiguous and version-stamped and relatively easy to parse (XML
+or JSON are good bases).  You give us the spec, we'll write the
+parser.  For other things you can do, ask on our dev list.
 
 === I'm a random hacker and this project looks interesting.  What kind of help do you need? ===
 
@@ -87,3 +89,10 @@ designers into writing importers. In a third, existing forges are too
 technically and/or politically broken to write importers, so we write a
 forge and it takes over the world.  We don't care which of those
 happens.  Yet.
+
+=== OK, you've got plucker for exporting, but is importing supported anywhere ===
+
+A FusionForge plugin is currently being developped to support
+importing of project dumps to be restored from a previous export made
+with ForgePlucker. We're of course very much eager to see more similar
+efforts.

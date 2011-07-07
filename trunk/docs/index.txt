@@ -1,23 +1,23 @@
-= ForgePlucker -- Freeing Open-Source Projects from Data Jail =
+= ForgePlucker -- Freeing Open-Source Projects from Forges Data Jails =
 
 The ForgePlucker project aims to produce tools to capture and back up
-project state from commonly used forge systems (open-source hosting
+_project_ state from commonly used _forge_ systems (open-source hosting
 sites). Bad architectural decisions in early forge systems have made
-their descendants into (unintentional) data jails; ForgePlucker
+their descendants into (unintentional) _data jails_; ForgePlucker
 will break our projects free.
 
 == Project documents ==
 
-- http:jailbreaking-the-forges.html[A call to jailbreak the forges]
-- http:forgeplucker-plan.html[A detailed project plan].
-- http:forgeplucker.html[The forgeplucker manual page]
-- http:savant.html[Design study for a forge built around import/export
+- link:jailbreaking-the-forges.html[A call to jailbreak the forges]
+- link:forgeplucker-plan.html[A detailed project plan].
+- link:forgeplucker.html[The forgeplucker manual page]
+- link:savant.html[Design study for a forge built around import/export
   and scripting]
-- http:FAQ.html[Frequently Asked Questions]
-- http:handler-howto.html[How To Write A ForgePlucker Handler Class]
-- http:forge-identification.html[The Forge-Identification Meta Header]
-- http:forge-ontology.html[Forge Ontology]
-- http:external.html[The blog entries that gave birth to this]
+- link:FAQ.html[Frequently Asked Questions]
+- link:handler-howto.html[How To Write A ForgePlucker Handler Class]
+- link:forge-identification.html[The Forge-Identification Meta Header]
+- link:forge-ontology.html[Forge Ontology]
+- link:external.html[The blog entries that gave birth to this]
 
 == Project Home and Communications ==
 
@@ -37,7 +37,7 @@ You can track the project's history on its https://www.ohloh.net/p/foregeplucker
 We are actively seeking interested developers.  Ideally, each forge
 type should have an owner-advocate who takes the lead in ensuring that
 ForgePlucker's handler module for that forge is complete and up
-to date. The http:FAQ.html[FAQ] should address your questions about the 
+to date. The link:FAQ.html[FAQ] should address your questions about the 
 time and effort required.
 
 We welcome cooperation from forge designers interested in better 

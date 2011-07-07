@@ -2,15 +2,28 @@
     "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="generator" content="AsciiDoc 8.5.2" />
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.4" />
 <title>Forge Ontology</title>
 <style type="text/css">
-/* Debug borders */
-p, li, dt, dd, div, pre, h1, h2, h3, h4, h5, h6 {
-/*
-  border: 1px solid red;
-*/
+/* Sans-serif font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+div#toctitle,
+span#author, span#revnumber, span#revdate, span#revremark,
+div#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+/* Serif font. */
+div.sectionbody {
+  font-family: Georgia,"Times New Roman",Times,serif;
+}
+
+/* Monospace font. */
+tt {
+  font-size: inherit;
 }
 
 body {
@@ -36,12 +49,12 @@ strong {
 }
 
 tt {
+  font-size: inherit;
   color: navy;
 }
 
 h1, h2, h3, h4, h5, h6 {
   color: #527bbd;
-  font-family: sans-serif;
   margin-top: 1.2em;
   margin-bottom: 0.5em;
   line-height: 1.3;
@@ -61,7 +74,6 @@ h3 + * {
 }
 
 div.sectionbody {
-  font-family: serif;
   margin-left: 0;
 }
 
@@ -77,6 +89,8 @@ p {
 ul, ol, li > p {
   margin-top: 0;
 }
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
 
 pre {
   padding: 0;
@@ -85,18 +99,15 @@ pre {
 
 span#author {
   color: #527bbd;
-  font-family: sans-serif;
   font-weight: bold;
   font-size: 1.1em;
 }
 span#email {
 }
 span#revnumber, span#revdate, span#revremark {
-  font-family: sans-serif;
 }
 
 div#footer {
-  font-family: sans-serif;
   font-size: small;
   border-top: 2px solid silver;
   padding-top: 0.5em;
@@ -135,7 +146,6 @@ div.content { /* Block element content. */
 /* Block element titles. */
 div.title, caption.title {
   color: #527bbd;
-  font-family: sans-serif;
   font-weight: bold;
   text-align: left;
   margin-top: 1.0em;
@@ -157,13 +167,15 @@ div.content + div.title {
 
 div.sidebarblock > div.content {
   background: #ffffee;
-  border: 1px solid silver;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
   padding: 0.5em;
 }
 
 div.listingblock > div.content {
-  border: 1px solid silver;
-  background: #f4f4f4;
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
   padding: 0.5em;
 }
 
@@ -171,7 +183,7 @@ div.quoteblock, div.verseblock {
   padding-left: 1.0em;
   margin-left: 1.0em;
   margin-right: 10%;
-  border-left: 5px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
   color: #777777;
 }
 
@@ -180,8 +192,9 @@ div.quoteblock > div.attribution {
   text-align: right;
 }
 
-div.verseblock > div.content {
-  white-space: pre;
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
 }
 div.verseblock > div.attribution {
   padding-top: 0.75em;
@@ -258,8 +271,8 @@ div.tableblock > table {
   border: 3px solid #527bbd;
 }
 thead, p.table.header {
-  font-family: sans-serif;
   font-weight: bold;
+  color: #527bbd;
 }
 tfoot {
   font-weight: bold;
@@ -339,6 +352,14 @@ span.footnote, span.footnoteref {
   min-width: 100px;
 }
 
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
 
 @media print {
   div#footer-badges { display: none; }
@@ -350,7 +371,6 @@ div#toc {
 
 div#toctitle {
   color: #527bbd;
-  font-family: sans-serif;
   font-size: 1.1em;
   font-weight: bold;
   margin-top: 1.0em;
@@ -373,47 +393,43 @@ div.toclevel4 {
   margin-left: 6em;
   font-size: 0.9em;
 }
-/* Workarounds for IE6's broken and incomplete CSS2. */
 
-div.sidebar-content {
-  background: #ffffee;
-  border: 1px solid silver;
-  padding: 0.5em;
-}
-div.sidebar-title, div.image-title {
-  color: #527bbd;
-  font-family: sans-serif;
-  font-weight: bold;
-  margin-top: 0.0em;
-  margin-bottom: 0.5em;
-}
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
 
-div.listingblock div.content {
-  border: 1px solid silver;
-  background: #f4f4f4;
-  padding: 0.5em;
-}
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
 
-div.quoteblock-attribution {
-  padding-top: 0.5em;
-  text-align: right;
-}
-
-div.verseblock-content {
-  white-space: pre;
-}
-div.verseblock-attribution {
-  padding-top: 0.75em;
-  text-align: left;
-}
-
-div.exampleblock-content {
-  border-left: 3px solid #dddddd;
-  padding-left: 0.5em;
-}
-
-/* IE6 sets dynamically generated links as visited. */
-div#toc a:visited { color: blue; }
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
 </style>
 <script type="text/javascript">
 /*<![CDATA[*/
@@ -549,7 +565,7 @@ footnotes: function () {
 /*]]>*/
 </script>
 </head>
-<body>
+<body class="article">
 <div id="header">
 <h1>Forge Ontology</h1>
 <span id="author">Eric S. Raymond</span><br />
@@ -557,6 +573,7 @@ footnotes: function () {
 <span id="revdate">Version 1.3</span>
 </div>
 <div id="content">
+<div class="sect1">
 <h2 id="_scope_of_this_document">Scope of this document</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>Forges are software-project hosting systems.  In order to support
@@ -571,6 +588,8 @@ yet only capable of extracting tracker state from forges.</p></div>
 extraction of a complete enough sate that it could in principle
 be uploaded into another forge site and create a running project.</p></div>
 </div>
+</div>
+<div class="sect1">
 <h2 id="_cfo_the_common_forge_ontology">CFO, the Common Forge Ontology</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>Ontology terms are in all caps.  Terms suffixed with ??
@@ -579,7 +598,8 @@ are not widely implemently per spec. Comma-separated lists
 enclosed in [] are controlled vocabularies.</p></div>
 <div class="paragraph"><p>The CFO is divided into JSON objects each with a CLASS attribute.
 They are listed below</p></div>
-<h3 id="_identity_objects">IDENTITY objects ?</h3><div style="clear:left"></div>
+<div class="sect2">
+<h3 id="_identity_objects">IDENTITY objects ?</h3>
 <div class="paragraph"><p>An IDENTITY object identifies a person. An IDENTITY has the following
 parts:</p></div>
 <div class="dlist"><dl>
@@ -611,7 +631,9 @@ String that is the name of a person.
 <div class="paragraph"><p>The NICK may be the special value null representing an anonymous or
 unspecified user, in which case the NAME and EMAIL parts are not used.</p></div>
 <div class="paragraph"><p>What to do when only part of the IDENTITY object is avalible is undecided.</p></div>
-<h3 id="_pull_interval_objects">PULL-INTERVAL OBJECTS</h3><div style="clear:left"></div>
+</div>
+<div class="sect2">
+<h3 id="_pull_interval_objects">PULL-INTERVAL OBJECTS</h3>
 <div class="paragraph"><p>A PULL-INTERVAL object represents the time interval associated with
 the capture of project state or some portion of it.  The capture
 is guaranteed to contain all changes prior to the capture start date, and
@@ -629,7 +651,9 @@ CAPTURE-END:: Timestamp, when the capture of the parent object completed
 </p>
 </li>
 </ul></div>
-<h3 id="_release_objects_and_subobjects">RELEASE objects and subobjects ??</h3><div style="clear:left"></div>
+</div>
+<div class="sect2">
+<h3 id="_release_objects_and_subobjects">RELEASE objects and subobjects ??</h3>
 <div class="paragraph"><p>A RELEASE is product files and metadata describing a software release.  It
 has the foilowing parts:</p></div>
 <div class="ulist"><ul>
@@ -684,7 +708,9 @@ TYPE:: Controlled vocabulary describing the project resource type
 </p>
 </li>
 </ul></div>
-<h3 id="_project_state_objects">PROJECT-STATE OBJECTS ??</h3><div style="clear:left"></div>
+</div>
+<div class="sect2">
+<h3 id="_project_state_objects">PROJECT-STATE OBJECTS ??</h3>
 <div class="paragraph"><p>A small subset of this is currently implemented as PROJECT objects.</p></div>
 <div class="paragraph"><p>A PROJECT-STATE object is intended to capture the entire state of
 a project for export and re-import.</p></div>
@@ -835,7 +861,9 @@ MANAGER:: can the user modify artifacts on here (boolean, optional)
 </ul></div>
 </li>
 </ul></div>
-<h3 id="_tracker_objects_and_subobjects">TRACKER objects and subobjects</h3><div style="clear:left"></div>
+</div>
+<div class="sect2">
+<h3 id="_tracker_objects_and_subobjects">TRACKER objects and subobjects</h3>
 <div class="paragraph"><p>The TRACKER object is intended to contain the entire state of the project&#8217;s
 issue trackers.  It has several subobject types.  All but ARTIFACT, the central
 and most complex one, are described here.  ARTIFACT is described in the next
@@ -1021,7 +1049,9 @@ Why this person is subscribed
 </p>
 </dd>
 </dl></div>
-<h3 id="_artifact_objects">ARTIFACT objects</h3><div style="clear:left"></div>
+</div>
+<div class="sect2">
+<h3 id="_artifact_objects">ARTIFACT objects</h3>
 <div class="paragraph"><p>The ARTIFACT object is the most complex and variable one in the entire
 ontology.  It is described by several tables.</p></div>
 <div class="paragraph"><p>The Internal Fieldname table maps slots into the ontology to the form
@@ -3683,6 +3713,9 @@ but some other work is needed (QA, documentation, etc.) The ideal workflow is
 Open &#8594; Pending &#8594; Closed. Of course, the real workflow is up to the
 developers.</p></div>
 </div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_additional_metadata_not_covered_by_the_ontology">Additional metadata not covered by the ontology</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>Under Berlios, SourceForge, and Savane, every tracker has a list of
@@ -3752,6 +3785,8 @@ various transitions in enumerated and controlled values.</p></div>
 areas and select boxes, and up to 5 customizable date fields.  These
 have fieldnames of the form *_custom.</p></div>
 </div>
+</div>
+<div class="sect1">
 <h2 id="_incompatibilities">Incompatibilities</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>Berlios and SourceForge lack many artifact fields found Savane and
@@ -3775,6 +3810,8 @@ notification on all state changes, and each subscription can have an
 explanatory comment.  The CFO SUBSCRIBER slot assumes Savane-like
 behavior which Berlios, Trac and SourceForge cannot support.</p></div>
 </div>
+</div>
+<div class="sect1">
 <h2 id="_open_questions">Open Questions</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>We need a definition of MAILING-LIST.</p></div>
@@ -3787,17 +3824,22 @@ these should we try to capture?</p></div>
 be brought into CFO?  Is there a principled distinction between "state
 of the project" and "state of the forge"?</p></div>
 </div>
+</div>
+<div class="sect1">
 <h2 id="_formalizing_the_ontology">Formalizing the ontology</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>The PROJECT class is a pretty close match to DOAP.  We&#8217;ll
 need an extension field cfo#captured.</p></div>
 <div class="paragraph"><p>The IDENTITY class can be represented by FOAF.</p></div>
 </div>
+</div>
+<div class="sect1">
 <h2 id="_appendix_forge_permissions_models">Appendix: Forge permissions models</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>These permissions models are documented here because CFO will have to
 capture at least some portions of them.  But that has not yet been done.</p></div>
-<h3 id="_berlios">Berlios</h3><div style="clear:left"></div>
+<div class="sect2">
+<h3 id="_berlios">Berlios</h3>
 <div class="paragraph"><p>Each project member may be assigned a role.  The role set is as follows:</p></div>
 <div class="ulist"><ul>
 <li>
@@ -3935,7 +3977,9 @@ The user may be enabled as a document-manager editor
 </ul></div>
 <div class="paragraph"><p>Mailing lists have separate permissions and passwords,
 being managed through Mailman.</p></div>
-<h3 id="_savane">Savane</h3><div style="clear:left"></div>
+</div>
+<div class="sect2">
+<h3 id="_savane">Savane</h3>
 <div class="paragraph"><p>There are no named developer roles as on Berlios.</p></div>
 <div class="paragraph"><p>Each developer has two general permissions:</p></div>
 <div class="dlist"><dl>
@@ -3975,6 +4019,9 @@ Manager - may modify items on this tracker (like Berlios Administrator)
 <div class="paragraph"><p>Mailing lists have separate permissions and passwords,
 being managed through Mailman.</p></div>
 </div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_change_history">Change History</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>Version 1.0, 2009-10-24: Initial version.</p></div>
@@ -3988,10 +4035,11 @@ models.</p></div>
 Added ?? for things not yet implemented and ? for things poorly implemented.</p></div>
 </div>
 </div>
+</div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2010-12-03 14:29:59 CEST
+Last updated 2010-12-06 16:33:52 CET
 </div>
 </div>
 </body>
