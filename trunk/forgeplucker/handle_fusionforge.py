@@ -433,11 +433,12 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		#if not a list, then it's a directory
 			if not (type(d[el]) is list):
 			#recursive call to myself to get the content for this directory
-				result[el] = self.pluck_docman_list(self.fetch('docman/admin/' + d[el], 'docman_explorer'), url = d[el], docman_type = docman_type)
+				result[el.encode('utf-8')] = self.pluck_docman_list(self.fetch('docman/admin/' + d[el], 'docman_explorer'), url = d[el], docman_type = docman_type)
 			else:
 		#else, it's a file
 				finfo = FusionForge_DocMan(self.fetch('docman/admin/' + d[el][0], 'docfile'))
 			#get its information
+				el = el.encode('utf-8')
 				result[el] = finfo.get_file_info()
 				if result[el]:
 			#create a directory and file to download the docfile
@@ -453,6 +454,10 @@ The FusionForge handler provides machinery for the FusionForge sites.
 					fout.close()
 				#update the url to a local url
 					result[el]['url'] = fnout
+					for k,v in result[el].items():
+						k = k.encode('utf-8')
+						v = v.encode('utf-8')
+						result[el][k]=v
 				else:
 				#file was an url:delete
 					del result[el]
@@ -547,12 +552,13 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		result = {}
 		init_page = self.fetch('frs/admin/' + pk_releases, 'Releases')
 		soup = BeautifulSoup(init_page)
-		trs = soup.find('table').findAllNext('tr')[1:]
-		
-		for tr in trs:
-			rel_edit = tr.find('a')['href']
-			rel_name, rel_data = self.pluck_frs_release(rel_edit)
-			result[rel_name] = rel_data
+		trs = soup.find('table')
+		if trs != None:
+			trs = trs.findAllNext('tr')[1:]
+			for tr in trs:
+				rel_edit = tr.find('a')['href']
+				rel_name, rel_data = self.pluck_frs_release(rel_edit)
+				result[rel_name] = rel_data
 			
 		return result
 	
@@ -753,6 +759,13 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			del artifact['start_year'],artifact['start_day'],artifact['start_hour'],artifact['start_minute']
 			del vocabularies['start_year'],vocabularies['start_day'],vocabularies['start_hour'],vocabularies['start_minute']
 			artifact['start_date'] = self.parent.canonicalize_date(start_date)
+			artifact['hours'] = soupedContents.find('input', attrs={'name':'hours'})['value']
+			try:
+				pct = soupedContents.find('select', attrs={'name':'percent_complete'}).find('option', attrs={'selected':'selected'})['value']
+			except TypeError:
+				pct = 0
+			artifact['percent_complete'] = pct
+
 			return True
 		
 	class CustomizableTaskTracker(Task):
@@ -827,12 +840,13 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		newsTable = newsSoup.find('table')
 		poster_name = newsTable.find(text=re.compile('Posted')).next.strip()
 		news_date = newsTable.find(text=re.compile('Date')).next.strip()
-		news_summary = newsTable.find(text=re.compile('Summary')).next.contents[0]
+		news_summary = newsTable.find(text=re.compile('Summary')).next.contents[0].encode('utf-8')
 		news_content=''
 		for s in newsTable.find('p').contents:
 			if s.string != None:
 				news_content+=s.string
-		news_content = news_content.strip().replace(' \r','\n')
+		news_content = news_content.strip().replace('\r','\n')
+		news_content = news_content.encode('utf-8')
 #		news_content = dehtmlize(''.join(blocktext(str(s)) for s in newsTable.find('p').contents)) #Couldn't make a correct code to handle both the <br /> and the \n without either too many \n or none at all... replaced by the length above code
 		news_forum = self.forumParser(newsSoup, 5, 4, 3)
 		result = {'poster_name':poster_name, 'date':news_date,'summary':news_summary,'news_content':news_content,'forum':news_forum}
@@ -912,7 +926,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			else:
 				#attachment found
 				fhref = table.find('a',{'href':re.compile('javascript:manageattachments')})
-				fname = table.find('a',{'href':re.compile('javascript:manageattachments')}).contents[1]
+				fname = table.find('a',{'href':re.compile('javascript:manageattachments')}).contents[1].encode('utf-8')
 				furl = re.search(":manageattachments\('([^']*)", fhref['href']).group(1)
 				rep_dest = self.parent.project_name + '/forum'
 				if not os.path.exists(self.parent.project_name):
@@ -925,8 +939,11 @@ The FusionForge handler provides machinery for the FusionForge sites.
 				fout.write(dl)
 				fout.close()
 				attachment = {'name':fname, 'url':fnout}
-			subject = table.find(text=re.compile('SUBJECT:'))[9:]
+			subject = (table.find(text=re.compile('SUBJECT:'))[9:]).encode('utf-8')
 			content = re.search('<p>&nbsp;</p>(.*)</td></tr></table>',str(table),re.DOTALL).group(1)
+			content = content.decode('iso-8859-1')
+			content = content.encode('utf-8')
+			
 			return {'submitter':submitter_login, 'date':date, 'attachment':attachment, 'subject':subject, 'content':content}
 	
 		def addChild(self, message):
@@ -954,42 +971,65 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		@param dataTableIndex: Index of the table containing the messages in the whole page
 		@param messageTableIndex: Index of the table containing the message content when viewing a single message rather than the whole forum
 		'''
+		#Will store ids of each message parsed, useful because Threaded View may show the same thread and messages on different pages and parser may store them multiple times
 		liste_ids = []
+		#Boolean used to allow multiple forum pages parsing
 		nextPage = True
+		#Stores each message at depth 0, meaning each root of a new thread
 		listeMessagesObjects = []
+		#Stores each message parsed in a {msg id:msg object} dictionary, useful to add children to message parsed on a different page. It sometimes happen that we reset the root of a thread then discover another children of this thread on a subsequent page
+		dictAllMessagesObjects = {}
+		#Stores the current thread from the root
+		liste = []
+		#Stores the last message seen in a {depth:msg object} dictionary, even if the message has already been seen
+		lastMsgAtDepth = {}
 		while nextPage:
-			liste = []
+			
 			tables = soup.findAll('table')
 			nextTable = tables[nextTableIndex]
 			dataTable = tables[dataTableIndex]
 			trs = dataTable.findAll('tr')[1:]
+
 			for tr in trs:
 				href = tr.find('a')['href']
 				#check each time?
 				#print href
 				msg_id = re.search('msg_id=([0-9]*)', href).group(1)
+				depth = (len(str(tr.contents[0]).split(';'))-1)/3
+				#Si l'id du message n'a pas déjà été parcourue:
 				if not msg_id in liste_ids:
+
 					liste_ids.append(msg_id)
-					depth = (len(str(tr.contents[0]).split(';'))-1)/3
+					
+					
 					if depth == 0:
 						try:
 							listeMessagesObjects.append(liste[0])
 						except:
 							pass
 						msg = self.Message(self, href, messageTableIndex)
+						dictAllMessagesObjects[msg_id] = msg
 						try:
 							liste[0] = msg
 						except:
 							liste.append(msg) 
 					else:
 						msg = self.Message(self, href, messageTableIndex)
-						liste[depth-1].addChild(msg)
+						dictAllMessagesObjects[msg_id] = msg
 						try:
-							liste[depth] = msg
+							liste[depth-1].addChild(msg)
+							try:
+								liste[depth] = msg
+							except:
+								liste.append(msg)
 						except:
-							liste.append(msg)
+							lastMsgAtDepth[depth-1].addChild(msg)
+							lastMsgAtDepth[depth] = msg
+				#Si l'id du message a déjà été parsée, reset de la liste
 				else:
+					lastMsgAtDepth[depth] = dictAllMessagesObjects[msg_id]
 					liste = []
+					
 			if len(liste)>0:
 				listeMessagesObjects.append(liste[0])
 			
@@ -1044,8 +1084,8 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			fHref = tds[0].find('a')['href']
 			fId = re.search('forum_id=([0-9]*)', fHref).group(1)
 			fUrl = 'forum/'+fHref
-			fName = tds[0].find('a').contents[1][6:]
-			fDesc = tds[1].contents[0]
+			fName = tds[0].find('a').contents[1][6:].encode('utf-8')
+			fDesc = tds[1].contents[0].encode('utf-8')
 			self.forumSwitchViewMode(fId)
 			fAdminUrl = 'forum/admin/index.php?group_id='+self.project_id+'&change_status=1&group_forum_id='+fId
 			fMonitorUrl = '/forum/admin/monitor.php?group_id='+self.project_id+'&group_forum_id='+fId
