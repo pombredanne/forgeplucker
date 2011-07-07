@@ -6,16 +6,22 @@ The use cases for such a tool, and future possibilities springing from
 it, are described in the ForgePlucker project plan: look in
 "docs/forgeplucker-plan.txt".
 
-The code is in early development; see the manual page for limitations.
-We are actively seeking contributers who want to own the job of maintaining 
-ForgePlucker classes for particular forge systems.
+The code is in early development; see the manual page (in
+docs/forgeplucker.xml) for limitations.  We are actively seeking
+contributers who want to own the job of maintaining ForgePlucker
+classes for particular forge systems.
 
 New BSD license applies.  See the file COPYING for license terms.
 
-You may try to use regress-driver to test non-regression on test forge
-projects (see --help for options). The tests/ dir contains .chk files
-used by regress-driver, and corresponding to the output of bugplucker
-for these projects.
+You may try to use 'regress-driver.py' to test non-regression on test
+forge projects (see --help for options). 
+The 'tests/' subdir contains '.chk' files used by regress-driver, and
+corresponding to the output of bugplucker for these projects. 
+
+Note that running regress-driver with -v and --skip may help, for the
+first times, and setting up a .netrc may help pass all tests if you
+have different test passwords on different forges (see manpage for
+.netrc usage).
 
 The bugplucker script will connect to a forge project and extract some
 of its contents to the JSON format(s) supported by forgeplucker. See
