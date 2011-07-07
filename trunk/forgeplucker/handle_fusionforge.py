@@ -1412,7 +1412,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		
 		self.basepage = self.fetch(self.project_page(project_name),
 				"Main page")
-		m = re.search(r'\?group_id=([0-9]*)', self.basepage)
+		m = re.search(r'memberlist.php\?group_id=([0-9]*)', self.basepage)
 
 		# #self.verbosity = 2
 
