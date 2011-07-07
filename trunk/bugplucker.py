@@ -74,17 +74,19 @@ def error(msg, code):
 output_formats = ('default', 'coclico', 'oslccmv2json')
 
 if __name__ == '__main__':
-    import getopt, json
+    import getopt
+    try: import simplejson as json
+    except ImportError: import json
     jdump = lambda x: json.dump(x, sys.stdout, sort_keys=True, indent=4, ensure_ascii = False)
     user = passwd = forgetype = None
     verbose = 0
     issue = None
 
-    xml = timeless = permissions = repositories = dump = phpWiki = trackers = getDocs = frs = forums = news = tasks = format = False
+    xml = timeless = permissions = repositories = dump = phpWiki = trackers = getDocs = frs = forums = news = tasks = format = version = False
     use_cache = True
 
     # Start with command-line args parsing
-    (options, arguments) = getopt.getopt(sys.argv[1:], "f:d:i:no:p:PTSFDWBNKru:v:h?", ["help",])
+    (options, arguments) = getopt.getopt(sys.argv[1:], "f:d:i:no:p:s:PTSFDWBNKru:v:h?", ["help",])
 
     for (arg, val) in options:
         if arg in ('-h', '-?', '--help'):	# help
@@ -149,6 +151,8 @@ if __name__ == '__main__':
                     error("%s: unknown output format type '%s' !" % (sys.argv[0], val), 1)
         elif arg == '-r' : #re-load from network instead of using cache
             use_cache = False
+        elif arg == '-s':#version
+            version = val
 
     if len(arguments) == 0 :
         usage()
@@ -229,18 +233,16 @@ if __name__ == '__main__':
         else:
             bt = forgetype(host, project)
 
+        if version:
+            bt.setVersion(version)
+        
         bt.verbosity = verbose
 
         bt.login(user, passwd)
 
         # This is the main data structure that will be dumped out at the end
         data = {}
-        
-        # extract common core
-        projectData = bt.pluck_project_data()
-        data["project"] = projectData
-        
-        # extract additional data
+        # extract data
         if phpWiki: #Not clean
             bt.pluck_wiki()
         if permissions:
@@ -279,9 +281,26 @@ if __name__ == '__main__':
                 trackers = True
 
         if trackers:
+            bugs = bt.pluck_trackers(timeless,True)
+            data["trackers"] = bugs
+        """
+        #Or, if we absolutely need to keep the trackers as a dictionary for non coclico format:
+        if trackers and format == 'coclico':
+            bugs = bt.pluck_trackers(timeless=timeless, True)
+            data["trackers"] = bugs
+        elif trackers:
             bugs = bt.pluck_trackers(timeless=timeless)
             data["trackers"] = bugs
-
+        """
+        
+        # extract common core
+        projectData = bt.pluck_project_data()
+        data["project"] = projectData
+        
+        
+        #next if (not format or default) is broken unless the above code is used, two corections possible : 
+        #   uncomment the above and it works but in default or oslccore, more than 1 custom tracker will not be recognized
+        #   update the code to work just like coclico format below
         if not format or format == 'default' :
             if verbose: notify('Outputing with format "default"')
             if permissions:
@@ -304,25 +323,18 @@ if __name__ == '__main__':
         elif format == 'coclico':
             if verbose: notify('Outputing with format "coclico"')
             # dump data as JSON
-            coclico_data = {}
             for key in data:
-                if key != 'trackers':
-                    coclico_data[key] = data[key]
-                else:
-                    coclico_data['trackers'] = []
+                if key == 'trackers':   
                     # Ensure non-regression on vocabularies where ['values'] and ['multi'] was introduced
-                    for tracker in data['trackers']['trackers']:
-                        coclico_tracker = data['trackers']['trackers'][tracker]
-                        if 'vocabulary' in coclico_tracker:
-                            vocab = coclico_tracker['vocabulary']
+                    for tracker in data['trackers']:
+                        if 'vocabulary' in tracker:
+                            vocab = tracker['vocabulary']
                             new_vocab = {}
                             for field in vocab:
                                 new_vocab[field] = vocab[field]['values']
-                            coclico_tracker['vocabulary'] = new_vocab
-                        coclico_tracker['type'] = tracker
-                        coclico_data['trackers'].append(coclico_tracker)
-
-            jdump(coclico_data)
+                            tracker['vocabulary'] = new_vocab
+                            
+            jdump(data)
             print
         elif format == 'oslccmv2json' :
             if verbose: notify('Outputing with format "oslccmv2json"')

@@ -1,6 +1,6 @@
 The ForgePlucker project aims to produce a robot that can extract a
 project's state from a hosting site such as SourceForge, Berlios, or
-Savane, or from installations of FusionForge for instance.
+Savane, or from a "private" installation of FusionForge for instance.
 
 The use cases for such a tool, and future possibilities springing from
 it, are described in the ForgePlucker project plan: look in

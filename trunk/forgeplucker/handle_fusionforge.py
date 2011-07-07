@@ -47,7 +47,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			# vérifier les champs de formulaire à ignorer
 			self.ignore = ("canned_response",
 			"new_artifact_type_id",
-			"words", "type_of_search")
+			"words", "type_of_search",  "quicknav")
 			# identifie les ids d'artefacts (bug, patches...) : aid
 			self.artifactid_re = r'/tracker/index.php\?func=detail&amp;aid=([0-9]+)&amp;group_id=[0-9]+&amp;atid=[0-9]+"'
 			# # chaque tracker a également un atid propre, indépendant du projet et global (utilité?????). ex, bugs de projet A : id 1, patch de projet 1 : id 2, bug de projet 2 : id 3...
@@ -55,11 +55,11 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			# m = re.search('<a href="[^/]*//[^/]*/([^"]*)">.*%s</a>' % label, self.parent.basepage)
 			
 			# if m:
-			# 	print m.groups()
-			# 	self.projectbase = dehtmlize(m.group(1))
+			#   print m.groups()
+			#   self.projectbase = dehtmlize(m.group(1))
 			# else:
-			# 	raise ForgePluckerException("Le tracker '%s' n'a pas été trouvé" \
-			# 		    % label)
+			#   raise ForgePluckerException("Le tracker '%s' n'a pas été trouvé" \
+			#		 % label)
 			# m = re.search('<a href="[^"]*atid=([0-9]*)[^"]*">.*%s</a>' % label, self.parent.basepage)
 			# print m.groups()
 			# self.atid = m.group(1)
@@ -220,38 +220,42 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		def custom(self, contents, artifact, vocabularies):
 			"parse specific fields of FusionForge"
 			#des champs spécifiques à fusionforge qu'il serait intéressant d'ajouter, peut ne rien faire en dehors d'appeler parse_followups et parse_attachments. méthode appelée par generic
- 			artifact, vocabularies = self.update_extrafields(artifact, contents, vocabularies)
+			artifact, vocabularies = self.update_extrafields(artifact, contents, vocabularies)
 
- 			#get Detailed Description (uneditable thus unfetchable directly from form)
- 			dD = None
+			#get Detailed Description (uneditable thus unfetchable directly from form)
+			dD = None
 			dDFound = False
 			bs = BeautifulSoup(self.narrow(contents))
 			# for 4.8
-			for t in bs.findAll('table'):
-				try :
-					if t.find('thead').find('tr').find('td').contents[0] == 'Detailed description':
-						dDFound = True
-						dD = t.find('tr', attrs={'class': 'altRowStyleEven'}).find('td').find('pre').contents[0]
-						dD = blocktext(dehtmlize(dD.strip()))
-						break
-				except AttributeError, e : # 
-					if str(e) != "'NoneType' object has no attribute 'find'":
-						raise
-			# Try for 5.0
-			if not dDFound:
-				bs = BeautifulSoup(self.narrow(contents))
-				for t in bs.findAll('table', attrs={'class': re.compile('.*listTable')}):
+			if not self.parent.version or self.parent.version == '4.8':
+				for t in bs.findAll('table'):
 					try :
-						if t.find('th').find('div').find('div').contents[0] == 'Detailed description':
+						if t.find('thead').find('tr').find('td').contents[0] == 'Detailed description':
 							dDFound = True
-							dD = t.find('tr').findNext('tr').find('td').contents[0]
+							dD = t.find('tr', attrs={'class': 'altRowStyleEven'}).find('td').find('pre').contents[0]
 							dD = blocktext(dehtmlize(dD.strip()))
 							break
 					except AttributeError, e : # 
 						if str(e) != "'NoneType' object has no attribute 'find'":
 							raise
- 			if dD:
- 				artifact['description'] = dD
+			elif self.parent.version == '5.x':
+				bs = BeautifulSoup(self.narrow(contents))
+				t= bs.find('div', text='Detailed description')
+				if t:
+					dDFound = True
+					dD = t.findNext('td').contents[0].encode('utf-8')
+#				for t in bs.findAll('table', attrs={'class': re.compile('.*listTable')}):
+#					try :
+#						if t.find('th').find('div').find('div').contents[0] == 'Detailed description':
+#							dDFound = True
+#							dD = t.find('tr').findNext('tr').find('td').contents[0]
+#							dD = blocktext(dehtmlize(dD.strip()))
+#							break
+#					except AttributeError, e : # 
+#						if str(e) != "'NoneType' object has no attribute 'find'":
+#							raise
+			if dD:
+				artifact['description'] = dD
 			
 			m = re.search('''Date Closed:</strong><br />\s*([^<]*)\s*<''', contents)
 			if not (m == None):
@@ -292,20 +296,31 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		trackers = []
 		trackersPage = self.fetch('tracker/?group_id='+self.project_id, 'Fetching tracker list')
 		trackersPage = BeautifulSoup(trackersPage)
-		for table in trackersPage.findAll('table') :
-			trs = table.findAll('tr')[1:]
+		if not self.version or self.version == '4.8':
+			tables = trackersPage.findAll('table') 
+			for table in tables :
+				trs = table.findAll('tr')[1:] #changed from 1 to 2, check why it was ever changed to 2??
 			for tr in trs:
 				a = tr.find('a')
 				tPage = re.search('[^/]*//[^/]*.*/([^/]+/[^"/]*)', a['href']).group(1)
 				tLabel = dehtmlize(a.contents[1]).strip()
 				trackers.append({'label':tLabel, 'projectbase':tPage})
-
-		self.trackers = []	
+		elif self.version == '5.x':
+			table = trackersPage.find('table', {'id':'sortable_table_tracker'})
+			trs = table.findAll('tr')[1:]
+			for tr in trs:
+				a = tr.find('a')
+				tPage = a['href']
+				tLabel = dehtmlize(a.contents[1]).strip()
+				trackers.append({'label':tLabel, 'projectbase':tPage})
+			
+			
+		self.trackers = []  
 
 		defaults = {'Bugs': FusionForge.BugTracker, 
-			    'Feature Requests': FusionForge.FeatureTracker, 
-			    'Patches': FusionForge.PatchTracker, 
-			    'Support': FusionForge.SupportTracker}
+				'Feature Requests': FusionForge.FeatureTracker, 
+				'Patches': FusionForge.PatchTracker, 
+				'Support': FusionForge.SupportTracker}
 		for tracker in trackers:
 			if self.verbosity >= 1:
 				self.notify("found tracker: " + tracker['label'] + ':' + tracker['projectbase'])
@@ -313,7 +328,20 @@ The FusionForge handler provides machinery for the FusionForge sites.
 				self.trackers.append(defaults[tracker['label']](self, tracker['projectbase']))
 			else:
 				self.trackers.append(FusionForge.CustomTracker(self, tracker['label'], tracker['projectbase']))
+		self.bugtrackers = self.trackers
 		return self.trackers
+
+
+	# wrap the pluck_trackers() 
+	def pluck_trackers(self, timeless=False,  asList = False):
+		'''
+		Get the trackers of the current fusionforge project. This is the method which should be called to initialize the extraction.
+		@param timeless: Record the time of extraction if true
+		@param asList: Boolean true if trackers should be returned as a list, false otherwise
+		'''
+		self.get_trackers()
+		return GenericForge.pluck_trackers(self, timeless, asList)
+
 
 	### PERMISSIONS/ROLES PARSING
 
@@ -328,11 +356,36 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			self.notify('plucking permissions from project/memberlist.php?group_id='+self.project_id)
 		contents = self.fetch('project/memberlist.php?group_id=' + self.project_id, 'Roles page')
 		perms = {}
-		for (realname, username, role, skills) in self.table_iter(self.narrow(contents), '<table', 4, 'Roles Table', has_header=True):
-			username = username.strip()
-			perms[username] = {'role':role}
-			perms[username]['real_name'] = realname
-			perms[username]['URL'] = self.real_url(self.user_page(username))
+		soup = BeautifulSoup(contents)	  
+		if not self.version or self.version == '4.8':
+			table = soup.find('table')
+		elif self.version == '5.x':
+			table = soup.find('div',  {'id':'maindiv'}).find('table')
+		if table != None:
+			trs = table.findAllNext('tr')[1:]
+			for tr in trs:
+				tds = tr.findAll('td')
+				username = tds[1].next.contents[0]
+				try:
+					realname = tds[0].next.contents[0]
+				except AttributeError:
+					realname = tds[0].contents[0]
+				role = tds[2].contents[0]
+				#Temporarily preserve legacy role:ROLENAME(string) for 4.8 import
+				#TODO: Update for role:[ROLE1, ROLE2,...] for 4.8 too
+				if not self.version or self.version == '4.8':
+					perms[username] = {'role':role.encode('utf-8')}
+				elif self.version == '5.x':
+					perms[username] = {'role': role.encode('utf-8').rsplit(', ')}
+				perms[username]['real_name'] = realname.encode('utf-8')
+
+
+
+#	 for (realname, username, role, skills) in self.table_iter(contents, '<table>', 4, 'Roles Table', has_header=True):
+#		 perms[username.strip().encode('utf-8')] = {'role':role}
+#		 
+#		 perms[username.strip().encode('utf-8')]['real_name'] = realname.encode('utf-8')
+			
 			
 		for user in perms:
 			contents = self.narrow(self.fetch(self.user_page(user), 'User page'))
@@ -346,33 +399,71 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		Get the roles of each registered user of the project and returns the corresponding array
 		'''
 		roles = {}
-		contents = self.fetch('project/admin/?group_id=' + self.project_id, 'Admin page')
-		m = re.search('''<form action="roleedit.php\?group_id=[0-9]*" method.*<select name="role_id">(.*)</select>''', contents, re.DOTALL)
-
-		# above is for 4.8, then if fails, for 5.0 :
-		if not m:
+		
+		if not self.version or self.version == '4.8':
+			contents = self.fetch('project/admin/?group_id=' + self.project_id, 'Admin page')
+			m = re.search('''<form action="roleedit.php\?group_id=[0-9]*" method.*<select name="role_id">(.*)</select>''', contents, re.DOTALL)
+			n = re.findall('''<option value="([0-9]*)"[^>]*>(.*)</option>''', m.group(1))
+			n.append(['1', 'Default'])#Default role for project creator, always #1
+			n.append(['observer', 'Observer'])
+			for i in range(0, len(n)):
+				permissions = {}
+				editpagecontents = self.fetch('project/admin/roleedit.php?group_id=' + self.project_id + '&role_id=' + n[i][0], 'Edit Role ' + n[i][1] + ' page')
+				for (section, subsection, setting) in self.table_iter(editpagecontents, '<table>', 3, 'Edit Table', has_header=True, keep_html=True):
+					subsection = dehtmlize(str(subsection)).strip()
+					section = dehtmlize(str(section)).strip()
+					t = re.findall('''<option value="[-\w]*" selected="selected">([^<]*)</option>''', str(setting))
+					if subsection != '-':
+						if len(t)>1:
+							permissions[section + ':' + 'AnonPost' + ':' + subsection]=t[1]
+						permissions[section + ':' + subsection] = t[0]
+					elif len(t) != 1: #Exception for project Admin.
+						permissions[section] = t[-1]
+					else:
+						permissions[section] = t[0]
+				roles[n[i][1]] = permissions
+		elif self.version =='5.x':
 			contents = self.fetch('project/admin/users.php?group_id=' + self.project_id, 'Admin page')
-			m = re.search('''<form action="roleedit.php\?group_id=[0-9]*[^"]*" method.*<select name="role_id">(.*)</select>''', contents, re.DOTALL)
-
-		n = re.findall('''<option value="([0-9]*)"[^>]*>(.*)</option>''', m.group(1))
-		n.append(['1', 'Default'])#Default role for project creator, always #1
-		n.append(['observer', 'Observer'])
-		for i in range(0, len(n)):
-			permissions = {}
-			editpagecontents = self.fetch('project/admin/roleedit.php?group_id=' + self.project_id + '&role_id=' + n[i][0], 'Edit Role ' + n[i][1] + ' page')
-			for (section, subsection, setting) in self.table_iter(editpagecontents, '<table>', 3, 'Edit Table', has_header=True, keep_html=True):
-				subsection = dehtmlize(str(subsection)).strip()
-				section = dehtmlize(str(section)).strip()
-				t = re.findall('''<option value="[-\w]*" selected="selected">([^<]*)</option>''', str(setting))
-				if subsection != '-':
-					if len(t)>1:
-						permissions[section + ':' + 'AnonPost' + ':' + subsection]=t[1]
-					permissions[section + ':' + subsection] = t[0]
-				elif len(t) != 1: #Exception for project Admin.
-					permissions[section] = t[-1]
-				else:
-					permissions[section] = t[0]
-			roles[n[i][1]] = permissions
+			contents = BeautifulSoup(contents)
+#			m = re.search('''<form action="roleedit.php\?group_id=[0-9]*[^"]*" method.*<select name="role_id">(.*)</select>''', contents, re.DOTALL)
+			input = contents.findAll('form', {'action':re.compile('roleedit.php')})[:-1]
+#			n = re.findall('''<option value="([0-9]*)"[^>]*>(.*)</option>''', m.group(1))
+#			n.append(['1', 'Default'])#Default role for project creator, always #1
+#			n.append(['observer', 'Observer'])
+			n = []
+			for  id in input:
+				n.append([id.contents[0]['value'],  id.findNext('td').contents[0]])
+			for i in range(0, len(n)):
+				permissions = {}
+#				editpagecontents = self.fetch('project/admin/roleedit.php?group_id=' + self.project_id + '&role_id=' + n[i][0], 'Edit Role ' + n[i][1] + ' page')
+				contents = self.fetch('project/admin/roleedit.php?group_id=' + self.project_id,  'Edit Role ' + n[i][1] + ' page', {'role_id':n[i][0]})
+				contents = BeautifulSoup(contents)
+				table = contents.find('form', {'action':re.compile('/project/admin/roleedit.php')}).findNext('table')
+				trs = table.findAll('tr')[1:]
+				for tr in trs:
+					tds = tr.findAll('td')
+					if len(tds)==2:#No subsection
+						section = tds[0].findNext('strong').contents[0]
+						val = tds[1].findNext('option', {'selected':'selected'}).contents[0]
+						permissions[section] = val
+					else:#A subsection
+						section = tds[0].contents[0]
+						subsection = tds[1].contents[0]
+						val = tds[2].findNext('option', {'selected':'selected'}).contents[0]
+						permissions[section + ':' + subsection] = val
+#				for (section, subsection, setting) in self.table_iter(editpagecontents, '<table>', 3, 'Edit Table', has_header=True, keep_html=True):
+#					subsection = dehtmlize(str(subsection)).strip()
+#					section = dehtmlize(str(section)).strip()
+#					t = re.findall('''<option value="[-\w]*" selected="selected">([^<]*)</option>''', str(setting))
+#					if subsection != '-':
+#						if len(t)>1:
+#							permissions[section + ':' + 'AnonPost' + ':' + subsection]=t[1]
+#						permissions[section + ':' + subsection] = t[0]
+#					elif len(t) != 1: #Exception for project Admin.
+#						permissions[section] = t[-1]
+#					else:
+#						permissions[section] = t[0]
+				roles[n[i][1]] = permissions
 		return roles
 	
 	### WIKI PARSING : COCLICO NEW FEATURE
@@ -403,25 +494,139 @@ The FusionForge handler provides machinery for the FusionForge sites.
 	def pluck_docman(self):
 		'''
 		Get the Document Manager's data of the project and returns the corresponding array, plus downloads any attached files in the local directory $(PROJECT_NAME)/docman
+		
+		Totally differs between 4.8 and 5.x
 		'''
-		# First page of a docman admin web page.
-		init_page = self.fetch('docman/admin/?group_id='+ self.project_id, 'main docman page')
 		result = {}
-		#get each category (active/deleted/hidden/private)
-		m=re.findall('''<li><strong>(.*)</strong>(.*)''',init_page)
-		#for each category
-		for lis in m:
-		#execute the recursive function at the root of this category
-			result[lis[0]] = self.pluck_docman_list(init_page, docman_type = lis[0])
+		if not self.version or self.version == '4.8':
+			# First page of a docman admin web page.
+			init_page = self.fetch('docman/admin/?group_id='+ self.project_id, 'main docman page')
+			#get each category (active/deleted/hidden/private)
+			m=re.findall('''<li><strong>(.*)</strong>(.*)''',init_page)
+			#for each category
+			for lis in m:
+			#execute the recursive function at the root of this category
+				result[lis[0]] = self.pluck_docman_list(init_page, docman_type = lis[0])
+		elif self.version == '5.x':
+#			init_url = 'docman/?group_id='+self.project_id+'&view=listfile&dirid=0'
+#			self.pluck_docman_list_5(init_url)
+			result = self.pluck_docman_list_5_m2()
+			#no category for dirs in 5.x
 		return result
 
+	def pluck_docman_list_5(self,  url,  id='ctSubTreeID1'):
+		content = self.fetch(url,  'fetching docman directories for id:'+str(id))
+		result=[]
+		content = BeautifulSoup(content)
+		tree = content.find('div',  {'id':id})
+		if len(tree.contents) !=0:
+			tables = tree.findNext('table')
+			tables = [tables] + tables.findNextSiblings('table')
+			for table in tables:
+				subres = {}
+				#find table id
+				a = table.find('a')
+				href  = re.search('(docman.*)', a['href']).group(1)
+				id = re.search('dirid=([0-9]*)', e['href']).group(1)
+				#get dir name
+				subres['name'] = a.contents[0]
+				#get table content
+				subres['files'] = pluck_docman_files(content)
+				#get subdirs content
+				subres['subdirectories']=self.pluck_docman_list_5(href,  id)
+				result.append(subres)
+		return result
+		
+	def pluck_docman_list_5_m2(self):
+		content = self.fetch('docman/?group_id='+self.project_id+'&view=additem',  'fetching docman directories')
+		content = BeautifulSoup(content)
+		opts = content.find('select', {'name':'doc_group'}).findAll('option')
+		subdirs = {}
+		resultObj = []
+		result=[]
+		for opt in opts:
+			name = opt.contents[0]
+			id = opt['value']
+			match = re.match('[-]+',  name)
+			if not match:
+				dg = self.DocumentGroup(self,  name,  id)
+				resultObj.append(dg)
+				subdirs[0] = dg
+			if match:
+				length = len(match.group())
+				depth = length/2
+				name = name[length:]
+				dg = self.DocumentGroup(self,  name,  id)
+				subdirs[depth-1].addChild(dg)
+				subdirs[depth] = dg
+		
+		for element in resultObj:
+			result.append(element.toDict())
+		return result
+		
+	class DocumentGroup():
+		def __init__(self, parent,  name,  id):
+			self.name = name
+			self.id = id
+			self.parent = parent
+			self.children = []
+			self.files = self.pluck_docman_files('docman/?group_id='+self.parent.project_id+'&view=listfile&dirid='+self.id)
+		def addChild(self,  dg):
+			self.children.append(dg)
+		def __str__(self):
+			return {'name':self.name, 'id':self.id}
+		
+		def pluck_docman_files(self,  url):
+			files = []
+			content = self.parent.fetch(url,  'fetching files for docgroup named: '+self.name)
+			content = BeautifulSoup(content)
+			table = content.find('table', {'class':'listing sortable_docman_listfile'})
+			if table != None:
+				trs = table.find('tbody').findAll('tr')
+				for tr in trs:
+					file = {}
+					tds = tr.findAll('td')
+					if len(tds[2].contents)>1:
+						file['file_name'] = tds[2].contents[1]
+					else:
+						file['file_name'] = tds[2].contents[0]
+					file['given_name']  = tds[3].contents[0]
+					file['submitter'] = re.search('/users/([^/]*)',tds[5].contents[0]['href']).group(1)
+					file['status']  = tds[7].contents[0]
+					file['description'] = tds[4].contents[0]
+					rep_dest = self.parent.project_name + '/docman'
+					if not os.path.exists(self.parent.project_name):
+						os.mkdir(self.parent.project_name)
+					if not os.path.exists(rep_dest):
+						os.mkdir(rep_dest)
+					furl = tds[1].find('a')['href']
+					dl = self.parent.fetch(furl, 'docman file fetching')
+					fnout = rep_dest + '/' + file['file_name']
+					fout = open(fnout, "wb")
+					fout.write(dl)
+					fout.close()
+					file['url'] = fnout
+					files.append(file)
+			return files   
+		
+		def toDict(self):
+			dict = {}
+			dict['name'] = self.name
+			dict['children'] = []
+			for child in self.children:
+				dict['children'].append(child.toDict())
+			dict['files'] = [self.files]
+			return dict
+			
+			
+ 
 	def pluck_docman_list(self, contents, url = None, docman_type = None):
 		'''
 		Get the documents and directories at the specified page and return a corresponding array
 		@param contents: The considered HTML to be parsed.
 		@param url: The URL where this HTML can be retrieved
 		@param docman_type: 
-		'''		
+		'''  
 		#TODO:Check usefulness of docman_type 
 		result = {}
 		#Init a FusionForge_DocMan instance, used to parse contents.
@@ -470,12 +675,14 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		Get the contents of the File Release System of the project and return a corresponding data array.
 		This is the function which should be called from the extractor.
 		'''
-		temp = self.fetch('forum/forum.php?forum_id=1&group_id=6', 'frs file fetching')
 		init_page = self.fetch('frs/admin/?group_id=' + self.project_id, 'main FRS Admin page')
 		result = {}
 		
 		soup = BeautifulSoup(init_page)
-		trs = soup.find('table').findAllNext('tr')[1:]
+		if not self.version or self.version =='4.8':
+			trs = soup.find('table').findAllNext('tr')[1:]
+		elif self.version == '5.x':
+			trs = soup.find('div', {'id':'maindiv'}).find('table').findAllNext('tr')[1:]
 		
 		for tr in trs:
 			pk_name = tr.find('input', attrs={'name':'package_name'})['value']
@@ -552,7 +759,11 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		result = {}
 		init_page = self.fetch('frs/admin/' + pk_releases, 'Releases')
 		soup = BeautifulSoup(init_page)
-		trs = soup.find('table')
+		if not self.version or self.version =='4.8':
+			trs = soup.find('table')
+		elif self.version == '5.x':
+			trs = soup.find('div', {'id':'maindiv'}).find('table')
+
 		if trs != None:
 			trs = trs.findAllNext('tr')[1:]
 			for tr in trs:
@@ -584,9 +795,11 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			r_change=""
 		
 		r_files = {}
-		
-		table = soup.findAll('table')[2]
-		trs = soup.findAll('table')[2].findAll('tr')[1:]
+		if not self.version or self.version =='4.8':
+			table = soup.findAll('table')[2]
+		elif self.version == '5.x':
+			table = soup.find('div', {'id':'maindiv'}).findAll('table')[2]
+		trs = table.findAll('tr')[1:]
 		i = 0
 		while i<len(trs):
 			tr = trs[i]
@@ -608,9 +821,10 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		
 	###### TASKS PARSING : COCLICO NEW FEATURE
 	
-	class Task:
+	class Task(GenericForge.GenericTracker):
 		## CLASSE DES TASKS
 		def __init__(self, label, parent, projectbase):
+			GenericForge.GenericTracker.__init__(self, parent, label)
 			self.parent = parent
 			self.optional = False
 			self.chunksize = 50
@@ -630,7 +844,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			# vérifier les champs de formulaire à ignorer
 			self.ignore = ("canned_response",
 			"new_artifact_type_id",
-			"words", "type_of_search", "start_month", "end_month")
+			"words", "type_of_search", "start_month", "end_month",  "quicknav")
 			# identifie les ids d'artefacts (bug, patches...) : aid
 
 			self.artifactid_re = r'/pm/task.php\?func=detailtask&amp;project_task_id=([0-9]+)&amp;group_id=[0-9]*&amp;group_project_id=[0-9]*'
@@ -743,8 +957,12 @@ The FusionForge handler provides machinery for the FusionForge sites.
 #			Get linked tasks
 			artifact['linked_tasks'] = self.parse_linkedTasks(soupedContents)
 #			Get the first comment of the task which cannot be modified and is the description of the task
-			artifact['description'] = soupedContents.find('td', attrs={'colspan':'2'}).find('strong').nextSibling.nextSibling.strip() #Use colspan because the original comment + add comment box are always in a colspan 2 td with no id
 #			Gather the number of the projected end moth of the task
+			desc = soupedContents.find('td', attrs={'colspan':'2'}).find('strong')
+			if not desc: #then 5.0
+				desc = soupedContents.find('td', attrs={'colspan':'3'}).find('strong')
+			artifact['description'] = desc.nextSibling.nextSibling.strip() #Use colspan because the original comment + add comment box are always in a colspan 2 (3 for 5.0) td with no id
+#		 Gather the number of the projected end moth of the task
 			end_month = soupedContents.find('select',attrs={'name':'end_month'}).find('option', attrs={'selected':'selected'})['value'] #Maybe use a corresponding tab, Plucker give the content value, the name of the month (January, Feb..., etc) instead of the number
 #			Format the end date as a normal date as used for comment or followups date
 			end_date = artifact['end_year']+'-'+end_month+'-'+artifact['end_day']+' '+artifact['end_hour']+':'+artifact['end_minute']
@@ -776,7 +994,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			FusionForge.Task.__init__(self, nameTracker, parent, projectbase)
 			self.type = typeTracker
 		
-	def getTasksTrackers(self):	
+	def getTasksTrackers(self): 
 		'''
 		Parse the tasks initial page and return a list of dictionaries containing (tasks tracker name, tasks tracker type (default custom)).
 		If type corresponds to one of the fixated types, register it
@@ -785,7 +1003,10 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		basepage = BeautifulSoup(self.basepage)
 		tT = basepage.findAll('a', {'href':re.compile('task.php')})
 		for t in tT:
-			tPage = re.search('[^/]*//[^/]*/([^"]*)',t['href']).group(1)
+			if not self.version or self.version == '4.8':
+				tPage = re.search('[^/]*//[^/]*/([^"]*)',t['href']).group(1) #TODO: Check if the version check is really useful or if the 5.x version is sufficient
+			elif self.version == '5.x':
+				tPage = t['href']
 			tLabel = t.contents[0]
 			tasksTrackers.append({'label':tLabel, 'type':'custom', 'projectbase':tPage})
 		return tasksTrackers
@@ -799,8 +1020,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		self.trackers = [] #Reset trackers to empty
 		for tasksTracker in self.getTasksTrackers():
 			self.trackers.append(FusionForge.CustomizableTaskTracker(self, tasksTracker['label'], tasksTracker['type'], tasksTracker['projectbase']))
-		return self.pluck_trackers(timeless, True)
-
+		return GenericForge.pluck_trackers(self,  timeless, True)
 	###### NEWS PARSING : COCLICO NEW FEATURE
 	
 	def pluck_news(self):
@@ -837,18 +1057,32 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		Parse a single news page
 		@param news: a news page soup
 		'''
-		newsTable = newsSoup.find('table')
+		if not self.version or self.version == '4.8':
+			newsTable = newsSoup.find('table')
+		elif self.version == '5.x':
+			newsTable = newsSoup.find('div', {'id':'maindiv'}).findNext('table')
 		poster_name = newsTable.find(text=re.compile('Posted')).next.strip()
 		news_date = newsTable.find(text=re.compile('Date')).next.strip()
 		news_summary = newsTable.find(text=re.compile('Summary')).next.contents[0].encode('utf-8')
 		news_content=''
-		for s in newsTable.find('p').contents:
-			if s.string != None:
-				news_content+=s.string
-		news_content = news_content.strip().replace('\r','\n')
-		news_content = news_content.encode('utf-8')
-#		news_content = dehtmlize(''.join(blocktext(str(s)) for s in newsTable.find('p').contents)) #Couldn't make a correct code to handle both the <br /> and the \n without either too many \n or none at all... replaced by the length above code
-		news_forum = self.forumParser(newsSoup, 5, 4, 3)
+		if not self.version or self.version == '4.8':
+			for s in newsTable.find('p').contents:
+				if s.string != None:
+					news_content+=s.string
+			news_content = news_content.strip().replace('\r','\n')
+			news_content = news_content.encode('utf-8')
+#		   TODO:Correct news content extraction for 5.x
+#	   elif self.version == '5.x':
+#		   init = newsTable.find('p').nextSibling
+#		   news_content = init.strip()
+#		   valid = True
+#		   while valid:
+		news_content = ''
+#	 news_content = dehtmlize(''.join(blocktext(str(s)) for s in newsTable.find('p').contents)) #Couldn't make a correct code to handle both the <br /> and the \n without either too many \n or none at all... replaced by the length above code
+		if not self.version or self.version == '4.8':
+			news_forum = self.forumParser(newsSoup, 5, 4, 3)
+		elif self.version == '5.x':
+			news_forum = self.forumParser(newsSoup, 4, 3, 4)
 		result = {'poster_name':poster_name, 'date':news_date,'summary':news_summary,'news_content':news_content,'forum':news_forum}
 		return result
 		
@@ -918,9 +1152,23 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			message = self.parent.fetch(self.href, 'Retrieving message info for msg_id '+self.href)
 			message = BeautifulSoup(message)
 			table = message.findAll('table')[self.index]
-			submitter_login = table.find('a', {'href':re.compile('/users/')}).contents[0]
-			date = table.find(text=re.compile('DATE:'))[6:]
-			if table.find(text=re.compile('No attachment')) != None:
+			if not self.parent.version or self.parent.version == '4.8':
+				submitter_login = table.find('a', {'href':re.compile('/users/')}).contents[0]
+				date = table.find(text=re.compile('DATE:'))[6:]
+				attachementCheck = table.find(text=re.compile('No attachment')) != None
+				subject = (table.find(text=re.compile('SUBJECT:'))[9:]).encode('utf-8')
+				content = re.search('<p>&nbsp;</p>(.*)</td></tr></table>',str(table),re.DOTALL).group(1)
+				content = content.decode('iso-8859-1')
+				content = content.encode('utf-8')
+			elif self.parent.version == '5.x':
+				href = table.find('a',{'href':re.compile('/users/')})
+				submitter_login = re.search('/users/([^/]*)',href['href']).group(1)
+				date = href.nextSibling[-16:]
+				attachementCheck = table.find('img',{'src':re.compile('forum_add')}) !=None
+				subject = message.find('div', {'id':'maindiv'}).findNext('h1').contents[0]
+				listContent = message.find('td', {'colspan':'2'}).contents
+				content = ''.join(str(i) for i in listContent[2:]).replace('<br />','\n').replace('\r', '')
+			if attachementCheck:
 				#No attachment
 				attachment = {}
 			else:
@@ -939,10 +1187,11 @@ The FusionForge handler provides machinery for the FusionForge sites.
 				fout.write(dl)
 				fout.close()
 				attachment = {'name':fname, 'url':fnout}
-			subject = (table.find(text=re.compile('SUBJECT:'))[9:]).encode('utf-8')
-			content = re.search('<p>&nbsp;</p>(.*)</td></tr></table>',str(table),re.DOTALL).group(1)
-			content = content.decode('iso-8859-1')
-			content = content.encode('utf-8')
+				
+				
+				
+			
+
 			
 			return {'submitter':submitter_login, 'date':date, 'attachment':attachment, 'subject':subject, 'content':content}
 	
@@ -984,9 +1233,16 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		#Stores the last message seen in a {depth:msg object} dictionary, even if the message has already been seen
 		lastMsgAtDepth = {}
 		while nextPage:
-			
-			tables = soup.findAll('table')
-			nextTable = tables[nextTableIndex]
+			if not self.version or self.version == '4.8':
+				tables = soup.findAll('table')
+				nextTable = tables[nextTableIndex]
+			elif self.version == '5.x':
+				div = soup.find('div', {'id':'maindiv'})
+				tables = soup.find('div', {'id':'maindiv'}).findAll('table')
+				if len(tables)<nextTableIndex+1:
+					nextTable = False
+				else:
+					nextTable = tables[nextTableIndex]
 			dataTable = tables[dataTableIndex]
 			trs = dataTable.findAll('tr')[1:]
 
@@ -1032,17 +1288,22 @@ The FusionForge handler provides machinery for the FusionForge sites.
 					
 			if len(liste)>0:
 				listeMessagesObjects.append(liste[0])
-			
-			hasNextPage = nextTable.find(text=' Next Messages')
-			if hasNextPage == None:
-				nextPage = False
+			if nextTable:
+				if not self.version or self.version == '4.8':
+					nextPage = nextTable.find(text=' Next Messages') != None
+				elif self.version == '5.x':
+					nextPage = nextTable.find('span',  {'class':'next'}) != None
+				if nextPage:
+					if not self.version or self.version == '4.8':
+						nextPageHtml = self.fetch(nextTable.find(text=' Next Messages').findPrevious('a')['href'], 'Fetching next forum page')
+					elif self.version == '5.x':
+						nextPageHtml = self.fetch(nextTable.find('span',  {'class':'next'}) .findNext('a')['href'], 'Fetching next forum page')
+					soup = BeautifulSoup(nextPageHtml)
 			else:
-				nextPageHtml = self.fetch(hasNextPage.findPrevious('a')['href'], 'Fetching next forum page')
-				soup = BeautifulSoup(nextPageHtml)
-		
+				nextPage = False
 		listeMessagesDicts = []
 		for message in listeMessagesObjects:
-			listeMessagesDicts.append(message.toDict())	
+			listeMessagesDicts.append(message.toDict()) 
 		return listeMessagesDicts
 
 	def forumAdminParser(self, soup):
@@ -1078,12 +1339,21 @@ The FusionForge handler provides machinery for the FusionForge sites.
 
 	def forumsListing(self, soup):
 		forums = []
-		trs = soup.find('table').findAll('tr')[1:]
+		if not self.version or self.version=='4.8':
+			trs = soup.find('table').findAll('tr')[1:]
+		elif self.version == '5.x':
+			#trs = soup.find('table',  attrs={'cellspacing':'1',  'cellpadding':'2',  'width':'100%'}).findAll('tr')[1:]
+#		TODO: 5.x is a false assumption here, the trs above will work for ~5.1 but not for trunk as of 04052011 because said cellspacing and cellpadding attrs were replaced by class="listing full"
+			trs = soup.find('table',  attrs={'class':'listing full'}).findAll('tr')[1:]
+#		TODO: If there is only one forum, FF skips the index page of forums and goes directly to the forum which breaks this function, a workaround has to be made in this case
 		for tr in trs:
 			tds = tr.findAll('td')
 			fHref = tds[0].find('a')['href']
 			fId = re.search('forum_id=([0-9]*)', fHref).group(1)
-			fUrl = 'forum/'+fHref
+			if not self.version or self.version=='4.8':
+				fUrl = 'forum/'+fHref
+			elif self.version == '5.x':
+				fUrl = fHref
 			fName = tds[0].find('a').contents[1][6:].encode('utf-8')
 			fDesc = tds[1].contents[0].encode('utf-8')
 			self.forumSwitchViewMode(fId)
@@ -1099,6 +1369,17 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		'''
 		forums = []
 		frs = self.forumsListing(soup)
+		#Index for different FF versions
+		if not self.version or self.version =='4.8':
+			dataTableIndex = 1
+			nextTableIndex = 2
+			messageTableIndex = 0
+		elif self.version =='5.x':
+#			dataTableIndex = 2
+			dataTableIndex = 1#Modified for trunk as of 04052011, may break 5.0
+#			nextTableIndex = 3
+			nextTableIndex = 2#Modified for trunk as of 04052011, may break 5.0
+			messageTableIndex = 3
 		for f in frs:
 			fName = f['name']
 			fDesc = f['description']
@@ -1106,10 +1387,10 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			fAdminUrl = f['adminUrl']
 			fMonitorUrl = f['monitoring_usersUrl']
 			fId = re.search('forum_id=([0-9]*)', fUrl).group(1)
-			self.forumSwitchViewMode(fId)
+#		   self.forumSwitchViewMode(fId)
 			fAdminContent = self.forumAdminParser(BeautifulSoup(self.fetch(fAdminUrl, 'forum admin content download. forum name:'+fName)))
 			fMonitorContent = self.forumMonitorParser(BeautifulSoup(self.fetch(fMonitorUrl, 'forum monitoring users content download. forum name:'+fName)))
-			fContent = self.forumParser(BeautifulSoup(self.fetch(fUrl, 'forum content downloading. forum name:'+fName))) 
+			fContent = self.forumParser(BeautifulSoup(self.fetch(fUrl, 'forum content downloading. forum name:'+fName)),  nextTableIndex, dataTableIndex,   messageTableIndex) 
 			forums.append({'name':fName, 'description':fDesc, 'content':fContent, 'admin':fAdminContent, 'monitoring_users':fMonitorContent})
 		return forums
 		
@@ -1178,7 +1459,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 				'form_loginname':username,
 				'form_pw':password,
 				'login':'login'},
-				   'href="'+ self.real_url('account/logout.php') +'">')
+				   'account/logout.php')
 
 
 	def narrow(self, text):
@@ -1202,8 +1483,11 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			description = fieldset.find('table').find('tr').find('td').find('p').contents
 			description = dehtmlize(''.join(map(str,description)))
 		else: #5.0
-			shortdesc = mainsoup.find('h2').contents[0]
-			description = mainsoup.find('p').contents[0]
+		#TODO:Correction pour 5.0 ne semble pas marcher
+			#shortdesc = mainsoup.find('h2').contents[0]
+			#description = mainsoup.find('p').contents[0]
+			shortdesc = 'a'
+			description = 'b'
 
 		registered = None
 		for p in mainsoup.findAll('p'):
@@ -1239,7 +1523,8 @@ The FusionForge handler provides machinery for the FusionForge sites.
 					if l == '&nbsp;Project Home Page':
 						homepage = a['href']
 					if l == '&nbsp;Tracker':
-						trackers = self.get_trackers()
+#					  trackers = self.get_trackers()
+						trackers = self.bugtrackers
 					if l == '&nbsp;Public Forums':
 						init_page = self.fetch('forum/?group_id='+self.project_id, 'plucking main forum page')
 						soup = BeautifulSoup(self.narrow(init_page))
@@ -1268,14 +1553,32 @@ The FusionForge handler provides machinery for the FusionForge sites.
 						news = a['href']
 						break
 				a = a.findNext('a')
+		
+		frs = mainsoup.find(text='[View All Project Files]')
+		if frs:
+			frs = frs.findPrevious('a')['href']
+#		for a in mainsoup.findAll('a'):
+#			for l in a.contents:
+#				if l == '[View All Project Files]':
+#					frs = a['href']
+#					break
+#			if frs:
+#				break
 
-		for a in mainsoup.findAll('a'):
-			for l in a.contents:
-				if l == '[View All Project Files]':
-					frs = a['href']
-					break
-			if frs:
-				break
+		public_areas = mainsoup.find('div',  text='Public Areas')
+		if public_areas:
+			a = public_areas.findNext(text='&nbsp;Project Home Page')
+			if a:
+				homepage = a.findPrevious('a')['href']
+			a = public_areas.findNext(text='&nbsp;Tracker')
+			if a:
+				trackers = self.bugtrackers #only works if trackers plucked, as they are normally,, might be interesting to write a trackers listing later
+			a = public_areas.findNext(text='&nbsp;DocManager: Project Documentation')
+			if a:
+				docman = a.findPrevious('a')["href"]
+			#complete with rest later
+
+
 
 		project_url = self.real_url(project_page)
 		data = {"class":"PROJECT",
@@ -1376,3 +1679,12 @@ The FusionForge handler provides machinery for the FusionForge sites.
 		data['tools'] = tools
 
 		return data
+
+	def login_url(self):
+		"Generate the site's account login page URL."
+		# Works for SourceForge, Berlios, Savannah, and Gna!.
+		# Override in derived classes if necessary.
+		if not self.version or self.version == '4.8':
+			return "account/login.php"
+		elif self.version == '5.x':
+			return "plugins/authbuiltin/post-login.php"
