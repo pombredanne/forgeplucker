@@ -61,8 +61,12 @@ def get_credentials(user, passwd, host):
             user = auth[0]
             passwd = auth[2]
         else :
-            user = None
-            passwd = None
+            if auth:
+                user = auth[0]
+                passwd = auth[2]
+            else :
+                user = None
+                passwd = None
     return (user, passwd)
 
 # End
