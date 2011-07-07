@@ -11,6 +11,15 @@ another forge site. Source-code repositories, bug tracker state,
 webspace and wikis, mailing lists, participants roles and permissions,
 the whole thing.
 
+=== Where can I find examples of your standard dump/export format ===
+
+We maintain a test suite together with forgeplucker that aims at
+capturing the current state of the dump format for various example
+projects for the different forges supported. You may find this test
+suite in http://svn.gna.org/viewcvs/forgeplucker/trunk/test/[the
+project's +'test'+ SVN subdir] (see files ending in +.chk+)
+
+
 === Why web-scrape rather than trying to build exporters into existing forges? ===
 
 The architectures of most forge systems would be very difficult to
