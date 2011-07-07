@@ -329,6 +329,8 @@ def output_oslccmv2json(data):
         oslc_person['foaf:holdsAccount'] = user_url
 
         roles = user_data['role']
+        if isinstance(roles, str):
+            roles = (roles,)
         for role in roles:
             i = roles_number[role]
             oslc_role = oslc_roles[i]

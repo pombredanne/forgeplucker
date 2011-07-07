@@ -312,16 +312,21 @@ if __name__ == '__main__':
             if issue:
                 jdump(data["issue"])
             else:
+                        
+                outputData = data["project"]
                 # Ensure non-regression on vocabularies where ['values'] and ['multi'] was introduced
-                for tracker in data['trackers']['trackers']:
-                    tracker = data['trackers']['trackers'][tracker]
+                for tracker in data["trackers"]:
                     if 'vocabulary' in tracker:
                         vocab = tracker['vocabulary']
                         new_vocab = {}
                         for field in vocab:
                             new_vocab[field] = vocab[field]['values']
                         tracker['vocabulary'] = new_vocab
-                jdump(data["trackers"])
+                    if 'trackers' not in outputData:
+                        outputData['trackers'] = {}
+                    outputData['trackers'][tracker['label']] = tracker
+                jdump(outputData)
+            print
         elif format == 'coclico':
             if verbose: notify('Outputing with format "coclico"')
             # dump data as JSON
@@ -335,7 +340,11 @@ if __name__ == '__main__':
                             for field in vocab:
                                 new_vocab[field] = vocab[field]['values']
                             tracker['vocabulary'] = new_vocab
-                            
+                # teporary hack to make sure there's no regression on coclico importing
+                if key == 'users':
+                    for u in data['users']:
+                        if data['users'][u]['URL']:
+                            del data['users'][u]['URL']
             jdump(data)
             print
         elif format == 'oslccmv2json' :

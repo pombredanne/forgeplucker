@@ -365,7 +365,9 @@ The FusionForge handler provides machinery for the FusionForge sites.
 			trs = table.findAllNext('tr')[1:]
 			for tr in trs:
 				tds = tr.findAll('td')
-				username = tds[1].next.contents[0]
+				userlink = tds[1].next
+				username = userlink.contents[0]
+				URL = userlink['href']
 				try:
 					realname = tds[0].next.contents[0]
 				except AttributeError:
@@ -378,7 +380,7 @@ The FusionForge handler provides machinery for the FusionForge sites.
 				elif self.version == '5.x':
 					perms[username] = {'role': role.encode('utf-8').rsplit(', ')}
 				perms[username]['real_name'] = realname.encode('utf-8')
-
+				perms[username]['URL'] = URL
 
 
 #	 for (realname, username, role, skills) in self.table_iter(contents, '<table>', 4, 'Roles Table', has_header=True):
