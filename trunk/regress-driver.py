@@ -99,7 +99,7 @@ def runtest(testenv, output, skip_failing = False):
         msg("running '%s'" % cmd)
     ret = system(cmd)
     if ret != 0:
-        print >>sys.stderr, "Command ('"+cmd+"') failed!"
+        print >>sys.stderr, "Command ('"+cmd+"') failed (see details in '"+testdir+"/"+output+"')!"
         if not skip_failing:
             raise SystemExit, 1
     return ret
